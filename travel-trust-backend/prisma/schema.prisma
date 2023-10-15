@@ -23,24 +23,66 @@ model User {
   address      String?
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
+  bookings     Booking[]
+  reviews      Review[]
 
   @@map("users")
 }
 
 model Service {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   name        String
   description String
   price       String
   image       String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  bookings    Booking[]
+  reviews     Review[]
 
   @@map("services")
+}
+
+model Booking {
+  id        String        @id @default(uuid())
+  serviceId String
+  userId    String
+  date      String
+  time      String
+  status    BookingStatus @default(pending)
+
+  user    User    @relation(fields: [userId], references: [id])
+  service Service @relation(fields: [serviceId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("bookings")
+}
+
+model Review {
+  id        String @id @default(uuid())
+  serviceId String
+  userId    String
+  rating    Int
+  comment   String
+
+  user    User    @relation(fields: [userId], references: [id])
+  service Service @relation(fields: [serviceId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("reviews")
 }
 
 enum ENUM_USER_ROLE {
   user
   admin
   super_admin
+}
+
+enum BookingStatus {
+  pending
+  confirmed
 }

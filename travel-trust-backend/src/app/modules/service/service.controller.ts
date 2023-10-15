@@ -4,6 +4,9 @@ import { TravelService } from './service.service';
 import sendResponse from '../../../shared/sendResponse';
 import { Service } from '@prisma/client';
 import httpStatus from 'http-status';
+import pick from '../../../shared/pick';
+import { paginationFields } from '../../../constants/pagination';
+import { ServiceFilterableFields } from './service.constant';
 
 const createService = catchAsync(async (req: Request, res: Response) => {
   const data = req.body;
@@ -17,6 +20,22 @@ const createService = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getAllService = catchAsync(async (req: Request, res: Response) => {
+  const filters = pick(req.query, ServiceFilterableFields);
+  const options = pick(req.query, paginationFields);
+
+  const result = await TravelService.getAllService(filters, options);
+
+  sendResponse<Service[]>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Service retrieved successfully',
+    meta: result.meta,
+    data: result.data,
+  });
+});
+
 export const ServiceController = {
   createService,
+  getAllService,
 };

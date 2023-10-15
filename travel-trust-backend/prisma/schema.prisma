@@ -21,16 +21,20 @@ model User {
   gender       String?
   age          Int?
   address      String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now()) @updatedAt
 
   @@map("users")
 }
 
 model Service {
-  id          String @id @default(uuid())
+  id          String   @id @default(uuid())
   name        String
   description String
-  price       Int    @default(0)
+  price       String
   image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
 
   @@map("services")
 }

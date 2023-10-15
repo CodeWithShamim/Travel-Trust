@@ -21,6 +21,18 @@ model User {
   gender       String?
   age          Int?
   address      String?
+
+  @@map("users")
+}
+
+model Service {
+  id          String @id @default(uuid())
+  name        String
+  description String
+  price       Int    @default(0)
+  image       String
+
+  @@map("services")
 }
 
 enum ENUM_USER_ROLE {

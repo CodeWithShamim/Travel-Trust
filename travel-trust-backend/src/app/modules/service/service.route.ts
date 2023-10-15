@@ -14,5 +14,19 @@ router.post(
 );
 
 router.get('/', ServiceController.getAllService);
+router.get('/:id', ServiceController.getSingleService);
+
+router.patch(
+  '/:id',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  validateRequest(ServiceZodValidation.update),
+  ServiceController.updateService
+);
+
+router.delete(
+  '/:id',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  ServiceController.deleteService
+);
 
 export const ServiceRoute = router;

@@ -22,7 +22,7 @@ model User {
   age          Int?
   address      String?
   createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @default(now()) @updatedAt
+  updatedAt    DateTime       @updatedAt
 
   @@map("users")
 }
@@ -34,7 +34,7 @@ model Service {
   price       String
   image       String
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
+  updatedAt   DateTime @updatedAt
 
   @@map("services")
 }

@@ -52,6 +52,43 @@ const login = async (data: ILogin): Promise<ILoginResponse> => {
   };
 };
 
+const refreshToken = async (token: string): Promise<ILoginResponse> => {
+  // validate refresh token
+  let verifyToken = null;
+  try {
+    verifyToken = jwtHelpers.verifyToken(
+      token,
+      config.jwt.refresh_secret as Secret
+    );
+  } catch (error) {
+    throw new ApiError(httpStatus.FORBIDDEN, 'Invalid refresh token');
+  }
+
+  // check user exist
+  const isUserExist = await prisma.user.findFirst({
+    where: {
+      id: verifyToken.id,
+    },
+  });
+
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist!');
+  }
+
+  // create new access token
+  const { id, role } = isUserExist;
+  const newAccessToken = jwtHelpers.createToken(
+    { id, role },
+    config.jwt.secret as Secret,
+    config.jwt.expires_in as string
+  );
+
+  return {
+    accessToken: newAccessToken,
+  };
+};
+
 export const AuthService = {
   login,
+  refreshToken,
 };

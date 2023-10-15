@@ -5,5 +5,5 @@ export type ILogin = {
 
 export type ILoginResponse = {
   accessToken: string;
-  refreshToken: string;
+  refreshToken?: string;
 };

@@ -40,7 +40,16 @@ const update = z.object({
   }),
 });
 
+const userToAdmin = z.object({
+  body: z.object({
+    id: z.string({
+      required_error: 'Id is required.',
+    }),
+  }),
+});
+
 export const UserZodValidation = {
   create,
   update,
+  userToAdmin,
 };

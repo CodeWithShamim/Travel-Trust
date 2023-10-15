@@ -37,4 +37,18 @@ router.delete(
   UserController.deleteUser
 );
 
+router.post(
+  '/create-admin',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN),
+  validateRequest(UserZodValidation.create),
+  UserController.createAdmin
+);
+
+router.post(
+  '/user-to-admin',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN),
+  validateRequest(UserZodValidation.userToAdmin),
+  UserController.updateUserToAdmin
+);
+
 export const UserRoute = router;

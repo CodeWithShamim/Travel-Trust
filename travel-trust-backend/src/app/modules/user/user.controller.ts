@@ -50,7 +50,7 @@ const getSingleUser = catchAsync(async (req: Request, res: Response) => {
 const updateUser = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
   const data = req.body;
-  const result = await UserService.updateUser(id, data);
+  const result = await UserService.updateUser(id, data, req);
 
   sendResponse<User>(res, {
     statusCode: httpStatus.OK,
@@ -62,12 +62,37 @@ const updateUser = catchAsync(async (req: Request, res: Response) => {
 
 const deleteUser = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
-  const result = await UserService.deleteUser(id);
+  const result = await UserService.deleteUser(id, req);
 
   sendResponse<User>(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'User deleted successfully',
+    data: result,
+  });
+});
+
+const createAdmin = catchAsync(async (req: Request, res: Response) => {
+  const data = req.body;
+  const result = await UserService.createAdmin(data);
+
+  sendResponse<User>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Admin created successfully',
+    data: result,
+  });
+});
+
+const updateUserToAdmin = catchAsync(async (req: Request, res: Response) => {
+  const id = req.body.id;
+  const user = req?.user;
+  const result = await UserService.updateUserToAdmin(id, user);
+
+  sendResponse<User>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: ' successfully',
     data: result,
   });
 });
@@ -78,4 +103,6 @@ export const UserController = {
   getSingleUser,
   updateUser,
   deleteUser,
+  createAdmin,
+  updateUserToAdmin,
 };

@@ -134,6 +134,16 @@ const createAdmin = async (data: User): Promise<User> => {
   return returnUserValue(User);
 };
 
+const deleteAdmin = async (id: string): Promise<User> => {
+  const result = await prisma.user.delete({
+    where: {
+      id,
+      role: 'admin',
+    },
+  });
+  return returnUserValue(result);
+};
+
 const updateUserToAdmin = async (
   id: string,
   user: User | any
@@ -164,5 +174,6 @@ export const UserService = {
   updateUser,
   deleteUser,
   createAdmin,
+  deleteAdmin,
   updateUserToAdmin,
 };

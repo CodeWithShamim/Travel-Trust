@@ -84,6 +84,18 @@ const createAdmin = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const deleteAdmin = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const result = await UserService.deleteAdmin(id);
+
+  sendResponse<User>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Admin deleted successfully',
+    data: result,
+  });
+});
+
 const updateUserToAdmin = catchAsync(async (req: Request, res: Response) => {
   const id = req.body.id;
   const user = req?.user;
@@ -104,5 +116,6 @@ export const UserController = {
   updateUser,
   deleteUser,
   createAdmin,
+  deleteAdmin,
   updateUserToAdmin,
 };

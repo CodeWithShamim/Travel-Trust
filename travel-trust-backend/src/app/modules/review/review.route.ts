@@ -1,31 +1,31 @@
 import express, { Router } from 'express';
-import { BookingController } from './booking.controller';
+import { ReviewController } from './review.controller';
 import validateRequest from '../../middlewares/validateRequest';
-import { BookingZodValidation } from './booking.validation';
+import { ReviewZodValidation } from './review.validation';
 import auth from '../../middlewares/auth';
 import { ENUM_USER_ROLE } from '../../../enums/user';
 const router: Router = express.Router();
 
 router.post(
   '/',
-  validateRequest(BookingZodValidation.create),
-  BookingController.createBooking
+  validateRequest(ReviewZodValidation.create),
+  ReviewController.createReview
 );
 
-router.get('/', BookingController.getAllBooking);
-router.get('/:id', BookingController.getSingleBooking);
+router.get('/', ReviewController.getAllReview);
+router.get('/:id', ReviewController.getSingleReview);
 
 router.patch(
   '/:id',
   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.USER),
-  validateRequest(BookingZodValidation.update),
-  BookingController.updateBooking
+  validateRequest(ReviewZodValidation.update),
+  ReviewController.updateReview
 );
 
 router.delete(
   '/:id',
   auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.USER),
-  BookingController.deleteBooking
+  ReviewController.deleteReview
 );
 
-export const BookingRoute = router;
+export const ReviewRoute = router;

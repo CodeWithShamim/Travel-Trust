@@ -46,7 +46,7 @@ router.post(
 
 router.delete(
   '/delete-admin/:id',
-  // auth(ENUM_USER_ROLE.SUPER_ADMIN),
+  auth(ENUM_USER_ROLE.SUPER_ADMIN),
   UserController.deleteAdmin
 );
 

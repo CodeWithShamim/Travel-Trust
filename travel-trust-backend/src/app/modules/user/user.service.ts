@@ -12,6 +12,7 @@ import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
 import { Request } from 'express';
 import { ENUM_USER_ROLE } from '../../../enums/user';
+import { JwtPayload } from 'jsonwebtoken';
 
 const createUser = async (data: User): Promise<User> => {
   const generateHashPassword = await hashPassword(data?.password);
@@ -56,11 +57,14 @@ const getAllUser = async (
   };
 };
 
-const getSingleUser = async (id: string): Promise<User | null> => {
+const getSingleUser = async (
+  id: string,
+  user: JwtPayload | null
+): Promise<User | null> => {
+  const isUser = user?.role === ENUM_USER_ROLE.USER;
+  const where = isUser ? { id: user?.id } : { id };
   const result = await prisma.user.findUnique({
-    where: {
-      id,
-    },
+    where,
   });
   return returnUserValue(result);
 };
@@ -72,54 +76,25 @@ const updateUser = async (
 ): Promise<User> => {
   delete data?.role;
   const user = req?.user;
-  let result = null;
+  const isUser = user?.role === ENUM_USER_ROLE.USER;
+  const where = isUser ? { id: user?.id } : { id };
 
-  if (
-    user?.role === ENUM_USER_ROLE.ADMIN ||
-    user?.role === ENUM_USER_ROLE.SUPER_ADMIN
-  ) {
-    result = await prisma.user.update({
-      where: {
-        id,
-      },
-      data,
-    });
-  }
-
-  if (user?.role === ENUM_USER_ROLE.USER) {
-    result = await prisma.user.update({
-      where: {
-        email: user?.email,
-      },
-      data,
-    });
-  }
+  const result = await prisma.user.update({
+    where,
+    data,
+  });
 
   return returnUserValue(result);
 };
 
 const deleteUser = async (id: string, req: Request): Promise<User> => {
   const user = req?.user;
-  let result = null;
+  const isUser = user?.role === ENUM_USER_ROLE.USER;
+  const where = isUser ? { id: user?.id } : { id };
 
-  if (
-    user?.role === ENUM_USER_ROLE.ADMIN ||
-    user?.role === ENUM_USER_ROLE.SUPER_ADMIN
-  ) {
-    result = await prisma.user.delete({
-      where: {
-        id,
-      },
-    });
-  }
-
-  if (user?.role === ENUM_USER_ROLE.USER) {
-    result = await prisma.user.delete({
-      where: {
-        email: user?.email,
-      },
-    });
-  }
+  const result = await prisma.user.delete({
+    where,
+  });
 
   return returnUserValue(result);
 };

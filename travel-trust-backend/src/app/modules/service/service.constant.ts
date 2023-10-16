@@ -31,4 +31,4 @@ export const ServiceCategory = [
   'Custom_Packages',
 ];
 
-export const ServiceStatus = ['open', 'on_hold', 'cancel'];
+export const ServiceStatus = ['available', 'upcoming', 'cancel'];

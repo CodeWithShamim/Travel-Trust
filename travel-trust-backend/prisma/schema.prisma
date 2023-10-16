@@ -37,12 +37,12 @@ model Service {
   image       String
   location    String
   category    SERVICE_CATEGORY @default(Any)
-  status      SERVICE_STATUS   @default(open)
-  
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
-  bookings    Booking[]
-  reviews     Review[]
+  status      SERVICE_STATUS   @default(available)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  bookings  Booking[]
+  reviews   Review[]
 
   @@map("services")
 }
@@ -96,8 +96,8 @@ enum SERVICE_CATEGORY {
 }
 
 enum SERVICE_STATUS {
-  open
-  on_hold
+  available
+  upcoming
   cancel
 }
 

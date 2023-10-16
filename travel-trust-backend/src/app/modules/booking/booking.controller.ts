@@ -24,7 +24,11 @@ const getAllBooking = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, BookingFilterableFields);
   const options = pick(req.query, paginationFields);
 
-  const result = await BookingService.getAllBooking(filters, options);
+  const result = await BookingService.getAllBooking(
+    filters,
+    options,
+    req?.user
+  );
 
   sendResponse<Booking[]>(res, {
     statusCode: httpStatus.OK,
@@ -37,7 +41,7 @@ const getAllBooking = catchAsync(async (req: Request, res: Response) => {
 
 const getSingleBooking = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
-  const result = await BookingService.getSingleBooking(id);
+  const result = await BookingService.getSingleBooking(id, req?.user);
 
   sendResponse<Booking>(res, {
     statusCode: httpStatus.OK,
@@ -50,7 +54,7 @@ const getSingleBooking = catchAsync(async (req: Request, res: Response) => {
 const updateBooking = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
   const data = req.body;
-  const result = await BookingService.updateBooking(id, data);
+  const result = await BookingService.updateBooking(id, data, req?.user);
 
   sendResponse<Booking>(res, {
     statusCode: httpStatus.OK,
@@ -62,7 +66,7 @@ const updateBooking = catchAsync(async (req: Request, res: Response) => {
 
 const deleteBooking = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
-  const result = await BookingService.deleteBooking(id);
+  const result = await BookingService.deleteBooking(id, req?.user);
 
   sendResponse<Booking>(res, {
     statusCode: httpStatus.OK,

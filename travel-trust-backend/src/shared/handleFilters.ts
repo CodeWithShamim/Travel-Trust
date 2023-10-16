@@ -15,6 +15,9 @@ const handleFilters = (filters: any, searchFields: string[]) => {
     });
   }
 
+  delete filtersData.minPrice;
+  delete filtersData.maxPrice;
+
   // filters
   if (Object.keys(filtersData).length > 0) {
     andConditons.push({

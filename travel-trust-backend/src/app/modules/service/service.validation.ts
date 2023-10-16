@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ServiceCategory, ServiceStatus } from './service.constant';
 
 const create = z.object({
   body: z.object({
@@ -14,6 +15,9 @@ const create = z.object({
     image: z.string({
       required_error: 'Image is required',
     }),
+    location: z.string(),
+    category: z.enum([...ServiceCategory] as [string, ...string[]]).optional(),
+    status: z.enum([...ServiceStatus] as [string, ...string[]]).optional(),
   }),
 });
 
@@ -23,6 +27,9 @@ const update = z.object({
     description: z.string().optional(),
     price: z.number().optional(),
     image: z.string().optional(),
+    location: z.string().optional(),
+    category: z.enum([...ServiceCategory] as [string, ...string[]]).optional(),
+    status: z.enum([...ServiceStatus] as [string, ...string[]]).optional(),
   }),
 });
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Service } from '@prisma/client';
 import prisma from '../../../shared/prisma';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
@@ -18,7 +19,32 @@ const getAllService = async (
   filters: IFilters,
   options: IPaginationOptions
 ): Promise<IGenericResponse<Service[]>> => {
-  const whereConditions = handleFilters(filters, ServiceSearchableFields);
+  let whereConditions: any = handleFilters(filters, ServiceSearchableFields);
+
+  if (filters?.minPrice || filters?.maxPrice) {
+    const minPrice = Number(filters.minPrice) || 0;
+    const maxPrice = Number(filters.maxPrice) || 1000000;
+
+    const pushData =
+      whereConditions?.AND?.length > 0 ? whereConditions?.AND : [];
+
+    pushData.push({
+      AND: [
+        {
+          price: {
+            gte: minPrice,
+          },
+        },
+        {
+          price: {
+            lte: maxPrice,
+          },
+        },
+      ],
+    });
+
+    whereConditions = { AND: pushData };
+  }
 
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelpers.calculatePagination(options);

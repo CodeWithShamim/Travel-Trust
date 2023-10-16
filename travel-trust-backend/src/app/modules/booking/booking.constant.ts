@@ -7,4 +7,4 @@ export const BookingFilterableFields = [
 ];
 export const BookingSearchableFields = ['serviceId', 'userId', 'date', 'time'];
 
-export const BookingStatus = ['pending', 'confirmed'];
+export const BookingStatus = ['pending', 'confirmed', 'cancel'];

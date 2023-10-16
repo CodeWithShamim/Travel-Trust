@@ -8,12 +8,21 @@ const router: Router = express.Router();
 
 router.post(
   '/',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.USER),
   validateRequest(BookingZodValidation.create),
   BookingController.createBooking
 );
 
-router.get('/', BookingController.getAllBooking);
-router.get('/:id', BookingController.getSingleBooking);
+router.get(
+  '/',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.USER),
+  BookingController.getAllBooking
+);
+router.get(
+  '/:id',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.USER),
+  BookingController.getSingleBooking
+);
 
 router.patch(
   '/:id',

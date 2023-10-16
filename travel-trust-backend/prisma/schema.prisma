@@ -30,13 +30,17 @@ model User {
 }
 
 model Service {
-  id          String    @id @default(uuid())
+  id          String           @id @default(uuid())
   name        String
   description String
-  price       String
+  price       Float
   image       String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  location    String
+  category    SERVICE_CATEGORY @default(Any)
+  status      SERVICE_STATUS   @default(open)
+  
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
   bookings    Booking[]
   reviews     Review[]
 
@@ -76,6 +80,27 @@ model Review {
   @@map("reviews")
 }
 
+enum SERVICE_CATEGORY {
+  Any
+  Tours
+  Flights
+  Hotels
+  Cruises
+  Car_Rentals
+  Travel_Insurance
+  Visa_Services
+  Adventure_Travel
+  Honeymoon_Packages
+  Group_Travel
+  Custom_Packages
+}
+
+enum SERVICE_STATUS {
+  open
+  on_hold
+  cancel
+}
+
 enum ENUM_USER_ROLE {
   user
   admin
@@ -85,4 +110,5 @@ enum ENUM_USER_ROLE {
 enum BookingStatus {
   pending
   confirmed
+  cancel
 }

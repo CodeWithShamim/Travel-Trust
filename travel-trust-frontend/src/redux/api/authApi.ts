@@ -1,13 +1,14 @@
+import Register from "@/pages/Register";
 import { baseApi } from "./baseApi";
 
-const REGISTER_URL = "/user";
+const USER_URL = "/user";
 const AUTH_URL = "/auth";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     register: build.mutation({
       query: (data: any) => ({
-        url: `${REGISTER_URL}`,
+        url: `${USER_URL}`,
         method: "POST",
         data,
       }),
@@ -21,7 +22,15 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    getUserById: build.query({
+      query: (id: string) => ({
+        url: `${USER_URL}/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation } = authApi;
+export const { useRegisterMutation, useLoginMutation, useGetUserByIdQuery } =
+  authApi;

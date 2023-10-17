@@ -11,3 +11,10 @@ export const getTokenFromLocalStorage = (key: string) => {
   }
   return localStorage.getItem(key);
 };
+
+export const removeTokenFromLocalStorage = (key: string) => {
+  if (!key || typeof window === "undefined") {
+    return "";
+  }
+  return localStorage.removeItem(key);
+};

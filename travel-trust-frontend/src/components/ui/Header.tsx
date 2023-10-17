@@ -4,11 +4,38 @@ import { Layout, Button, MenuProps, Dropdown, Space, Avatar } from "antd";
 import Link from "next/link";
 import React from "react";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import { useGetUserByIdQuery } from "@/redux/api/authApi";
+import { getUserInfo } from "@/helpers/persist/user.persist";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { removeUserData, setUserData } from "@/redux/slices/userSlice";
+import { useEffect } from "react";
+import { removeTokenFromLocalStorage } from "@/utils/local-storage";
+import { authKey } from "@/constants/storageKey";
+import { useRouter } from "next/navigation";
+import { IUser } from "@/types";
 
 const { Header: HeaderLayout } = Layout;
 const items: MenuProps["items"] = [];
 
 const Header = () => {
+  const { id } = getUserInfo();
+  const { data, isLoading, error } = useGetUserByIdQuery(id);
+  const dispatch = useAppDispatch();
+  const userData = useAppSelector((state) => state.user?.data) as any;
+  const router = useRouter();
+
+  useEffect(() => {
+    if (data?.id) {
+      dispatch(setUserData(data));
+    }
+  }, [data, dispatch]);
+
+  const signOut = () => {
+    removeTokenFromLocalStorage(authKey);
+    dispatch(removeUserData());
+    router.push("/login");
+  };
+
   return (
     <HeaderLayout className="px-4 md:px-24 lg:px-32 text-white flex items-center justify-between">
       <div className="md:text-xl">
@@ -37,7 +64,7 @@ const Header = () => {
           <a>
             <Space wrap size={16}>
               <Avatar
-                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                src={userData?.profileImage}
                 size="large"
                 style={{ backgroundColor: "#87d068" }}
                 icon={<UserOutlined />}
@@ -47,17 +74,22 @@ const Header = () => {
         </Dropdown>
 
         {/* login / logout button  */}
-        {true ? (
+        {userData?.id ? (
           <Button
-            //   onClick={() => signOut()}
+            onClick={() => signOut()}
             type="primary"
             className="bg-primary text-xs md:text-sm"
+            loading={isLoading}
           >
             Logout
           </Button>
         ) : (
           <Link href="/login">
-            <Button type="primary" className="bg-primary text-xs md:text-sm">
+            <Button
+              type="primary"
+              className="bg-primary text-xs md:text-sm"
+              loading={isLoading}
+            >
               Signin
             </Button>
           </Link>

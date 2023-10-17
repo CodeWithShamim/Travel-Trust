@@ -20,3 +20,16 @@ export type IGenericErrorMessage = {
   path: string | number;
   message: string;
 };
+
+export type IUser = {
+  id: string;
+  username: string;
+  email: string;
+  password: string;
+  contactNo: string;
+  profileImage: string;
+  role: "user" | "admin" | "super_admin";
+  gender?: string;
+  address?: string;
+  age?: number;
+};

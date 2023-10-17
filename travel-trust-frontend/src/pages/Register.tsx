@@ -10,9 +10,11 @@ import { useRegisterMutation } from "@/redux/api/authApi";
 import { useRouter } from "next/navigation";
 import { setTokenToLocalStorage } from "@/utils/local-storage";
 import { authKey } from "@/constants/storageKey";
-import { UploadOutlined, StarOutlined } from "@ant-design/icons";
+import { UploadOutlined } from "@ant-design/icons";
 import { useUploadImage } from "@/utils/upload";
 import Link from "next/link";
+import { useAppSelector } from "@/redux/hooks";
+import { useEffect } from "react";
 
 type FormValues = {
   username: string;
@@ -26,6 +28,14 @@ const Register = () => {
   const [userRegistration, { isLoading }] = useRegisterMutation();
   const { handleUpload, imageUrl, uploadLoading } = useUploadImage();
   const router = useRouter();
+
+  const userData = useAppSelector((state) => state.user?.data) as any;
+
+  useEffect(() => {
+    if (userData?.id) {
+      router.push("/");
+    }
+  }, [userData, router]);
 
   const onSubmit: SubmitHandler<FormValues> = async (data: any, reset: any) => {
     if (!imageUrl) {

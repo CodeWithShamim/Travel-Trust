@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 import { setTokenToLocalStorage } from "@/utils/local-storage";
 import { authKey } from "@/constants/storageKey";
 import Link from "next/link";
+import { useAppSelector } from "@/redux/hooks";
+import { useEffect } from "react";
 
 type FormValues = {
   email: string;
@@ -20,6 +22,13 @@ type FormValues = {
 const Login = () => {
   const [userLogin, { isLoading }] = useLoginMutation();
   const router = useRouter();
+  const userData = useAppSelector((state) => state.user?.data) as any;
+
+  useEffect(() => {
+    if (userData?.id) {
+      router.push("/");
+    }
+  }, [userData, router]);
 
   const onSubmit: SubmitHandler<FormValues> = async (data: any, reset: any) => {
     try {

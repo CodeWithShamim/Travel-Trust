@@ -14,7 +14,7 @@ const handleValidationError = (
   const statusCode = 400;
   return {
     statusCode,
-    message: 'Validation Error',
+    message: 'Validation Error! Complete all required info.',
     errorMessages: errors,
   };
 };

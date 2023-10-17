@@ -12,7 +12,9 @@ import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
 import { Request } from 'express';
 import { ENUM_USER_ROLE } from '../../../enums/user';
-import { JwtPayload } from 'jsonwebtoken';
+import { JwtPayload, Secret } from 'jsonwebtoken';
+import { jwtHelpers } from '../../../helpers/jwtHelpers';
+import config from '../../../config';
 
 const createUser = async (data: User): Promise<User> => {
   const generateHashPassword = await hashPassword(data?.password);
@@ -21,7 +23,16 @@ const createUser = async (data: User): Promise<User> => {
   const User = await prisma.user.create({
     data,
   });
-  return returnUserValue(User);
+
+  const { role, id } = User;
+
+  const accessToken = jwtHelpers.createToken(
+    { id, role },
+    config.jwt.secret as Secret,
+    config.jwt.expires_in as string
+  );
+
+  return returnUserValue({ ...User, accessToken });
 };
 
 const getAllUser = async (

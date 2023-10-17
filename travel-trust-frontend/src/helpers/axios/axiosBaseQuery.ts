@@ -20,7 +20,7 @@ export const axiosBaseQuery =
   > =>
   async ({ url, method, data, params, contentType }) => {
     try {
-      const result = await axiosInstance({
+      const result: any = await axiosInstance({
         url: baseUrl + url,
         method,
         data,
@@ -29,13 +29,22 @@ export const axiosBaseQuery =
           contentType: contentType || "application/json",
         },
       });
+
+      console.log(result);
+
+      if (!result?.data) {
+        throw new Error(JSON.stringify(result));
+      }
+
       return { data: result.data };
     } catch (axiosError) {
-      let err = axiosError as AxiosError;
+      let err = axiosError as any;
+      const parseErr = JSON.parse(err.message);
+
       return {
         error: {
-          status: err.response?.status,
-          data: err.response?.data || err.message,
+          status: parseErr.statusCode,
+          data: parseErr || err.message,
         },
       };
     }

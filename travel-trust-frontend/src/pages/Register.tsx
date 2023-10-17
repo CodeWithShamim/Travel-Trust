@@ -12,6 +12,7 @@ import { setTokenToLocalStorage } from "@/utils/local-storage";
 import { authKey } from "@/constants/storageKey";
 import { UploadOutlined, StarOutlined } from "@ant-design/icons";
 import { useUploadImage } from "@/utils/upload";
+import Link from "next/link";
 
 type FormValues = {
   username: string;
@@ -26,13 +27,19 @@ const Register = () => {
   const { handleUpload, imageUrl, uploadLoading } = useUploadImage();
   const router = useRouter();
 
-  const onSubmit: SubmitHandler<FormValues> = async (data: any) => {
+  const onSubmit: SubmitHandler<FormValues> = async (data: any, reset: any) => {
+    if (!imageUrl) {
+      message.error("Upload profile image.");
+      return;
+    }
+
     try {
       const res = await userRegistration({
         ...data,
         profileImage: imageUrl,
       }).unwrap();
       if (res?.accessToken) {
+        reset();
         message.success("Registartion successfully complete!");
         router.push("/");
       }
@@ -111,6 +118,10 @@ const Register = () => {
               Sign up
             </Button>
           </Form>
+
+          <div className="text-xs mt-3">
+            Already have an account? <Link href={"/login"}>Login</Link>
+          </div>
         </div>
       </Col>
       <Col sm={20} md={16} lg={10}>

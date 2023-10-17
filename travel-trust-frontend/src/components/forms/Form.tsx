@@ -9,7 +9,7 @@ type FormConfig = {
 
 type FormProps = {
   children?: ReactElement | ReactNode;
-  submitHandler: SubmitHandler<any>;
+  submitHandler: any;
 } & FormConfig;
 
 const Form = ({ children, submitHandler, defaultValues }: FormProps) => {
@@ -22,8 +22,7 @@ const Form = ({ children, submitHandler, defaultValues }: FormProps) => {
   const { handleSubmit, reset } = methods;
 
   const onSubmit = (data: any) => {
-    submitHandler(data);
-    reset();
+    submitHandler(data, reset);
   };
 
   return (

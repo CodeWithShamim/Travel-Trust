@@ -1,18 +1,18 @@
 "use client";
 import Loader from "@/components/ui/Loader";
+import { USER_ROLE } from "@/constants/role";
 import { getUserInfo } from "@/helpers/persist/user.persist";
-import { Layout } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const AdminLayout = ({ children }: { children: React.ReactNode }) => {
   const userLoggedIn = getUserInfo();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!userLoggedIn?.id) {
-      router.push("/login");
+    if (userLoggedIn?.role === USER_ROLE.USER) {
+      router.push("/");
     }
     setIsLoading(true);
   }, [userLoggedIn, router, isLoading]);
@@ -21,7 +21,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     return <Loader />;
   }
 
-  return <Layout hasSider>{children}</Layout>;
+  return <>{children}</>;
 };
 
-export default DashboardLayout;
+export default AdminLayout;

@@ -49,7 +49,7 @@ const Header = () => {
 
       <div className="flex gap-2 items-center">
         {/* for tablet & desktop */}
-        <Link href="/dashboard" className="hidden md:block">
+        <Link href="/dashboard/profile" className="hidden md:block">
           <Button type="default" className="text-xs md:text-sm">
             Dashboard
           </Button>

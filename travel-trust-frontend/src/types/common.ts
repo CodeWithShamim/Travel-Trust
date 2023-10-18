@@ -33,3 +33,14 @@ export type IUser = {
   address?: string;
   age?: number;
 };
+
+export type IService = {
+  id: string;
+  name: string;
+  description: string;
+  price: string;
+  image: string;
+  location: string;
+  category: string;
+  status: string;
+};

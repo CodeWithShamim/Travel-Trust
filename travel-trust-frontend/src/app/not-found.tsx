@@ -5,7 +5,7 @@ import Link from "next/link";
 const NotFound = () => {
   return (
     <div className="flex flex-col lg:flex-row justify-center items-center min-h-screen">
-      <h3>
+      <h3 className="text-xl font-bold ">
         Opps! Page not found <Link href={"/"}>Go Home</Link>
       </h3>
       <Image src={notFoundImage} width={500} alt="not found image" />

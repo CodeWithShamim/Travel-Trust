@@ -74,6 +74,8 @@ const Register = () => {
         <h1
           style={{
             margin: "15px 0px",
+            fontSize: "20px",
+            fontWeight: "700",
           }}
         >
           Register your account

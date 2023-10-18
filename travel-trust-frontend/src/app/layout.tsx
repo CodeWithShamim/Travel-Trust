@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Header from "@/components/ui/Header";
+import Footer from "@/components/ui/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,10 @@ export default function RootLayout({
       <html lang="en">
         <body>
           <Header />
-          <div className="max-w-[1200px] mx-auto pt-4">{children}</div>
+          <div className="max-w-[1200px] min-h-screen mx-auto pt-4">
+            {children}
+          </div>
+          <Footer />
         </body>
       </html>
     </Providers>

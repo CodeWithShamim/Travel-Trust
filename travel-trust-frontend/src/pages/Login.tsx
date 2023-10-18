@@ -58,6 +58,8 @@ const Login = () => {
         <h1
           style={{
             margin: "15px 0px",
+            fontSize: "20px",
+            fontWeight: "700",
           }}
         >
           Login your account

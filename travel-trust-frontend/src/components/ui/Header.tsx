@@ -37,9 +37,9 @@ const Header = () => {
   };
 
   return (
-    <HeaderLayout className="px-4 md:px-24 lg:px-32 text-white flex items-center justify-between">
+    <HeaderLayout className="px-4 md:px-24 lg:px-32 bg-[#ffffff] text-white flex items-center justify-between">
       <div className="md:text-xl">
-        <Link href="/" className="text-primary font-bold">
+        <Link href="/" className="text-xl md:text-2xl font-bold">
           Travel Trust
         </Link>
       </div>
@@ -54,24 +54,11 @@ const Header = () => {
 
       <div className="flex gap-2 items-center">
         {/* for tablet & desktop */}
-        <Link href="/tool/pc-builder" className="hidden md:block">
-          <Button type="primary" className="text-xs md:text-sm">
-            PC Builder
+        <Link href="/dashboard" className="hidden md:block">
+          <Button type="default" className="text-xs md:text-sm">
+            Dashboard
           </Button>
         </Link>
-
-        <Dropdown menu={{ items }}>
-          <a>
-            <Space wrap size={16}>
-              <Avatar
-                src={userData?.profileImage}
-                size="large"
-                style={{ backgroundColor: "#87d068" }}
-                icon={<UserOutlined />}
-              />
-            </Space>
-          </a>
-        </Dropdown>
 
         {/* login / logout button  */}
         {userData?.id ? (
@@ -94,6 +81,19 @@ const Header = () => {
             </Button>
           </Link>
         )}
+
+        <Dropdown menu={{ items }}>
+          <a>
+            <Space wrap size={16}>
+              <Avatar
+                src={userData?.profileImage}
+                size="large"
+                style={{ backgroundColor: "#87d068" }}
+                icon={<UserOutlined />}
+              />
+            </Space>
+          </a>
+        </Dropdown>
       </div>
     </HeaderLayout>
   );

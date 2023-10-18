@@ -20,10 +20,8 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <body>
-          <Header />
-          <div className="max-w-[1200px] min-h-screen mx-auto pt-4">
-            {children}
-          </div>
+          {/* <Header /> */}
+          <div className="min-h-screen mx-auto">{children}</div>
           <Footer />
         </body>
       </html>

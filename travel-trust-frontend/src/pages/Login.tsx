@@ -53,6 +53,7 @@ const Login = () => {
       style={{
         minHeight: "100vh",
       }}
+      className="max-w-[1200px] mx-auto"
     >
       <Col sm={20} md={8} lg={8}>
         <h1

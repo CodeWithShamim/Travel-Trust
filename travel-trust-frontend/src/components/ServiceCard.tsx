@@ -29,7 +29,7 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
         )}
         <Link href={`/service-details/${id}`} className="text-white">
           <Image
-            src={image ?? require("@/assets/banner.jpg")}
+            src={image ?? require("@/assets/login.png")}
             alt={name}
             width={200}
             height={180}

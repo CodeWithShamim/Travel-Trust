@@ -62,84 +62,91 @@ const Register = () => {
   };
 
   return (
-    <Row
-      justify="center"
-      align="middle"
-      style={{
-        minHeight: "100vh",
-      }}
-      className="flex flex-col-reverse lg:flex-row w-full"
-    >
-      <Col sm={20} md={8} lg={8}>
-        <h1
-          style={{
-            margin: "15px 0px",
-            fontSize: "20px",
-            fontWeight: "700",
-          }}
-        >
-          Register your account
-        </h1>
-        <div>
-          <Form submitHandler={onSubmit}>
-            <div className="gap-1 flex flex-col">
-              <FormInput
-                name="username"
-                type="text"
-                size="large"
-                label="Username"
-              />
-              <FormInput name="email" type="email" size="large" label="Email" />
-              <FormInput
-                name="contactNo"
-                type="number"
-                size="large"
-                label="contactNo"
-              />
-              <FormInput
-                name="password"
-                type="password"
-                size="large"
-                label="Password"
-              />
+    <div className="max-w-[1200px] mx-auto">
+      <Row
+        justify="center"
+        align="middle"
+        style={{
+          minHeight: "100vh",
+        }}
+        className="flex flex-col-reverse lg:flex-row"
+      >
+        <Col sm={20} md={8} lg={8}>
+          <h1
+            style={{
+              margin: "15px 0px",
+              fontSize: "20px",
+              fontWeight: "700",
+            }}
+          >
+            Register your account
+          </h1>
+          <div>
+            <Form submitHandler={onSubmit}>
+              <div className="gap-1 flex flex-col">
+                <FormInput
+                  name="username"
+                  type="text"
+                  size="large"
+                  label="Username"
+                />
+                <FormInput
+                  name="email"
+                  type="email"
+                  size="large"
+                  label="Email"
+                />
+                <FormInput
+                  name="contactNo"
+                  type="number"
+                  size="large"
+                  label="contactNo"
+                />
+                <FormInput
+                  name="password"
+                  type="password"
+                  size="large"
+                  label="Password"
+                />
 
-              <Upload
-                customRequest={(e: any) =>
-                  handleUpload(e.file, e.onSuccess, e.onError)
-                }
-                listType="picture"
-                maxCount={1}
-                disabled={uploadLoading}
-                showUploadList={{
-                  showRemoveIcon: true,
-                }}
+                <Upload
+                  customRequest={(e: any) =>
+                    handleUpload(e.file, e.onSuccess, e.onError)
+                  }
+                  listType="picture"
+                  maxCount={1}
+                  disabled={uploadLoading}
+                  showUploadList={{
+                    showRemoveIcon: true,
+                  }}
+                >
+                  <Button icon={<UploadOutlined />}>
+                    Select profile image (Max: 1)
+                  </Button>
+                </Upload>
+              </div>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                loading={isLoading}
+                disabled={isLoading}
+                className="w-[100%] mt-4"
               >
-                <Button icon={<UploadOutlined />}>
-                  Select profile image (Max: 1)
-                </Button>
-              </Upload>
-            </div>
-            <Button
-              type="primary"
-              htmlType="submit"
-              size="large"
-              loading={isLoading}
-              disabled={isLoading}
-              className="w-[100%] mt-4"
-            >
-              Sign up
-            </Button>
-          </Form>
+                Sign up
+              </Button>
+            </Form>
 
-          <div className="text-xs mt-3">
-            Already have an account? <Link href={"/login"}>Login</Link>
+            <div className="text-xs mt-3">
+              Already have an account? <Link href={"/login"}>Login</Link>
+            </div>
           </div>
-        </div>
-      </Col>
-      <Col sm={20} md={16} lg={10}>
-        <Image src={loginImage} width={500} alt="login image" />
-      </Col>
-    </Row>
+        </Col>
+        <Col sm={20} md={16} lg={10}>
+          <Image src={loginImage} width={500} alt="login image" />
+        </Col>
+      </Row>
+    </div>
   );
 };
 

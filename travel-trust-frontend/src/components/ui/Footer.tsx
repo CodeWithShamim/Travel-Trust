@@ -6,8 +6,8 @@ import { PhoneOutlined, MailOutlined, HomeOutlined } from "@ant-design/icons";
 
 const Footer = () => {
   return (
-    <div className="bg-[#1ea398] py-4 text-[#FFFFFF] text-center">
-      <div className="max-w-[1000px] mx-auto pt-10">
+    <div className="bg-[#01220b] py-4 text-[#FFFFFF] text-center">
+      <div className="max-w-[1200px] mx-auto pt-10">
         <Row>
           <Col xs={24} lg={8} className="flex">
             <div className="bg-[#33d8d0]  w-12 h-12 justify-center items-center">

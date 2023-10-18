@@ -7,12 +7,12 @@ import Form from "@/components/forms/Form";
 import FormInput from "@/components/forms/FormInput";
 import { SubmitHandler } from "react-hook-form";
 import { useLoginMutation } from "@/redux/api/authApi";
-import { useRouter } from "next/navigation";
 import { setTokenToLocalStorage } from "@/utils/local-storage";
 import { authKey } from "@/constants/storageKey";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/hooks";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 type FormValues = {
   email: string;
@@ -26,7 +26,7 @@ const Login = () => {
 
   useEffect(() => {
     if (userData?.id) {
-      router.push("/");
+      router.back();
     }
   }, [userData, router]);
 

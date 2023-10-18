@@ -37,20 +37,15 @@ const Header = () => {
   };
 
   return (
-    <HeaderLayout className="px-4 md:px-24 lg:px-32 bg-[#ffffff] text-white flex items-center justify-between">
+    <HeaderLayout className="z-[999999] shadow-md sticky px-4 md:px-24 lg:px-32 bg-transparent text-white flex items-center justify-between">
       <div className="md:text-xl">
-        <Link href="/" className="text-xl md:text-2xl font-bold">
+        <Link
+          href="/"
+          className="text-xl md:text-2xl lg:text-3xl font-extrabold shadow-2xl uppercase text-[#09ea4c]"
+        >
           Travel Trust
         </Link>
       </div>
-
-      {/* dropdoan list  for tablet & desktop*/}
-      <Dropdown menu={{ items }} className="hidden md:flex">
-        <Space className="font-medium hover:cursor-pointer">
-          Categories
-          <DownOutlined />
-        </Space>
-      </Dropdown>
 
       <div className="flex gap-2 items-center">
         {/* for tablet & desktop */}

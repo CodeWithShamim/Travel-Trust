@@ -14,7 +14,7 @@ const HomePage = () => {
   return (
     <div>
       {/* Hero section  */}
-      <div className="relative top-0 left-0 right-0 ">
+      <div className="relative top-[-65px] left-0 right-0">
         <Carousel effect="fade" autoplay={true}>
           {[1, 2, 3].map((item: number) => (
             <div className="h-screen w-full" key={item}>
@@ -31,7 +31,7 @@ const HomePage = () => {
           ))}
         </Carousel>
 
-        <div className="absolute bottom-1/2 left-0 right-0">
+        <div className="absolute bottom-1/2 left-0 right-0 max-w-[80%] mx-auto">
           <h1 className="text-3xl md:text-6xl lg:text-8xl text-white font-extrabold uppercase text-center drop-shadow-md">
             Expore the world with travel
           </h1>

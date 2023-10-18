@@ -4,11 +4,18 @@ import { TravelCategory, TravelDestinations } from "@/constants/service";
 import { Button, Input, Select } from "antd";
 import React, { useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
+import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/redux/hooks";
+import { addSearchData } from "@/redux/slices/serviceSlice";
 
 const SearchBar = () => {
   const [from, setFrom] = useState<string>("");
-  const [destination, setDestination] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
+  const [destination, setDestination] = useState<string | null>(null);
+  const [category, setCategory] = useState<string | null>(null);
+  const { data: services, isLoading, error } = useGetAllServiceQuery(null);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const handleSearchService = () => {
     const data = {
@@ -17,15 +24,18 @@ const SearchBar = () => {
       category,
     };
 
-    console.log({ data });
+    if (from || destination || category) {
+      dispatch(addSearchData(data));
+      router.push("/service/search");
+    }
 
     setFrom("");
-    setDestination("");
-    setCategory("");
+    setDestination(null);
+    setCategory(null);
   };
 
   return (
-    <div className="w-[80%] mx-auto backdrop-blur-md bg-white/30 p-5">
+    <div className="z-20 w-[80%] mx-auto backdrop-blur-md bg-white/30 p-5">
       <div className="flex items-center justify-center bg-white w-full py-6 relative shadow-2xl">
         <div className="w-full">
           <Input
@@ -35,25 +45,28 @@ const SearchBar = () => {
             bordered={false}
             style={{ width: "22%" }}
             className="text-black"
+            value={from}
             onChange={(e) => setFrom(e.target.value)}
           />
           <Select
-            placeholder={"Destination"}
+            placeholder="Destination"
             bordered={false}
-            style={{ width: "22%" }}
+            style={{ width: "22%", color: "#000" }}
             onChange={(value) => setDestination(value)}
             className="text-black"
+            value={destination}
             options={TravelDestinations.map((province: string) => ({
               label: province,
               value: province,
             }))}
           />
           <Select
-            placeholder={"Category"}
+            placeholder="Category"
             bordered={false}
-            style={{ width: "22%", color: "red" }}
+            style={{ width: "22%", color: "#000" }}
             onChange={(value) => setCategory(value)}
             className="text-black"
+            value={category}
             options={TravelCategory.map((province: string) => ({
               label: province,
               value: province,

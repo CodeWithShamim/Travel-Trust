@@ -13,8 +13,8 @@ export const serviceApi = baseApi.injectEndpoints({
       }),
     }),
     getAllService: build.query({
-      query: () => ({
-        url: `${SERVICE_URL}`,
+      query: (filtersData: any) => ({
+        url: `${SERVICE_URL}?${filtersData}`,
         method: "GET",
       }),
     }),

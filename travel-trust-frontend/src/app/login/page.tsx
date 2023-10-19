@@ -1,4 +1,4 @@
-import Login from "@/pages/Login";
+import Login from "@/views/Login";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

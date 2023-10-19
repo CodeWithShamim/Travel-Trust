@@ -1,4 +1,4 @@
-import Register from "@/pages/Register";
+import Register from "@/views/Register";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

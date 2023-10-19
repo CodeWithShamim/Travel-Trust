@@ -1,4 +1,4 @@
-import Register from "@/pages/Register";
+import Register from "@/views/Register";
 import { baseApi } from "./baseApi";
 
 const USER_URL = "/user";

@@ -8,6 +8,7 @@ import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
 import { addSearchData } from "@/redux/slices/serviceSlice";
+import Loader from "./ui/Loader";
 
 const SearchBar = () => {
   const [from, setFrom] = useState<string>("");
@@ -33,6 +34,10 @@ const SearchBar = () => {
     setDestination(null);
     setCategory(null);
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="z-20 w-[80%] mx-auto backdrop-blur-md bg-white/30 p-5">

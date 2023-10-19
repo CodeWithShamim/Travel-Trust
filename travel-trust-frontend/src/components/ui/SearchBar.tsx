@@ -8,7 +8,7 @@ import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
 import { addSearchData } from "@/redux/slices/serviceSlice";
-import Loader from "./ui/Loader";
+import Loader from "./Loader";
 
 const SearchBar = () => {
   const [from, setFrom] = useState<string>("");

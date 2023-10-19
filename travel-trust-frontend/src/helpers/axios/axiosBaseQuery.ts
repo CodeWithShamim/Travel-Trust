@@ -30,13 +30,11 @@ export const axiosBaseQuery =
         },
       });
 
-      console.log(result);
-
       if (!result?.data) {
         throw new Error(JSON.stringify(result));
       }
 
-      return { data: result.data };
+      return result;
     } catch (axiosError) {
       let err = axiosError as any;
       const parseErr = JSON.parse(err.message);

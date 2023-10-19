@@ -44,3 +44,12 @@ export type IService = {
   category: string;
   status: string;
 };
+
+export type IBooking = {
+  id: string;
+  date: string;
+  time: string;
+  userId: string;
+  serviceId: string;
+  status: "pending" | "confirm" | "cancel";
+};

@@ -1,7 +1,7 @@
 "use client";
 
-import SearchBar from "@/components/SearchBar";
-import ServiceCard from "@/components/ServiceCard";
+import SearchBar from "@/components/ui/SearchBar";
+import ServiceCard from "@/components/ui/ServiceCard";
 import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
 import { useAppSelector } from "@/redux/hooks";
 import { IService } from "@/types";

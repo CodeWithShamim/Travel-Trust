@@ -1,11 +1,15 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
-import { IService } from "@/types";
+import { IBooking, IService } from "@/types";
 import Image from "next/image";
 import React from "react";
-import { Button, Rate } from "antd";
+import { Button, Rate, message } from "antd";
 import { useGetSingleServiceQuery } from "@/redux/api/serviceApi";
+import { getTimeAndDate } from "@/utils/common";
+import { getUserInfo } from "@/helpers/persist/user.persist";
+import { useCreatebookingMutation } from "@/redux/api/bookingApi";
+import Loader from "@/components/ui/Loader";
 
 interface IServiceProps {
   service: IService;
@@ -17,15 +21,41 @@ const ServiceDetails = () => {
     data: service,
     isLoading,
     error,
-  } = useGetSingleServiceQuery("ab6c4203-da34-43c9-853d-943f169dc94b");
+  } = useGetSingleServiceQuery(id as string);
+  const [createBooking, { isLoading: bookingCreateLoading }] =
+    useCreatebookingMutation();
+  const user = getUserInfo();
+  const router = useRouter();
 
-  console.log({ isLoading });
-  console.log({ service });
-  console.log({ error });
+  const handleServiceBooking = async () => {
+    if (!user?.id) router.push("/login");
+
+    const { date, time } = getTimeAndDate();
+    const data: IBooking = {
+      date,
+      time,
+      userId: user?.id,
+      serviceId: id as string,
+    };
+
+    try {
+      const res: any = await createBooking(data);
+      if (res?.data?.id) {
+        message.success("Booking created successfully.");
+        router?.push("/dashboard/user/bookings");
+      }
+    } catch (error) {
+      message.error("Failed to booking.");
+    }
+  };
+
+  if (bookingCreateLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="max-w-[1200px] mx-auto">
-      <div className="h-full xl:h-screen flex flex-col lg:flex-row items-center lg:items-start gap-8 border-b border-gray-300">
+      <div className="h-full w-full flex flex-col  lg:flex-row items-center justify-center lg:items-start gap-8 border-b border-gray-300">
         <div className="w-full  lg:w-[50%] mx-auto">
           <Image
             src={service?.image}
@@ -40,7 +70,7 @@ const ServiceDetails = () => {
         </div>
 
         {/* details info  */}
-        <div className="w-[93%] md:w-[40%]">
+        <div className="w-[93%] md:w-[40%] flex gap-10 flex-col">
           <h1 className="text-xl md:text-2xl lg:text-3xl font-semibold lg:pt-10">
             {service?.name}
           </h1>
@@ -89,7 +119,9 @@ const ServiceDetails = () => {
             </ul>
           </div> */}
 
-          <Button type="primary">Buy Now</Button>
+          <Button type="primary" onClick={handleServiceBooking}>
+            Booking Now
+          </Button>
         </div>
       </div>
 

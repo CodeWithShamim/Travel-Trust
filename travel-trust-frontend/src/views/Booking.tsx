@@ -2,18 +2,23 @@
 
 import TTTable from "@/components/ui/TTTable";
 import React, { useState } from "react";
-import { Button, message } from "antd";
+import { Button, Input, Modal, message } from "antd";
 import Link from "next/link";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  ExclamationCircleOutlined,
+} from "@ant-design/icons";
 import dayjs from "dayjs";
 import {
   useDeleteSingleBookingMutation,
   useGetAllBookingQuery,
 } from "@/redux/api/bookingApi";
+import { useDebounced } from "@/redux/hooks";
 
 const Booking = () => {
   const query: Record<string, any> = {};
-  const { data: bookings, isLoading, error } = useGetAllBookingQuery(null);
+
   const [handleDeleteBooking] = useDeleteSingleBookingMutation();
 
   const [page, setPage] = useState<number>(1);
@@ -22,14 +27,23 @@ const Booking = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
 
-  console.log({ bookings });
-
-  const meta = bookings?.meta;
   query["limit"] = size;
   query["page"] = page;
   query["sortBy"] = sortBy;
   query["sortOrder"] = sortOrder;
-  // query["searchTerm"] = searchTerm;
+
+  const debouncedTerm = useDebounced({
+    searchQuery: searchTerm,
+    delay: 600,
+  });
+
+  if (!!debouncedTerm) {
+    query["searchTerm"] = debouncedTerm;
+  }
+
+  const { data, isLoading, error } = useGetAllBookingQuery({ ...query });
+
+  const meta = data?.meta as any;
 
   const onPaginationChange = (page: number, pageSize: number) => {
     setPage(page);
@@ -42,15 +56,24 @@ const Booking = () => {
   };
 
   const deleteHandler = async (id: string) => {
-    message.loading("Deleting.....");
-    try {
-      const res = (await handleDeleteBooking(id)) as any;
-      if (res?.data?.id) {
-        message.success("Booking Deleted successfully");
-      }
-    } catch (err: any) {
-      message.error(err.message);
-    }
+    Modal.confirm({
+      title: "Warning",
+      icon: <ExclamationCircleOutlined />,
+      content: "Are you sure? You want to delete this item!",
+      okText: "OK",
+      cancelText: "Cancel",
+      onOk: async () => {
+        message.loading("Deleting.....");
+        try {
+          const res = (await handleDeleteBooking(id)) as any;
+          if (res?.data?.id) {
+            message.success("Booking Deleted successfully");
+          }
+        } catch (err: any) {
+          message.error(err.message);
+        }
+      },
+    });
   };
 
   const columns = [
@@ -86,14 +109,20 @@ const Booking = () => {
     },
   ];
 
-  console.log({ TTT: meta?.total });
-
   return (
-    <div className="w-full">
+    <div className="w-[95%] h-[100%] items-center justify-center">
+      <Input
+        placeholder="Search booking"
+        type="text"
+        allowClear
+        className="text-black border-r-0 mb-6 w-[40%] h-16 rounded-md border-neutral-200"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
       <TTTable
         loading={isLoading}
         columns={columns}
-        dataSource={bookings}
+        dataSource={data?.bookings}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}

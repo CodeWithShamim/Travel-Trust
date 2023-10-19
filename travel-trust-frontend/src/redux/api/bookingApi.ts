@@ -1,4 +1,4 @@
-import { IBooking } from "@/types";
+import { IBooking, IMeta } from "@/types";
 import { baseApi } from "./baseApi";
 
 const BOOKING_URL = "/booking";
@@ -11,12 +11,20 @@ export const bookingApi = baseApi.injectEndpoints({
         method: "POST",
         data,
       }),
+      invalidatesTags: ["booking"],
     }),
     getAllBooking: build.query({
       query: (filtersData: any) => ({
-        url: `${BOOKING_URL}?${filtersData}`,
+        url: `${BOOKING_URL}`,
         method: "GET",
+        params: filtersData,
       }),
+      transformResponse: (response: IBooking[], meta: IMeta) => {
+        return {
+          bookings: response,
+          meta,
+        };
+      },
       providesTags: ["booking"],
     }),
     deleteSingleBooking: build.mutation({

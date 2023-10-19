@@ -21,7 +21,7 @@ const SideBar = () => {
       width={230}
       style={{
         overflow: "auto",
-        height: "100vh",
+        height: "auto",
         left: 0,
         top: 0,
         bottom: 0,

@@ -1,9 +1,11 @@
 "use client";
 import { IService } from "@/types";
 import Image from "next/image";
-import { Card, Rate } from "antd";
+import { Card, Rate, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { ShoppingCartOutlined } from "@ant-design/icons";
+import colors from "@/constants/colors";
 
 const { Meta } = Card;
 
@@ -22,11 +24,12 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
   return (
     <div className="w-full mx-auto flex justify-center">
       <Card className="w-full shadow" loading={loading} hoverable>
-        {Number(price) > 100 && (
-          <div className="top-0 right-0 bg-primary text-white w-24 text-center absolute rounded-sm">
-            50% off
-          </div>
-        )}
+        <div className="top-0 right-0 bg-primary  text-white text-center absolute rounded-full w-8 h-8 bg-[#09ea4c]">
+          <Tooltip title="Add to cart" color={colors.primary}>
+            <ShoppingCartOutlined height={100} width={100} className="mt-2" />
+          </Tooltip>
+        </div>
+
         <Link href={`/service-details/${id}`} className="text-white">
           <Image
             src={image ?? require("@/assets/login.png")}
@@ -37,31 +40,18 @@ const ServiceCard = ({ service }: ServiceCardProps) => {
             layout="responsive"
             objectFit="cover"
             priority
-            className="mx-auto pb-3 w-full transition-all hover:scale-[110%] md:hover:scale-[110%] lg:hover:scale-[120%]"
+            className="mx-auto pb-3 w-full transition-all hover:scale-[110%] md:hover:scale-[103%]"
           />
 
-          <Meta
-            title={name}
-            description={<div className="pb-2">{category}</div>}
-          />
-          <Meta
+          <Meta title={name} />
+          {/* <Meta
             title={
               <span className="md:text-lg font-bold text-primary">
                 {price}$
               </span>
             }
             description={status}
-          />
-
-          {/* <div className="pt-1">
-            <Rate
-              disabled
-              defaultValue={rating}
-              allowHalf
-              className="text-xs"
-            />
-            <span style={{ marginLeft: 8 }}>{rating}</span>
-          </div> */}
+          /> */}
         </Link>
       </Card>
     </div>

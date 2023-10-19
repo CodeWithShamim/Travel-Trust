@@ -3,7 +3,11 @@
 import { Layout, Button, MenuProps, Dropdown, Space, Avatar } from "antd";
 import Link from "next/link";
 import React from "react";
-import { DownOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  DownOutlined,
+  UserOutlined,
+  ShoppingCartOutlined,
+} from "@ant-design/icons";
 import { useGetUserByIdQuery } from "@/redux/api/authApi";
 import { getUserInfo } from "@/helpers/persist/user.persist";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -15,7 +19,6 @@ import { useRouter } from "next/navigation";
 import { IUser } from "@/types";
 
 const { Header: HeaderLayout } = Layout;
-const items: MenuProps["items"] = [];
 
 const Header = () => {
   const { id } = getUserInfo();
@@ -36,6 +39,40 @@ const Header = () => {
     router.push("/login");
   };
 
+  const items: MenuProps["items"] = [
+    {
+      key: 1,
+      label: <Link href="/dashboard/profile">Profile</Link>,
+    },
+    {
+      key: 1,
+      label: (
+        <>
+          {userData?.id ? (
+            <Button
+              onClick={() => signOut()}
+              type="primary"
+              className="bg-primary text-xs md:text-sm"
+              loading={isLoading}
+            >
+              Logout
+            </Button>
+          ) : (
+            <Link href="/login">
+              <Button
+                type="primary"
+                className="bg-primary text-xs md:text-sm"
+                loading={isLoading}
+              >
+                Signin
+              </Button>
+            </Link>
+          )}
+        </>
+      ),
+    },
+  ];
+
   return (
     <HeaderLayout className="z-[999999] shadow-md sticky px-4 md:px-24 lg:px-32 bg-transparent text-white flex items-center justify-between">
       <div className="md:text-xl">
@@ -47,47 +84,33 @@ const Header = () => {
         </Link>
       </div>
 
+      <div></div>
+
       <div className="flex gap-2 items-center">
         {/* for tablet & desktop */}
+        <Link href="/dashboard/profile" className="hidden md:block">
+          <ShoppingCartOutlined
+            height={100}
+            width={100}
+            className="text-[#09ea4c] font-bold text-4xl"
+          />
+        </Link>
+
         <Link href="/dashboard/profile" className="hidden md:block">
           <Button type="default" className="text-xs md:text-sm">
             Dashboard
           </Button>
         </Link>
 
-        {/* login / logout button  */}
-        {userData?.id ? (
-          <Button
-            onClick={() => signOut()}
-            type="primary"
-            className="bg-primary text-xs md:text-sm"
-            loading={isLoading}
-          >
-            Logout
-          </Button>
-        ) : (
-          <Link href="/login">
-            <Button
-              type="primary"
-              className="bg-primary text-xs md:text-sm"
-              loading={isLoading}
-            >
-              Signin
-            </Button>
-          </Link>
-        )}
-
-        <Dropdown menu={{ items }}>
-          <a>
-            <Space wrap size={16}>
-              <Avatar
-                src={userData?.profileImage}
-                size="large"
-                style={{ backgroundColor: "#87d068" }}
-                icon={<UserOutlined />}
-              />
-            </Space>
-          </a>
+        <Dropdown menu={{ items }} className="z-50">
+          <Space wrap size={16}>
+            <Avatar
+              src={userData?.profileImage}
+              size="large"
+              style={{ backgroundColor: "#87d068" }}
+              icon={<UserOutlined />}
+            />
+          </Space>
         </Dropdown>
       </div>
     </HeaderLayout>

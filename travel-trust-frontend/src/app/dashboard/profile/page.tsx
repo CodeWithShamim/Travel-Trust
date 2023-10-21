@@ -1,7 +1,16 @@
-import React from "react";
+import Profile from "@/views/Profile";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "User profile",
+};
 
 const ProfilePage = () => {
-  return <div>ProfilePage</div>;
+  return (
+    <>
+      <Profile />
+    </>
+  );
 };
 
 export default ProfilePage;

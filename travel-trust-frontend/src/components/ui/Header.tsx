@@ -1,6 +1,14 @@
 "use client";
 
-import { Layout, Button, MenuProps, Dropdown, Space, Avatar } from "antd";
+import {
+  Layout,
+  Button,
+  MenuProps,
+  Dropdown,
+  Space,
+  Avatar,
+  Badge,
+} from "antd";
 import Link from "next/link";
 import React from "react";
 import {
@@ -23,9 +31,10 @@ const { Header: HeaderLayout } = Layout;
 const Header = () => {
   const { id } = getUserInfo();
   const { data, isLoading, error } = useGetUserByIdQuery(id);
-  const dispatch = useAppDispatch();
+  const dispatch: any = useAppDispatch();
   const userData = useAppSelector((state) => state.user?.data) as any;
   const router = useRouter();
+  const cart = useAppSelector((state) => state.service?.cart);
 
   useEffect(() => {
     if (data?.id) {
@@ -89,11 +98,17 @@ const Header = () => {
       <div className="flex gap-2 items-center">
         {/* for tablet & desktop */}
         <Link href="/dashboard/profile" className="hidden md:block">
-          <ShoppingCartOutlined
-            height={100}
-            width={100}
-            className="text-[#09ea4c] font-bold text-4xl"
-          />
+          <Badge count={cart?.length} className="mr-4">
+            <Avatar
+              icon={
+                <ShoppingCartOutlined
+                  height={100}
+                  width={100}
+                  className="text-[#09ea4c] mb-6"
+                />
+              }
+            />
+          </Badge>
         </Link>
 
         <Link href="/dashboard/profile" className="hidden md:block">

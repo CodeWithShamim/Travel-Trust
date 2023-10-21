@@ -8,27 +8,27 @@ import { IService } from "@/types";
 import Image from "next/image";
 
 const SearchPage = () => {
+  const query: any = {};
   const searchData = useAppSelector((state) => state.service?.search) as any;
   const location = searchData?.destination;
   const category = searchData?.category || "any";
   const searchTerm = searchData?.from;
 
-  const filterUrl = [];
   if (location) {
-    filterUrl.push(`location=${location}`);
+    query["location"] = location;
   }
   if (category) {
-    filterUrl.push(`&category=${category}`);
+    query["category"] = category;
   }
   if (searchTerm) {
-    filterUrl.push(`&searchTerm=${searchTerm}`);
+    query["searchTerm"] = searchTerm;
   }
 
   const {
     data: services,
     isLoading,
     error,
-  } = useGetAllServiceQuery(filterUrl.join());
+  } = useGetAllServiceQuery({ ...query });
 
   return (
     <div>

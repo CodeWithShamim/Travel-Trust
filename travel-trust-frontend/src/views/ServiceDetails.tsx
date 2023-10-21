@@ -1,20 +1,29 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
 
-import { IBooking, IService } from "@/types";
+import { IBooking, IReview, IService } from "@/types";
 import Image from "next/image";
-import React from "react";
-import { Button, Rate, message } from "antd";
+import React, { useState } from "react";
+import { Button, Input, Rate, Select, message } from "antd";
 import { useGetSingleServiceQuery } from "@/redux/api/serviceApi";
 import { getTimeAndDate } from "@/utils/common";
 import { getUserInfo } from "@/helpers/persist/user.persist";
 import { useCreatebookingMutation } from "@/redux/api/bookingApi";
 import Loader from "@/components/ui/Loader";
+import { useAppSelector } from "@/redux/hooks";
+import {
+  useCreateReviewMutation,
+  useGetAllReviewQuery,
+} from "@/redux/api/reviewApi";
+
+const { TextArea } = Input;
 
 interface IServiceProps {
   service: IService;
 }
 const ServiceDetails = () => {
+  const query: any = {};
+
   const params = useParams();
   const id = params?.id;
   const {
@@ -24,9 +33,21 @@ const ServiceDetails = () => {
   } = useGetSingleServiceQuery(id as string);
   const [createBooking, { isLoading: bookingCreateLoading }] =
     useCreatebookingMutation();
-  const user = getUserInfo();
+  const [createReview, { isLoading: addReviewLoading }] =
+    useCreateReviewMutation();
+
+  query["serviceId"] = id;
+  const { data: reviews, isLoading: reviewLoading } = useGetAllReviewQuery({
+    ...query,
+  });
+
+  const [comment, setComment] = useState<string>("");
+  const [rating, setRating] = useState<number>(0);
+
+  const user = useAppSelector((state) => state.user?.data) as any;
   const router = useRouter();
 
+  // add service booking
   const handleServiceBooking = async () => {
     if (!user?.id) router.push("/login");
 
@@ -49,13 +70,35 @@ const ServiceDetails = () => {
     }
   };
 
-  if (bookingCreateLoading) {
+  // add review
+  const handleAddReview = async () => {
+    if (!user?.id) router.push("/login");
+
+    const data: IReview = {
+      comment,
+      rating,
+      userId: user?.id,
+      serviceId: id as string,
+    };
+
+    try {
+      const res: any = await createReview(data);
+      console.log({ ressss: res });
+      if (res?.data?.id) {
+        message.success("Review added successfully.");
+      }
+    } catch (error) {
+      message.error("Failed to add review.");
+    }
+  };
+
+  if (isLoading || bookingCreateLoading) {
     return <Loader />;
   }
 
   return (
     <div className="max-w-[1200px] mx-auto">
-      <div className="h-full w-full flex flex-col  lg:flex-row items-center justify-center lg:items-start gap-8 border-b border-gray-300">
+      <div className="h-full w-full flex flex-col mt-24 lg:flex-row items-center justify-center lg:items-start gap-8 border-b border-gray-300">
         <div className="w-full  lg:w-[50%] mx-auto">
           <Image
             src={service?.image}
@@ -65,7 +108,7 @@ const ServiceDetails = () => {
             quality={100}
             layout="responsive"
             priority
-            className="mx-auto lg:pb-3 w-full"
+            className="mx-auto lg:pb-3 w-full rounded"
           />
         </div>
 
@@ -96,65 +139,70 @@ const ServiceDetails = () => {
               {service?.status}
             </p>
           </div>
-          {/* 
-          <div className="flex items-center h-8">
-            <p className="text-sm font-bold">Individual Rating: </p>
-            <Rate
-              disabled
-              defaultValue={individualRating}
-              allowHalf
-              className="pl-2 pb-1 text-xs md:text-sm"
-            />
-          </div> */}
 
-          {/* 
-          <div>
-            <h4 className="text-sm">Key Features:</h4>
-            <ul className="text-lg">
-              {Object.entries(keyFeatures as Object)?.map(([key, value]) => (
-                <li className="text-xs md:text-sm" key={key}>
-                  {value}
-                </li>
-              ))}
-            </ul>
-          </div> */}
-
-          <Button type="primary" onClick={handleServiceBooking}>
+          <Button
+            type="primary"
+            onClick={handleServiceBooking}
+            disabled={service?.status === "upcoming"}
+            loading={isLoading}
+          >
             Booking Now
           </Button>
         </div>
       </div>
 
-      {/* reviews  */}
-      {/* <div>
-        <h1 className=" pt-6 md:pt-0 md:pb-2 text-lg md:text-xl">
-          Recent reviews
-        </h1>
-        {reviews?.map((review) => (
-          <>
-            <div className="flex items-center justify-start w-full gap-2">
-              <div className="flex flex-col justify-center items-start w-12">
-                <div className="avatar">
-                  <div className="w-6 h-6 rounded-full">
-                    <Image
-                      height={100}
-                      width={100}
-                      layout="responsive"
-                      src="/favicon.ico"
-                      alt="user image"
-                    />
-                  </div>
-                </div>
-                <p className="font-serif text-[12px] md:text-[14px]">
-                  {review?.username}
-                </p>
-              </div>
-              <p className="font-serif pb-5 max-w-4xl">{review?.comment}</p>
+      {/* Add reviews  */}
+      <div className="pt-16 pb-4 flex flex-col items-end justify-center">
+        <TextArea
+          onChange={(e) => setComment(e.target?.value)}
+          rows={4}
+          placeholder="Write a comment..."
+        />
+
+        <div className="flex items-center justify-center">
+          <Select
+            placeholder="rate"
+            onChange={(value) => setRating(Number(value))}
+            className="text-black mx-2 mt-2"
+            value={rating}
+            options={[1, 2, 3, 4, 5].map((province: number) => ({
+              label: province,
+              value: province,
+            }))}
+          />
+          <Button
+            type="primary"
+            onClick={handleAddReview}
+            loading={addReviewLoading}
+            className="mt-2"
+            disabled={service?.status === "upcoming"}
+          >
+            Review
+          </Button>
+        </div>
+      </div>
+
+      <div className="w-[93%] mx-auto my-20">
+        <h1 className="text-3xl font-semibold text-[#09ea4c] my-6">Reviews</h1>
+        {reviews?.map((review: IReview) => (
+          <div key={review?.id} className="flex gap-2 flex-col mb-4">
+            <div className="flex flex-col justify-center items-start w-12">
+              <Image
+                height={100}
+                width={100}
+                layout="responsive"
+                className="rounded-full w-10 h-10"
+                src={review?.user?.profileImage ?? ""}
+                alt="user image"
+              />
+              <p className="font-semibold">{review?.user?.username}</p>
             </div>
-            <hr className="w-full" />
-          </>
+            <div className="pb-5 h-20 bg-green-100 p-4 rounded overflow-hidden">
+              <p>{review?.comment}</p>
+            </div>
+          </div>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 };

@@ -16,6 +16,7 @@ export const serviceApi = baseApi.injectEndpoints({
       query: (filtersData: any) => ({
         url: `${SERVICE_URL}?${filtersData}`,
         method: "GET",
+        params: filtersData,
       }),
     }),
     getSingleService: build.query({

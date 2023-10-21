@@ -50,4 +50,16 @@ export type IBooking = {
   time: string;
   userId: string;
   serviceId: string;
+  user?: IUser;
+  service?: IService;
+};
+
+export type IReview = {
+  id?: string;
+  rating: number;
+  comment: string;
+  userId: string;
+  serviceId: string;
+  user?: IUser;
+  service?: IService;
 };

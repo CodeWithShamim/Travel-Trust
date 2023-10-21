@@ -6,25 +6,31 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import colors from "@/constants/colors";
+import { useAppDispatch } from "@/redux/hooks";
+import { addServiceToCart } from "@/redux/slices/serviceSlice";
 
 const { Meta } = Card;
 
 interface ServiceCardProps {
   service: IService;
+  loading?: boolean;
 }
 
-const ServiceCard = ({ service }: ServiceCardProps) => {
+const ServiceCard = ({ service, loading }: ServiceCardProps) => {
   const { id, name, price, image, category, status } = service;
-  const [loading, setLoading] = useState(true);
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    if (id) setLoading(false);
-  }, [id]);
+  const handleAddToCart = () => {
+    dispatch(addServiceToCart(service));
+  };
 
   return (
     <div className="w-full mx-auto flex justify-center">
       <Card className="w-full shadow" loading={loading} hoverable>
-        <div className="top-0 right-0 bg-primary  text-white text-center absolute rounded-full w-8 h-8 bg-[#09ea4c]">
+        <div
+          onClick={handleAddToCart}
+          className="top-0 right-0 bg-primary  text-white text-center absolute rounded-full w-8 h-8 bg-[#09ea4c]"
+        >
           <Tooltip title="Add to cart" color={colors.primary}>
             <ShoppingCartOutlined height={100} width={100} className="mt-2" />
           </Tooltip>

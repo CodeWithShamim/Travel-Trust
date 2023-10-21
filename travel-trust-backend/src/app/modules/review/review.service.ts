@@ -28,7 +28,7 @@ const getAllReview = async (
     paginationHelpers.calculatePagination(options);
 
   const result = await prisma.review.findMany({
-    where: whereConditions,
+    where: { ...whereConditions, serviceId: filters?.serviceId },
     skip,
     take: limit,
     orderBy: {

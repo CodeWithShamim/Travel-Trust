@@ -49,7 +49,10 @@ const ServiceDetails = () => {
 
   // add service booking
   const handleServiceBooking = async () => {
-    if (!user?.id) router.push("/login");
+    if (!user?.id) {
+      router.push("/login");
+      return;
+    }
 
     const { date, time } = getTimeAndDate();
     const data: IBooking = {
@@ -72,7 +75,10 @@ const ServiceDetails = () => {
 
   // add review
   const handleAddReview = async () => {
-    if (!user?.id) router.push("/login");
+    if (!user?.id) {
+      router.push("/login");
+      return;
+    }
 
     const data: IReview = {
       comment,

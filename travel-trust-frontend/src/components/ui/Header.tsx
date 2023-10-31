@@ -101,11 +101,13 @@ const Header = () => {
           <Badge count={cart?.length} className="mr-4">
             <Avatar
               icon={
-                <ShoppingCartOutlined
-                  height={100}
-                  width={100}
-                  className="text-[#09ea4c] mb-6"
-                />
+                <span style={{ fontSize: "32px" }}>
+                  <ShoppingCartOutlined
+                    height={100}
+                    width={100}
+                    className="text-[#09ea4c]"
+                  />
+                </span>
               }
             />
           </Badge>

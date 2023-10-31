@@ -1,5 +1,6 @@
 "use client";
 
+import ServiceCardSkeleton from "@/components/skeletons/ServiceCardSkeleton";
 import NewsCard from "@/components/ui/NewsCard";
 import SearchBar from "@/components/ui/SearchBar";
 import ServiceCard from "@/components/ui/ServiceCard";
@@ -64,7 +65,11 @@ const HomePage = () => {
           Available service
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center py-6">
-          {!availableService && <p>Loading...</p>}
+          {!availableService &&
+            Array.from({ length: 8 }).map((n, index) => (
+              <ServiceCardSkeleton key={index} />
+            ))}
+
           {availableService?.slice(0, 8)?.map((service: IService) => (
             <ServiceCard
               key={service.id}
@@ -79,7 +84,10 @@ const HomePage = () => {
             Upcoming service
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center py-6">
-            {!upcomingService && <p>Loading...</p>}
+            {!upcomingService &&
+              Array.from({ length: 4 }).map((n, index) => (
+                <ServiceCardSkeleton key={index} />
+              ))}
             {upcomingService?.slice(0, 4)?.map((service: IService) => (
               <ServiceCard
                 key={service.id}

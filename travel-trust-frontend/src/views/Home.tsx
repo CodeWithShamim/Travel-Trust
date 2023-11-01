@@ -30,7 +30,7 @@ const HomePage = () => {
   return (
     <div>
       {/* Hero section  */}
-      <div className="relative top-[-65px] left-0 right-0">
+      <div className="relative top-[-65px] left-0 right-0 z-[-1]">
         <Carousel effect="fade" autoplay={true}>
           {[1, 2, 3].map((item: number) => (
             <div className="h-screen w-full" key={item}>
@@ -39,6 +39,7 @@ const HomePage = () => {
                 alt="banner image"
                 style={{
                   width: "100%",
+                  height: "100vh",
                   objectFit: "cover",
                 }}
               />
@@ -47,20 +48,20 @@ const HomePage = () => {
           ))}
         </Carousel>
 
-        <div className="absolute bottom-1/2 left-0 right-0 max-w-[80%] mx-auto">
+        <div className="absolute bottom-1/2 left-0 right-0 max-w-[1200px] mx-auto">
           <h1 className="text-3xl md:text-6xl lg:text-8xl text-white font-extrabold uppercase text-center drop-shadow-md">
             Expore the world with travel
           </h1>
           {/* <h1>Discover the world with our guide</h1> */}
         </div>
 
-        <div className="absolute bottom-20 left-0 right-0">
+        <div className="absolute bottom-20 left-0 right-0 max-w-[1200px] mx-auto">
           <SearchBar />
         </div>
       </div>
 
       {/* services  */}
-      <div className="max-w-[1200px] mx-auto">
+      <div className="max-w-[1200px] mx-auto px-4">
         <h1 className="font-semibold text-3xl text-[#34d364]">
           Available service
         </h1>

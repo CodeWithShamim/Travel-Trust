@@ -83,52 +83,54 @@ const Header = () => {
   ];
 
   return (
-    <HeaderLayout className="z-[999999] shadow-md sticky px-4 md:px-24 lg:px-32 bg-transparent text-white flex items-center justify-between">
-      <div className="md:text-xl">
-        <Link
-          href="/"
-          className="text-xl md:text-2xl lg:text-3xl font-extrabold shadow-2xl uppercase text-[#09ea4c]"
-        >
-          Travel Trust
-        </Link>
-      </div>
+    <HeaderLayout className="z-[999999] shadow-md bg-transparent">
+      <div className=" max-w-[1200px] mx-auto text-white flex items-center justify-between h-full">
+        <div className="md:text-xl">
+          <Link
+            href="/"
+            className="text-xl md:text-2xl lg:text-3xl font-extrabold shadow-2xl uppercase text-[#09ea4c]"
+          >
+            Travel Trust
+          </Link>
+        </div>
 
-      <div></div>
+        <div></div>
 
-      <div className="flex gap-2 items-center">
-        {/* for tablet & desktop */}
-        <Link href="/dashboard/profile" className="hidden md:block">
-          <Badge count={cart?.length} className="mr-4">
-            <Avatar
-              icon={
-                <span style={{ fontSize: "32px" }}>
-                  <ShoppingCartOutlined
-                    height={100}
-                    width={100}
-                    className="text-[#09ea4c]"
-                  />
-                </span>
-              }
-            />
-          </Badge>
-        </Link>
+        <div className="flex gap-2 items-center">
+          {/* for tablet & desktop */}
+          <Link href="/dashboard/profile" className="hidden md:block">
+            <Badge count={cart?.length} className="mr-4">
+              <Avatar
+                icon={
+                  <span style={{ fontSize: "32px" }}>
+                    <ShoppingCartOutlined
+                      height={100}
+                      width={100}
+                      className="text-[#09ea4c]"
+                    />
+                  </span>
+                }
+              />
+            </Badge>
+          </Link>
 
-        <Link href="/dashboard/profile" className="hidden md:block">
-          <Button type="default" className="text-xs md:text-sm">
-            Dashboard
-          </Button>
-        </Link>
+          <Link href="/dashboard/profile" className="hidden md:block">
+            <Button type="default" className="text-xs md:text-sm">
+              Dashboard
+            </Button>
+          </Link>
 
-        <Dropdown menu={{ items }} className="z-50">
-          <Space wrap size={16}>
-            <Avatar
-              src={userData?.profileImage}
-              size="large"
-              style={{ backgroundColor: "#87d068" }}
-              icon={<UserOutlined />}
-            />
-          </Space>
-        </Dropdown>
+          <Dropdown menu={{ items }} className="z-50">
+            <Space wrap size={16}>
+              <Avatar
+                src={userData?.profileImage}
+                size="large"
+                style={{ backgroundColor: "#87d068" }}
+                icon={<UserOutlined />}
+              />
+            </Space>
+          </Dropdown>
+        </div>
       </div>
     </HeaderLayout>
   );

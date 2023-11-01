@@ -40,7 +40,7 @@ const SearchBar = () => {
   }
 
   return (
-    <div className="z-20 w-[80%] mx-auto backdrop-blur-md bg-white/30 p-5">
+    <div className="z-20 hidden md:block w-full mx-auto backdrop-blur-md bg-white/30 p-5">
       <div className="flex items-center justify-center bg-white w-full py-6 relative shadow-2xl">
         <div className="w-full">
           <Input

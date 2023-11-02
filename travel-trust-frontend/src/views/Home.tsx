@@ -8,7 +8,7 @@ import ServiceCard from "@/components/ui/ServiceCard";
 import { newses } from "@/data/news";
 import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
 import { IService } from "@/types";
-import { Button, Carousel, Divider } from "antd";
+import { Button, Carousel, Divider, Modal } from "antd";
 import Image from "next/image";
 import { useState } from "react";
 import styles from "@/styles/home.module.css";
@@ -127,9 +127,17 @@ const HomePage = () => {
         </p>
       </div>
       {isVideoPlay && (
-        <div className="w-full h-[660px] rounded">
-          <VideoPlayer />
-        </div>
+        <Modal
+          open={isVideoPlay}
+          onCancel={() => setIsVideoPlay(false)}
+          className="w-[100%] md:w-[80%] lg:w-[70%] h-[20rem] lg:h-[35rem] bg-[#09ea4c]"
+          style={{ position: "relative" }}
+          footer={null}
+        >
+          <div className="w-full h-[20rem] lg:h-[35rem] absolute inset-0">
+            <VideoPlayer />
+          </div>
+        </Modal>
       )}
 
       {/* news  */}

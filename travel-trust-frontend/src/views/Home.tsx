@@ -12,6 +12,7 @@ import { Button, Carousel, Divider } from "antd";
 import Image from "next/image";
 import React from "react";
 import styles from "@/styles/home.module.css";
+import ReviewSlider from "@/components/ui/ReviewSlider";
 
 const HomePage = () => {
   const query: any = {};
@@ -121,13 +122,14 @@ const HomePage = () => {
         </div>
       </div>
 
+      {/* section  */}
       <div
-        className={`${styles["background-image"]} flex flex-col items-center justify-center w-full gap-4 text-center px-4`}
+        className={`${styles["background-image"]} flex flex-col  my-14 md:my-16 lg:my-24 items-center justify-center w-full gap-4 text-center px-4`}
       >
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold shadow-2xl text-white">
           Are You Still Intarested To Tour?
         </h1>
-        <p className="text-white">
+        <p className="text-white text-lg">
           Where Adventure Awaits – Explore the World with Us!
         </p>
 
@@ -138,6 +140,23 @@ const HomePage = () => {
         >
           <span className="font-bold">Book Tour</span>
         </Button>
+      </div>
+
+      {/* reviews  */}
+      <div className="bg-[#F7F7F7] px-4">
+        <div className="max-w-[1200px] m-auto pt-12">
+          <Divider
+            orientation="center"
+            orientationMargin="0"
+            className="border-[#00ff4c] "
+          >
+            <h1 className="font-semibold text-3xl text-[#34d364] text-center capitalize">
+              Customer Review
+            </h1>
+          </Divider>
+        </div>
+
+        <ReviewSlider />
       </div>
 
       {/* maps  */}

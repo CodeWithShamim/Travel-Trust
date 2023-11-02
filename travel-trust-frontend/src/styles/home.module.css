@@ -1,5 +1,5 @@
 .background-image {
-    background-image: url('./../assets/home1.jpg'), linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.4));
+    background-image: url('./../assets/home1.jpg'), linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.5));
     background-blend-mode: overlay;
     background-repeat: no-repeat;
     background-size: cover;

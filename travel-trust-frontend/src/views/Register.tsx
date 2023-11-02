@@ -62,7 +62,7 @@ const Register = () => {
   };
 
   return (
-    <div className="max-w-[1200px] mx-auto">
+    <div className="max-w-[1200px] mx-auto py-4">
       <Row
         justify="center"
         align="middle"
@@ -143,7 +143,13 @@ const Register = () => {
           </div>
         </Col>
         <Col sm={20} md={16} lg={10}>
-          <Image src={loginImage} width={500} alt="login image" />
+          <Image
+            src={loginImage}
+            width={500}
+            layout="responsive"
+            objectFit="cover"
+            alt="login image"
+          />
         </Col>
       </Row>
     </div>

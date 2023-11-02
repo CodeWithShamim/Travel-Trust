@@ -1,15 +1,17 @@
 "use client";
 
 import ServiceCardSkeleton from "@/components/skeletons/ServiceCardSkeleton";
+import MapView from "@/components/ui/MapView";
 import NewsCard from "@/components/ui/NewsCard";
 import SearchBar from "@/components/ui/SearchBar";
 import ServiceCard from "@/components/ui/ServiceCard";
 import { newses } from "@/data/news";
 import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
 import { IService } from "@/types";
-import { Carousel, Divider } from "antd";
+import { Button, Carousel, Divider } from "antd";
 import Image from "next/image";
 import React from "react";
+import styles from "@/styles/home.module.css";
 
 const HomePage = () => {
   const query: any = {};
@@ -28,10 +30,10 @@ const HomePage = () => {
   );
 
   return (
-    <div>
+    <div className="w-full">
       {/* Hero section  */}
-      <div className="relative top-[-65px] left-0 right-0 z-[-1]">
-        <Carousel effect="fade" autoplay={true}>
+      <div className="relative top-[-65px] left-0 right-0">
+        <Carousel effect="fade" autoplay={true} className="z-[-1]">
           {[1, 2, 3].map((item: number) => (
             <div className="h-screen w-full" key={item}>
               <Image
@@ -118,6 +120,30 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+
+      <div
+        className={`${styles["background-image"]} flex flex-col items-center justify-center w-full gap-4 text-center px-4`}
+      >
+        <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold shadow-2xl text-white">
+          Are You Still Intarested To Tour?
+        </h1>
+        <p className="text-white">
+          Where Adventure Awaits – Explore the World with Us!
+        </p>
+
+        <Button
+          type="primary"
+          className="mt-6 w-48  rounded-full hover:bg-transparent hover:border-[#09ea4c] transition duration-300 ease-in-out"
+          size="large"
+        >
+          <span className="font-bold">Book Tour</span>
+        </Button>
+      </div>
+
+      {/* maps  */}
+      {/* <div>
+        <MapView />
+      </div> */}
     </div>
   );
 };

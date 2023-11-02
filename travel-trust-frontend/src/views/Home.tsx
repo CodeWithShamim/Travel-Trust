@@ -10,9 +10,10 @@ import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
 import { IService } from "@/types";
 import { Button, Carousel, Divider } from "antd";
 import Image from "next/image";
-import React from "react";
+import { useState } from "react";
 import styles from "@/styles/home.module.css";
 import ReviewSlider from "@/components/ui/ReviewSlider";
+import VideoPlayer from "@/components/ui/VideoPlayer";
 
 const HomePage = () => {
   const query: any = {};
@@ -22,6 +23,8 @@ const HomePage = () => {
     isLoading,
     error,
   } = useGetAllServiceQuery({ ...query });
+
+  const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false);
 
   const availableService = services?.filter(
     (service: IService) => service?.status === "available"
@@ -101,30 +104,56 @@ const HomePage = () => {
             ))}
           </div>
         </div>
+      </div>
 
-        {/* news  */}
-        <div className="mt-20">
-          <Divider
-            orientation="center"
-            orientationMargin="0"
-            className="border-[#00ff4c]"
-          >
-            <h1 className="font-semibold text-3xl text-[#34d364] text-center capitalize">
-              Latest news
-            </h1>
-          </Divider>
+      {/* videos  */}
+      <div
+        className={`${styles["background-image"]} flex flex-col items-center justify-center w-full gap-4 text-center px-4 mt-12 md:mt-16 lg:mt-20`}
+      >
+        <Image
+          src={require("@/assets/play.png")}
+          width={100}
+          height={100}
+          objectFit="cover"
+          alt="video play image"
+          className="backdrop-blur-md bg-white/5 rounded-full cursor-pointer"
+          onClick={() => setIsVideoPlay(true)}
+        />
+        <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold shadow-2xl text-white uppercase">
+          Good Time
+        </h1>
+        <p className="text-white text-lg uppercase">
+          Plan the perfect vacations
+        </p>
+      </div>
+      {isVideoPlay && (
+        <div className="w-full h-[660px] rounded">
+          <VideoPlayer />
+        </div>
+      )}
 
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center py-6">
-            {newses?.slice(0, 8)?.map((news: any) => (
-              <NewsCard key={news.id} news={news} />
-            ))}
-          </div>
+      {/* news  */}
+      <div className="max-w-[1200px] mx-auto my-14 md:my-20 lg:my-24">
+        <Divider
+          orientation="center"
+          orientationMargin="0"
+          className="border-[#00ff4c]"
+        >
+          <h1 className="font-semibold text-3xl text-[#34d364] text-center capitalize">
+            Latest news
+          </h1>
+        </Divider>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center py-6">
+          {newses?.slice(0, 8)?.map((news: any) => (
+            <NewsCard key={news.id} news={news} />
+          ))}
         </div>
       </div>
 
       {/* section  */}
       <div
-        className={`${styles["background-image"]} flex flex-col  my-14 md:my-16 lg:my-24 items-center justify-center w-full gap-4 text-center px-4`}
+        className={`${styles["background-image2"]} flex flex-col  my-14 md:my-16 lg:my-24 items-center justify-center w-full gap-4 text-center px-4`}
       >
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold shadow-2xl text-white">
           Are You Still Intarested To Tour?

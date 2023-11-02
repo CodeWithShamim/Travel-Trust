@@ -4,4 +4,5 @@ export const config = {
   api_key: process.env.NEXT_PUBLIC_API_KEY,
   api_secret: process.env.NEXT_PUBLIC_API_SECRET,
   google_map_api_key: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY,
+  yt_video_url: process.env.NEXT_PUBLIC_YT_VIDEO_URL,
 };

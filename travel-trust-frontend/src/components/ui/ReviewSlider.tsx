@@ -16,7 +16,6 @@ const ReviewSlider = () => {
       <Swiper
         spaceBetween={10}
         slidesPerView={3}
-        centeredSlides={true}
         autoplay={{
           delay: 2500,
           disableOnInteraction: false,

@@ -103,7 +103,7 @@ const ServiceDetails = () => {
   }
 
   return (
-    <div className="max-w-[1200px] mx-auto">
+    <div className="max-w-[1200px] mx-auto px-4">
       <div className="h-full w-full flex flex-col mt-24 lg:flex-row items-center justify-center lg:items-start gap-8 border-b border-gray-300">
         <div className="w-full  lg:w-[50%] mx-auto">
           <Image

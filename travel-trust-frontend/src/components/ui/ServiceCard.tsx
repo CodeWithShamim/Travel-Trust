@@ -43,7 +43,7 @@ const ServiceCard = ({ service, loading }: ServiceCardProps) => {
             width={200}
             height={180}
             quality={100}
-            layout="responsive"
+            // layout="responsive"
             objectFit="cover"
             priority
             className="mx-auto pb-3 w-full transition-all hover:scale-[110%] md:hover:scale-[103%]"

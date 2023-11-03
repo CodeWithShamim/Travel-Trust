@@ -3,7 +3,11 @@
 import { TravelCategory, TravelDestinations } from "@/constants/service";
 import { Button, Input, Select } from "antd";
 import React, { useState } from "react";
-import { DownOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+  DownCircleOutlined,
+  DownOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
@@ -40,7 +44,7 @@ const SearchBar = () => {
   }
 
   return (
-    <div className="z-50 hidden md:block w-full mx-auto backdrop-blur-md bg-white/30 p-5">
+    <div className="z-50 hidden md:block w-full mx-auto backdrop-blur-md bg-white/10 p-5">
       <div className="flex items-center justify-center bg-white w-full py-6 relative shadow-2xl">
         <div className="w-full">
           <Input
@@ -49,7 +53,7 @@ const SearchBar = () => {
             allowClear
             bordered={false}
             style={{ width: "22%" }}
-            className="text-black"
+            className="text-black custom-input"
             value={from}
             onChange={(e) => setFrom(e.target.value)}
           />
@@ -58,8 +62,9 @@ const SearchBar = () => {
             bordered={false}
             style={{ width: "22%", color: "#000" }}
             onChange={(value) => setDestination(value)}
-            className="text-black"
+            className="text-black custom-select"
             value={destination}
+            suffixIcon={<DownCircleOutlined />}
             options={TravelDestinations.map((province: string) => ({
               label: province,
               value: province,
@@ -70,12 +75,12 @@ const SearchBar = () => {
             bordered={false}
             style={{ width: "22%", color: "#000" }}
             onChange={(value) => setCategory(value)}
-            className="text-black"
+            className="text-black custom-select"
             value={category}
             // dropdownStyle={{
             //   backgroundColor: "#09ea4c",
             // }}
-            // suffixIcon={<DownOutlined />}
+            suffixIcon={<DownCircleOutlined />}
             options={TravelCategory.map((province: string) => ({
               label: province,
               value: province,
@@ -94,7 +99,7 @@ const SearchBar = () => {
           }}
           onClick={handleSearchService}
         >
-          Search Now
+          <span className="uppercase font-bold text-lg">Search Now</span>
         </Button>
       </div>
     </div>

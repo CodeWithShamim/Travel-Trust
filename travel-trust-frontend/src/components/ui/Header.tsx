@@ -94,9 +94,7 @@ const Header = () => {
           </Link>
         </div>
 
-        <div></div>
-
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center z-50">
           {/* for tablet & desktop */}
           <Link href="/dashboard/profile" className="hidden md:block">
             <Badge count={cart?.length} className="mr-4">

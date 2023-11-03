@@ -14,3 +14,18 @@
   font-weight: 400;
   scroll-behavior: smooth;
 }
+
+.custom-select .anticon {
+  color: #09ea4c;
+  font-size: 100px;
+}
+
+.custom-select .ant-select-selection-placeholder {
+  color: #000000;
+  text-transform: uppercase;
+}
+
+.custom-input .ant-input::placeholder {
+  color: #000000;
+  text-transform: uppercase;
+}

@@ -6,6 +6,7 @@ import React from "react";
 import { PhoneOutlined, MailOutlined, HomeOutlined } from "@ant-design/icons";
 import { footerLinks } from "@/data/common";
 import Link from "next/link";
+import styles from "@/styles/footer.module.css";
 
 const items = [
   {
@@ -30,7 +31,9 @@ const items = [
 
 const Footer = () => {
   return (
-    <div className="p-4 bg-[#01220b] text-[#FFF] text-center shadow-2xl font-serif">
+    <div
+      className={`${styles["background-image"]} p-4 bg-[#01220b] text-[#FFF] text-center shadow-2xl font-serif`}
+    >
       <div className="max-w-[1200px] mx-auto pt-10">
         <Row className="flex gap-4 flex-col md:flex-row w-full">
           {items.map((item, index) => (
@@ -46,9 +49,9 @@ const Footer = () => {
           ))}
         </Row>
 
-        <div className="flex gap-5 my-10 justify-between text-left">
+        <div className="flex flex-col md:flex-row gap-5 my-10 justify-between text-left">
           <div className="flex flex-col gap-6">
-            <h1 className="text-xl font-bold">Quick Links</h1>
+            <h1 className="text-xl font-bold underline">Quick Links</h1>
             {footerLinks[0].map((item) => (
               <Link
                 className="text-gray-100 no-underline font-semibold"
@@ -60,7 +63,7 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col gap-6">
-            <h1 className="text-xl font-bold">Our Community</h1>
+            <h1 className="text-xl font-bold underline">Our Community</h1>
             {footerLinks[1].map((item) => (
               <Link
                 className="text-gray-100 no-underline font-semibold"

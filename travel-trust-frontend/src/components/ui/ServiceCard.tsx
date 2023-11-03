@@ -26,10 +26,14 @@ const ServiceCard = ({ service, loading }: ServiceCardProps) => {
 
   return (
     <div className="w-full mx-auto flex justify-center">
-      <Card className="w-full shadow" loading={loading} hoverable>
+      <Card
+        className="w-full h-[200px] shadow custom-card"
+        loading={loading}
+        hoverable
+      >
         <div
           onClick={handleAddToCart}
-          className="top-0 right-0 bg-primary  text-white text-center absolute rounded-full w-8 h-8 bg-[#09ea4c]"
+          className="top-0 right-0 bg-primary z-20 text-white text-center absolute rounded-full w-8 h-8 bg-[#09ea4c]"
         >
           <Tooltip title="Add to cart" color={colors.primary}>
             <ShoppingCartOutlined height={100} width={100} className="mt-2" />
@@ -41,23 +45,21 @@ const ServiceCard = ({ service, loading }: ServiceCardProps) => {
             src={image ?? require("@/assets/login.png")}
             alt={name}
             width={200}
-            height={180}
+            height={215}
             quality={100}
             // layout="responsive"
             objectFit="cover"
             priority
-            className="mx-auto pb-3 w-full transition-all hover:scale-[110%] md:hover:scale-[103%]"
+            className="mx-auto card-img pb-3 w-full absolute inset-0"
           />
+          <h1 className="absolute text-white font-extrabold text-2xl text-left shadow-sm">
+            {name}
+          </h1>
 
-          <Meta title={name} />
-          {/* <Meta
-            title={
-              <span className="md:text-lg font-bold text-primary">
-                {price}$
-              </span>
-            }
-            description={status}
-          /> */}
+          <div className="card-content flex gap-2 shadow-sm p-2">
+            <p className=" font-bold">Category: {category}</p>
+            <p className=" font-bold">Price: {price}$</p>
+          </div>
         </Link>
       </Card>
     </div>

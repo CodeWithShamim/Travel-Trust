@@ -55,7 +55,7 @@ const HomePage = () => {
         </Carousel>
 
         <div className="absolute bottom-1/2 left-0 right-0 max-w-[1200px] mx-auto">
-          <h1 className="text-6xl md:text-7xl lg:text-8xl text-white font-extrabold uppercase text-center drop-shadow-md">
+          <h1 className="text-4xl md:text-6xl lg:text-8xl text-white font-extrabold uppercase text-center drop-shadow-md">
             Expore the world with travel
           </h1>
           {/* <h1>Discover the world with our guide</h1> */}

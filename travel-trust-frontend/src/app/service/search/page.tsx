@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from "@/components/ui/Loader";
 import SearchBar from "@/components/ui/SearchBar";
 import ServiceCard from "@/components/ui/ServiceCard";
 import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
@@ -30,6 +31,8 @@ const SearchPage = () => {
     error,
   } = useGetAllServiceQuery({ ...query });
 
+  console.log(isLoading);
+
   return (
     <div className="max-w-[1200px] mx-auto">
       <SearchBar />
@@ -53,8 +56,9 @@ const SearchPage = () => {
           <Image
             src={require("@/assets/search-not-found.png")}
             width={300}
-            className="mt-4"
+            className="mt-4 px-4"
             alt="search not found"
+            objectFit="cover"
           />
         </div>
       ) : null}

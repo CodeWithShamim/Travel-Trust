@@ -14,6 +14,8 @@ import { useState } from "react";
 import styles from "@/styles/home.module.css";
 import ReviewSlider from "@/components/ui/ReviewSlider";
 import VideoPlayer from "@/components/ui/VideoPlayer";
+import { motion } from "framer-motion";
+import { h1Variants } from "@/motions/home.variants";
 
 const HomePage = () => {
   const query: any = {};
@@ -55,15 +57,27 @@ const HomePage = () => {
         </Carousel>
 
         <div className="absolute bottom-1/2 left-0 right-0 max-w-[1200px] mx-auto">
-          <h1 className="text-4xl md:text-6xl lg:text-8xl text-white font-extrabold uppercase text-center drop-shadow-md">
+          <motion.h1
+            initial="hidden"
+            animate="enter"
+            variants={h1Variants}
+            transition={{ type: "linear", duration: 1.5 }}
+            className="text-4xl md:text-6xl lg:text-8xl text-white font-extrabold uppercase text-center drop-shadow-md"
+          >
             Expore the world with travel
-          </h1>
+          </motion.h1>
           {/* <h1>Discover the world with our guide</h1> */}
         </div>
 
-        <div className="absolute bottom-20 left-0 right-0 max-w-[1100px] mx-auto">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ ease: "easeIn", duration: 2 }}
+          className="absolute bottom-20 left-0 right-0 max-w-[1100px] mx-auto"
+        >
           <SearchBar />
-        </div>
+        </motion.div>
       </div>
 
       {/* services  */}
@@ -130,7 +144,7 @@ const HomePage = () => {
         <Modal
           open={isVideoPlay}
           onCancel={() => setIsVideoPlay(false)}
-          className="w-[100%] md:w-[80%] lg:w-[70%] h-[20rem] lg:h-[35rem] bg-[#09ea4c]"
+          className="w-[100%] md:w-[80%] lg:w-[70%] h-[20rem] lg:h-[35rem] bg-[#000]"
           style={{ position: "relative" }}
           footer={null}
         >

@@ -8,6 +8,7 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 import colors from "@/constants/colors";
 import { useAppDispatch } from "@/redux/hooks";
 import { addServiceToCart } from "@/redux/slices/serviceSlice";
+import { motion } from "framer-motion";
 
 const { Meta } = Card;
 
@@ -25,7 +26,7 @@ const ServiceCard = ({ service, loading }: ServiceCardProps) => {
   };
 
   return (
-    <div className="w-full mx-auto flex justify-center">
+    <motion.div className="w-full mx-auto flex justify-center">
       <Card
         className="w-full h-[200px] shadow custom-card"
         loading={loading}
@@ -62,7 +63,7 @@ const ServiceCard = ({ service, loading }: ServiceCardProps) => {
           </div>
         </Link>
       </Card>
-    </div>
+    </motion.div>
   );
 };
 

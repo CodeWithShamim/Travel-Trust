@@ -29,8 +29,12 @@
   left: 0;
   right: 0;
   color: #fff;
-  background: #09ea4c;
   transition: bottom .6 ease-in;
+}
+
+.card-overlay {
+  display: none;
+  transition: overlay 0.6s ease-in;
 }
 
 .custom-card:hover {
@@ -38,6 +42,11 @@
     transform: scale(1.15);
     transition: transform .8s ease-out;
     transform-origin: center;
+  }
+
+  .card-overlay {
+    display: block;
+    transition: overlay 0.6s ease-out;
   }
 
   .card-content {
@@ -48,8 +57,6 @@
 
   }
 }
-
-
 
 .custom-select .anticon {
   color: #09ea4c;

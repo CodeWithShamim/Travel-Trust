@@ -23,7 +23,7 @@ const NewsCard = ({ news }: any) => {
             quality={100}
             objectFit="cover"
             priority
-            className="mx-auto card-img pb-3 w-full"
+            className="mx-auto pb-3 w-full"
           />
 
           <Meta title={title} />

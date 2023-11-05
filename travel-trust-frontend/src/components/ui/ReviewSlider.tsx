@@ -20,7 +20,7 @@ const ReviewSlider = () => {
           delay: 2500,
           disableOnInteraction: false,
         }}
-        className="w-[75%] m-auto "
+        className="w-full m-auto "
         breakpoints={{
           0: {
             slidesPerView: 1,

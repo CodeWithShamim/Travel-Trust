@@ -51,10 +51,18 @@ const Header = () => {
   const items: MenuProps["items"] = [
     {
       key: 1,
+      label: <Link href="/dashboard/profile">Dashboard</Link>,
+    },
+    {
+      key: 2,
       label: <Link href="/dashboard/profile">Profile</Link>,
     },
     {
-      key: 1,
+      key: 3,
+      label: <Link href="/service/search">Search</Link>,
+    },
+    {
+      key: 4,
       label: (
         <>
           {userData?.id ? (
@@ -83,8 +91,8 @@ const Header = () => {
   ];
 
   return (
-    <HeaderLayout className="z-[999999] shadow-md bg-transparent">
-      <div className=" max-w-[1200px] mx-auto text-white flex items-center justify-between h-full">
+    <HeaderLayout className="z-[999999] shadow-md bg-transparent w-full px-4">
+      <div className=" max-w-[1200px] mx-auto text-white w-full flex items-center justify-between h-full">
         <div className="md:text-xl">
           <Link
             href="/"

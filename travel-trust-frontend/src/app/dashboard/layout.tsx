@@ -25,7 +25,9 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <Layout hasSider>
       <SideBar />
-      <div className="p-6 w-full h-[100%]">{children}</div>
+      <div className="p-4 w-full max-w-[1200px] mx-auto h-[100%]">
+        {children}
+      </div>
     </Layout>
   );
 };

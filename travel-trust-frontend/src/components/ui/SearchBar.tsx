@@ -19,10 +19,12 @@ const SearchBar = () => {
   const [destination, setDestination] = useState<string | null>(null);
   const [category, setCategory] = useState<string | null>(null);
   const { data: services, isLoading, error } = useGetAllServiceQuery(null);
+  const [searchLoading, setSearchLoading] = useState<boolean>(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const handleSearchService = () => {
+    setSearchLoading(true);
     const data = {
       from,
       destination,
@@ -37,6 +39,7 @@ const SearchBar = () => {
     setFrom("");
     setDestination(null);
     setCategory(null);
+    setTimeout(() => setSearchLoading(false), 1000);
   };
 
   if (isLoading) {
@@ -97,6 +100,7 @@ const SearchBar = () => {
             height: 70.8,
             borderRadius: "0px",
           }}
+          loading={searchLoading}
           onClick={handleSearchService}
         >
           <span className="uppercase font-bold text-lg">Search Now</span>

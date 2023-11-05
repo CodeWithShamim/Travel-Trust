@@ -8,7 +8,12 @@ const NotFound = () => {
       <h3 className="text-xl font-bold ">
         Opps! Page not found <Link href={"/"}>Go Home</Link>
       </h3>
-      <Image src={notFoundImage} width={500} alt="not found image" />
+      <Image
+        src={notFoundImage}
+        objectFit="cover"
+        width={280}
+        alt="not found image"
+      />
     </div>
   );
 };

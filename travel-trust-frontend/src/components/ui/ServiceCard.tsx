@@ -8,7 +8,7 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 import colors from "@/constants/colors";
 import { useAppDispatch } from "@/redux/hooks";
 import { addServiceToCart } from "@/redux/slices/serviceSlice";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 
 const { Meta } = Card;
 
@@ -26,7 +26,12 @@ const ServiceCard = ({ service, loading }: ServiceCardProps) => {
   };
 
   return (
-    <motion.div className="w-full mx-auto flex justify-center">
+    <motion.div
+      initial={{ opacity: 0, x: -200 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.5 }}
+      className="w-full mx-auto flex justify-center"
+    >
       <Card
         className="w-full h-[200px] shadow custom-card"
         loading={loading}
@@ -53,7 +58,7 @@ const ServiceCard = ({ service, loading }: ServiceCardProps) => {
             priority
             className="mx-auto card-img pb-3 w-full absolute inset-0"
           />
-          <h1 className="absolute text-white font-extrabold text-2xl text-left shadow-sm">
+          <h1 className="absolute z-50 text-white font-extrabold text-2xl text-left shadow-sm">
             {name}
           </h1>
 
@@ -62,6 +67,8 @@ const ServiceCard = ({ service, loading }: ServiceCardProps) => {
             <p className=" font-bold">Price: {price}$</p>
           </div>
         </Link>
+
+        <div className="card-overlay absolute inset-0 w-full h-full bg-[#09ea4c] opacity-30 rounded-lg"></div>
       </Card>
     </motion.div>
   );

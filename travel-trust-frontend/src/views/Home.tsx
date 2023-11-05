@@ -70,10 +70,13 @@ const HomePage = () => {
         </div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ ease: "easeIn", duration: 2 }}
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{
+            duration: 0.8,
+            delay: 0.5,
+            ease: [0, 0.71, 0.2, 1.01],
+          }}
           className="absolute bottom-20 left-0 right-0 max-w-[1100px] mx-auto"
         >
           <SearchBar />
@@ -100,7 +103,7 @@ const HomePage = () => {
           ))}
         </div>
 
-        <div className="mt-20">
+        <div className="mt-10 md:mt-14 lg:mt-20">
           <h1 className="font-semibold text-3xl text-[#34d364]">
             Upcoming service
           </h1>

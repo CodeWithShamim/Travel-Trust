@@ -11,7 +11,7 @@ const Error = () => {
       <Image
         src={errorImage}
         objectFit="cover"
-        width={500}
+        width={280}
         alt="not found image"
       />
     </div>

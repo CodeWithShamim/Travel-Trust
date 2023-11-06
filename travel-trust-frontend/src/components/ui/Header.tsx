@@ -25,6 +25,7 @@ import { removeTokenFromLocalStorage } from "@/utils/local-storage";
 import { authKey } from "@/constants/storageKey";
 import { useRouter } from "next/navigation";
 import { IUser } from "@/types";
+import { motion } from "framer-motion";
 
 const { Header: HeaderLayout } = Layout;
 
@@ -92,7 +93,7 @@ const Header = () => {
 
   return (
     <HeaderLayout className="z-[999999] shadow-md bg-transparent w-full px-4">
-      <div className=" max-w-[1200px] mx-auto text-white w-full flex items-center justify-between h-full">
+      <motion.div className=" max-w-[1200px] mx-auto text-white w-full flex items-center justify-between h-full">
         <div className="md:text-xl">
           <Link
             href="/"
@@ -137,7 +138,7 @@ const Header = () => {
             </Space>
           </Dropdown>
         </div>
-      </div>
+      </motion.div>
     </HeaderLayout>
   );
 };

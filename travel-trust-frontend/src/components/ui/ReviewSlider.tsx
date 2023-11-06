@@ -9,10 +9,17 @@ import {
 } from "swiper/modules";
 import { reviewsItems } from "@/data/reviews";
 import { Rate } from "antd";
+import { fadeIn, zoomIn } from "@/utils/motion";
+import { motion } from "framer-motion";
 
 const ReviewSlider = () => {
   return (
-    <div className="max-w-[1200px] m-auto py-16 text-center">
+    <motion.div
+      initial="hidden"
+      whileInView="show"
+      variants={fadeIn("down", "tween", 0.5, 0.5)}
+      className="max-w-[1200px] m-auto py-16 text-center"
+    >
       <Swiper
         spaceBetween={10}
         slidesPerView={3}
@@ -55,7 +62,7 @@ const ReviewSlider = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    </motion.div>
   );
 };
 

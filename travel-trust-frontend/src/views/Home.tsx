@@ -8,14 +8,16 @@ import ServiceCard from "@/components/ui/ServiceCard";
 import { newses } from "@/data/news";
 import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
 import { IService } from "@/types";
-import { Button, Carousel, Divider, Modal } from "antd";
+import { Button, Carousel, Divider, FloatButton, Modal } from "antd";
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import styles from "@/styles/home.module.css";
 import ReviewSlider from "@/components/ui/ReviewSlider";
 import VideoPlayer from "@/components/ui/VideoPlayer";
 import { motion } from "framer-motion";
-import { h1Variants } from "@/motions/home.variants";
+import { fadeIn, slideIn, textVariant } from "@/utils/motion";
+import { useScroll, useSpring } from "framer-motion";
+import { UpOutlined } from "@ant-design/icons";
 
 const HomePage = () => {
   const query: any = {};
@@ -27,6 +29,8 @@ const HomePage = () => {
   } = useGetAllServiceQuery({ ...query });
 
   const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress);
 
   const availableService = services?.filter(
     (service: IService) => service?.status === "available"
@@ -37,6 +41,17 @@ const HomePage = () => {
 
   return (
     <div className="w-full">
+      {/* Float Button  */}
+      <motion.div className="progress-bar" style={{ scaleX }} />
+      <FloatButton.BackTop
+        shape="circle"
+        type="primary"
+        style={{
+          right: 24,
+        }}
+        icon={<UpOutlined />}
+      />
+
       {/* Hero section  */}
       <div className="relative top-[-65px] left-0 right-0">
         <Carousel effect="fade" autoplay={true} className="z-[-1]">
@@ -59,9 +74,8 @@ const HomePage = () => {
         <div className="absolute bottom-1/2 left-0 right-0 max-w-[1200px] mx-auto">
           <motion.h1
             initial="hidden"
-            animate="enter"
-            variants={h1Variants}
-            transition={{ type: "linear", duration: 1.5 }}
+            animate="show"
+            variants={slideIn("left", "tween", 0.5, 0.8)}
             className="text-4xl md:text-6xl lg:text-8xl text-white font-extrabold uppercase text-center drop-shadow-md"
           >
             Expore the world with travel
@@ -69,80 +83,95 @@ const HomePage = () => {
           {/* <h1>Discover the world with our guide</h1> */}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 0.8,
-            delay: 0.5,
-            ease: [0, 0.71, 0.2, 1.01],
-          }}
-          className="absolute bottom-20 left-0 right-0 max-w-[1100px] mx-auto"
-        >
+        <motion.div className="absolute bottom-20 left-0 right-0 max-w-[1100px] mx-auto">
           <SearchBar />
         </motion.div>
       </div>
 
       {/* services  */}
-      <div className="max-w-[1200px] mx-auto px-4">
-        <h1 className="font-semibold text-3xl text-[#34d364]">
+      <motion.div className="max-w-[1200px] mx-auto px-4">
+        <motion.h1
+          initial="hidden"
+          whileInView="show"
+          variants={textVariant(0.3)}
+          className="font-semibold text-3xl text-[#34d364]"
+        >
           Available service
-        </h1>
+        </motion.h1>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center py-6">
           {!availableService &&
             Array.from({ length: 8 }).map((n, index) => (
               <ServiceCardSkeleton key={index} />
             ))}
 
-          {availableService?.slice(0, 8)?.map((service: IService) => (
-            <ServiceCard
-              key={service.id}
-              service={service}
-              loading={isLoading}
-            />
-          ))}
+          {availableService
+            ?.slice(0, 8)
+            ?.map((service: IService, index: number) => (
+              <ServiceCard
+                key={service.id}
+                service={service}
+                loading={isLoading}
+                index={index}
+              />
+            ))}
         </div>
 
         <div className="mt-10 md:mt-14 lg:mt-20">
-          <h1 className="font-semibold text-3xl text-[#34d364]">
+          <motion.h1
+            initial="hidden"
+            whileInView="show"
+            variants={textVariant(0.3)}
+            className="font-semibold text-3xl text-[#34d364]"
+          >
             Upcoming service
-          </h1>
+          </motion.h1>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center py-6">
             {!upcomingService &&
               Array.from({ length: 4 }).map((n, index) => (
                 <ServiceCardSkeleton key={index} />
               ))}
-            {upcomingService?.slice(0, 4)?.map((service: IService) => (
-              <ServiceCard
-                key={service.id}
-                service={service}
-                loading={isLoading}
-              />
-            ))}
+            {upcomingService
+              ?.slice(0, 4)
+              ?.map((service: IService, index: number) => (
+                <ServiceCard
+                  key={service.id}
+                  service={service}
+                  loading={isLoading}
+                  index={index}
+                />
+              ))}
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* videos  */}
-      <div
+      <motion.div
         className={`${styles["background-image"]} flex flex-col items-center justify-center w-full gap-4 text-center px-4 mt-12 md:mt-16 lg:mt-20`}
+        // style={{ scale: scrollYProgress }}
       >
-        <Image
-          src={require("@/assets/play.png")}
-          width={100}
-          height={100}
-          objectFit="cover"
-          alt="video play image"
-          className="backdrop-blur-md bg-white/5 rounded-full cursor-pointer"
-          onClick={() => setIsVideoPlay(true)}
-        />
+        <motion.span
+          whileHover={{
+            scale: 1.2,
+            transition: { duration: 1 },
+          }}
+        >
+          <Image
+            src={require("@/assets/play.png")}
+            width={100}
+            height={100}
+            objectFit="cover"
+            alt="video play image"
+            className="backdrop-blur-md bg-white/5 rounded-full cursor-pointer"
+            onClick={() => setIsVideoPlay(true)}
+          />
+        </motion.span>
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold shadow-2xl text-white uppercase">
           Good Time
         </h1>
         <p className="text-white text-lg uppercase">
           Plan the perfect vacations
         </p>
-      </div>
+      </motion.div>
       {isVideoPlay && (
         <Modal
           open={isVideoPlay}
@@ -164,14 +193,19 @@ const HomePage = () => {
           orientationMargin="0"
           className="border-[#00ff4c]"
         >
-          <h1 className="font-semibold text-3xl text-[#34d364] text-center capitalize">
+          <motion.h1
+            initial="hidden"
+            whileInView="show"
+            variants={textVariant(0.3)}
+            className="font-semibold text-3xl text-[#34d364] text-center capitalize"
+          >
             Latest news
-          </h1>
+          </motion.h1>
         </Divider>
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center py-6">
-          {newses?.slice(0, 8)?.map((news: any) => (
-            <NewsCard key={news.id} news={news} />
+          {newses?.slice(0, 8)?.map((news: any, index: number) => (
+            <NewsCard key={news.id} news={news} index={index} />
           ))}
         </div>
       </div>
@@ -204,9 +238,14 @@ const HomePage = () => {
             orientationMargin="0"
             className="border-[#00ff4c] "
           >
-            <h1 className="font-semibold text-3xl text-[#34d364] text-center capitalize">
+            <motion.h1
+              initial="hidden"
+              whileInView="show"
+              variants={textVariant(0.3)}
+              className="font-semibold text-3xl text-[#34d364] text-center capitalize"
+            >
               Customer Review
-            </h1>
+            </motion.h1>
           </Divider>
         </div>
 

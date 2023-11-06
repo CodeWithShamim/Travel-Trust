@@ -16,6 +16,7 @@
     "axios": "^1.5.1",
     "dayjs": "^1.11.10",
     "framer-motion": "^10.16.4",
+    "framer-motion-3d": "^10.16.4",
     "leaflet": "^1.9.4",
     "next": "13.5.4",
     "react": "^18",

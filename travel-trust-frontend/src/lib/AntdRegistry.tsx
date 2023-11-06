@@ -24,8 +24,11 @@ const StyledComponentsRegistry = ({ children }: React.PropsWithChildren) => {
               algorithm: true,
             },
             Input: {
-              // colorBorder: "#FFF",
               colorPrimary: "#09ea4c",
+              algorithm: true,
+            },
+            FloatButton: {
+              colorPrimary: "#00bf36",
               algorithm: true,
             },
           },

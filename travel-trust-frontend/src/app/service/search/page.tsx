@@ -39,8 +39,8 @@ const SearchPage = () => {
 
       <div className="max-w-[1200px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center py-6">
-          {services?.slice(0, 12)?.map((service: IService) => (
-            <ServiceCard key={service.id} service={service} />
+          {services?.slice(0, 12)?.map((service: IService, index: number) => (
+            <ServiceCard key={service.id} service={service} index={index} />
           ))}
         </div>
       </div>

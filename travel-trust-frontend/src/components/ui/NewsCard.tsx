@@ -2,17 +2,26 @@
 import Image from "next/image";
 import { Card, Tooltip } from "antd";
 import React from "react";
-import Link from "next/link";
-import { ShoppingCartOutlined } from "@ant-design/icons";
-import colors from "@/constants/colors";
+import { motion } from "framer-motion";
+import { slideIn } from "@/utils/motion";
 
 const { Meta } = Card;
 
-const NewsCard = ({ news }: any) => {
+type INewsCard = {
+  news: any;
+  index?: number;
+};
+
+const NewsCard = ({ news, index = 0 }: INewsCard) => {
   const { title, source, image, description, date } = news;
 
   return (
-    <div className="w-full mx-auto flex justify-center">
+    <motion.div
+      initial="hidden"
+      whileInView="show"
+      variants={slideIn("left", "spring", index * 0.2, 0.5)}
+      className="w-full mx-auto flex justify-center"
+    >
       <Card className="w-full shadow custom-card" hoverable>
         <div className="text-white">
           <Image
@@ -29,7 +38,7 @@ const NewsCard = ({ news }: any) => {
           <Meta title={title} />
         </div>
       </Card>
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,4 +1,5 @@
 "use client";
+
 import { IService } from "@/types";
 import Image from "next/image";
 import { Card, Rate, Tooltip } from "antd";
@@ -9,15 +10,17 @@ import colors from "@/constants/colors";
 import { useAppDispatch } from "@/redux/hooks";
 import { addServiceToCart } from "@/redux/slices/serviceSlice";
 import { motion, useAnimation } from "framer-motion";
+import { fadeIn, slideIn, zoomIn } from "@/utils/motion";
 
 const { Meta } = Card;
 
 interface ServiceCardProps {
   service: IService;
   loading?: boolean;
+  index?: number;
 }
 
-const ServiceCard = ({ service, loading }: ServiceCardProps) => {
+const ServiceCard = ({ service, loading, index = 0 }: ServiceCardProps) => {
   const { id, name, price, image, category, status } = service;
   const dispatch = useAppDispatch();
 
@@ -27,9 +30,9 @@ const ServiceCard = ({ service, loading }: ServiceCardProps) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: -200 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5 }}
+      initial="hidden"
+      whileInView="show"
+      variants={fadeIn("", "scroll", index * 0.2, 0.5)}
       className="w-full mx-auto flex justify-center"
     >
       <Card
@@ -46,7 +49,7 @@ const ServiceCard = ({ service, loading }: ServiceCardProps) => {
           </Tooltip>
         </div>
 
-        <Link href={`/service-details/${id}`} className="text-white">
+        <Link href={`/service-details/${id}`} className="text-white h-full">
           <Image
             src={image ?? require("@/assets/login.png")}
             alt={name}
@@ -58,17 +61,17 @@ const ServiceCard = ({ service, loading }: ServiceCardProps) => {
             priority
             className="mx-auto card-img pb-3 w-full absolute inset-0"
           />
-          <h1 className="absolute z-50 text-white font-extrabold text-2xl text-left shadow-sm">
+          <h1 className="absolute z-40 text-white font-extrabold text-2xl text-left shadow-sm">
             {name}
           </h1>
+
+          <div className="card-overlay absolute inset-0 w-full h-full bg-[#09ea4c] opacity-30 rounded-lg"></div>
 
           <div className="card-content flex gap-2 shadow-sm p-2">
             <p className=" font-bold">Category: {category}</p>
             <p className=" font-bold">Price: {price}$</p>
           </div>
         </Link>
-
-        <div className="card-overlay absolute inset-0 w-full h-full bg-[#09ea4c] opacity-30 rounded-lg"></div>
       </Card>
     </motion.div>
   );

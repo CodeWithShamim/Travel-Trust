@@ -44,3 +44,46 @@ export const footerLinks = [
     },
   ],
 ];
+
+export const galleryItems = [
+  {
+    id: 1,
+    url: require("@/assets/gallery/1.jpg"),
+  },
+  {
+    id: 2,
+    url: require("@/assets/gallery/2.png"),
+  },
+  // {
+  //   id: 3,
+  //   url: require("@/assets/gallery/1.mp4"),
+  // },
+  {
+    id: 4,
+    url: require("@/assets/gallery/3.jpg"),
+  },
+  {
+    id: 5,
+    url: require("@/assets/gallery/4.jpg"),
+  },
+  // {
+  //   id: 6,
+  //   url: require("@/assets/gallery/2.mp4"),
+  // },
+  {
+    id: 7,
+    url: require("@/assets/gallery/5.png"),
+  },
+  {
+    id: 8,
+    url: require("@/assets/gallery/6.jpg"),
+  },
+  // {
+  //   id: 10,
+  //   url: require("@/assets/gallery/3.mp4"),
+  // },
+  {
+    id: 1,
+    url: require("@/assets/gallery/7.jpg"),
+  },
+];

@@ -18,6 +18,7 @@ import { motion } from "framer-motion";
 import { fadeIn, slideIn, textVariant } from "@/utils/motion";
 import { useScroll, useSpring } from "framer-motion";
 import { UpOutlined } from "@ant-design/icons";
+import ImageGallery from "@/components/ui/ImageGallery";
 
 const HomePage = () => {
   const query: any = {};
@@ -162,6 +163,7 @@ const HomePage = () => {
             objectFit="cover"
             alt="video play image"
             className="backdrop-blur-md bg-white/5 rounded-full cursor-pointer"
+            layout="responsive"
             onClick={() => setIsVideoPlay(true)}
           />
         </motion.span>
@@ -189,7 +191,7 @@ const HomePage = () => {
       {/* news  */}
       <div className="max-w-[1200px] mx-auto my-14 md:my-20 lg:my-24">
         <Divider
-          orientation="center"
+          orientation="left"
           orientationMargin="0"
           className="border-[#00ff4c]"
         >
@@ -208,6 +210,26 @@ const HomePage = () => {
             <NewsCard key={news.id} news={news} index={index} />
           ))}
         </div>
+      </div>
+
+      {/* gallery  */}
+      <div className="max-w-[1200px] mx-auto px-4 pb-10 md:pb-14 lg:pb-20">
+        <Divider
+          orientation="left"
+          orientationMargin="0"
+          className="border-[#00ff4c]"
+        >
+          <motion.h1
+            initial="hidden"
+            whileInView="show"
+            variants={textVariant(0.3)}
+            className="font-semibold text-3xl text-[#34d364] text-center capitalize"
+          >
+            Photo Gallery
+          </motion.h1>
+        </Divider>
+
+        <ImageGallery />
       </div>
 
       {/* section  */}

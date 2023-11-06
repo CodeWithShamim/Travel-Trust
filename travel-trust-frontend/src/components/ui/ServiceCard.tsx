@@ -54,9 +54,9 @@ const ServiceCard = ({ service, loading, index = 0 }: ServiceCardProps) => {
             src={image ?? require("@/assets/login.png")}
             alt={name}
             width={200}
-            height={215}
+            height={250}
             quality={100}
-            // layout="responsive"
+            layout="responsive"
             objectFit="cover"
             priority
             className="mx-auto card-img pb-3 w-full absolute inset-0"

@@ -10,7 +10,11 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        "auto-fill-250px": "repeat(auto-fill, 250px)",
+      },
+    },
   },
   plugins: [],
   corePlugins: {

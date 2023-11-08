@@ -77,7 +77,7 @@ const HomePage = () => {
                   objectFit: "cover",
                 }}
               />
-              <div className="absolute inset-0 bg-[#000] opacity-40"></div>
+              <div className="absolute inset-0 bg-[#000] opacity-50"></div>
             </motion.div>
           ))}
         </Carousel>
@@ -87,15 +87,15 @@ const HomePage = () => {
             initial="hidden"
             animate="show"
             variants={fadeIn("down", "tween", 0, 1.5)}
-            className="px-4 text-4xl md:text-6xl lg:text-8xl tracking-wide text-white font-extrabold uppercase text-center drop-shadow-md"
+            className="custom-head-text px-4 text-4xl md:text-6xl lg:text-8xl tracking-wide text-white font-extrabold uppercase text-center drop-shadow-md"
           >
-            Expore the world with travel
+            Expore the world with <span className="fancy">Travel</span>
           </motion.h1>
           <motion.p
             initial="hidden"
             animate="show"
             variants={fadeIn("up", "tween", 0, 1.5)}
-            className="text-center text-white text-xl md:text-2xl lg:text-3xl tracking-[1px] capitalize font-semibold pt-10"
+            className="custom-sub-text hero-banner__stroked-title text-center text-white text-xl md:text-2xl lg:text-3xl tracking-[1px] capitalize font-semibold pt-10"
           >
             Where would you like to go?
           </motion.p>

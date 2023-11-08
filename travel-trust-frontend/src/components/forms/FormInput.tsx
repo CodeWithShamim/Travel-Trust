@@ -9,9 +9,18 @@ interface IInput {
   value?: string | string[] | undefined;
   placeholder?: string;
   label?: string;
+  isStyles?: boolean;
 }
 
-const FormInput = ({ name, type, size, value, placeholder, label }: IInput) => {
+const FormInput = ({
+  name,
+  type,
+  size,
+  value,
+  placeholder,
+  label,
+  isStyles = false,
+}: IInput) => {
   const { control } = useFormContext();
 
   return (
@@ -36,6 +45,7 @@ const FormInput = ({ name, type, size, value, placeholder, label }: IInput) => {
               placeholder={placeholder}
               {...field}
               value={value ? value : field.value}
+              className={`${isStyles && "bg-green-100 border-0 custom-placeholder py-6"}`}
             />
           )
         }

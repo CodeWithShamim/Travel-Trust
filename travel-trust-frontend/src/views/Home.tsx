@@ -86,12 +86,19 @@ const HomePage = () => {
           <motion.h1
             initial="hidden"
             animate="show"
-            variants={slideIn("left", "tween", 0.5, 0.8)}
-            className="text-4xl md:text-6xl lg:text-8xl text-white font-extrabold uppercase text-center drop-shadow-md"
+            variants={fadeIn("down", "tween", 0, 1.5)}
+            className="px-4 text-4xl md:text-6xl lg:text-8xl tracking-wide text-white font-extrabold uppercase text-center drop-shadow-md"
           >
             Expore the world with travel
           </motion.h1>
-          {/* <h1>Discover the world with our guide</h1> */}
+          <motion.p
+            initial="hidden"
+            animate="show"
+            variants={fadeIn("up", "tween", 0, 1.5)}
+            className="text-center text-white text-xl md:text-2xl lg:text-3xl tracking-[1px] capitalize font-semibold pt-10"
+          >
+            Where would you like to go?
+          </motion.p>
         </div>
 
         <motion.div className="absolute bottom-20 left-0 right-0 max-w-[1100px] mx-auto">
@@ -104,7 +111,7 @@ const HomePage = () => {
         <motion.h1
           initial="hidden"
           whileInView="show"
-          variants={textVariant(0.3)}
+          variants={textVariant(0.4)}
           className="font-bold text-3xl uppercase text-[#34d364] tracking-widest"
         >
           Available service
@@ -131,7 +138,7 @@ const HomePage = () => {
           <motion.h1
             initial="hidden"
             whileInView="show"
-            variants={textVariant(0.3)}
+            variants={textVariant(0.4)}
             className="font-bold text-3xl uppercase text-[#34d364] tracking-widest"
           >
             Upcoming service
@@ -209,7 +216,7 @@ const HomePage = () => {
           <motion.h1
             initial="hidden"
             whileInView="show"
-            variants={textVariant(0.3)}
+            variants={textVariant(0.4)}
             className="font-bold text-3xl uppercase text-[#34d364] tracking-widest"
           >
             Latest news
@@ -233,7 +240,7 @@ const HomePage = () => {
           <motion.h1
             initial="hidden"
             whileInView="show"
-            variants={textVariant(0.3)}
+            variants={textVariant(0.4)}
             className="font-bold text-3xl uppercase text-[#34d364] tracking-widest"
           >
             Photo Gallery
@@ -274,7 +281,7 @@ const HomePage = () => {
             <motion.h1
               initial="hidden"
               whileInView="show"
-              variants={textVariant(0.3)}
+              variants={textVariant(0.4)}
               className="font-bold text-3xl uppercase text-[#34d364] tracking-widest"
             >
               Customer Review

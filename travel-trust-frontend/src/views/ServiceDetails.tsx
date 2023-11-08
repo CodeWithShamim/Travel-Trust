@@ -25,13 +25,15 @@ import {
 } from "@/redux/api/reviewApi";
 
 import { BiSolidTimeFive } from "react-icons/bi";
-import { FaPlane, FaUserAlt } from "react-icons/fa";
-import { IoLocationSharp } from "react-icons/io5";
-import { DownCircleOutlined, ShareAltOutlined } from "@ant-design/icons";
+import { ShareAltOutlined } from "@ant-design/icons";
 import { TravelCategory } from "@/constants/service";
 import CustomSelect from "@/components/ui/CustomSelect";
 import { motion } from "framer-motion";
 import { imageVariants } from "@/utils/motion";
+import FormInput from "@/components/forms/FormInput";
+import { SubmitHandler } from "react-hook-form";
+import Form from "@/components/forms/Form";
+import { reviewsLists, serviceDetailsLists } from "@/data/service";
 
 const { TextArea } = Input;
 
@@ -59,7 +61,7 @@ const ServiceDetails = () => {
   });
 
   const [comment, setComment] = useState<string>("");
-  const [rating, setRating] = useState<number>(0);
+  const [ratings, setRatings] = useState<number[]>([5, 3, 4, 5, 5]);
   const [types, setTypes] = useState<string | null>(null);
   const [ticket, setTicket] = useState<string | null>(null);
 
@@ -93,18 +95,18 @@ const ServiceDetails = () => {
   };
 
   // add review
-  const handleAddReview = async () => {
+  const handleAddReview: SubmitHandler<any> = async (data: any, reset: any) => {
     if (!user?.id) {
       router.push("/login");
       return;
     }
 
-    const data: IReview = {
-      comment,
-      rating,
-      userId: user?.id,
-      serviceId: id as string,
-    };
+    // const data: IReview = {
+    //   comment,
+    //   rating,
+    //   userId: user?.id,
+    //   serviceId: id as string,
+    // };
 
     try {
       const res: any = await createReview(data);
@@ -116,36 +118,15 @@ const ServiceDetails = () => {
     }
   };
 
+  const handleRateChange = (value: number, index: number) => {
+    const newRatings = [...ratings];
+    newRatings[index] = value;
+    setRatings(newRatings);
+  };
+
   if (isLoading) {
     return <Loader />;
   }
-
-  const items = [
-    {
-      id: 1,
-      icon: <BiSolidTimeFive size={35} color="#09ea4c" />,
-      title: "Duration",
-      value: "1 Week",
-    },
-    {
-      id: 2,
-      icon: <FaUserAlt size={30} color="#09ea4c" />,
-      title: "Min Age",
-      value: "12+",
-    },
-    {
-      id: 3,
-      icon: <FaPlane size={30} color="#09ea4c" />,
-      title: "Category",
-      value: service?.category ?? "Any",
-    },
-    {
-      id: 4,
-      icon: <IoLocationSharp size={35} color="#09ea4c" />,
-      title: "Location",
-      value: service?.location ?? "Italy",
-    },
-  ];
 
   return (
     <div className="">
@@ -187,7 +168,7 @@ const ServiceDetails = () => {
             </div>
 
             <div className="flex gap-16">
-              {items?.map((item, index) => (
+              {serviceDetailsLists(service)?.map((item, index) => (
                 <div key={index} className="flex items-center gap-4">
                   <span className="hover:scale-125 transition-all">
                     {item.icon}
@@ -261,7 +242,72 @@ const ServiceDetails = () => {
         </div>
       </section>
 
-      <div className="max-w-[1200px] mx-auto px-4"></div>
+      <section className="max-w-[1200px] mx-auto px-4 py-16">
+        <div className="w-[70%]">
+          <Form submitHandler={handleAddReview}>
+            <div className="flex py-5 gap-5">
+              <div className="flex flex-col gap-2 w-[60%]">
+                <span className="bg-green-100">
+                  <FormInput
+                    name="name"
+                    placeholder="Name"
+                    type="text"
+                    size="large"
+                    isStyles
+                  />
+                </span>
+                <FormInput
+                  name="email"
+                  placeholder="Email"
+                  type="email"
+                  size="large"
+                  isStyles
+                />
+                <FormInput
+                  name="title"
+                  placeholder="Review Title"
+                  type="text"
+                  size="large"
+                  isStyles
+                />
+              </div>
+              <div className="flex flex-col gap-3 w-[40%]">
+                {reviewsLists.map((item, index) => (
+                  <div
+                    key={item.id}
+                    className="flex items-center justify-between px-10"
+                  >
+                    <p className="text-2xl text-gray-600 tracking-widest">
+                      {item.name}
+                    </p>
+                    <Rate
+                      className="text-green-400 ant-star"
+                      value={ratings[index]}
+                      onChange={(value) => handleRateChange(value, index)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+            <TextArea
+              // onChange={(e) => setComment(e.target?.value)}
+              rows={7}
+              placeholder="Write comment..."
+              className="bg-green-100 border-none custom-placeholder text-black"
+            />
+
+            <Button
+              type="primary"
+              htmlType="submit"
+              size="large"
+              loading={isLoading}
+              className="my-6"
+            >
+              <span className="font-bold text-xl uppercase">Submit Review</span>
+            </Button>
+          </Form>
+        </div>
+      </section>
     </div>
   );
 };

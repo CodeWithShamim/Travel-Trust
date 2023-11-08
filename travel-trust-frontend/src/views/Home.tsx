@@ -15,7 +15,7 @@ import styles from "@/styles/home.module.css";
 import ReviewSlider from "@/components/ui/ReviewSlider";
 import VideoPlayer from "@/components/ui/VideoPlayer";
 import { motion } from "framer-motion";
-import { fadeIn, slideIn, textVariant } from "@/utils/motion";
+import { fadeIn, imageVariants, slideIn, textVariant } from "@/utils/motion";
 import { useScroll, useSpring } from "framer-motion";
 import { UpOutlined } from "@ant-design/icons";
 import ImageGallery from "@/components/ui/ImageGallery";
@@ -55,9 +55,19 @@ const HomePage = () => {
 
       {/* Hero section  */}
       <div className="relative top-[-65px] left-0 right-0">
-        <Carousel effect="fade" autoplay={true} className="z-[-1]">
+        <Carousel
+          effect="fade"
+          autoplay={true}
+          className="z-[-1] overflow-hidden"
+        >
           {[1, 2, 3].map((item: number) => (
-            <div className="h-screen w-full" key={item}>
+            <motion.div
+              initial="hidden"
+              animate="show"
+              variants={imageVariants()}
+              className="h-screen w-full"
+              key={item}
+            >
               <Image
                 src={require(`@/assets/banner${item}.jpg`)}
                 alt="banner image"
@@ -68,7 +78,7 @@ const HomePage = () => {
                 }}
               />
               <div className="absolute inset-0 bg-[#000] opacity-40"></div>
-            </div>
+            </motion.div>
           ))}
         </Carousel>
 
@@ -95,7 +105,7 @@ const HomePage = () => {
           initial="hidden"
           whileInView="show"
           variants={textVariant(0.3)}
-          className="font-semibold text-3xl text-[#34d364]"
+          className="font-bold text-3xl uppercase text-[#34d364] tracking-widest"
         >
           Available service
         </motion.h1>
@@ -122,7 +132,7 @@ const HomePage = () => {
             initial="hidden"
             whileInView="show"
             variants={textVariant(0.3)}
-            className="font-semibold text-3xl text-[#34d364]"
+            className="font-bold text-3xl uppercase text-[#34d364] tracking-widest"
           >
             Upcoming service
           </motion.h1>
@@ -155,6 +165,7 @@ const HomePage = () => {
             scale: 1.2,
             transition: { duration: 1 },
           }}
+          className="blinking-animation"
         >
           <Image
             src={require("@/assets/play.png")}
@@ -162,7 +173,7 @@ const HomePage = () => {
             height={100}
             objectFit="cover"
             alt="video play image"
-            className="backdrop-blur-md bg-white/5 rounded-full cursor-pointer"
+            className="backdrop-blur-md bg-white/10 rounded-full cursor-pointer"
             layout="responsive"
             onClick={() => setIsVideoPlay(true)}
           />
@@ -199,7 +210,7 @@ const HomePage = () => {
             initial="hidden"
             whileInView="show"
             variants={textVariant(0.3)}
-            className="font-semibold text-3xl text-[#34d364] text-center capitalize"
+            className="font-bold text-3xl uppercase text-[#34d364] tracking-widest"
           >
             Latest news
           </motion.h1>
@@ -223,7 +234,7 @@ const HomePage = () => {
             initial="hidden"
             whileInView="show"
             variants={textVariant(0.3)}
-            className="font-semibold text-3xl text-[#34d364] text-center capitalize"
+            className="font-bold text-3xl uppercase text-[#34d364] tracking-widest"
           >
             Photo Gallery
           </motion.h1>
@@ -264,7 +275,7 @@ const HomePage = () => {
               initial="hidden"
               whileInView="show"
               variants={textVariant(0.3)}
-              className="font-semibold text-3xl text-[#34d364] text-center capitalize"
+              className="font-bold text-3xl uppercase text-[#34d364] tracking-widest"
             >
               Customer Review
             </motion.h1>

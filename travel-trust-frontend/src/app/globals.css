@@ -15,6 +15,27 @@
   scroll-behavior: smooth;
 }
 
+@keyframes blink {
+  0% {
+    opacity: 1;
+    scale: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+    scale: 1.10;
+  }
+
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+.blinking-animation {
+  animation: blink 1s infinite;
+}
+
 .galleryLayout {
   width: 100%;
   columns: 4;
@@ -89,11 +110,14 @@
   text-transform: uppercase;
 }
 
+.custom-picker .ant-picker-input>input::placeholder {
+  color: #000;
+}
+
 .custom-input .ant-input::placeholder {
   color: #000000;
   text-transform: uppercase;
 }
-
 
 @media (max-width: 1120px) {
   .galleryLayout {

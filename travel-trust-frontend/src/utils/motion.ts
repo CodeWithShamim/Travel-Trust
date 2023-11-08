@@ -88,6 +88,25 @@ export const slideIn = (
   };
 };
 
+export const imageVariants = (type: string = "just", duration: number = 4) => {
+  return {
+    hidden: {
+      scale: 1,
+      transition: {
+        type,
+        duration,
+      },
+    },
+    show: {
+      scale: 1.25,
+      transition: {
+        type,
+        duration,
+      },
+    },
+  };
+};
+
 export const staggerContainer = (
   staggerChildren: undefined,
   delayChildren: undefined

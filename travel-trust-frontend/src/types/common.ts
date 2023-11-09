@@ -48,6 +48,8 @@ export type IService = {
 export type IBooking = {
   date: string;
   time: string;
+  types: string;
+  ticket: string;
   userId: string;
   serviceId: string;
   user?: IUser;

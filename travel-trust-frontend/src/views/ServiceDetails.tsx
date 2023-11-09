@@ -63,8 +63,10 @@ const ServiceDetails = () => {
   });
 
   const [ratings, setRatings] = useState<number[]>([5, 3, 4, 5, 5]);
-  const [types, setTypes] = useState<string | null>(null);
-  const [ticket, setTicket] = useState<string | null>(null);
+  const [types, setTypes] = useState<string>("");
+  const [ticket, setTicket] = useState<string>("");
+  const [date, setDate] = useState<string>("");
+  const [time, setTime] = useState<string>("");
 
   const user = useAppSelector((state) => state.user?.data) as any;
   const router = useRouter();
@@ -76,10 +78,16 @@ const ServiceDetails = () => {
       return;
     }
 
-    const { date, time } = getTimeAndDate();
+    if (!date || !time || !ticket || !types) {
+      return;
+    }
+
+    // const { date, time } = getTimeAndDate();
     const data: IBooking = {
       date,
       time,
+      types,
+      ticket,
       userId: user?.id,
       serviceId: id as string,
     };
@@ -214,21 +222,26 @@ const ServiceDetails = () => {
 
           <div className="bg-green-100 w-full md:basis-4/12 p-4 md:p-8 rounded-md flex flex-col gap-4">
             <h1 className="text-lg font-bold tracking-widest">Booking Tour</h1>
+
             <CustomSelect
               placeholder="Type"
               onChange={setTypes}
-              value={types}
+              value={types ? types : null}
               optionsValue={TravelCategory}
             />
             <DatePicker
               format="YYYY-MM-DD"
               className="text-black custom-picker bg-white border-none w-full py-5 pl-10 rounded-xl"
+              onChange={(date, currentDate) => setDate(currentDate)}
             />
-            <TimePicker className="text-black custom-picker bg-white border-none w-full py-5 pl-10 rounded-xl" />
+            <TimePicker
+              className="text-black custom-picker bg-white border-none w-full py-5 pl-10 rounded-xl"
+              onChange={(time, currentTime) => setTime(currentTime)}
+            />
             <CustomSelect
               placeholder="Choose Ticket"
               onChange={setTicket}
-              value={ticket}
+              value={ticket ? ticket : null}
               optionsValue={TravelCategory}
             />
 

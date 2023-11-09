@@ -93,6 +93,14 @@ const Booking = () => {
       dataIndex: "time",
     },
     {
+      title: "Types",
+      dataIndex: "types",
+    },
+    {
+      title: "Ticket",
+      dataIndex: "ticket",
+    },
+    {
       title: "Status",
       dataIndex: "status",
     },

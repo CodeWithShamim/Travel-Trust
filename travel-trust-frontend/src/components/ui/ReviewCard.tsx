@@ -51,6 +51,7 @@ const ReviewCard = ({ review }: IReviewCardProps) => {
             <Rate
               className="text-green-400 ant-star"
               value={review?.ratings[index]}
+              disabled
             />
           </div>
         ))}

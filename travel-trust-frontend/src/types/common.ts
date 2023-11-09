@@ -56,10 +56,14 @@ export type IBooking = {
 
 export type IReview = {
   id?: string;
-  rating: number;
+  name: string;
+  email: string;
+  reviewTitle: string;
+  ratings: number[];
   comment: string;
   userId: string;
   serviceId: string;
   user?: IUser;
   service?: IService;
+  createdAt?: string;
 };

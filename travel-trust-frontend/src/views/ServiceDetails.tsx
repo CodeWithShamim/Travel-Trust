@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import {
   Button,
   DatePicker,
+  Divider,
   Input,
   Rate,
   Select,
@@ -31,9 +32,10 @@ import CustomSelect from "@/components/ui/CustomSelect";
 import { motion } from "framer-motion";
 import { imageVariants } from "@/utils/motion";
 import FormInput from "@/components/forms/FormInput";
-import { SubmitHandler } from "react-hook-form";
+import { Controller, SubmitHandler, useFormContext } from "react-hook-form";
 import Form from "@/components/forms/Form";
 import { reviewsLists, serviceDetailsLists } from "@/data/service";
+import ReviewCard from "@/components/ui/ReviewCard";
 
 const { TextArea } = Input;
 
@@ -60,7 +62,6 @@ const ServiceDetails = () => {
     ...query,
   });
 
-  const [comment, setComment] = useState<string>("");
   const [ratings, setRatings] = useState<number[]>([5, 3, 4, 5, 5]);
   const [types, setTypes] = useState<string | null>(null);
   const [ticket, setTicket] = useState<string | null>(null);
@@ -96,25 +97,22 @@ const ServiceDetails = () => {
 
   // add review
   const handleAddReview: SubmitHandler<any> = async (data: any, reset: any) => {
-    if (!user?.id) {
-      router.push("/login");
-      return;
-    }
-
-    // const data: IReview = {
-    //   comment,
-    //   rating,
-    //   userId: user?.id,
-    //   serviceId: id as string,
-    // };
+    const reviewData: IReview = {
+      ...data,
+      ratings: ratings,
+      userId: user?.id ?? undefined,
+      serviceId: id as string,
+    };
 
     try {
-      const res: any = await createReview(data);
+      const res: any = await createReview(reviewData);
       if (res?.data?.id) {
         message.success("Review added successfully.");
       }
     } catch (error) {
       message.error("Failed to add review.");
+    } finally {
+      reset();
     }
   };
 
@@ -149,6 +147,7 @@ const ServiceDetails = () => {
         </motion.div>
       </div>
 
+      {/* header details content  */}
       <section>
         <div className="bg-green-100 h-[150px] flex items-center justify-center w-full mt-[-10px]">
           <div className="max-w-[1200px] w-full mx-auto px-4 flex justify-between items-center">
@@ -196,9 +195,10 @@ const ServiceDetails = () => {
             </Button>
           </span>
         </div>
-        <hr className="text-gray-400" />
+        <Divider className="text-gray-400" />
       </section>
 
+      {/* overview  */}
       <section className="max-w-[1200px] w-full mx-auto px-4 py-16">
         <div className="flex items-start justify-between gap-10">
           <div className="basis-3/5">
@@ -242,8 +242,19 @@ const ServiceDetails = () => {
         </div>
       </section>
 
+      {/* show review  */}
+      <section className="max-w-[1200px] mx-auto px-4 pt-16">
+        <div className="w-[80%]">
+          {reviews?.map((review: IReview) => (
+            <ReviewCard review={review} key={review?.id} />
+          ))}
+        </div>
+      </section>
+
+      {/* add review  */}
       <section className="max-w-[1200px] mx-auto px-4 py-16">
-        <div className="w-[70%]">
+        <h1 className="text-4xl font-bold pb-4">Write a Review</h1>
+        <div className="w-[80%]">
           <Form submitHandler={handleAddReview}>
             <div className="flex py-5 gap-5">
               <div className="flex flex-col gap-2 w-[60%]">
@@ -264,7 +275,7 @@ const ServiceDetails = () => {
                   isStyles
                 />
                 <FormInput
-                  name="title"
+                  name="reviewTitle"
                   placeholder="Review Title"
                   type="text"
                   size="large"
@@ -289,11 +300,17 @@ const ServiceDetails = () => {
                 ))}
               </div>
             </div>
-            <TextArea
-              // onChange={(e) => setComment(e.target?.value)}
-              rows={7}
-              placeholder="Write comment..."
-              className="bg-green-100 border-none custom-placeholder text-black"
+
+            <Controller
+              name="comment"
+              render={({ field }) => (
+                <TextArea
+                  rows={7}
+                  placeholder="Write comment..."
+                  className="bg-green-100 border-none custom-placeholder text-black"
+                  {...field}
+                />
+              )}
             />
 
             <Button

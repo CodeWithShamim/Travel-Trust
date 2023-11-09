@@ -149,10 +149,10 @@ const ServiceDetails = () => {
 
       {/* header details content  */}
       <section>
-        <div className="bg-green-100 h-[150px] flex items-center justify-center w-full mt-[-10px]">
-          <div className="max-w-[1200px] w-full mx-auto px-4 flex justify-between items-center">
-            <div>
-              <h1 className="text-3xl font-bold uppercase tracking-widest">
+        <div className="bg-green-100 flex items-center justify-center w-full md:mt-[-10px] py-16 md:py-20 lg:py-24">
+          <div className="max-w-[1200px] w-full mx-auto px-4 flex flex-col items-start justify-center md:flex-row  md:justify-between md:items-center">
+            <div className="pb-6 md:pb-0">
+              <h1 className="text-xl md:text-2xl lg:text-3xl font-bold uppercase tracking-widest">
                 {service?.name}
               </h1>
               <p>
@@ -166,18 +166,20 @@ const ServiceDetails = () => {
               </p>
             </div>
 
-            <div className="flex gap-16">
+            <div className="flex flex-col md:flex-row gap-8 md:gap-16">
               {serviceDetailsLists(service)?.map((item, index) => (
                 <div key={index} className="flex items-center gap-4">
-                  <span className="hover:scale-125 transition-all">
+                  <div className="hover:scale-125 transition-all">
                     {item.icon}
-                  </span>
-                  <span>
+                  </div>
+                  <div>
                     <h2 className="text-gray-600 font-mono tracking-wide">
                       {item.title}
                     </h2>
-                    <p className="text-2xl tracking-widest">{item.value}</p>
-                  </span>
+                    <p className="text-xl lg:text-2xl md:tracking-widest">
+                      {item.value}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -199,16 +201,18 @@ const ServiceDetails = () => {
       </section>
 
       {/* overview  */}
-      <section className="max-w-[1200px] w-full mx-auto px-4 py-16">
-        <div className="flex items-start justify-between gap-10">
-          <div className="basis-3/5">
-            <h1 className="text-3xl font-bold tracking-widest">Overview</h1>
-            <p className="font-medium tracking-[1px] text-gray-500 py-8">
+      <section className="max-w-[1200px] w-full mx-auto px-4 pb-8 md:py-12 lg:py-16">
+        <div className="flex flex-col md:flex-row items-start justify-between gap-5 md:gap-8 lg:gap-10">
+          <div className="w-full md:basis-3/5">
+            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold tracking-widest">
+              Overview
+            </h1>
+            <p className="font-medium tracking-[1px] text-gray-500 py-4 md:py-8">
               {service.description}
             </p>
           </div>
 
-          <div className="bg-green-100 basis-4/12 p-8 rounded-md flex flex-col gap-4">
+          <div className="bg-green-100 w-full md:basis-4/12 p-4 md:p-8 rounded-md flex flex-col gap-4">
             <h1 className="text-lg font-bold tracking-widest">Booking Tour</h1>
             <CustomSelect
               placeholder="Type"
@@ -243,8 +247,8 @@ const ServiceDetails = () => {
       </section>
 
       {/* show review  */}
-      <section className="max-w-[1200px] mx-auto px-4 pt-16">
-        <div className="w-[80%]">
+      <section className="max-w-[1200px] mx-auto px-4 pt-8 md:pt-12 lg:pt-14">
+        <div className="w-full lg:w-[80%]">
           {reviews?.map((review: IReview) => (
             <ReviewCard review={review} key={review?.id} />
           ))}
@@ -252,12 +256,14 @@ const ServiceDetails = () => {
       </section>
 
       {/* add review  */}
-      <section className="max-w-[1200px] mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold pb-4">Write a Review</h1>
-        <div className="w-[80%]">
+      <section className="max-w-[1200px] mx-auto px-4 py-8 md:py-12">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold pb-4">
+          Write a Review
+        </h1>
+        <div className="w-full lg:w-[80%]">
           <Form submitHandler={handleAddReview}>
-            <div className="flex py-5 gap-5">
-              <div className="flex flex-col gap-2 w-[60%]">
+            <div className="flex flex-col md:flex-row py-5 gap-5">
+              <div className="flex flex-col gap-2 md:w-[60%]">
                 <span className="bg-green-100">
                   <FormInput
                     name="name"
@@ -282,13 +288,14 @@ const ServiceDetails = () => {
                   isStyles
                 />
               </div>
-              <div className="flex flex-col gap-3 w-[40%]">
+
+              <div className="flex flex-col gap-3 w-full md:w-[40%]">
                 {reviewsLists.map((item, index) => (
                   <div
                     key={item.id}
-                    className="flex items-center justify-between px-10"
+                    className="flex items-center justify-between md:px-10"
                   >
-                    <p className="text-2xl text-gray-600 tracking-widest">
+                    <p className="text-xl md:text-2xl text-gray-600 md:tracking-widest">
                       {item.name}
                     </p>
                     <Rate

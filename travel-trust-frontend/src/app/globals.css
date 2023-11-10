@@ -180,6 +180,10 @@
   }
 }
 
+.bordered {
+  border: 3px solid #FFF;
+}
+
 @media (max-width: 768px) {
   .galleryLayout {
     width: 100%;

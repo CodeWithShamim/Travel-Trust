@@ -36,6 +36,8 @@ import { Controller, SubmitHandler, useFormContext } from "react-hook-form";
 import Form from "@/components/forms/Form";
 import { reviewsLists, serviceDetailsLists } from "@/data/service";
 import ReviewCard from "@/components/ui/ReviewCard";
+import MouseScroll from "@/components/common/MouseScroll";
+import styles from "@/styles/common.module.css";
 
 const { TextArea } = Input;
 
@@ -146,12 +148,16 @@ const ServiceDetails = () => {
           <Image
             src={service?.image}
             alt={service?.name}
-            width={500}
+            width={1300}
             height={300}
-            className="h-[40rem] w-full object-cover"
+            className="h-[35rem] w-full object-cover"
             quality={100}
             priority
           />
+
+          <div>
+            <MouseScroll />
+          </div>
         </motion.div>
       </div>
 
@@ -337,7 +343,7 @@ const ServiceDetails = () => {
               type="primary"
               htmlType="submit"
               size="large"
-              loading={isLoading}
+              loading={addReviewLoading}
               className="my-6"
             >
               <span className="font-bold text-xl uppercase">Submit Review</span>

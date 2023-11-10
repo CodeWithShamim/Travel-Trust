@@ -43,7 +43,7 @@ const HomePage = () => {
   return (
     <div className="w-full">
       {/* Float Button  */}
-      <motion.div className="progress-bar" style={{ scaleX }} />
+      {/* <motion.div className="progress-bar" style={{ scaleX }} /> */}
       <FloatButton.BackTop
         shape="circle"
         type="primary"
@@ -296,6 +296,8 @@ const HomePage = () => {
       {/* <div>
         <MapView />
       </div> */}
+
+      <div className={styles["background-image3"]}></div>
     </div>
   );
 };

@@ -5,6 +5,8 @@ export type IFilters = {
   userId?: string;
   date?: string;
   time?: string;
+  types?: string;
+  ticket?: string;
   status?: string;
   searchTerm?: string;
 };

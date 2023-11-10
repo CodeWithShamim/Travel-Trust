@@ -53,6 +53,8 @@ model Booking {
   userId    String
   date      String
   time      String
+  types     String        @default("")
+  ticket    String        @default("")
   status    BookingStatus @default(pending)
 
   user    User    @relation(fields: [userId], references: [id])
@@ -68,9 +70,9 @@ model Review {
   id          String  @id @default(uuid())
   serviceId   String
   userId      String?
-  name        String
-  email       String
-  reviewTitle String
+  name        String  @default("")
+  email       String  @default("")
+  reviewTitle String  @default("")
   ratings     Int[]
   comment     String
 

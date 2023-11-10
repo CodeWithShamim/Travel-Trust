@@ -15,6 +15,12 @@ const create = z.object({
     time: z.string({
       required_error: 'Time is required',
     }),
+    types: z.string({
+      required_error: 'Types is required',
+    }),
+    ticket: z.string({
+      required_error: 'Ticket is required',
+    }),
     status: z.enum([...BookingStatus] as [string, ...string[]]).optional(),
   }),
 });
@@ -25,6 +31,8 @@ const update = z.object({
     serviceId: z.string().optional(),
     date: z.string().optional(),
     time: z.string().optional(),
+    types: z.string().optional(),
+    ticket: z.string().optional(),
     status: z.enum([...BookingStatus] as [string, ...string[]]).optional(),
   }),
 });

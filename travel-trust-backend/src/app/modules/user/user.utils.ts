@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import config from '../../../config';
 
 export const returnUserValue = (user: any) => {
-  delete user.role;
+  // delete user.role;
   delete user.password;
   return user;
 };

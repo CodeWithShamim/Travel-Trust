@@ -2,12 +2,12 @@
 
 import { IService } from "@/types";
 import Image from "next/image";
-import { Card, Rate, Tooltip } from "antd";
+import { Card, Rate, Tooltip, message } from "antd";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import colors from "@/constants/colors";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addServiceToCart } from "@/redux/slices/serviceSlice";
 import { motion, useAnimation } from "framer-motion";
 import { fadeIn, slideIn, zoomIn } from "@/utils/motion";
@@ -22,11 +22,19 @@ interface ServiceCardProps {
 
 const ServiceCard = ({ service, loading, index = 0 }: ServiceCardProps) => {
   const { id, name, price, image, category, status } = service;
+  const cart = useAppSelector((state) => state.service.cart);
   const dispatch = useAppDispatch();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (type: "add" | "remove") => {
+    if (cart.length >= 5 && type === "add") {
+      message.warning("Maximum cart size exists! total cart 5");
+      return;
+    }
+
     dispatch(addServiceToCart(service));
   };
+
+  const isExistOnCart = cart.some((item: { id: string }) => item?.id === id);
 
   return (
     <motion.div
@@ -41,10 +49,15 @@ const ServiceCard = ({ service, loading, index = 0 }: ServiceCardProps) => {
         hoverable
       >
         <div
-          onClick={handleAddToCart}
-          className="top-0 right-0 bg-primary z-20 text-white text-center absolute rounded-full w-8 h-8 bg-[#09ea4c]"
+          onClick={() => handleAddToCart(isExistOnCart ? "remove" : "add")}
+          className={`top-0 right-0 bg-primary z-20 text-white text-center absolute rounded-full w-8 h-8 ${
+            isExistOnCart ? "bg-[#ff3333]" : "bg-[#09ea4c] "
+          }`}
         >
-          <Tooltip title="Add to cart" color={colors.primary}>
+          <Tooltip
+            title={isExistOnCart ? "Remove from cart" : "Add to cart"}
+            color={isExistOnCart ? "#ff3333" : colors.primary}
+          >
             <ShoppingCartOutlined height={100} width={100} className="mt-2" />
           </Tooltip>
         </div>

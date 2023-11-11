@@ -8,7 +8,7 @@ import FormInput from "@/components/forms/FormInput";
 import { SubmitHandler } from "react-hook-form";
 import { useRegisterMutation } from "@/redux/api/authApi";
 import { useRouter } from "next/navigation";
-import { setTokenToLocalStorage } from "@/utils/local-storage";
+import { setValueToLocalStorage } from "@/utils/local-storage";
 import { authKey } from "@/constants/storageKey";
 import { UploadOutlined } from "@ant-design/icons";
 import { useUploadImage } from "@/utils/upload";
@@ -54,7 +54,7 @@ const Register = () => {
         router.push("/");
       }
 
-      setTokenToLocalStorage(authKey, res?.accessToken);
+      setValueToLocalStorage(authKey, res?.accessToken);
     } catch (err: any) {
       message.error(err?.data?.message);
       console.log({ err });

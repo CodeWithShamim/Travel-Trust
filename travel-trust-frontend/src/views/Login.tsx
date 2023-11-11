@@ -7,7 +7,7 @@ import Form from "@/components/forms/Form";
 import FormInput from "@/components/forms/FormInput";
 import { SubmitHandler } from "react-hook-form";
 import { useLoginMutation } from "@/redux/api/authApi";
-import { setTokenToLocalStorage } from "@/utils/local-storage";
+import { setValueToLocalStorage } from "@/utils/local-storage";
 import { authKey } from "@/constants/storageKey";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/hooks";
@@ -39,7 +39,7 @@ const Login = () => {
         router.push("/");
       }
 
-      setTokenToLocalStorage(authKey, res?.accessToken);
+      setValueToLocalStorage(authKey, res?.accessToken);
     } catch (err: any) {
       message.error(err?.data?.message);
       console.log({ err });

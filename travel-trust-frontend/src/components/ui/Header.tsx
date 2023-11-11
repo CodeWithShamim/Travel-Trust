@@ -10,7 +10,7 @@ import {
   Badge,
 } from "antd";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import {
   DownOutlined,
   UserOutlined,
@@ -21,11 +21,16 @@ import { getUserInfo } from "@/helpers/persist/user.persist";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { removeUserData, setUserData } from "@/redux/slices/userSlice";
 import { useEffect } from "react";
-import { removeTokenFromLocalStorage } from "@/utils/local-storage";
-import { authKey } from "@/constants/storageKey";
+import {
+  getValueFromLocalStorage,
+  removeValueFromLocalStorage,
+} from "@/utils/local-storage";
+import { authKey, cartKey } from "@/constants/storageKey";
 import { useRouter } from "next/navigation";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import { motion } from "framer-motion";
+import { IService } from "@/types";
+import { addAllServiceToCart } from "@/redux/slices/serviceSlice";
 
 const { Header: HeaderLayout } = Layout;
 
@@ -35,16 +40,24 @@ const Header = () => {
   const dispatch: any = useAppDispatch();
   const userData = useAppSelector((state) => state.user?.data) as any;
   const router = useRouter();
+
   const cart = useAppSelector((state) => state.service?.cart);
 
   useEffect(() => {
+    const cartValue = getValueFromLocalStorage(cartKey);
+    const parseCartValue = JSON.parse(cartValue as string);
+
+    if (parseCartValue?.length) {
+      dispatch(addAllServiceToCart(parseCartValue));
+    }
+
     if (data?.id) {
       dispatch(setUserData(data));
     }
   }, [data, dispatch]);
 
   const signOut = () => {
-    removeTokenFromLocalStorage(authKey);
+    removeValueFromLocalStorage(authKey);
     dispatch(removeUserData());
     router.push("/login");
   };

@@ -2,6 +2,7 @@
 import Loader from "@/components/ui/Loader";
 import SideBar from "@/components/ui/SideBar";
 import { getUserInfo } from "@/helpers/persist/user.persist";
+import { useGetUserByIdQuery } from "@/redux/api/authApi";
 import { Layout } from "antd";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -9,16 +10,19 @@ import { useEffect, useState } from "react";
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const userLoggedIn = getUserInfo();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const {
+    data: user,
+    isLoading,
+    error,
+  } = useGetUserByIdQuery(userLoggedIn?.id);
 
   useEffect(() => {
-    if (!userLoggedIn?.id) {
+    if (!user?.id && !isLoading) {
       router.push("/login");
     }
-    setIsLoading(true);
-  }, [userLoggedIn, router, isLoading]);
+  }, [user, router, isLoading]);
 
-  if (!isLoading) {
+  if (isLoading) {
     return <Loader />;
   }
 

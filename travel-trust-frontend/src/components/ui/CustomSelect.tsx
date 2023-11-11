@@ -23,7 +23,7 @@ const CustomSelect = ({
       className="text-black bg-white custom-select w-full p-8 rounded-xl"
       value={value}
       suffixIcon={<DownCircleOutlined />}
-      options={optionsValue.map((province: string) => ({
+      options={optionsValue.map((province: string, index: number) => ({
         label: province,
         value: province,
       }))}

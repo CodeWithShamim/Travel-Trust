@@ -7,7 +7,7 @@ import React from "react";
 import { AiOutlineMail, AiOutlineContacts } from "react-icons/ai";
 import { FaRegAddressCard } from "react-icons/fa";
 
-const Profile = ({ mode }: { mode?: string }) => {
+const Profile = () => {
   const user: any = useAppSelector((state) => state.user?.data);
 
   const contactLists = [
@@ -24,8 +24,6 @@ const Profile = ({ mode }: { mode?: string }) => {
       icon: <FaRegAddressCard />,
     },
   ];
-
-  const isEdit = mode === "edit";
 
   return (
     <div>
@@ -67,7 +65,7 @@ const Profile = ({ mode }: { mode?: string }) => {
       <section className="flex gap-8 items-center justify-between">
         <div className="shadow-2xl bg-white basis-4/12 p-6 my-10 rounded">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold pb-4">
-            {isEdit ? "Edit" : "About"}
+            About
           </h1>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam

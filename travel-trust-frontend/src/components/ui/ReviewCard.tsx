@@ -38,16 +38,17 @@ const ReviewCard = ({ review }: IReviewCardProps) => {
       <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-700 capitalize pt-4 md:pt-8">
         {review?.reviewTitle}
       </h1>
-      <p className="font-medium tracking-[1px] text-gray-500 py-6 md:py-8">
+      <p className="font-medium tracking-[1px] lg:max-w-[70%] text-gray-500 py-6 md:py-8">
         {review?.comment}
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full md:w-[80%] lg:w-[70%]">
         {reviewsLists.map((item, index) => (
-          <div key={index} className="flex justify-between items-center gap-6">
+          <div key={index} className="flex items-center gap-3">
             <h3 className="text-xl text-gray-600 tracking-widest">
               {item.name}
             </h3>
+
             <Rate
               className="text-green-400 ant-star"
               value={review?.ratings[index]}

@@ -18,18 +18,30 @@ const StyledComponentsRegistry = ({ children }: React.PropsWithChildren) => {
     <StyleProvider cache={cache}>
       <ConfigProvider
         theme={{
+          token: {
+            colorPrimary: "#09ea4c",
+          },
           components: {
-            Button: {
-              colorPrimary: "#09ea4c",
-              algorithm: true,
-            },
-            Input: {
-              colorPrimary: "#09ea4c",
-              algorithm: true,
-            },
-            FloatButton: {
-              colorPrimary: "#00bf36",
-              algorithm: true,
+            // Button: {
+            //   colorPrimary: "#09ea4c",
+            //   algorithm: true,
+            // },
+            // Input: {
+            //   colorPrimary: "#09ea4c",
+            //   algorithm: true,
+            // },
+            // FloatButton: {
+            //   colorPrimary: "#09ea4c",
+            //   algorithm: true,
+            // },
+            // Pagination: {
+            //   itemBg: "#09ea4c",
+            // },
+            Menu: {
+              itemHoverBg: "#c1ffd2",
+              itemActiveBg: "#09ea4c",
+              itemSelectedBg: "#09ea4c",
+              itemSelectedColor: "#FFF",
             },
           },
         }}

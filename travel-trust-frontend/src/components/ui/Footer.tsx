@@ -52,10 +52,11 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row gap-5 my-10 justify-between text-left">
           <div className="flex flex-col gap-6">
             <h1 className="text-xl font-bold underline">Quick Links</h1>
-            {footerLinks[0].map((item) => (
+            {footerLinks[0].map((item, index) => (
               <Link
                 className="text-gray-100 no-underline font-semibold"
                 href={item.href}
+                key={index}
               >
                 {item.name}
               </Link>
@@ -64,10 +65,11 @@ const Footer = () => {
 
           <div className="flex flex-col gap-6">
             <h1 className="text-xl font-bold underline">Our Community</h1>
-            {footerLinks[1].map((item) => (
+            {footerLinks[1].map((item, index) => (
               <Link
                 className="text-gray-100 no-underline font-semibold"
                 href={item.href}
+                key={index}
               >
                 {item.name}
               </Link>

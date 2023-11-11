@@ -24,7 +24,7 @@ import { useEffect } from "react";
 import { removeTokenFromLocalStorage } from "@/utils/local-storage";
 import { authKey } from "@/constants/storageKey";
 import { useRouter } from "next/navigation";
-import { IUser } from "@/types";
+import { BsFillCartCheckFill } from "react-icons/bs";
 import { motion } from "framer-motion";
 
 const { Header: HeaderLayout } = Layout;
@@ -109,13 +109,7 @@ const Header = () => {
             <Badge count={cart?.length} className="mr-4">
               <Avatar
                 icon={
-                  <span style={{ fontSize: "32px" }}>
-                    <ShoppingCartOutlined
-                      height={100}
-                      width={100}
-                      className="text-[#09ea4c]"
-                    />
-                  </span>
+                  <BsFillCartCheckFill size={16} className="text-[#09ea4c]" />
                 }
               />
             </Badge>

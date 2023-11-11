@@ -4,6 +4,7 @@ import {
   TableOutlined,
   AppstoreOutlined,
 } from "@ant-design/icons";
+import { FaRegUserCircle } from "react-icons/fa";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
 export const sidebarItems = (role: string) => {
@@ -11,23 +12,23 @@ export const sidebarItems = (role: string) => {
 
   const defaultSidebarItems: MenuProps["items"] = [
     {
-      label: "Profile",
-      key: "profile",
-      icon: <ProfileOutlined />,
-      children: [
-        {
-          label: <Link href={`${DAHBOARD_URL}/profile`}>Account Profile</Link>,
-          key: `/profile`,
-        },
-        {
-          label: (
-            <Link href={`${DAHBOARD_URL}/profile/edit-profile`}>
-              Edit Profile
-            </Link>
-          ),
-          key: `/edit-profile`,
-        },
-      ],
+      label: <Link href={`${DAHBOARD_URL}/profile`}>Profile</Link>,
+      key: 1,
+      icon: <FaRegUserCircle />,
+      // children: [
+      //   {
+      //     label: <Link href={`${DAHBOARD_URL}/profile`}>Account Profile</Link>,
+      //     key: `/profile`,
+      //   },
+      //   {
+      //     label: (
+      //       <Link href={`${DAHBOARD_URL}/profile/edit-profile`}>
+      //         Edit Profile
+      //       </Link>
+      //     ),
+      //     key: `/edit-profile`,
+      //   },
+      // ],
     },
   ];
 

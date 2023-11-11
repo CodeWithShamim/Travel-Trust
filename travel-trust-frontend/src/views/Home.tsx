@@ -19,6 +19,7 @@ import { fadeIn, imageVariants, slideIn, textVariant } from "@/utils/motion";
 import { useScroll, useSpring } from "framer-motion";
 import { UpOutlined } from "@ant-design/icons";
 import ImageGallery from "@/components/ui/ImageGallery";
+import { useRouter } from "next/navigation";
 
 const HomePage = () => {
   const query: any = {};
@@ -32,6 +33,8 @@ const HomePage = () => {
   const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress);
+
+  const router = useRouter();
 
   const availableService = services?.filter(
     (service: IService) => service?.status === "available"
@@ -265,6 +268,7 @@ const HomePage = () => {
           type="primary"
           className="mt-6 w-48  rounded-full hover:bg-transparent hover:border-[#09ea4c] transition duration-300 ease-in-out"
           size="large"
+          onClick={() => router.push("/service/search")}
         >
           <span className="font-bold">Book Tour</span>
         </Button>

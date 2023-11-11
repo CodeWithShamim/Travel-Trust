@@ -19,6 +19,12 @@ export const reviewApi = baseApi.injectEndpoints({
         method: "GET",
         params: filtersData,
       }),
+      transformResponse: (response: IReview[], meta: IMeta) => {
+        return {
+          reviews: response,
+          meta,
+        };
+      },
       providesTags: ["review"],
     }),
     deleteSingleReview: build.mutation({

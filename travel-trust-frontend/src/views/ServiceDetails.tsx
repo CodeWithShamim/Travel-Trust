@@ -9,6 +9,8 @@ import {
   DatePicker,
   Divider,
   Input,
+  Pagination,
+  PaginationProps,
   Rate,
   Select,
   TimePicker,
@@ -59,16 +61,20 @@ const ServiceDetails = () => {
   const [createReview, { isLoading: addReviewLoading }] =
     useCreateReviewMutation();
 
-  query["serviceId"] = id;
-  const { data: reviews, isLoading: reviewLoading } = useGetAllReviewQuery({
-    ...query,
-  });
-
   const [ratings, setRatings] = useState<number[]>([5, 3, 4, 5, 5]);
   const [types, setTypes] = useState<string>("");
   const [ticket, setTicket] = useState<string>("");
   const [date, setDate] = useState<string>("");
   const [time, setTime] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(2);
+
+  query["serviceId"] = id;
+  query["page"] = currentPage;
+  query["limit"] = limit;
+  const { data: reviewsData, isLoading: reviewLoading } = useGetAllReviewQuery({
+    ...query,
+  });
 
   const user = useAppSelector((state) => state.user?.data) as any;
   const router = useRouter();
@@ -132,6 +138,11 @@ const ServiceDetails = () => {
     setRatings(newRatings);
   };
 
+  const onChange: PaginationProps["onChange"] = (page) => {
+    console.log(page);
+    setCurrentPage(page);
+  };
+
   if (isLoading) {
     return <Loader />;
   }
@@ -158,6 +169,13 @@ const ServiceDetails = () => {
           <div>
             <MouseScroll />
           </div>
+          {service?.status === "upcoming" && (
+            <div className="absolute inset-x-0 box-content top-1/4 m-auto text-center h-32">
+              <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl text-green-400 text-center drop-shadow-lg capitalize">
+                {service?.status}
+              </h1>
+            </div>
+          )}
         </motion.div>
       </div>
 
@@ -268,9 +286,20 @@ const ServiceDetails = () => {
       {/* show review  */}
       <section className="max-w-[1200px] mx-auto px-4 pt-8 md:pt-12 lg:pt-14">
         <div className="w-full lg:w-[80%]">
-          {reviews?.map((review: IReview) => (
+          {reviewsData?.reviews?.map((review: IReview) => (
             <ReviewCard review={review} key={review?.id} />
           ))}
+        </div>
+        <div>
+          {Number(reviewsData?.meta?.total) > 0 ? (
+            <Pagination
+              current={currentPage}
+              onChange={onChange}
+              total={reviewsData?.meta?.total}
+              defaultPageSize={limit}
+              responsive
+            />
+          ) : null}
         </div>
       </section>
 
@@ -344,6 +373,7 @@ const ServiceDetails = () => {
               htmlType="submit"
               size="large"
               loading={addReviewLoading}
+              disabled={service?.status === "upcoming"}
               className="my-6"
             >
               <span className="font-bold text-xl uppercase">Submit Review</span>

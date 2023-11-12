@@ -115,7 +115,7 @@ const HomePage = () => {
           initial="hidden"
           whileInView="show"
           variants={textVariant(0.4)}
-          className="font-bold text-3xl uppercase text-[#34d364] tracking-widest"
+          className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest"
         >
           Available service
         </motion.h1>
@@ -142,7 +142,7 @@ const HomePage = () => {
             initial="hidden"
             whileInView="show"
             variants={textVariant(0.4)}
-            className="font-bold text-3xl uppercase text-[#34d364] tracking-widest"
+            className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest"
           >
             Upcoming service
           </motion.h1>
@@ -210,7 +210,7 @@ const HomePage = () => {
       )}
 
       {/* news  */}
-      <div className="max-w-[1200px] mx-auto my-14 md:my-20 lg:my-24">
+      <div className="max-w-[1200px] mx-auto px-4 my-14 md:my-20 lg:my-24">
         <Divider
           orientation="left"
           orientationMargin="0"
@@ -220,7 +220,7 @@ const HomePage = () => {
             initial="hidden"
             whileInView="show"
             variants={textVariant(0.4)}
-            className="font-bold text-3xl uppercase text-[#34d364] tracking-widest"
+            className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest"
           >
             Latest news
           </motion.h1>
@@ -244,7 +244,7 @@ const HomePage = () => {
             initial="hidden"
             whileInView="show"
             variants={textVariant(0.4)}
-            className="font-bold text-3xl uppercase text-[#34d364] tracking-widest"
+            className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest"
           >
             Photo Gallery
           </motion.h1>
@@ -286,7 +286,7 @@ const HomePage = () => {
               initial="hidden"
               whileInView="show"
               variants={textVariant(0.4)}
-              className="font-bold text-3xl uppercase text-[#34d364] tracking-widest"
+              className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest"
             >
               Customer Review
             </motion.h1>

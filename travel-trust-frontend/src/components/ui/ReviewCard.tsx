@@ -44,7 +44,10 @@ const ReviewCard = ({ review }: IReviewCardProps) => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full md:w-[80%] lg:w-[70%]">
         {reviewsLists.map((item, index) => (
-          <div key={index} className="flex items-center gap-3">
+          <div
+            key={index}
+            className="flex justify-between md:justify-start items-center gap-3"
+          >
             <h3 className="text-xl text-gray-600 tracking-widest">
               {item.name}
             </h3>

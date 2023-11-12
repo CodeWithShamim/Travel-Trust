@@ -42,7 +42,8 @@ const TTTable = ({
       dataSource={dataSource}
       pagination={paginationConfig}
       onChange={onTableChange}
-      style={{ width: "auto" }}
+      style={{ overflowX: "auto", width: Number(window?.innerWidth) - 118 }}
+      //
     />
   );
 };

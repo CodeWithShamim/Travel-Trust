@@ -123,7 +123,7 @@ const Booking = () => {
         placeholder="Search booking"
         type="text"
         allowClear
-        className="text-black border-r-0 mb-6 w-[40%] h-16 rounded-md border-neutral-200"
+        className="text-black border-r-0 mb-6 w-[90%] lg:w-[40%] h-16 rounded-md border-neutral-200"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />

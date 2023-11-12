@@ -1,38 +1,58 @@
 "use client";
 
-import { useState } from "react";
-import { Layout, Menu } from "antd";
+import { useEffect, useState } from "react";
+import { Button, Layout, Menu } from "antd";
 
 import { sidebarItems } from "@/constants/sidebarItems";
-import { getUserInfo } from "@/helpers/persist/user.persist";
+import { useAppSelector } from "@/redux/hooks";
+import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 
 const { Sider } = Layout;
 
 const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const user: any = useAppSelector((state) => state.user.data);
 
-  const { role } = getUserInfo() as any;
+  useEffect(() => {
+    setCollapsed(window?.innerWidth <= 400);
+  }, []);
 
   return (
     <Sider
       collapsible
       collapsed={collapsed}
-      onCollapse={(value) => setCollapsed(value)}
-      width={230}
+      trigger={null}
       style={{
-        overflow: "auto",
-        height: "auto",
-        left: 0,
-        top: 0,
-        bottom: 0,
         backgroundColor: "#FFFFFF",
       }}
     >
+      <div className="flex items-center justify-evenly">
+        <h3 className="font-semibold text-gray-400">
+          {collapsed || "Hide menu"}
+        </h3>
+        <Button
+          type="text"
+          icon={
+            collapsed ? (
+              <BsArrowRight className="text-green-400" size={25} />
+            ) : (
+              <BsArrowLeft className="text-green-400" size={25} />
+            )
+          }
+          onClick={() => setCollapsed(!collapsed)}
+          style={{
+            fontSize: "16px",
+            width: 64,
+            height: 64,
+          }}
+        />
+      </div>
+
       <Menu
         theme="light"
         defaultSelectedKeys={["1"]}
         mode="inline"
-        items={sidebarItems(role)}
+        items={sidebarItems(user?.role)}
       />
     </Sider>
   );

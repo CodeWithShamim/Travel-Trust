@@ -19,7 +19,7 @@ const CartCard = ({ item }: ICartCard) => {
   };
 
   return (
-    <div className="w-full h-full bg-white p-2 rounded grid gap-5 grid-cols-6 items-center shadow">
+    <div className="w-full h-full bg-white p-2 rounded grid gap-5 grid-cols-3 lg:grid-cols-6 items-center shadow">
       <Image
         src={item?.image}
         width={55}
@@ -31,8 +31,8 @@ const CartCard = ({ item }: ICartCard) => {
 
       <h2>{item.name}</h2>
       <p className="font-semibold">${item.price}</p>
-      <p className="text-green-400">
-        Status: <span>{item.status}</span>
+      <p className="text-green-400 text-xs md:text-base">
+        Status: <span className="text-xs md:text-base">{item.status}</span>
       </p>
 
       <div onClick={handleRemoveItem}>

@@ -26,6 +26,11 @@ const Profile = () => {
   const cart: IService[] = useAppSelector((state) => state.service?.cart);
   const dispatch = useAppDispatch();
   const { handleUpload, imageUrl, uploadLoading } = useUploadImage();
+  const {
+    handleUpload: handleUploadBanner,
+    imageUrl: bannerUrl,
+    uploadLoading: uploadBannerLoading,
+  } = useUploadImage();
 
   const updateData: any = {};
   const [handeUpdateUser, { data, isLoading, error }] = useUpdateUserMutation();
@@ -49,13 +54,19 @@ const Profile = () => {
   ];
 
   useEffect(() => {
+    updateData["id"] = user?.id;
     if (imageUrl) {
-      updateData["id"] = user?.id;
       updateData["profileImage"] = imageUrl;
+    }
+    if (bannerUrl) {
+      updateData["bannerImage"] = bannerUrl;
+    }
+
+    if (imageUrl || bannerUrl) {
       handeUpdateUser(updateData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imageUrl]);
+  }, [imageUrl, bannerUrl]);
 
   if (data?.id) {
     dispatch(setUserData(data));
@@ -82,15 +93,42 @@ const Profile = () => {
   return (
     <div>
       <section>
-        <Image
-          src={require("@/assets/home1.jpg")}
-          width={1300}
-          height={400}
-          className="h-[18rem] w-full object-cover"
-          priority
-          quality={100}
-          alt="profile banner"
-        />
+        <div className="relative">
+          <Image
+            src={user?.bannerImage ?? require("@/assets/home1.jpg")}
+            width={1300}
+            height={400}
+            className="h-[18rem] w-full object-cover"
+            priority
+            quality={100}
+            alt="profile banner"
+          />
+
+          {uploadBannerLoading && (
+            <>
+              <span className="absolute inset-1/2">
+                <Spin />
+              </span>
+              <div className="absolute bg-black inset-0 h-full w-full rounded-full opacity-60"></div>
+            </>
+          )}
+
+          <div className="absolute bg-white rounded px-2 bottom-4 right-4 hover:bg-green-200 transition-all">
+            <Upload
+              customRequest={(e: any) =>
+                handleUploadBanner(e.file, e.onSuccess, e.onError)
+              }
+              showUploadList={false}
+              maxCount={1}
+              disabled={uploadBannerLoading}
+            >
+              <span className="flex gap-2 items-center cursor-pointer">
+                <BsCameraFill size={16} />
+                <h3 className="font-serif">Upload banner image</h3>
+              </span>
+            </Upload>
+          </div>
+        </div>
 
         <div className="flex items-center gap-5 mt-[-8.5%] ml-8">
           {ProfileImageUpload(user, uploadLoading, handleUpload)}

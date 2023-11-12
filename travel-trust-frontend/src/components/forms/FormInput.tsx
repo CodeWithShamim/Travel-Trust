@@ -7,7 +7,9 @@ interface IInput {
   type?: string;
   size?: "large" | "small";
   value?: string | string[] | undefined;
+  defaultValue?: string;
   placeholder?: string;
+  disabled?: boolean;
   label?: string;
   isStyles?: boolean;
 }
@@ -17,7 +19,9 @@ const FormInput = ({
   type,
   size,
   value,
+  defaultValue,
   placeholder,
+  disabled,
   label,
   isStyles = false,
 }: IInput) => {
@@ -43,8 +47,10 @@ const FormInput = ({
               type={type}
               size={size}
               placeholder={placeholder}
+              disabled={disabled}
               {...field}
               value={value ? value : field.value}
+              defaultValue={defaultValue}
               className={`${
                 isStyles && "bg-green-100 border-0 custom-placeholder py-6"
               }`}

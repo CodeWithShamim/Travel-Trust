@@ -35,6 +35,7 @@ export const authApi = baseApi.injectEndpoints({
         method: "PATCH",
         data,
       }),
+      invalidatesTags: ["user"],
     }),
   }),
 });

@@ -3,7 +3,9 @@ import "./globals.css";
 import Header from "@/components/ui/Header";
 import Footer from "@/components/ui/Footer";
 import type { Metadata } from "next";
-import ProgressBar from "@/components/common/ProgressBar";
+import dynamic from "next/dynamic";
+
+const ProgressBar = dynamic(() => import("@/components/common/ProgressBar"));
 
 export const metadata: Metadata = {
   title: "Travel Trust Agency Website",
@@ -17,8 +19,8 @@ export default function RootLayout({
   return (
     <Providers>
       <html lang="en">
-        <ProgressBar />
         <body>
+          <ProgressBar />
           <Header />
           <div className="min-h-screen mx-auto">{children}</div>
           <Footer />

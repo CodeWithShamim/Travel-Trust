@@ -4,7 +4,6 @@ import React, { ReactNode } from "react";
 interface IEditModal {
   open: boolean;
   title?: string;
-  onOk: () => void;
   onCancel: () => void;
   children?: ReactNode;
 }
@@ -12,12 +11,11 @@ interface IEditModal {
 const EditModal = ({
   open,
   title = "Edit",
-  onOk,
   onCancel,
   children,
 }: IEditModal) => {
   return (
-    <Modal title={title} open={open} onOk={onOk} onCancel={onCancel}>
+    <Modal title={title} open={open} onCancel={onCancel} footer={null}>
       {children}
     </Modal>
   );

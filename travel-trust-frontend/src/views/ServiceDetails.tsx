@@ -255,11 +255,11 @@ const ServiceDetails = () => {
             />
             <DatePicker
               format="YYYY-MM-DD"
-              className="text-black custom-picker bg-white border-none w-full py-5 pl-10 rounded-xl"
+              className="text-black custom-picker bg-white border-none w-full py-5 rounded-xl"
               onChange={(date, currentDate) => setDate(currentDate)}
             />
             <TimePicker
-              className="text-black custom-picker bg-white border-none w-full py-5 pl-10 rounded-xl"
+              className="text-black custom-picker bg-white border-none w-full py-5 rounded-xl"
               onChange={(time, currentTime) => setTime(currentTime)}
             />
             <CustomSelect

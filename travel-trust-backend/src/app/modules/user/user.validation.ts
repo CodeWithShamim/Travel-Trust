@@ -21,6 +21,7 @@ const create = z.object({
     // role: z.enum([...userRole] as [string, ...string[]], {
     //   required_error: 'Role is required',
     // }),
+    bannerImage: z.string().optional(),
     gender: z.string().optional(),
     age: z.number().optional(),
     address: z.string().optional(),
@@ -34,6 +35,7 @@ const update = z.object({
     email: z.string().optional(),
     contactNo: z.string().optional(),
     // role: z.enum([...userRole] as [string, ...string[]]).optional(),
+    bannerImage: z.string().optional(),
     gender: z.string().optional(),
     age: z.number().optional(),
     address: z.string().optional(),

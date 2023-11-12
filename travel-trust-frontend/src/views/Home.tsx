@@ -74,23 +74,21 @@ const HomePage = () => {
               <Image
                 src={require(`@/assets/banner${item}.jpg`)}
                 alt="banner image"
-                style={{
-                  width: "100%",
-                  height: "100vh",
-                  objectFit: "cover",
-                }}
+                className="w-full h-screen object-cover"
+                priority
+                quality={100}
               />
-              <div className="absolute inset-0 bg-[#000] opacity-50"></div>
+              <div className="absolute inset-0 bg-[#000] opacity-30"></div>
             </motion.div>
           ))}
         </Carousel>
 
-        <div className="absolute bottom-1/2 left-0 right-0 max-w-[1200px] mx-auto">
+        <div className="absolute bottom-[35%] md:bottom-[45%] lg:bottom-1/2 text-center left-0 right-0 max-w-[1200px] mx-auto">
           <motion.h1
             initial="hidden"
             animate="show"
             variants={fadeIn("down", "tween", 0, 1.5)}
-            className="custom-head-text px-4 text-4xl md:text-6xl lg:text-8xl tracking-wide text-white font-extrabold uppercase text-center drop-shadow-md"
+            className="custom-head-text px-4 text-6xl lg:text-8xl tracking-wide text-white font-extrabold uppercase text-center drop-shadow-md"
           >
             Expore the world with <span className="fancy">Travel</span>
           </motion.h1>
@@ -98,7 +96,7 @@ const HomePage = () => {
             initial="hidden"
             animate="show"
             variants={fadeIn("up", "tween", 0, 1.5)}
-            className="custom-sub-text hero-banner__stroked-title text-center text-white text-xl md:text-2xl lg:text-3xl tracking-[1px] capitalize font-semibold pt-10"
+            className="custom-sub-text hero-banner__stroked-title text-center text-white text-2xl lg:text-3xl tracking-[1px] capitalize font-semibold pt-10"
           >
             Where would you like to go?
           </motion.p>

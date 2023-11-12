@@ -310,7 +310,7 @@ const ServiceDetails = () => {
         </h1>
         <div className="w-full lg:w-[80%]">
           <Form submitHandler={handleAddReview}>
-            <div className="flex flex-col md:flex-row py-5 gap-5">
+            <div className="flex flex-col-reverse md:flex-row py-5 gap-5">
               <div className="flex flex-col gap-2 md:w-[60%]">
                 <span className="bg-green-100">
                   <FormInput

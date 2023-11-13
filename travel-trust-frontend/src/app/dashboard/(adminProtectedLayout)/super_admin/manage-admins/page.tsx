@@ -1,7 +1,12 @@
+import ManageAdmin from "@/views/adminDashboard/ManageAdmin";
 import React from "react";
 
 const ManageAdminPage = () => {
-  return <div>ManageAdminPage</div>;
+  return (
+    <>
+      <ManageAdmin />
+    </>
+  );
 };
 
 export default ManageAdminPage;

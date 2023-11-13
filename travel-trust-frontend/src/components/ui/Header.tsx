@@ -31,6 +31,7 @@ import { BsFillCartCheckFill } from "react-icons/bs";
 import { motion } from "framer-motion";
 import { IService } from "@/types";
 import { addAllServiceToCart } from "@/redux/slices/serviceSlice";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const { Header: HeaderLayout } = Layout;
 
@@ -117,8 +118,11 @@ const Header = () => {
         </div>
 
         <div className="flex gap-2 items-center z-50">
-          {/* for tablet & desktop */}
-          <Link href="/dashboard/profile" className="hidden md:block">
+          <Link href="/service/search">
+            <AiOutlineSearch size={20} className="text-[#09ea4c]" />
+          </Link>
+
+          <Link href="/dashboard/profile">
             <Badge count={cart?.length} className="mr-4">
               <Avatar
                 icon={

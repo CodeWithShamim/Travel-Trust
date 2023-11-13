@@ -1,7 +1,12 @@
+import ManageService from "@/views/adminDashboard/ManageService";
 import React from "react";
 
 const ManageServicePage = () => {
-  return <div>ManageServicePage</div>;
+  return (
+    <>
+      <ManageService />
+    </>
+  );
 };
 
 export default ManageServicePage;

@@ -1,7 +1,12 @@
+import ManageBooking from "@/views/adminDashboard/ManageBooking";
 import React from "react";
 
 const ManageBookingsPage = () => {
-  return <div>ManageBookingsPage</div>;
+  return (
+    <>
+      <ManageBooking />
+    </>
+  );
 };
 
 export default ManageBookingsPage;

@@ -1,7 +1,12 @@
+import ManageUser from "@/views/adminDashboard/ManageUser";
 import React from "react";
 
 const ManageUserPage = () => {
-  return <div>ManageUserPage</div>;
+  return (
+    <>
+      <ManageUser />
+    </>
+  );
 };
 
 export default ManageUserPage;

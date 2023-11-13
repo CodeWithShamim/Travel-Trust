@@ -32,6 +32,7 @@ export type IUser = {
   gender?: string;
   address?: string;
   age?: number;
+  createdAt?: string;
 };
 
 export type IService = {

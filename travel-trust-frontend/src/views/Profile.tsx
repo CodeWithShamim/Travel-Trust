@@ -3,7 +3,7 @@
 import CartCard from "@/components/ui/CartCard";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { IService, IUser } from "@/types";
-import { Avatar, Button, Spin, Tooltip, Upload, message } from "antd";
+import { Spin, Upload, message } from "antd";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
@@ -15,11 +15,8 @@ import { BiEdit } from "react-icons/bi";
 import { useUploadImage } from "@/utils/upload";
 import { useUpdateUserMutation } from "@/redux/api/authApi";
 import { setUserData } from "@/redux/slices/userSlice";
-import EditModal from "@/components/ui/EditModal";
-import Form from "@/components/forms/Form";
-import FormInput from "@/components/forms/FormInput";
-import CustomSelect from "@/components/ui/CustomSelect";
 import { SubmitHandler } from "react-hook-form";
+import UpdateUserInfo from "@/components/ui/UpdateUserInfo";
 
 const Profile = () => {
   const user: any = useAppSelector((state) => state.user?.data);
@@ -206,83 +203,19 @@ const Profile = () => {
       {/* Edit modal */}
       <section>
         {showEditModal && (
-          <EditModal
-            title={user?.username}
-            open={showEditModal}
-            onCancel={() => setShowEditModal(false)}
-          >
-            <Form submitHandler={handleProfileUpdate}>
-              <div className="flex flex-col gap-5">
-                <div className="flex flex-col lg:flex-row gap-5">
-                  <div className="w-full lg:w-[70%] flex flex-col gap-1">
-                    <FormInput
-                      name="username"
-                      size="large"
-                      disabled
-                      defaultValue={user?.username}
-                    />
-
-                    <FormInput
-                      name="email"
-                      size="large"
-                      placeholder="Email"
-                      disabled
-                      defaultValue={user?.email}
-                    />
-                    <FormInput
-                      name="contactNo"
-                      type="text"
-                      size="large"
-                      placeholder="Contact number"
-                      defaultValue={user?.contactNo}
-                    />
-                    <FormInput
-                      name="address"
-                      type="text"
-                      size="large"
-                      placeholder="Address"
-                      defaultValue={user?.address}
-                      isStyles
-                    />
-                  </div>
-
-                  <div className="lg:w-[30%]">
-                    {ProfileImageUpload(user, uploadLoading, handleUpload)}
-                  </div>
-                </div>
-
-                <div className="flex gap-5">
-                  <CustomSelect
-                    placeholder="Gender"
-                    onChange={setGender}
-                    value={gender ?? user?.gender ?? null}
-                    optionsValue={["Male", "Female", "Custom"]}
-                    style={{
-                      border: "1px solid #09ea4c",
-                    }}
-                  />
-                  <CustomSelect
-                    placeholder="Age"
-                    onChange={setAge}
-                    value={age ?? user?.age ?? null}
-                    optionsValue={[20, 21, 22, 23, 24, 25, 26]}
-                    style={{
-                      border: "1px solid #09ea4c",
-                    }}
-                  />
-                </div>
-
-                <Button
-                  htmlType="submit"
-                  type="primary"
-                  size="large"
-                  loading={isLoading}
-                >
-                  Update
-                </Button>
-              </div>
-            </Form>
-          </EditModal>
+          <UpdateUserInfo
+            user={user}
+            age={age as string}
+            gender={gender as string}
+            setAge={setAge}
+            setGender={setGender}
+            uploadLoading={uploadLoading}
+            isLoading={isLoading}
+            handleUpload={handleUpload}
+            showEditModal={showEditModal}
+            setShowEditModal={setShowEditModal}
+            handleProfileUpdate={handleProfileUpdate}
+          />
         )}
       </section>
     </div>
@@ -291,14 +224,14 @@ const Profile = () => {
 
 export default Profile;
 
-const ProfileImageUpload = (
-  user: IUser,
+export const ProfileImageUpload = (
+  user: IUser | null,
   uploadLoading: boolean,
   handleUpload: any
 ) => (
   <div className="relative cursor-pointer">
     <Image
-      src={user.profileImage ?? require("@/assets/home1.jpg")}
+      src={user?.profileImage ?? require("@/assets/home1.jpg")}
       className="h-[50px] w-[50px] md:h-[80px] md:w-[80px] lg:h-[120px] lg:w-[120px]  rounded-full bordered object-cover shadow lg:shadow-2xl"
       priority
       width={120}

@@ -43,6 +43,9 @@ const TTTable = ({
       pagination={paginationConfig}
       onChange={onTableChange}
       style={{ overflowX: "auto", width: Number(window?.innerWidth) - 118 }}
+      title={(t) => (
+        <h1 className="text-green-400 font-bold text-xl">Manage</h1>
+      )}
       //
     />
   );

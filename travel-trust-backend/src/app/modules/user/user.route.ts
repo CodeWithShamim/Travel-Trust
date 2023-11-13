@@ -53,8 +53,15 @@ router.delete(
 router.post(
   '/user-to-admin',
   auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
-  validateRequest(UserZodValidation.userToAdmin),
+  validateRequest(UserZodValidation.updateForAdmin),
   UserController.updateUserToAdmin
+);
+
+router.post(
+  '/admin-to-super-admin',
+  auth(ENUM_USER_ROLE.SUPER_ADMIN),
+  validateRequest(UserZodValidation.updateForAdmin),
+  UserController.updateAdminToSuperAdmin
 );
 
 export const UserRoute = router;

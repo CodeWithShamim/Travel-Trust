@@ -104,10 +104,25 @@ const updateUserToAdmin = catchAsync(async (req: Request, res: Response) => {
   sendResponse<User>(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: ' successfully',
+    message: 'User to admin successfully updated',
     data: result,
   });
 });
+
+const updateAdminToSuperAdmin = catchAsync(
+  async (req: Request, res: Response) => {
+    const id = req.body.id;
+    const user = req?.user;
+    const result = await UserService.updateAdminToSuperAdmin(id, user);
+
+    sendResponse<User>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Admin to super_admin successfully updated',
+      data: result,
+    });
+  }
+);
 
 export const UserController = {
   createUser,
@@ -118,4 +133,5 @@ export const UserController = {
   createAdmin,
   deleteAdmin,
   updateUserToAdmin,
+  updateAdminToSuperAdmin,
 };

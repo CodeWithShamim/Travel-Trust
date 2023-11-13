@@ -159,12 +159,38 @@ const updateUserToAdmin = async (
 ): Promise<User | null> => {
   let result = null;
 
-  if (user?.role === ENUM_USER_ROLE.ADMIN) {
+  if (
+    user?.role === ENUM_USER_ROLE.ADMIN ||
+    user?.role === ENUM_USER_ROLE.SUPER_ADMIN
+  ) {
     result = await prisma.user.update({
       where: {
         id,
       },
       data: { role: 'admin' },
+    });
+  } else {
+    throw new ApiError(
+      httpStatus.UNAUTHORIZED,
+      'You are not perform this action!'
+    );
+  }
+
+  return returnUserValue(result);
+};
+
+const updateAdminToSuperAdmin = async (
+  id: string,
+  user: User | any
+): Promise<User | null> => {
+  let result = null;
+
+  if (user?.role === ENUM_USER_ROLE.SUPER_ADMIN) {
+    result = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: { role: 'super_admin' },
     });
   } else {
     throw new ApiError(
@@ -185,4 +211,5 @@ export const UserService = {
   createAdmin,
   deleteAdmin,
   updateUserToAdmin,
+  updateAdminToSuperAdmin,
 };

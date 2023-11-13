@@ -1,3 +1,5 @@
+import { BookingStatus } from "@/constants/booking";
+
 export interface IMeta {
   limit: number;
   page: number;
@@ -47,6 +49,7 @@ export type IService = {
 };
 
 export type IBooking = {
+  id: string;
   date: string;
   time: string;
   types: string;
@@ -55,6 +58,7 @@ export type IBooking = {
   serviceId: string;
   user?: IUser;
   service?: IService;
+  status?: string;
 };
 
 export type IReview = {

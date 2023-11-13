@@ -1,6 +1,6 @@
 "use client";
 
-import { Table } from "antd";
+import { Button, Table } from "antd";
 
 type UMTableProps = {
   loading?: boolean;
@@ -12,6 +12,8 @@ type UMTableProps = {
   onPaginationChange?: (page: number, pageSize: number) => void;
   onTableChange?: (pagination: any, filter: any, sorter: any) => void;
   showPagination?: boolean;
+  isButton?: boolean;
+  onClickBtn?: () => void;
 };
 
 const TTTable = ({
@@ -24,6 +26,8 @@ const TTTable = ({
   onPaginationChange,
   onTableChange,
   showPagination = true,
+  isButton = false,
+  onClickBtn,
 }: UMTableProps) => {
   const paginationConfig = showPagination
     ? {
@@ -43,9 +47,15 @@ const TTTable = ({
       pagination={paginationConfig}
       onChange={onTableChange}
       style={{ overflowX: "auto", width: Number(window?.innerWidth) - 118 }}
-      title={(t) => (
-        <h1 className="text-green-400 font-bold text-xl">Manage</h1>
-      )}
+      title={() =>
+        isButton ? (
+          <Button onClick={onClickBtn} type="primary" size="middle">
+            Save Changes
+          </Button>
+        ) : (
+          <h1 className="text-green-400 font-bold text-xl">Manage</h1>
+        )
+      }
       //
     />
   );

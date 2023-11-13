@@ -42,14 +42,16 @@ const HomePage = () => {
   return (
     <div className="w-full">
       {/* <motion.div className="progress-bar" style={{ scaleX }} /> */}
-      <FloatButton.BackTop
-        shape="circle"
-        type="primary"
-        style={{
-          right: 24,
-        }}
-        icon={<UpOutlined />}
-      />
+      <div>
+        <FloatButton.BackTop
+          shape="circle"
+          type="primary"
+          style={{
+            right: 24,
+          }}
+          icon={<UpOutlined />}
+        />
+      </div>
 
       {/* Hero section  */}
       <div className="relative top-[-65px] left-0 right-0">
@@ -222,7 +224,7 @@ const HomePage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center py-6">
           {newses?.slice(0, 8)?.map((news: any, index: number) => (
-            <NewsCard key={news.id} news={news} index={index} />
+            <NewsCard key={index} news={news} index={index} />
           ))}
         </div>
       </div>

@@ -68,6 +68,14 @@ export const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    createAdminToSuperAdmin: build.mutation({
+      query: (id: string) => ({
+        url: `${USER_URL}/admin-to-super-admin`,
+        method: "POST",
+        data: { id },
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
@@ -79,4 +87,5 @@ export const {
   useUpdateUserMutation,
   useDeleteSingleUserMutation,
   useCreateUserToAdminMutation,
+  useCreateAdminToSuperAdminMutation,
 } = authApi;

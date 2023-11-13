@@ -1,31 +1,50 @@
 "use client";
 
 import TTTable from "@/components/ui/TTTable";
-import React, { useState } from "react";
-import { Button, Input, Modal, message } from "antd";
-import Link from "next/link";
-import {
-  EditOutlined,
-  DeleteOutlined,
-  ExclamationCircleOutlined,
-} from "@ant-design/icons";
-import dayjs from "dayjs";
-import {
-  useDeleteSingleBookingMutation,
-  useGetAllBookingQuery,
-} from "@/redux/api/bookingApi";
+import React, { useEffect, useState } from "react";
+import { Button, Image, Input, Modal, message } from "antd";
+
+import { AiOutlineDelete, AiOutlineWarning } from "react-icons/ai";
+
 import { useDebounced } from "@/redux/hooks";
+import {
+  useCreateAdminToSuperAdminMutation,
+  useDeleteSingleUserMutation,
+  useGetAllUserQuery,
+  useUpdateUserMutation,
+} from "@/redux/api/authApi";
+import { timeAgo } from "@/utils/common";
+import { USER_ROLE } from "@/constants/role";
+import { BiEdit } from "react-icons/bi";
+import UpdateUserInfo from "@/components/ui/UpdateUserInfo";
+import { useUploadImage } from "@/utils/upload";
+import { SubmitHandler } from "react-hook-form";
+import { IUser } from "@/types";
 
 const ManageAdmin = () => {
   const query: Record<string, any> = {};
+  query["role"] = USER_ROLE.ADMIN;
 
-  const [handleDeleteBooking] = useDeleteSingleBookingMutation();
+  const [handleDeleteUser] = useDeleteSingleUserMutation();
+  const [handleCreateSuperAdmin] = useCreateAdminToSuperAdminMutation();
 
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const { handleUpload, imageUrl, uploadLoading } = useUploadImage();
+  const [
+    handeUpdateUser,
+    { data: updateUserData, isLoading: updateLoading, error: updateError },
+  ] = useUpdateUserMutation();
+
+  const [user, setUser] = useState<IUser | null>(null);
+
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const [gender, setGender] = useState<string | undefined>(undefined);
+  const [age, setAge] = useState<string | undefined>(undefined);
 
   query["limit"] = size;
   query["page"] = page;
@@ -41,7 +60,7 @@ const ManageAdmin = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data, isLoading, error } = useGetAllBookingQuery({ ...query });
+  const { data, isLoading, error } = useGetAllUserQuery({ ...query });
 
   const meta = data?.meta as any;
 
@@ -55,22 +74,56 @@ const ManageAdmin = () => {
     setSortOrder(order === "ascend" ? "asc" : "desc");
   };
 
+  // update user profile image
+  useEffect(() => {
+    if (imageUrl) {
+      const updateData = {
+        id: user?.id,
+        profileImage: imageUrl,
+      };
+      handeUpdateUser(updateData);
+    }
+  }, [imageUrl, handeUpdateUser, user]);
+
   const deleteHandler = async (id: string) => {
     Modal.confirm({
-      title: "Warning",
-      icon: <ExclamationCircleOutlined />,
-      content: "Are you sure? You want to delete this item!",
+      title: <span className="text-red-500 ">Warning</span>,
+      icon: <AiOutlineWarning className="text-red-500 m-1" size={20} />,
+      content: "Are you sure? You want to delete this user!",
       okText: "OK",
       cancelText: "Cancel",
       onOk: async () => {
         message.loading("Deleting.....");
         try {
-          const res = (await handleDeleteBooking(id)) as any;
+          const res = (await handleDeleteUser(id)) as any;
           if (res?.data?.id) {
-            message.success("Booking Deleted successfully");
+            message.success("User Deleted successfully");
           }
         } catch (err: any) {
-          message.error(err.message);
+          console.log({ err });
+          message.error(err.message || "Something went wrong!");
+        }
+      },
+    });
+  };
+
+  const handleAdminToSuperAdmin = async (id: string) => {
+    Modal.confirm({
+      title: <span className="text-red-500 ">Warning</span>,
+      icon: <AiOutlineWarning className="text-red-500 m-1" size={20} />,
+      content: "Are you sure? You want to make this Admin to Super_Admin!",
+      okText: "Yes",
+      cancelText: "No",
+      onOk: async () => {
+        message.loading("Super Admin created loading.....");
+        try {
+          const res = (await handleCreateSuperAdmin(id)) as any;
+          if (res?.data?.id) {
+            message.success("Super admin successfully created");
+          }
+        } catch (err: any) {
+          console.log({ err });
+          message.error(err.message || "Something went wrong!");
         }
       },
     });
@@ -78,49 +131,116 @@ const ManageAdmin = () => {
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "service",
-      render: function (data: any) {
-        return <>{data?.name}</>;
+      title: "",
+      dataIndex: "profileImage",
+      render: (data: string) => {
+        return (
+          <Image
+            src={data}
+            width={55}
+            height={55}
+            className="h-[55px] w-[55px] object-cover rounded"
+            alt="user profile image"
+          />
+        );
       },
     },
     {
-      title: "Date",
-      dataIndex: "date",
+      title: "Username",
+      dataIndex: "username",
     },
     {
-      title: "Time",
-      dataIndex: "time",
+      title: "Email",
+      dataIndex: "email",
     },
     {
-      title: "Types",
-      dataIndex: "types",
+      title: "Contact number",
+      dataIndex: "contactNo",
     },
     {
-      title: "Ticket",
-      dataIndex: "ticket",
+      title: "Gender",
+      dataIndex: "gender",
     },
     {
-      title: "Status",
-      dataIndex: "status",
+      title: "Age",
+      dataIndex: "age",
+    },
+    {
+      title: "Registration",
+      dataIndex: "createdAt",
+      render: (data: any) => {
+        return timeAgo(data);
+      },
+    },
+    {
+      title: "Role",
+      render: (data: any) => {
+        return (
+          <div className="flex gap-2">
+            <span>{data?.role}</span>
+            <Button
+              type="primary"
+              size="small"
+              onClick={() => handleAdminToSuperAdmin(data?.id)}
+            >
+              <span className="font-semibold">Make Super Admin</span>
+            </Button>
+          </div>
+        );
+      },
     },
 
     {
-      title: "Delete",
-      render: function (data: any) {
+      title: "Update",
+      render: function (data: IUser) {
         return (
-          <Button onClick={() => deleteHandler(data?.id)} type="primary" danger>
-            <DeleteOutlined />
+          <Button
+            type="primary"
+            onClick={() => {
+              setUser(data);
+              setShowEditModal(true);
+            }}
+          >
+            <BiEdit size={16} />
+          </Button>
+        );
+      },
+    },
+
+    {
+      title: "Remove",
+      dataIndex: "id",
+      render: function (id: string) {
+        return (
+          <Button onClick={() => deleteHandler(id)} type="primary" danger>
+            <AiOutlineDelete size={16} />
           </Button>
         );
       },
     },
   ];
 
+  const handleProfileUpdate: SubmitHandler<any> = async (
+    data?: IUser,
+    reset?: any
+  ) => {
+    const newData = { id: user?.id, ...data, gender, age };
+    try {
+      const res = await handeUpdateUser(newData).unwrap();
+    } catch (error: any) {
+      message.error(error?.data.message);
+    } finally {
+      setShowEditModal(false);
+      setAge(undefined);
+      setGender(undefined);
+      reset();
+    }
+  };
+
   return (
     <div className="lg:w-[95%] h-[100%] items-center justify-center">
       <Input
-        placeholder="Search admins"
+        placeholder="Search users"
         type="text"
         allowClear
         className="text-black border-r-0 mb-6 lg:w-[40%] h-16 rounded-md border-neutral-200"
@@ -131,7 +251,7 @@ const ManageAdmin = () => {
       <TTTable
         loading={isLoading}
         columns={columns}
-        dataSource={data?.bookings}
+        dataSource={data?.users}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}
@@ -139,6 +259,25 @@ const ManageAdmin = () => {
         onTableChange={onTableChange}
         showPagination={true}
       />
+
+      {/* Edit modal */}
+      <section>
+        {showEditModal && (
+          <UpdateUserInfo
+            user={user}
+            age={age as string}
+            gender={gender as string}
+            setAge={setAge}
+            setGender={setGender}
+            uploadLoading={uploadLoading}
+            isLoading={isLoading}
+            handleUpload={handleUpload}
+            showEditModal={showEditModal}
+            setShowEditModal={setShowEditModal}
+            handleProfileUpdate={handleProfileUpdate}
+          />
+        )}
+      </section>
     </div>
   );
 };

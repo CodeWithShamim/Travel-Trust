@@ -297,7 +297,7 @@ const HomePage = () => {
         <MapView />
       </div> */}
 
-      <div className={styles["background-image3"]}></div>
+      <div className={`${styles["background-image3"]} hidden md:block`}></div>
     </div>
   );
 };

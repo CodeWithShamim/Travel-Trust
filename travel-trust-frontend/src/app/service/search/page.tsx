@@ -25,11 +25,9 @@ const SearchPage = () => {
     query["searchTerm"] = searchTerm;
   }
 
-  const {
-    data: services,
-    isLoading,
-    error,
-  } = useGetAllServiceQuery({ ...query });
+  const { data, isLoading, error } = useGetAllServiceQuery({ ...query });
+
+  const services = data?.services as any;
 
   return (
     <div className="max-w-[1200px] mx-auto px-4">

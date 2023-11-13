@@ -21,8 +21,6 @@ export const useUploadImage = () => {
       formData.append("upload_preset", uploadPreset as string);
       formData.append("cloud_name", cloudName as string);
 
-      console.log({ file });
-
       setUploadLoading(true);
       const response = await fetch(
         `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,

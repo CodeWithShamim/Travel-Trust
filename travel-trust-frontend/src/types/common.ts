@@ -49,7 +49,7 @@ export type IService = {
 };
 
 export type IBooking = {
-  id: string;
+  id?: string;
   date: string;
   time: string;
   types: string;

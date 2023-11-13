@@ -139,7 +139,6 @@ const ServiceDetails = () => {
   };
 
   const onChange: PaginationProps["onChange"] = (page) => {
-    console.log(page);
     setCurrentPage(page);
   };
 

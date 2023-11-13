@@ -42,7 +42,6 @@ const Login = () => {
       setValueToLocalStorage(authKey, res?.accessToken);
     } catch (err: any) {
       message.error(err?.data?.message);
-      console.log({ err });
     }
   };
 

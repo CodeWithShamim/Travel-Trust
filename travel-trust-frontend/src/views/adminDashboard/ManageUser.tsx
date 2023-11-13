@@ -97,7 +97,6 @@ const ManageUser = () => {
         message.loading("Deleting.....");
         try {
           const res = (await handleDeleteUser(id)) as any;
-          console.log({ res });
           if (res?.data?.id) {
             message.success("User Deleted successfully");
           }
@@ -231,7 +230,6 @@ const ManageUser = () => {
     const newData = { id: user?.id, ...data, gender, age };
     try {
       const res = await handeUpdateUser(newData).unwrap();
-      console.log({ res });
     } catch (error: any) {
       message.error(error?.data.message);
     } finally {

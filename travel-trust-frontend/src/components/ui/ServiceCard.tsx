@@ -70,8 +70,8 @@ const ServiceCard = ({ service, loading, index = 0 }: ServiceCardProps) => {
             height={250}
             quality={100}
             layout="responsive"
+            loading="lazy"
             objectFit="cover"
-            priority
             className="mx-auto card-img pb-3 w-full absolute inset-0"
           />
           <h1 className="absolute z-40 text-white font-extrabold text-2xl text-left shadow-sm">

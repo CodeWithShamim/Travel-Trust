@@ -147,6 +147,7 @@ const Register = () => {
             src={loginImage}
             width={500}
             layout="responsive"
+            loading="lazy"
             objectFit="cover"
             alt="login image"
           />

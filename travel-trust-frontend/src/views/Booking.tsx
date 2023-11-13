@@ -3,13 +3,8 @@
 import TTTable from "@/components/ui/TTTable";
 import React, { useState } from "react";
 import { Button, Input, Modal, message } from "antd";
-import Link from "next/link";
-import {
-  EditOutlined,
-  DeleteOutlined,
-  ExclamationCircleOutlined,
-} from "@ant-design/icons";
-import dayjs from "dayjs";
+import { DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+
 import {
   useDeleteSingleBookingMutation,
   useGetAllBookingQuery,
@@ -22,7 +17,7 @@ const Booking = () => {
   const [handleDeleteBooking] = useDeleteSingleBookingMutation();
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");

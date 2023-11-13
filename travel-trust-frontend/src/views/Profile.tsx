@@ -188,6 +188,7 @@ const Profile = () => {
               className="md:h-full lg:h-[25.3rem] w-full object-cover rounded"
               alt="user post image"
               layout="responsive"
+              loading="lazy"
             />
           ) : (
             <div className="flex flex-col gap-5">
@@ -232,10 +233,10 @@ export const ProfileImageUpload = (
     <Image
       src={user?.profileImage ?? require("@/assets/home1.jpg")}
       className="h-[50px] w-[50px] md:h-[80px] md:w-[80px] lg:h-[120px] lg:w-[120px]  rounded-full bordered object-cover shadow lg:shadow-2xl"
-      priority
       width={120}
       height={120}
       layout="responsive"
+      loading="lazy"
       objectFit="cover"
       quality={100}
       alt="profile img"

@@ -2,7 +2,7 @@
 
 import TTTable from "@/components/ui/TTTable";
 import React, { useEffect, useState } from "react";
-import { Button, Input, Modal, message } from "antd";
+import { Button, Image, Input, Modal, message } from "antd";
 
 import { AiOutlineDelete, AiOutlineWarning } from "react-icons/ai";
 
@@ -14,7 +14,6 @@ import {
   useUpdateUserMutation,
 } from "@/redux/api/authApi";
 import { timeAgo } from "@/utils/common";
-import Image from "next/image";
 import { USER_ROLE } from "@/constants/role";
 import { BiEdit } from "react-icons/bi";
 import UpdateUserInfo from "@/components/ui/UpdateUserInfo";
@@ -30,7 +29,7 @@ const ManageUser = () => {
   const [handleCreateAdmin] = useCreateUserToAdminMutation();
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -142,7 +141,6 @@ const ManageUser = () => {
             height={55}
             className="h-[55px] w-[55px] object-cover rounded"
             alt="user profile image"
-            layout="responsive"
           />
         );
       },
@@ -181,12 +179,11 @@ const ManageUser = () => {
           <div className="flex gap-2">
             <span>{data?.role}</span>
             <Button
-              className="border-green-400 text-green-400 hover:border-green-200"
-              type="default"
+              type="primary"
               size="small"
               onClick={() => handleUserToAdmin(data?.id)}
             >
-              Make Admin
+              <span className="font-semibold">Make Admin</span>
             </Button>
           </div>
         );
@@ -204,7 +201,7 @@ const ManageUser = () => {
               setShowEditModal(true);
             }}
           >
-            <BiEdit size={20} />
+            <BiEdit size={16} />
           </Button>
         );
       },
@@ -216,7 +213,7 @@ const ManageUser = () => {
       render: function (id: string) {
         return (
           <Button onClick={() => deleteHandler(id)} type="primary" danger>
-            <AiOutlineDelete size={20} />
+            <AiOutlineDelete size={16} />
           </Button>
         );
       },

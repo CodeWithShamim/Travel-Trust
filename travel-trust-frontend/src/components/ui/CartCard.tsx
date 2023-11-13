@@ -27,6 +27,7 @@ const CartCard = ({ item }: ICartCard) => {
         className="h-[55px] w-[55px] object-cover rounded"
         alt="card service image"
         layout="responsive"
+        loading="lazy"
       />
 
       <h2>{item.name}</h2>

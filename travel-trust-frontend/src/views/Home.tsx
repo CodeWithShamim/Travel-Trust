@@ -15,8 +15,8 @@ import styles from "@/styles/home.module.css";
 import ReviewSlider from "@/components/ui/ReviewSlider";
 import VideoPlayer from "@/components/ui/VideoPlayer";
 import { motion } from "framer-motion";
-import { fadeIn, imageVariants, slideIn, textVariant } from "@/utils/motion";
-import { useScroll, useSpring } from "framer-motion";
+import { fadeIn, imageVariants, textVariant } from "@/utils/motion";
+import { useScroll } from "framer-motion";
 import { UpOutlined } from "@ant-design/icons";
 import ImageGallery from "@/components/ui/ImageGallery";
 import { useRouter } from "next/navigation";
@@ -24,17 +24,13 @@ import { useRouter } from "next/navigation";
 const HomePage = () => {
   const query: any = {};
   query["limit"] = 20;
-  const {
-    data: services,
-    isLoading,
-    error,
-  } = useGetAllServiceQuery({ ...query });
+  const { data, isLoading, error } = useGetAllServiceQuery({ ...query });
 
   const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false);
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress);
 
   const router = useRouter();
+
+  const services = data?.services as any;
 
   const availableService = services?.filter(
     (service: IService) => service?.status === "available"
@@ -45,7 +41,6 @@ const HomePage = () => {
 
   return (
     <div className="w-full">
-      {/* Float Button  */}
       {/* <motion.div className="progress-bar" style={{ scaleX }} /> */}
       <FloatButton.BackTop
         shape="circle"
@@ -183,6 +178,7 @@ const HomePage = () => {
             alt="video play image"
             className="backdrop-blur-md bg-white/10 rounded-full cursor-pointer"
             layout="responsive"
+            loading="lazy"
             onClick={() => setIsVideoPlay(true)}
           />
         </motion.span>

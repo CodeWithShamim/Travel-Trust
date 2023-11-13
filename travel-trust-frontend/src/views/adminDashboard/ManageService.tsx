@@ -2,27 +2,21 @@
 
 import TTTable from "@/components/ui/TTTable";
 import React, { useState } from "react";
-import { Button, Input, Modal, message } from "antd";
-import Link from "next/link";
+import { Button, Image, Input, Modal, message } from "antd";
+import { DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import {
-  EditOutlined,
-  DeleteOutlined,
-  ExclamationCircleOutlined,
-} from "@ant-design/icons";
-import dayjs from "dayjs";
-import {
-  useDeleteSingleBookingMutation,
-  useGetAllBookingQuery,
-} from "@/redux/api/bookingApi";
+  useDeleteSingleServiceMutation,
+  useGetAllServiceQuery,
+} from "@/redux/api/serviceApi";
 import { useDebounced } from "@/redux/hooks";
 
 const ManageService = () => {
   const query: Record<string, any> = {};
 
-  const [handleDeleteBooking] = useDeleteSingleBookingMutation();
+  const [handleDeleteService] = useDeleteSingleServiceMutation();
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(10);
+  const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -41,7 +35,7 @@ const ManageService = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data, isLoading, error } = useGetAllBookingQuery({ ...query });
+  const { data, isLoading, error } = useGetAllServiceQuery({ ...query });
 
   const meta = data?.meta as any;
 
@@ -59,15 +53,15 @@ const ManageService = () => {
     Modal.confirm({
       title: "Warning",
       icon: <ExclamationCircleOutlined />,
-      content: "Are you sure? You want to delete this item!",
-      okText: "OK",
-      cancelText: "Cancel",
+      content: "Are you sure? You want to delete this service!",
+      okText: "Yes",
+      cancelText: "No",
       onOk: async () => {
         message.loading("Deleting.....");
         try {
-          const res = (await handleDeleteBooking(id)) as any;
+          const res = (await handleDeleteService(id)) as any;
           if (res?.data?.id) {
-            message.success("Booking Deleted successfully");
+            message.success("Service deleted successfully");
           }
         } catch (err: any) {
           message.error(err.message);
@@ -78,31 +72,55 @@ const ManageService = () => {
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "service",
-      render: function (data: any) {
-        return <>{data?.name}</>;
+      title: "",
+      dataIndex: "image",
+      render: (url: string) => {
+        return (
+          <Image
+            src={url}
+            width={55}
+            height={55}
+            className="h-[55px] w-[55px] object-cover rounded"
+            alt="user profile image"
+          />
+        );
       },
     },
     {
-      title: "Date",
-      dataIndex: "date",
+      title: "Name",
+      dataIndex: "name",
     },
     {
-      title: "Time",
-      dataIndex: "time",
+      title: "Price",
+      dataIndex: "price",
+      render: (price: number) => {
+        return <span className="font-bold text-green-400">${price}</span>;
+      },
     },
     {
-      title: "Types",
-      dataIndex: "types",
+      title: "Location",
+      dataIndex: "location",
     },
     {
-      title: "Ticket",
-      dataIndex: "ticket",
+      title: "Category",
+      dataIndex: "category",
     },
     {
       title: "Status",
       dataIndex: "status",
+      render: (status: string) => {
+        return (
+          <span
+            className={`${
+              status === "upcoming"
+                ? "text-green-400 font-semibold"
+                : "text-slate-900"
+            }`}
+          >
+            {status}
+          </span>
+        );
+      },
     },
 
     {
@@ -131,7 +149,7 @@ const ManageService = () => {
       <TTTable
         loading={isLoading}
         columns={columns}
-        dataSource={data?.bookings}
+        dataSource={data?.services}
         pageSize={size}
         totalPages={meta?.total}
         showSizeChanger={true}

@@ -17,6 +17,7 @@ const handleFilters = (filters: any, searchFields: string[]) => {
 
   delete filtersData.minPrice;
   delete filtersData.maxPrice;
+  delete filtersData.role;
 
   // filters
   if (Object.keys(filtersData).length > 0) {

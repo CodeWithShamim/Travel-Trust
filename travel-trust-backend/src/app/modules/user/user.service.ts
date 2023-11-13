@@ -45,8 +45,12 @@ const getAllUser = async (
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelpers.calculatePagination(options);
 
+  const newConditions = filters?.role
+    ? { role: filters?.role as ENUM_USER_ROLE, ...whereConditions }
+    : whereConditions;
+
   const result = await prisma.user.findMany({
-    where: whereConditions,
+    where: newConditions,
     skip,
     take: limit,
     orderBy: {
@@ -55,7 +59,7 @@ const getAllUser = async (
   });
 
   const total = await prisma.user.count({
-    where: whereConditions,
+    where: newConditions,
   });
 
   return {
@@ -98,16 +102,35 @@ const updateUser = async (
   return returnUserValue(result);
 };
 
-const deleteUser = async (id: string, req: Request): Promise<User> => {
+const deleteUser = async (id: string, req: Request): Promise<any> => {
   const user = req?.user;
   const isUser = user?.role === ENUM_USER_ROLE.USER;
   const where = isUser ? { id: user?.id } : { id };
 
-  const result = await prisma.user.delete({
-    where,
-  });
+  await prisma.$transaction(async tnx => {
+    const isExitsUser = await prisma.user.findUnique({
+      where,
+      include: {
+        bookings: true,
+      },
+    });
 
-  return returnUserValue(result);
+    if (!isExitsUser) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'User not found.');
+    }
+
+    await tnx.booking.deleteMany({
+      where: {
+        userId: isUser ? user.id : id,
+      },
+    });
+
+    const result = await tnx.user.delete({
+      where,
+    });
+
+    return returnUserValue(result);
+  });
 };
 
 const createAdmin = async (data: User): Promise<User> => {
@@ -136,7 +159,7 @@ const updateUserToAdmin = async (
 ): Promise<User | null> => {
   let result = null;
 
-  if (user?.role === ENUM_USER_ROLE.SUPER_ADMIN) {
+  if (user?.role === ENUM_USER_ROLE.ADMIN) {
     result = await prisma.user.update({
       where: {
         id,

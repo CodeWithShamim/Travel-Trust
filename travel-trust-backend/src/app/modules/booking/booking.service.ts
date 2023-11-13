@@ -1,4 +1,5 @@
-import { Booking } from '@prisma/client';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Booking, BookingStatus } from '@prisma/client';
 import prisma from '../../../shared/prisma';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IPaginationOptions } from '../../../interfaces/pagination';
@@ -8,6 +9,8 @@ import { IFilters } from './booking.interface';
 import { BookingSearchableFields } from './booking.constant';
 import { JwtPayload } from 'jsonwebtoken';
 import { ENUM_USER_ROLE } from '../../../enums/user';
+import ApiError from '../../../errors/ApiError';
+import httpStatus from 'http-status';
 
 const createBooking = async (data: Booking): Promise<Booking> => {
   const Booking = await prisma.booking.create({
@@ -100,6 +103,30 @@ const updateBooking = async (
   return result;
 };
 
+const updateStatuses = async (
+  data: { id: string; value: string }[]
+): Promise<any> => {
+  try {
+    await prisma.$transaction(async prisma => {
+      for (const { id, value } of data) {
+        await prisma.booking.update({
+          where: { id },
+          data: { status: value as BookingStatus },
+        });
+      }
+    });
+
+    return true;
+  } catch (error) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      'Error updating booking statuses'
+    );
+  } finally {
+    await prisma.$disconnect();
+  }
+};
+
 const deleteBooking = async (
   id: string,
   user: JwtPayload | null
@@ -123,5 +150,6 @@ export const BookingService = {
   getAllBooking,
   getSingleBooking,
   updateBooking,
+  updateStatuses,
   deleteBooking,
 };

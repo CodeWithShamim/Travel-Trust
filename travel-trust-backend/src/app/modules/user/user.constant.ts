@@ -12,7 +12,5 @@ export const UserSearchableFields = [
   'username',
   'email',
   'contactNo',
-  'role',
-  'age',
   'gender',
 ];

@@ -52,7 +52,7 @@ router.delete(
 
 router.post(
   '/user-to-admin',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN),
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
   validateRequest(UserZodValidation.userToAdmin),
   UserController.updateUserToAdmin
 );

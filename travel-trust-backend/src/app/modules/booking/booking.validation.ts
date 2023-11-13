@@ -37,7 +37,19 @@ const update = z.object({
   }),
 });
 
+const updateStatuses = z.object({
+  body: z.object({
+    statuses: z.array(
+      z.object({
+        id: z.string(),
+        value: z.string(),
+      })
+    ),
+  }),
+});
+
 export const BookingZodValidation = {
   create,
   update,
+  updateStatuses,
 };

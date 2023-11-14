@@ -91,7 +91,7 @@ const Profile = () => {
       <section>
         <div className="relative">
           <Image
-            src={user?.bannerImage ?? require("@/assets/home1.jpg")}
+            src={user?.bannerImage ?? require("@/assets/home1.webp")}
             width={1300}
             height={400}
             className="h-[18rem] w-full object-cover"
@@ -182,7 +182,7 @@ const Profile = () => {
         <div className="w-full lg:w-[60%] lg:ml-10 h-full">
           {cart.length === 0 ? (
             <Image
-              src={user?.profileImage ?? require("@/assets/gallery/1.jpg")}
+              src={user?.profileImage ?? require("@/assets/gallery/1.webp")}
               width={800}
               height={300}
               className="md:h-full lg:h-[25.3rem] w-full object-cover rounded"
@@ -231,7 +231,7 @@ export const ProfileImageUpload = (
 ) => (
   <div className="relative cursor-pointer">
     <Image
-      src={user?.profileImage ?? require("@/assets/home1.jpg")}
+      src={user?.profileImage ?? require("@/assets/home1.webp")}
       className="h-[50px] w-[50px] md:h-[80px] md:w-[80px] lg:h-[120px] lg:w-[120px]  rounded-full bordered object-cover shadow lg:shadow-2xl"
       width={120}
       height={120}

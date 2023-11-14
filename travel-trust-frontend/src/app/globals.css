@@ -116,6 +116,22 @@
   }
 }
 
+.imgGalleryContent {
+  transition: overlay 0.6s ease-in;
+  cursor: pointer;
+}
+
+.hover-effect {
+  display: none;
+}
+
+.imgGalleryContent:hover {
+  .hover-effect {
+    display: inline;
+    transition: overlay 0.6s ease-in;
+  }
+}
+
 .custom-select .anticon {
   color: #09ea4c;
   font-size: 100px;

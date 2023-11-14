@@ -50,7 +50,7 @@ const SearchPage = () => {
             <p>Please try another search</p>
           </div>
           <Image
-            src={require("@/assets/search-not-found.png")}
+            src={require("@/assets/search-not-found.webp")}
             width={300}
             className="mt-4 px-4"
             alt="search not found"

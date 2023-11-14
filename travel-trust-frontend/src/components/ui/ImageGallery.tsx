@@ -12,18 +12,21 @@ const ImageGallery = () => {
   return (
     <div className="galleryLayout rounded-xl">
       {galleryItems?.map((item, index) => (
-        <div key={index} className="w-full mb-5 break-inside-avoid relative">
+        <div
+          key={index}
+          className="w-full mb-5 break-inside-avoid relative imgGalleryContent"
+        >
           <Image
             src={item.url}
             alt="gallery image"
-            className="rounded-xl max-w-full"
+            className="rounded-xl max-w-full cursor-pointer"
             style={styles.card}
             objectFit="cover"
             layout="responsive"
             loading="lazy"
           />
 
-          <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity"></div>
+          <div className="absolute hover-effect inset-0 bg-black opacity-40 transition-all rounded-xl mb-2"></div>
         </div>
       ))}
     </div>

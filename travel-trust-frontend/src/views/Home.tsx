@@ -69,11 +69,13 @@ const HomePage = () => {
               key={item}
             >
               <Image
-                src={require(`@/assets/banner${item}.jpg`)}
+                src={require(`@/assets/banner${item}.webp`)}
                 alt="banner image"
                 className="w-full h-screen object-cover"
                 priority
                 quality={100}
+                objectFit="cover"
+                layout="responsive"
               />
               <div className="absolute inset-0 bg-[#000] opacity-30"></div>
             </motion.div>
@@ -173,7 +175,7 @@ const HomePage = () => {
           className="blinking-animation"
         >
           <Image
-            src={require("@/assets/play.png")}
+            src={require("@/assets/play.webp")}
             width={100}
             height={100}
             objectFit="cover"

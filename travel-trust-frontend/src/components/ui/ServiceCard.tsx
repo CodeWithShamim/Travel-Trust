@@ -64,7 +64,7 @@ const ServiceCard = ({ service, loading, index = 0 }: ServiceCardProps) => {
 
         <Link href={`/service-details/${id}`} className="text-white h-full">
           <Image
-            src={image ?? require("@/assets/login.png")}
+            src={image ?? require("@/assets/login.webp")}
             alt={name}
             width={200}
             height={250}

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import errorImage from "@/assets/error.png";
+import errorImage from "@/assets/error.webp";
 
 const Error = () => {
   return (

@@ -25,7 +25,7 @@ const NewsCard = ({ news, index = 0 }: INewsCard) => {
       <Card className="w-full shadow custom-card" hoverable>
         <div className="text-white">
           <Image
-            src={image ?? require("@/assets/login.png")}
+            src={image ?? require("@/assets/login.webp")}
             alt={title}
             width={200}
             height={180}

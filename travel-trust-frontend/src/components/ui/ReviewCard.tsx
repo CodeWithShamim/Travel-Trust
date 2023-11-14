@@ -2,7 +2,7 @@ import { reviewsLists } from "@/data/service";
 import { Divider, Rate } from "antd";
 import Image from "next/image";
 import React from "react";
-import defaultImage from "@/assets/register.jpg";
+import defaultImage from "@/assets/login.webp";
 import { IReview } from "@/types";
 
 type IReviewCardProps = {

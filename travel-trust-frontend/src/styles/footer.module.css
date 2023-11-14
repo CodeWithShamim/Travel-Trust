@@ -1,5 +1,5 @@
 .background-image {
-    background-image: url('./../assets/footer.jpeg'), linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
+    background-image: url('./../assets/footer.webp'), linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
     background-blend-mode: overlay;
     background-repeat: no-repeat;
     background-size: cover;

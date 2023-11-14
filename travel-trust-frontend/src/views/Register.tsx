@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Col, Row, Upload, message } from "antd";
-import loginImage from "@/assets/login.png";
+import loginImage from "@/assets/login.webp";
 import Image from "next/image";
 import Form from "@/components/forms/Form";
 import FormInput from "@/components/forms/FormInput";

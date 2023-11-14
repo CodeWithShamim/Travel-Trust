@@ -48,42 +48,46 @@ export const footerLinks = [
 export const galleryItems = [
   {
     id: 1,
-    url: require("@/assets/gallery/1.jpg"),
+    url: require("@/assets/gallery/1.webp"),
   },
   {
     id: 2,
-    url: require("@/assets/gallery/2.png"),
+    url: require("@/assets/gallery/2.webp"),
   },
   // {
   //   id: 3,
   //   url: require("@/assets/gallery/1.mp4"),
   // },
   {
-    id: 4,
-    url: require("@/assets/gallery/3.jpg"),
+    id: 3,
+    url: require("@/assets/gallery/3.webp"),
   },
   {
-    id: 5,
-    url: require("@/assets/gallery/4.jpg"),
+    id: 4,
+    url: require("@/assets/gallery/4.webp"),
   },
   // {
   //   id: 6,
   //   url: require("@/assets/gallery/2.mp4"),
   // },
   {
-    id: 7,
-    url: require("@/assets/gallery/5.png"),
+    id: 5,
+    url: require("@/assets/gallery/5.webp"),
   },
   {
-    id: 8,
-    url: require("@/assets/gallery/6.jpg"),
+    id: 6,
+    url: require("@/assets/gallery/6.webp"),
   },
   // {
   //   id: 10,
   //   url: require("@/assets/gallery/3.mp4"),
   // },
   {
-    id: 1,
-    url: require("@/assets/gallery/7.jpg"),
+    id: 7,
+    url: require("@/assets/gallery/7.webp"),
+  },
+  {
+    id: 8,
+    url: require("@/assets/gallery/8.webp"),
   },
 ];

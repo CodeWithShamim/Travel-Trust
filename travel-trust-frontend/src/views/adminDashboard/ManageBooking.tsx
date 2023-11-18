@@ -12,6 +12,7 @@ import {
 import { useDebounced } from "@/redux/hooks";
 import { IBooking } from "@/types";
 import { BookingStatus } from "@/constants/booking";
+import CustomSelect from "@/components/ui/CustomSelect";
 
 const ManageBooking = () => {
   const query: Record<string, any> = {};
@@ -111,28 +112,25 @@ const ManageBooking = () => {
       title: "Status",
       render: (data: any) => {
         const isCancel = data?.status === BookingStatus.CANCEL;
+        const isConfirm = data?.status === BookingStatus.CONFIRMED;
+
+        const styles = {
+          border: isCancel
+            ? "1px solid red"
+            : isConfirm
+            ? "1px solid #09ea4c"
+            : "1px solid #d1d100",
+        };
 
         return (
-          <Select
-            style={{ maxWidth: "100%", padding: 0 }}
-            bordered={false}
-            defaultValue={[data?.status]}
+          <CustomSelect
             onChange={(value: any) => handleStatusChange(data?.id, value)}
+            defaultValue={data?.status}
             disabled={isCancel}
-            options={[
-              {
-                label: "Pending",
-                value: "pending",
-              },
-              {
-                label: "Confirm",
-                value: "confirmed",
-              },
-              {
-                label: "Cancel",
-                value: "cancel",
-              },
-            ]}
+            optionsValue={["pending", "confirmed", "cancel"]}
+            style={{
+              ...styles,
+            }}
           />
         );
       },

@@ -8,7 +8,7 @@ import ServiceCard from "@/components/ui/ServiceCard";
 import { newses } from "@/data/news";
 import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
 import { IService } from "@/types";
-import { Button, Carousel, Divider, FloatButton, Modal } from "antd";
+import { Button, Carousel, Divider, FloatButton, Modal, Spin } from "antd";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import styles from "@/styles/home.module.css";
@@ -27,6 +27,7 @@ const HomePage = () => {
   const { data, isLoading, error } = useGetAllServiceQuery({ ...query });
 
   const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false);
+  const [onReady, setOnReady] = useState<boolean>(false);
 
   const router = useRouter();
 
@@ -82,7 +83,7 @@ const HomePage = () => {
           ))}
         </Carousel>
 
-        <div className="absolute bottom-[35%] md:bottom-[45%] lg:bottom-1/2 text-center left-0 right-0 max-w-[1200px] mx-auto">
+        <div className="absolute bottom-[32%] md:bottom-[45%] lg:bottom-[40%] text-center left-0 right-0 max-w-[1200px] mx-auto">
           <motion.h1
             initial="hidden"
             animate="show"
@@ -202,8 +203,15 @@ const HomePage = () => {
           footer={null}
         >
           <div className="w-full h-[20rem] lg:h-[35rem] absolute inset-0">
-            <VideoPlayer />
+            <VideoPlayer onReady={() => setOnReady(true)} />
           </div>
+
+          {onReady || (
+            <div className="w-full h-[20rem] lg:h-[35rem] text-center text-white bg-black absolute inset-0 flex items-center justify-center">
+              <Spin />
+              <span className="pl-2">Loading video...</span>
+            </div>
+          )}
         </Modal>
       )}
 

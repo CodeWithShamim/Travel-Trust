@@ -1,13 +1,19 @@
 import { config } from "@/helpers/config/envConfig";
 import ReactPlayer from "react-player";
 
-const VideoPlayer = () => {
+interface IVideoPlayer {
+  onReady: () => void;
+}
+
+const VideoPlayer = ({ onReady }: IVideoPlayer) => {
   return (
     <ReactPlayer
+      playing
       url={config.yt_video_url}
       controls
       width="100%"
       height="100%"
+      onReady={onReady}
     />
   );
 };

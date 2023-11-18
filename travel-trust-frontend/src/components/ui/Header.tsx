@@ -118,8 +118,8 @@ const Header = () => {
         </div>
 
         <div className="flex gap-2 items-center z-50">
-          <Link href="/service/search">
-            <AiOutlineSearch size={20} className="text-[#09ea4c]" />
+          <Link href="/service/search" className="pt-2">
+            <AiOutlineSearch size={24} className="text-[#09ea4c]" />
           </Link>
 
           <Link href="/dashboard/profile">

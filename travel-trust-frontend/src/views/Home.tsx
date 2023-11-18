@@ -17,9 +17,10 @@ import VideoPlayer from "@/components/ui/VideoPlayer";
 import { motion } from "framer-motion";
 import { fadeIn, imageVariants, textVariant } from "@/utils/motion";
 import { useScroll } from "framer-motion";
-import { UpOutlined } from "@ant-design/icons";
+import { CloseOutlined, UpOutlined } from "@ant-design/icons";
 import ImageGallery from "@/components/ui/ImageGallery";
 import { useRouter } from "next/navigation";
+import { IoCloseCircleOutline } from "react-icons/io5";
 
 const HomePage = () => {
   const query: any = {};
@@ -198,6 +199,9 @@ const HomePage = () => {
         <Modal
           open={isVideoPlay}
           onCancel={() => setIsVideoPlay(false)}
+          closeIcon={
+            <IoCloseCircleOutline size={20} className="text-green-400" />
+          }
           className="w-[100%] md:w-[80%] lg:w-[70%] h-[20rem] lg:h-[35rem] bg-[#000]"
           style={{ position: "relative" }}
           footer={null}

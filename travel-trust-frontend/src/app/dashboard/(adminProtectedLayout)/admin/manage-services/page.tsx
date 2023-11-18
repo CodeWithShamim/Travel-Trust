@@ -1,4 +1,4 @@
-import ManageService from "@/views/adminDashboard/ManageService";
+import ManageService from "@/views/adminDashboard/service/ManageService";
 import React from "react";
 
 const ManageServicePage = () => {

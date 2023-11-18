@@ -1,6 +1,7 @@
 "use client";
 
 import { Button, Table } from "antd";
+import { FaRegEdit } from "react-icons/fa";
 
 type UMTableProps = {
   loading?: boolean;
@@ -14,6 +15,9 @@ type UMTableProps = {
   showPagination?: boolean;
   isButton?: boolean;
   onClickBtn?: () => void;
+  isTitleBtn?: boolean;
+  onAdd?: () => void;
+  onEdit?: () => void;
 };
 
 const TTTable = ({
@@ -28,6 +32,9 @@ const TTTable = ({
   showPagination = true,
   isButton = false,
   onClickBtn,
+  isTitleBtn = false,
+  onAdd,
+  onEdit,
 }: UMTableProps) => {
   const paginationConfig = showPagination
     ? {
@@ -52,6 +59,22 @@ const TTTable = ({
           <Button onClick={onClickBtn} type="primary" size="middle">
             Save Changes
           </Button>
+        ) : isTitleBtn ? (
+          <div className="flex items-center justify-between">
+            <h1 className="text-green-400 font-bold text-xl">Manage</h1>
+            <div className="flex items-center gap-2">
+              <Button onClick={onAdd} type="primary">
+                Add
+              </Button>
+              <Button
+                onClick={onEdit}
+                type="primary"
+                icon={<FaRegEdit className="text-white cursor-pointer" />}
+              >
+                Edit
+              </Button>
+            </div>
+          </div>
         ) : (
           <h1 className="text-green-400 font-bold text-xl">Manage</h1>
         )

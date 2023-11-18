@@ -138,7 +138,7 @@ const Header = () => {
             </Button>
           </Link>
 
-          <Dropdown menu={{ items }} className="z-50">
+          <Dropdown menu={{ items }} className="z-50 cursor-pointer">
             <Space wrap size={16}>
               <Avatar
                 src={userData?.profileImage}

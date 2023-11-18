@@ -9,12 +9,14 @@ import {
   useGetAllServiceQuery,
 } from "@/redux/api/serviceApi";
 import { useDebounced } from "@/redux/hooks";
+import { useRouter } from "next/navigation";
 
 const ManageService = () => {
   const query: Record<string, any> = {};
 
   const [handleDeleteService] = useDeleteSingleServiceMutation();
 
+  const router = useRouter();
   const [page, setPage] = useState<number>(1);
   const [size, setSize] = useState<number>(5);
   const [sortBy, setSortBy] = useState<string>("");
@@ -156,6 +158,8 @@ const ManageService = () => {
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}
         showPagination={true}
+        isTitleBtn
+        onAdd={() => router.push("/dashboard/admin/add-service")}
       />
     </div>
   );

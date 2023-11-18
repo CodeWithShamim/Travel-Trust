@@ -14,17 +14,40 @@ export const TravelDestinations = [
   "Santorini, Greece",
   "New York City, USA",
   "Machu Picchu, Peru",
-  // "Venice, Italy",
-  // "Bora Bora, French Polynesia",
-  // "Dubai, UAE",
-  // "Barcelona, Spain",
-  // "Sydney, Australia",
-  // "Istanbul, Turkey",
-  // "Rio de Janeiro, Brazil",
-  // "Prague, Czech Republic",
-  // "Amsterdam, Netherlands",
-  // "Reykjavik, Iceland",
-  // "Bangkok, Thailand",
-  // "Zurich, Switzerland",
-  // "Marrakech, Morocco",
 ];
+
+export const ServiceStatus = ["available", "upcoming", "cancel"];
+
+export const serviceFieldrules = {
+  title: [
+    {
+      required: true,
+      message: "Please enter title",
+    },
+  ],
+  description: [
+    {
+      required: true,
+      message: "Please enter description",
+    },
+  ],
+  price: [
+    {
+      required: true,
+      message: "Please enter price",
+    },
+  ],
+  location: [
+    {
+      required: true,
+      message: "Please enter location",
+    },
+  ],
+
+  category: [
+    {
+      required: true,
+      message: "Please enter category",
+    },
+  ],
+};

@@ -36,9 +36,10 @@ const fileUploadProps = {
 
 interface IGeneralField {
   setImageUrl: (value: any) => void;
+  image?: string;
 }
 
-const GeneralField = ({ setImageUrl }: IGeneralField) => {
+const GeneralField = ({ setImageUrl, image }: IGeneralField) => {
   const { handleUpload, imageUrl, uploadLoading } = useUploadImage();
 
   useEffect(() => {
@@ -92,9 +93,9 @@ const GeneralField = ({ setImageUrl }: IGeneralField) => {
             }}
             beforeUpload={beforeUpload}
           >
-            {imageUrl ? (
+            {image || imageUrl ? (
               <Image
-                src={imageUrl}
+                src={imageUrl ? imageUrl : (image as string)}
                 width={280}
                 height={150}
                 alt="avatar"

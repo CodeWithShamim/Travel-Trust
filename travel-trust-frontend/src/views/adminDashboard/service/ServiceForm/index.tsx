@@ -3,44 +3,49 @@
 import React, { useEffect, useState } from "react";
 import { Form, Button, message } from "antd";
 
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import GeneralField from "./GeneralField";
+import {
+  useCreateServiceMutation,
+  useGetSingleServiceQuery,
+  useUpdateServiceMutation,
+} from "@/redux/api/serviceApi";
+import { IService } from "@/types";
+import Loader from "@/components/ui/Loader";
 
 const ADD = "ADD";
 const EDIT = "EDIT";
 
-const ServiceForm = ({ mode = ADD }: { mode: string }) => {
+const ServiceForm = ({ mode = ADD }: { mode?: "ADD" | "EDIT" }) => {
   const router = useRouter();
+  const params = useParams();
+  const id = params?.id;
 
   const [form] = Form.useForm();
-  const [submitLoading, setSubmitLoading] = useState<boolean>(false);
   const [imageUrl, setImageUrl] = useState<string>("");
 
-  // useEffect(() => {
-  //   if (mode === EDIT) {
-  //     const { id } = param;
-  //     const getData = hazardPerceptions?.filter(
-  //       (perception) => perception.id === id
-  //     );
-  //     if (getData?.length === undefined) return;
-  //     const Perception = getData[0];
-  //     form.setFieldsValue({
-  //       description: Perception.description,
-  //       category: Perception.category,
-  //       title: Perception.title,
-  //     });
-  //     setUploadFile(Perception?.video[0]);
-  //   }
-  // }, [form, hazardPerceptions, mode, param, props]);
+  const [handleCreateService, { isLoading }] = useCreateServiceMutation();
+  const [handleUpdateService, { isLoading: updateLoading }] =
+    useUpdateServiceMutation();
+
+  const {
+    data: service,
+    isLoading: isLoading2,
+    error,
+  } = useGetSingleServiceQuery(id as string);
+
+  useEffect(() => {
+    if (mode === EDIT) {
+      form.setFieldsValue(service);
+    }
+  }, [form, mode, service]);
 
   const onFinish = () => {
-    setSubmitLoading(true);
     form
       .validateFields()
       .then(async (values) => {
-        if (!imageUrl) {
+        if (!imageUrl && mode === ADD) {
           message.error("Image is required!");
-          setSubmitLoading(false);
           return;
         }
 
@@ -49,16 +54,42 @@ const ServiceForm = ({ mode = ADD }: { mode: string }) => {
         );
 
         if (mode === ADD) {
+          const res: any = await handleCreateService({
+            ...filterData,
+            image: imageUrl,
+            price: Number(filterData?.price),
+          } as IService);
+
+          if (res?.data?.id) {
+            message.success("Service added successfully");
+            form.resetFields();
+            // router.push("/dashboard/admin/manage-services");
+          }
         }
 
         if (mode === EDIT) {
+          const res: any = await handleUpdateService({
+            id: service?.id,
+            ...filterData,
+            image: imageUrl ? imageUrl : undefined,
+            price: Number(filterData?.price),
+          });
+
+          if (res?.data?.id) {
+            message.success("Service updated successfully");
+            router.push("/dashboard/admin/manage-services");
+          }
         }
       })
-      .catch((info) => {
-        setSubmitLoading(false);
-        // message.error("Please enter all required field ");
+      .catch((error) => {
+        console.log({ error });
+        message.error(error?.message || "Something went wrong");
       });
   };
+
+  if (isLoading2) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -81,7 +112,7 @@ const ServiceForm = ({ mode = ADD }: { mode: string }) => {
                 type="primary"
                 onClick={() => onFinish()}
                 htmlType="submit"
-                loading={submitLoading}
+                loading={isLoading || updateLoading}
               >
                 {mode === "ADD" ? "Add" : `Save`}
               </Button>
@@ -90,7 +121,7 @@ const ServiceForm = ({ mode = ADD }: { mode: string }) => {
         </div>
 
         <div className="container">
-          <GeneralField setImageUrl={setImageUrl} />
+          <GeneralField setImageUrl={setImageUrl} image={service?.image} />
         </div>
       </Form>
     </>

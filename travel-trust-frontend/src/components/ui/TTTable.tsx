@@ -17,7 +17,6 @@ type UMTableProps = {
   onClickBtn?: () => void;
   isTitleBtn?: boolean;
   onAdd?: () => void;
-  onEdit?: () => void;
 };
 
 const TTTable = ({
@@ -34,7 +33,6 @@ const TTTable = ({
   onClickBtn,
   isTitleBtn = false,
   onAdd,
-  onEdit,
 }: UMTableProps) => {
   const paginationConfig = showPagination
     ? {
@@ -62,18 +60,9 @@ const TTTable = ({
         ) : isTitleBtn ? (
           <div className="flex items-center justify-between">
             <h1 className="text-green-400 font-bold text-xl">Manage</h1>
-            <div className="flex items-center gap-2">
-              <Button onClick={onAdd} type="primary">
-                Add
-              </Button>
-              <Button
-                onClick={onEdit}
-                type="primary"
-                icon={<FaRegEdit className="text-white cursor-pointer" />}
-              >
-                Edit
-              </Button>
-            </div>
+            <Button onClick={onAdd} type="primary">
+              Add
+            </Button>
           </div>
         ) : (
           <h1 className="text-green-400 font-bold text-xl">Manage</h1>

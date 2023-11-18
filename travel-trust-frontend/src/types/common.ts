@@ -41,7 +41,7 @@ export type IService = {
   id: string;
   name: string;
   description: string;
-  price: string;
+  price: string | number;
   image: string;
   location: string;
   category: string;

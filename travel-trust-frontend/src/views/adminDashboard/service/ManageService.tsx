@@ -10,6 +10,8 @@ import {
 } from "@/redux/api/serviceApi";
 import { useDebounced } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
+import { BiEdit } from "react-icons/bi";
+import Link from "next/link";
 
 const ManageService = () => {
   const query: Record<string, any> = {};
@@ -121,6 +123,20 @@ const ManageService = () => {
           >
             {status}
           </span>
+        );
+      },
+    },
+
+    {
+      title: "Update",
+      dataIndex: "id",
+      render: function (id: string) {
+        return (
+          <Link href={`/dashboard/admin/edit-service/${id}`}>
+            <Button type="primary">
+              <BiEdit size={16} />
+            </Button>
+          </Link>
         );
       },
     },

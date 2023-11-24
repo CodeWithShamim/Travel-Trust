@@ -8,6 +8,7 @@ import {
   Button,
   DatePicker,
   Divider,
+  FloatButton,
   Input,
   Pagination,
   PaginationProps,
@@ -40,6 +41,8 @@ import { reviewsLists, serviceDetailsLists } from "@/data/service";
 import ReviewCard from "@/components/ui/ReviewCard";
 import MouseScroll from "@/components/common/MouseScroll";
 import styles from "@/styles/common.module.css";
+import Link from "next/link";
+import { AiFillMessage } from "react-icons/ai";
 
 const { TextArea } = Input;
 
@@ -148,6 +151,15 @@ const ServiceDetails = () => {
 
   return (
     <div className="">
+      <Link href={"/message"}>
+        <FloatButton
+          shape="circle"
+          type="primary"
+          style={{ right: 10, bottom: 10 }}
+          icon={<AiFillMessage size={22} />}
+        />
+      </Link>
+
       <div className="overflow-hidden">
         <motion.div
           initial="hidden"

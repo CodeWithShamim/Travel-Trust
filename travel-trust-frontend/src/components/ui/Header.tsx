@@ -31,7 +31,8 @@ import { BsFillCartCheckFill } from "react-icons/bs";
 import { motion } from "framer-motion";
 import { IService } from "@/types";
 import { addAllServiceToCart } from "@/redux/slices/serviceSlice";
-import { AiOutlineSearch } from "react-icons/ai";
+import { AiFillMessage, AiOutlineSearch } from "react-icons/ai";
+import { IoMdNotifications } from "react-icons/io";
 
 const { Header: HeaderLayout } = Layout;
 
@@ -122,6 +123,12 @@ const Header = () => {
             <AiOutlineSearch size={24} className="text-[#09ea4c]" />
           </Link>
 
+          <Badge count={1} className="mr-4">
+            <Avatar
+              icon={<IoMdNotifications size={16} className="text-[#09ea4c]" />}
+            />
+          </Badge>
+
           <Link href="/dashboard/profile">
             <Badge count={cart?.length} className="mr-4">
               <Avatar
@@ -130,6 +137,18 @@ const Header = () => {
                 }
               />
             </Badge>
+          </Link>
+
+          <Link href="/message" className="hidden md:block">
+            <Button
+              type="link"
+              className="text-xs md:text-sm"
+              // icon={<AiFillMessage size={20} className="text-green-400 pt-2" />}
+            >
+              <span className="font-bold text-green-400 tracking-wide">
+                Message
+              </span>
+            </Button>
           </Link>
 
           <Link href="/dashboard/profile" className="hidden md:block">

@@ -91,3 +91,34 @@ export const galleryItems = [
     url: require("@/assets/gallery/8.webp"),
   },
 ];
+
+export const sponsorItems = [
+  {
+    id: 1,
+    image: require("@/assets/sponsor/1.jpg"),
+  },
+  {
+    id: 2,
+    image: require("@/assets/sponsor/2.png"),
+  },
+  {
+    id: 3,
+    image: require("@/assets/sponsor/3.jpg"),
+  },
+  {
+    id: 4,
+    image: require("@/assets/sponsor/4.jpg"),
+  },
+  {
+    id: 5,
+    image: require("@/assets/sponsor/5.jpg"),
+  },
+  {
+    id: 6,
+    image: require("@/assets/sponsor/6.jpg"),
+  },
+  {
+    id: 7,
+    image: require("@/assets/sponsor/7.png"),
+  },
+];

@@ -21,6 +21,12 @@ import { CloseOutlined, UpOutlined } from "@ant-design/icons";
 import ImageGallery from "@/components/ui/ImageGallery";
 import { useRouter } from "next/navigation";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import dynamic from "next/dynamic";
+
+const SponsorCarousel = dynamic(
+  () => import("@/components/ui/SponsorCarousel"),
+  { ssr: false }
+);
 
 const HomePage = () => {
   const query: any = {};
@@ -106,6 +112,11 @@ const HomePage = () => {
         <motion.div className="absolute bottom-20 left-0 right-0 max-w-[1100px] mx-auto">
           <SearchBar />
         </motion.div>
+      </div>
+
+      {/* sponsor carousel  */}
+      <div className="max-w-[1200px] mx-auto px-4 pb-10 md:pb-14 lg:pb-20">
+        <SponsorCarousel />
       </div>
 
       {/* services  */}

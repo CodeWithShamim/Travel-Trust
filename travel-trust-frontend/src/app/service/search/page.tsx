@@ -15,21 +15,34 @@ import { useState } from "react";
 const { Option } = Select;
 
 const SearchPage = () => {
-  const query: any = {};
+  const query: any = { category: "any" };
   const searchData = useAppSelector((state) => state.service?.search) as any;
 
   const [status, setStatus] = useState<string>("");
+  const [prices, setPrices] = useState<number[]>([]);
   const [location, setLocation] = useState<string>(searchData?.destination);
-  const [category, setCategory] = useState<string>(
-    searchData?.category ?? "any"
-  );
+  const [category, setCategory] = useState<string>(searchData?.category);
   const [searchTerm, setSearchTerm] = useState<string>(searchData?.from);
+  const [sortBy, setSortBy] = useState<string>("");
 
+  if (status) {
+    query["status"] = status;
+  }
+  if (prices[0]) {
+    query["minPrice"] = prices[0];
+  }
+  if (prices[1]) {
+    query["maxPrice"] = prices[1];
+  }
   if (location) {
     query["location"] = location;
   }
   if (category) {
     query["category"] = category;
+  }
+  if (sortBy) {
+    query["sortBy"] = "price";
+    query["sortOrder"] = sortBy === "lh" ? "asc" : "desc";
   }
 
   const debouncedTerm = useDebounced({
@@ -50,6 +63,7 @@ const SearchPage = () => {
       <div className="basis-1/4">
         <FilterSideBar
           setStatus={setStatus}
+          setPrices={setPrices}
           setLocation={setLocation}
           setCategory={setCategory}
         />
@@ -71,23 +85,30 @@ const SearchPage = () => {
             <Select
               defaultValue=""
               style={{ width: 120 }}
-              // onChange={(value: string)=> setPrice(value)}
+              onChange={(value: string) => setSortBy(value)}
               options={[
                 { value: "", label: "Default" },
-                { value: 0, label: "Low to High" },
-                { value: 1500000, label: "High to Low" },
+                { value: "lh", label: "Low to High" },
+                { value: "hl", label: "High to Low" },
               ]}
             />
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center p-4">
-          {services?.slice(0, 12)?.map((service: IService, index: number) => (
-            <ServiceCard key={service.id} service={service} index={index} />
-          ))}
-        </div>
+        {isLoading && (
+          <div className="z-50">
+            <Loading />
+          </div>
+        )}
 
-        {isLoading && <Loading />}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center p-4">
+          {isLoading ||
+            services
+              ?.slice(0, 20)
+              ?.map((service: IService, index: number) => (
+                <ServiceCard key={service.id} service={service} index={index} />
+              ))}
+        </div>
 
         {services?.length === 0 ? (
           <div className="text-center w-full flex flex-col justify-center items-center">

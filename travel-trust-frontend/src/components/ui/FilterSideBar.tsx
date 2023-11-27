@@ -3,58 +3,19 @@ import {
   TravelCategory,
   TravelDestinations,
 } from "@/constants/service";
-import {
-  Card,
-  Collapse,
-  CollapseProps,
-  Input,
-  Radio,
-  RadioChangeEvent,
-  Select,
-  Slider,
-} from "antd";
+import { Card, Input, Radio, RadioChangeEvent, Slider } from "antd";
 import React, { useState } from "react";
-
-const { Option } = Select;
-
-const items: CollapseProps["items"] = [
-  {
-    key: "1",
-    label: "This is panel header 1",
-    children: (
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, labore!
-      </p>
-    ),
-  },
-  {
-    key: "2",
-    label: "This is panel header 2",
-    children: (
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, labore!
-      </p>
-    ),
-  },
-  {
-    key: "3",
-    label: "This is panel header 3",
-    children: (
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, labore!
-      </p>
-    ),
-  },
-];
 
 interface IFilterSideBarProps {
   setStatus: (v: string) => void;
+  setPrices: (v: number[]) => void;
   setLocation: (v: string) => void;
   setCategory: (v: string) => void;
 }
 
 const FilterSideBar = ({
   setStatus,
+  setPrices,
   setLocation,
   setCategory,
 }: IFilterSideBarProps) => {
@@ -63,9 +24,8 @@ const FilterSideBar = ({
   const onSliderChange = (value: number[]) => {
     setPrice(value);
   };
-
-  const onChange = (key: string | string[]) => {
-    console.log(key);
+  const onSliderAfterChange = (value: number[]) => {
+    setPrices(value);
   };
 
   return (
@@ -76,6 +36,7 @@ const FilterSideBar = ({
           step={10}
           defaultValue={price}
           onChange={onSliderChange}
+          onAfterChange={onSliderAfterChange}
           min={0}
           max={150000}
         />
@@ -92,7 +53,7 @@ const FilterSideBar = ({
           onChange={(e: RadioChangeEvent) => setStatus(e.target.value)}
         >
           {ServiceStatus?.map((item, index) => (
-            <Radio key={index} value={item}>
+            <Radio className="py-1" key={index} value={item}>
               {item}
             </Radio>
           ))}
@@ -106,7 +67,7 @@ const FilterSideBar = ({
           onChange={(e: RadioChangeEvent) => setCategory(e.target.value)}
         >
           {TravelCategory?.map((item, index) => (
-            <Radio key={index} value={item}>
+            <Radio className="py-1" key={index} value={item}>
               {item}
             </Radio>
           ))}
@@ -120,7 +81,7 @@ const FilterSideBar = ({
           onChange={(e: RadioChangeEvent) => setLocation(e.target.value)}
         >
           {TravelDestinations?.map((item, index) => (
-            <Radio key={index} value={item}>
+            <Radio className="py-1" key={index} value={item}>
               {item}
             </Radio>
           ))}

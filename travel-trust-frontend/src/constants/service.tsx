@@ -1,9 +1,12 @@
 export const TravelCategory = [
   "Any",
   "Tours",
+  "Flights",
+  "Hotels",
+  "Cruises",
+  "Group_Travel",
   "Adventure_Travel",
   "Honeymoon_Packages",
-  "Group_Travel",
 ];
 
 export const TravelDestinations = [

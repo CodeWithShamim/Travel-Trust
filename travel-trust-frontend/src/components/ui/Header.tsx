@@ -123,7 +123,7 @@ const Header = () => {
             <AiOutlineSearch size={24} className="text-[#09ea4c]" />
           </Link>
 
-          <Badge count={1} className="mr-4">
+          <Badge count={1} className="mr-4 cursor-pointer">
             <Avatar
               icon={<IoMdNotifications size={16} className="text-[#09ea4c]" />}
             />

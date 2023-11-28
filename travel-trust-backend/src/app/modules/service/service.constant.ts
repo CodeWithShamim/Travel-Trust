@@ -3,8 +3,8 @@
 export const ServiceFilterableFields = [
   'name',
   'location',
-  //   'category',
-  //   'status',
+  'category',
+  'status',
   'minPrice',
   'maxPrice',
   'searchTerm',
@@ -12,8 +12,8 @@ export const ServiceFilterableFields = [
 export const ServiceSearchableFields = [
   'name',
   'location',
-  //   'category',
-  //   'status',
+  // 'category',
+  // 'status',
 ];
 
 export const ServiceCategory = [

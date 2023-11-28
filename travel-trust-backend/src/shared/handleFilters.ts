@@ -25,7 +25,7 @@ const handleFilters = (filters: any, searchFields: string[]) => {
       AND: Object.keys(filtersData).map(key => ({
         [key]: {
           equals: (filtersData as any)[key],
-          mode: 'insensitive',
+          // mode: 'insensitive',
         },
       })),
     });

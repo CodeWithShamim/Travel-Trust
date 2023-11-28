@@ -2,21 +2,20 @@
 
 import Loading from "@/app/loading";
 import FilterSideBar from "@/components/ui/FilterSideBar";
-import Loader from "@/components/ui/Loader";
-import SearchBar from "@/components/ui/SearchBar";
 import ServiceCard from "@/components/ui/ServiceCard";
 import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
 import { useAppSelector, useDebounced } from "@/redux/hooks";
 import { IService } from "@/types";
-import { Input, Select } from "antd";
+import { Button, Drawer, Input, Select } from "antd";
 import Image from "next/image";
 import { useState } from "react";
-
-const { Option } = Select;
+import { BiFilter, BiReset } from "react-icons/bi";
 
 const SearchPage = () => {
-  const query: any = { category: "any" };
+  const query: any = {};
   const searchData = useAppSelector((state) => state.service?.search) as any;
+
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
 
   const [status, setStatus] = useState<string>("");
   const [prices, setPrices] = useState<number[]>([]);
@@ -58,40 +57,95 @@ const SearchPage = () => {
 
   const services = data?.services as any;
 
+  const handleReset = () => {
+    setStatus("");
+    setPrices([]);
+    setLocation("");
+    setCategory("");
+    setSearchTerm("");
+    setSortBy("");
+  };
+
   return (
     <div className="max-w-[1200px] mx-auto p-4 flex items-start flex-row">
-      <div className="basis-1/4">
-        <FilterSideBar
-          setStatus={setStatus}
-          setPrices={setPrices}
-          setLocation={setLocation}
-          setCategory={setCategory}
-        />
+      {/* Filter  */}
+      <div>
+        <div className="hidden lg:block basis-1/4">
+          <FilterSideBar
+            setStatus={setStatus}
+            setPrices={setPrices}
+            setLocation={setLocation}
+            setCategory={setCategory}
+          />
+        </div>
+        <div>
+          <Drawer
+            title="Filters"
+            placement="right"
+            open={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+          >
+            <FilterSideBar
+              setStatus={setStatus}
+              setPrices={setPrices}
+              setLocation={setLocation}
+              setCategory={setCategory}
+            />
+          </Drawer>
+        </div>
       </div>
 
       <div className="w-full">
-        <div className="m-4 p-4 flex items-center justify-between bg-white shadow-sm">
-          <Input
-            placeholder="Search"
-            type="text"
-            allowClear
-            className="text-black md:w-[30%] h-8 rounded-md border-neutral-200"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-
-          <div>
-            <span>Sort by : </span>
-            <Select
-              defaultValue=""
-              style={{ width: 120 }}
-              onChange={(value: string) => setSortBy(value)}
-              options={[
-                { value: "", label: "Default" },
-                { value: "lh", label: "Low to High" },
-                { value: "hl", label: "High to Low" },
-              ]}
+        {/* Filter & search header  */}
+        <div className="px-4 lg:m-4 lg:py-4 flex gap-4 flex-col lg:flex-row lg:items-center justify-between bg-white shadow-sm">
+          <div className="flex items-center md:w-[50%] lg:w-[30%]">
+            <Input
+              placeholder="Search"
+              type="text"
+              allowClear
+              className="text-black mr-6 lg:mr-0 h-10 lg:h-8 rounded-md border-neutral-200"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
+            <div className="lg:hidden">
+              <span className="flex items-center">
+                <h4>{`Filter`}</h4>
+                <Button
+                  size="small"
+                  className="border-0"
+                  onClick={() => setDrawerOpen(true)}
+                  icon={<BiFilter size={26} className="text-green-400" />}
+                />
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-5">
+            <div>
+              <span className="flex items-center">
+                <h4>{`Reset all : `}</h4>
+                <Button
+                  size="small"
+                  className="border-0"
+                  onClick={handleReset}
+                  icon={<BiReset size={22} className="text-green-400" />}
+                />
+              </span>
+            </div>
+
+            <div>
+              <span>Sort by : </span>
+              <Select
+                defaultValue=""
+                style={{ width: 160 }}
+                onChange={(value: string) => setSortBy(value)}
+                options={[
+                  { value: "", label: "Price >> Default" },
+                  { value: "lh", label: "Price >> Low to High" },
+                  { value: "hl", label: "Price >> High to Low" },
+                ]}
+              />
+            </div>
           </div>
         </div>
 

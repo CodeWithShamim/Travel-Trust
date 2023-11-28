@@ -66,13 +66,14 @@ const ServiceCard = ({ service, loading, index = 0 }: ServiceCardProps) => {
           <Image
             src={image ?? require("@/assets/login.webp")}
             alt={name}
-            width={200}
-            height={250}
+            // width={200}
+            // height={250}
+            fill
             quality={100}
-            layout="responsive"
+            // layout="responsive"
             loading="lazy"
             objectFit="cover"
-            className="mx-auto card-img pb-3 w-full absolute inset-0"
+            className="mx-auto h-full w-full card-img pb-3 absolute inset-0"
           />
           <h1 className="absolute z-40 text-white font-extrabold text-2xl text-left shadow-sm">
             {name}

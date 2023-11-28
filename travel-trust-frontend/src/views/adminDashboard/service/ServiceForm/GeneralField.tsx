@@ -9,6 +9,7 @@ import Image from "next/image";
 import {
   ServiceStatus,
   TravelCategory,
+  TravelDestinations,
   serviceFieldrules,
 } from "@/constants/service";
 
@@ -78,7 +79,13 @@ const GeneralField = ({ setImageUrl, image }: IGeneralField) => {
                 label="Location"
                 rules={serviceFieldrules.location}
               >
-                <Input placeholder="Location" />
+                <Select className="w-100" placeholder="Status">
+                  {TravelDestinations.map((elm, index) => (
+                    <option key={index} value={elm}>
+                      {elm}
+                    </option>
+                  ))}
+                </Select>
               </Form.Item>
             </Col>
           </Row>

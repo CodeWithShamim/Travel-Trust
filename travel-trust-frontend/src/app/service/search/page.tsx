@@ -69,8 +69,8 @@ const SearchPage = () => {
   return (
     <div className="max-w-[1200px] mx-auto p-4 flex items-start flex-row">
       {/* Filter  */}
-      <div>
-        <div className="hidden lg:block basis-1/4">
+      <div className="basis-1/4">
+        <div className="hidden lg:block">
           <FilterSideBar
             setStatus={setStatus}
             setPrices={setPrices}
@@ -78,6 +78,7 @@ const SearchPage = () => {
             setCategory={setCategory}
           />
         </div>
+
         <div>
           <Drawer
             title="Filters"

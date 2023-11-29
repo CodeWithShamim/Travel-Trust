@@ -1,18 +1,19 @@
-# Travel Trust
+# TRAVEL TRUST
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Website](https://img.shields.io/website-up-down-green-red/https/travel-trust-codewithshamim.vercel.app.svg)](https://travel-trust-codewithshamim.vercel.app/)
 
 ## Overview
 
+This repository contains the source code and assets for the Travel Trust website. A travel agency service website simplifies travel planning with streamlined bookings for flights, accommodations, and tours,
+ensuring a hassle-free and enjoyable experience for users. The website is built with the following technologies:
+
 <div>
 <img src="https://res.cloudinary.com/djdrjwmfc/image/upload/v1701278495/1_htlvf2.png" alt="Alt Text" width="100%">
-<img src="https://res.cloudinary.com/djdrjwmfc/image/upload/v1701278497/2_mkpshm.png" alt="Alt Text" width="33%">
-<img src="https://res.cloudinary.com/djdrjwmfc/image/upload/v1701278496/3_p9jqrc.png" alt="Alt Text" width="33%">
-<img src="https://res.cloudinary.com/djdrjwmfc/image/upload/v1701278495/4_pulhjw.png" alt="Alt Text" width="33%">
+<img src="https://res.cloudinary.com/djdrjwmfc/image/upload/v1701278497/2_mkpshm.png" alt="Alt Text" width="30%">
+<img src="https://res.cloudinary.com/djdrjwmfc/image/upload/v1701278496/3_p9jqrc.png" alt="Alt Text" width="30%">
+<img src="https://res.cloudinary.com/djdrjwmfc/image/upload/v1701278495/4_pulhjw.png" alt="Alt Text" width="30%">
 </div>
-
-This repository contains the source code and assets for the Travel Trust website. The website is built with the following technologies:
 
 ### Technologies used
 
@@ -29,6 +30,19 @@ This repository contains the source code and assets for the Travel Trust website
 | Prisma        | Database toolkit for Node.js and TypeScript         |
 | PostgreSQL    | Relational database for storing and retrieving data |
 
+## Features
+
+- **Interactive User Interface:**
+
+  - User-friendly interface that allows users to navigate the website easily and find information.
+
+- **Booking and Reservation System:**
+
+  - An integrated system that enables users to book flights, hotels, and other services.
+
+- **User Reviews and Ratings:**
+  - A section where users can share their experiences, reviews, and ratings about the service.
+
 ## Getting Started
 
 ### Prerequisites
@@ -44,7 +58,7 @@ Make sure you have the following software installed:
 0. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/your-username/travel-trust.git
+   git clone https://github.com/CodeWithShamim/Travel-Trust
    ```
 
 ## For FronEnd
@@ -146,4 +160,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 If you have any questions or suggestions, feel free to reach out:
 
 - Email: shamimislamonline@gmail.com
-- LinkedIn: [Shamim Islam](https://www.linkedin.com/in/codewithshamim/)
+- LinkedIn: [@codewithshamim](https://www.linkedin.com/in/codewithshamim/)

@@ -9,10 +9,12 @@ This repository contains the source code and assets for the Travel Trust website
 ensuring a hassle-free and enjoyable experience for users. The website is built with the following technologies:
 
 <div>
-<img src="https://res.cloudinary.com/djdrjwmfc/image/upload/v1701278495/1_htlvf2.png" alt="Alt Text" width="100%">
-<img src="https://res.cloudinary.com/djdrjwmfc/image/upload/v1701278497/2_mkpshm.png" alt="Alt Text" width="30%">
-<img src="https://res.cloudinary.com/djdrjwmfc/image/upload/v1701278496/3_p9jqrc.png" alt="Alt Text" width="30%">
-<img src="https://res.cloudinary.com/djdrjwmfc/image/upload/v1701278495/4_pulhjw.png" alt="Alt Text" width="30%">
+<a href="https://travel-trust-codewithshamim.vercel.app/" target="_blank"><img src="https://res.cloudinary.com/djdrjwmfc/image/upload/v1701278495/1_htlvf2.png" alt="Alt Text" width="100%"></a>
+
+<a href="https://travel-trust-codewithshamim.vercel.app/" target="_blank"><img src="https://res.cloudinary.com/djdrjwmfc/image/upload/v1701278497/2_mkpshm.png" alt="Alt Text" width="30%"></a>
+<a href="https://travel-trust-codewithshamim.vercel.app/" target="_blank"><img src="https://res.cloudinary.com/djdrjwmfc/image/upload/v1701278496/3_p9jqrc.png" alt="Alt Text" width="30%"></a>
+<a href="https://travel-trust-codewithshamim.vercel.app/" target="_blank"><img src="https://res.cloudinary.com/djdrjwmfc/image/upload/v1701278495/4_pulhjw.png" alt="Alt Text" width="30%"></a>
+
 </div>
 
 ### Technologies used

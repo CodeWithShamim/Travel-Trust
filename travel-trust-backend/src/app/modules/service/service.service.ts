@@ -116,6 +116,14 @@ const deleteService = async (id: string): Promise<Service> => {
     },
   });
 
+  if (result?.id) {
+    await prisma.notification.deleteMany({
+      where: {
+        notificationDataId: result?.id,
+      },
+    });
+  }
+
   return result;
 };
 

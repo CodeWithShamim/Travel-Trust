@@ -32,12 +32,14 @@ import { IoMdNotifications } from "react-icons/io";
 import Notification from "@/views/Notification";
 import { INotification } from "@/types";
 import { useGetAllNotificationQuery } from "@/redux/api/notificationApi";
+import { headerItems } from "@/constants/commons";
 
 const { Header: HeaderLayout } = Layout;
 
 const Header = () => {
   const { id } = getUserInfo();
   const { data, isLoading, error } = useGetUserByIdQuery(id);
+  const audioRef = React.useRef<HTMLAudioElement>(null);
 
   const { data: data2, isLoading: isLoading2 } =
     useGetAllNotificationQuery(null);
@@ -55,10 +57,15 @@ const Header = () => {
 
   const cart = useAppSelector((state) => state.service?.cart);
 
+  const playSound = () => {
+    audioRef?.current?.play();
+  };
+
   // notification received by socket
   useEffect(() => {
     if (socket) {
       socket.on("notification:service", (notificaion: any) => {
+        playSound();
         setNotifications((prev) => [notificaion, ...prev]);
       });
     }
@@ -89,48 +96,6 @@ const Header = () => {
     router.push("/login");
   };
 
-  const items: MenuProps["items"] = [
-    {
-      key: 1,
-      label: <Link href="/dashboard/profile">Dashboard</Link>,
-    },
-    {
-      key: 2,
-      label: <Link href="/dashboard/profile">Profile</Link>,
-    },
-    {
-      key: 3,
-      label: <Link href="/service/search">Search</Link>,
-    },
-    {
-      key: 4,
-      label: (
-        <>
-          {userData?.id ? (
-            <Button
-              onClick={() => signOut()}
-              type="primary"
-              className="bg-primary text-xs md:text-sm"
-              loading={isLoading}
-            >
-              Logout
-            </Button>
-          ) : (
-            <Link href="/login">
-              <Button
-                type="primary"
-                className="bg-primary text-xs md:text-sm"
-                loading={isLoading}
-              >
-                Signin
-              </Button>
-            </Link>
-          )}
-        </>
-      ),
-    },
-  ];
-
   if ((error as any)?.data?.message === "Jwt expired") {
     message.error((error as any)?.data?.message);
     signOut();
@@ -145,6 +110,8 @@ const Header = () => {
           isLoading={isLoading2}
         />
       )}
+
+      <audio ref={audioRef} src={"/notifacation.wav"}></audio>
 
       <motion.div className=" max-w-[1200px] mx-auto text-white w-full flex items-center justify-between h-full">
         <Link
@@ -194,7 +161,10 @@ const Header = () => {
             </Button>
           </Link>
 
-          <Dropdown menu={{ items }} className="z-50 cursor-pointer">
+          <Dropdown
+            menu={{ items: headerItems({ userData, isLoading, signOut }) }}
+            className="z-50 cursor-pointer"
+          >
             <Space wrap size={16}>
               <Avatar
                 src={userData?.profileImage}

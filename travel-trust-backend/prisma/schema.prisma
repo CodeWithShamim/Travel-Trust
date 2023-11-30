@@ -26,6 +26,7 @@ model User {
   updatedAt    DateTime       @updatedAt
   bookings     Booking[]
   reviews      Review[]
+  Notification Notification[]
 
   @@map("users")
 }
@@ -84,6 +85,18 @@ model Review {
   updatedAt DateTime @updatedAt
 
   @@map("reviews")
+}
+
+model Notification {
+  id                 String  @id @default(uuid())
+  userId             String?
+  notificationDataId String?
+  message            String  @default("")
+  user               User?   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@map("notifications")
 }
 
 enum SERVICE_CATEGORY {

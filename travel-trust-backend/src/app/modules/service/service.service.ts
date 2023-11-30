@@ -7,11 +7,25 @@ import { IGenericResponse } from '../../../interfaces/common';
 import handleFilters from '../../../shared/handleFilters';
 import { IFilters } from './service.interface';
 import { ServiceSearchableFields } from './service.constant';
+import io from '../../../shared/socket';
 
 const createService = async (data: Service): Promise<Service> => {
   const service = await prisma.service.create({
     data,
   });
+
+  if (service?.id) {
+    const notification = await prisma.notification.create({
+      data: {
+        message: `New service ${service?.name} added`,
+        notificationDataId: service?.id,
+      },
+    });
+
+    // socket trigger
+    io.emit(`notification:service`, notification);
+  }
+
   return service;
 };
 

@@ -74,3 +74,11 @@ export type IReview = {
   service?: IService;
   createdAt?: string;
 };
+
+export type INotification = {
+  id?: string;
+  userId?: string;
+  notificationDataId?: string;
+  message: string;
+  createdAt: string;
+};

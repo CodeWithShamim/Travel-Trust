@@ -1,16 +1,17 @@
 import { NotificationItems } from "@/constants/commons";
+import { INotification } from "@/types";
 import { timeAgo } from "@/utils/common";
 import { Drawer } from "antd";
 import Link from "next/link";
 import React from "react";
-import { BiDotsVerticalRounded, BiNotification } from "react-icons/bi";
 import { IoClose, IoNotificationsOffCircle } from "react-icons/io5";
 
 interface INotificationProps {
   onClose: (v: boolean) => void;
+  data: INotification[];
 }
 
-const Notification = ({ onClose }: INotificationProps) => {
+const Notification = ({ onClose, data }: INotificationProps) => {
   return (
     <div>
       <Drawer
@@ -21,9 +22,9 @@ const Notification = ({ onClose }: INotificationProps) => {
         // width={270}
       >
         <div className="flex flex-col gap-3">
-          {NotificationItems.map((item) => (
+          {data?.map((item: INotification) => (
             <Link
-              href={item?.link}
+              href={`/service-details/${item?.notificationDataId}`}
               key={item?.id}
               className="flex items-start gap-2 cursor-pointer hover:bg-green-100 transition-all rounded p-1"
               onClick={() => onClose(false)}
@@ -32,7 +33,7 @@ const Notification = ({ onClose }: INotificationProps) => {
               <span>
                 <p className="text-black font-semibold">{item?.message}</p>
                 <h5 className="text-green-600 text-sm">
-                  {timeAgo(item?.timestamp)}
+                  {timeAgo(item?.createdAt)}
                 </h5>
               </span>
               {/* <span>{item.timestamp}</span> */}

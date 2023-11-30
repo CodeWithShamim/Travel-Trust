@@ -40,7 +40,6 @@ import Form from "@/components/forms/Form";
 import { reviewsLists, serviceDetailsLists } from "@/data/service";
 import ReviewCard from "@/components/ui/ReviewCard";
 import MouseScroll from "@/components/common/MouseScroll";
-import styles from "@/styles/common.module.css";
 import Link from "next/link";
 import { AiFillMessage } from "react-icons/ai";
 
@@ -49,6 +48,7 @@ const { TextArea } = Input;
 interface IServiceProps {
   service: IService;
 }
+
 const ServiceDetails = () => {
   const query: any = {};
 

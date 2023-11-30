@@ -15,7 +15,7 @@ import React, { useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
 import { useGetUserByIdQuery } from "@/redux/api/authApi";
 import { getUserInfo } from "@/helpers/persist/user.persist";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector, useSocket } from "@/redux/hooks";
 import { removeUserData, setUserData } from "@/redux/slices/userSlice";
 import { useEffect } from "react";
 import {
@@ -30,6 +30,7 @@ import { addAllServiceToCart } from "@/redux/slices/serviceSlice";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoMdNotifications } from "react-icons/io";
 import Notification from "@/views/Notification";
+import { INotification } from "@/types";
 
 const { Header: HeaderLayout } = Layout;
 
@@ -37,9 +38,14 @@ const Header = () => {
   const { id } = getUserInfo();
   const { data, isLoading, error } = useGetUserByIdQuery(id);
   const dispatch: any = useAppDispatch();
+
+  const [notifications, setNotifications] = useState<INotification[]>([]);
   const [showNotification, setShowNotification] = useState<boolean>(false);
+
   const userData = useAppSelector((state) => state.user?.data) as any;
   const router = useRouter();
+
+  const socket = useSocket();
 
   const cart = useAppSelector((state) => state.service?.cart);
 
@@ -109,9 +115,19 @@ const Header = () => {
     signOut();
   }
 
+  useEffect(() => {
+    if (socket) {
+      socket.on("notification:service", (notificaion: any) => {
+        setNotifications((prev) => [...prev, notificaion]);
+      });
+    }
+  }, [socket]);
+
   return (
     <HeaderLayout className="z-[999999] shadow-md bg-transparent w-full px-4">
-      {showNotification && <Notification onClose={setShowNotification} />}
+      {showNotification && (
+        <Notification data={notifications} onClose={setShowNotification} />
+      )}
 
       <motion.div className=" max-w-[1200px] mx-auto text-white w-full flex items-center justify-between h-full">
         <Link

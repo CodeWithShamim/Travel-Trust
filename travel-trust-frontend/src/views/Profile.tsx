@@ -180,6 +180,9 @@ const Profile = () => {
         </div>
 
         <div className="w-full lg:w-[60%] lg:ml-10 h-full">
+          <h1 className="font-bold text-xl pb-4 md:uppercase tracking-widest">
+            Cart Items
+          </h1>
           {cart.length === 0 ? (
             <Image
               src={user?.profileImage ?? require("@/assets/gallery/1.webp")}

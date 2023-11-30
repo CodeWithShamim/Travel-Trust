@@ -7,28 +7,27 @@ import ScrollCarousel from "scroll-carousel-react";
 
 const SponsorCarousel = () => {
   return (
-    <>
+    <div>
       <ScrollCarousel
         autoplay
-        autoplaySpeed={10}
-        speed={10}
+        autoplaySpeed={7}
+        speed={7}
         // onReady={() => console.log("I am ready")}
       >
         {sponsorItems?.map((item) => (
-          <div key={item?.id} className="h-32 w-28 cursor-pointer">
-            <Image
-              src={item?.image}
-              alt={"sponsor image"}
-              width={120}
-              height={120}
-              layout="responsive"
-              loading="lazy"
-              objectFit="cover"
-            />
-          </div>
+          <Image
+            key={item?.id}
+            src={item?.image}
+            alt={"sponsor image"}
+            width={150}
+            height={150}
+            layout="responsive"
+            objectFit="cover"
+            className="cursor-pointer h-24 w-24 md:h-32 md:w-32"
+          />
         ))}
       </ScrollCarousel>
-    </>
+    </div>
   );
 };
 

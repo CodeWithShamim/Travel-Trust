@@ -108,8 +108,9 @@ const SearchPage = () => {
               className="text-black mr-6 lg:mr-0 h-10 lg:h-8 rounded-md border-neutral-200"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              prefix={<AiOutlineSearch size={24} className="text-[#09ea4c]" />}
+              prefix={<AiOutlineSearch size={18} className="text-[#09ea4c]" />}
             />
+
             <div className="lg:hidden">
               <span className="flex items-center">
                 <h4>{`Filter`}</h4>

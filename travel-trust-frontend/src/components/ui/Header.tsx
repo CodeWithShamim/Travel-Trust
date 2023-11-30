@@ -12,11 +12,7 @@ import {
 } from "antd";
 import Link from "next/link";
 import React, { useState } from "react";
-import {
-  DownOutlined,
-  UserOutlined,
-  ShoppingCartOutlined,
-} from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { useGetUserByIdQuery } from "@/redux/api/authApi";
 import { getUserInfo } from "@/helpers/persist/user.persist";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
@@ -30,10 +26,10 @@ import { authKey, cartKey } from "@/constants/storageKey";
 import { useRouter } from "next/navigation";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import { motion } from "framer-motion";
-import { IService } from "@/types";
 import { addAllServiceToCart } from "@/redux/slices/serviceSlice";
-import { AiFillMessage, AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineSearch } from "react-icons/ai";
 import { IoMdNotifications } from "react-icons/io";
+import Notification from "@/views/Notification";
 
 const { Header: HeaderLayout } = Layout;
 
@@ -41,6 +37,7 @@ const Header = () => {
   const { id } = getUserInfo();
   const { data, isLoading, error } = useGetUserByIdQuery(id);
   const dispatch: any = useAppDispatch();
+  const [showNotification, setShowNotification] = useState<boolean>(false);
   const userData = useAppSelector((state) => state.user?.data) as any;
   const router = useRouter();
 
@@ -114,6 +111,8 @@ const Header = () => {
 
   return (
     <HeaderLayout className="z-[999999] shadow-md bg-transparent w-full px-4">
+      {showNotification && <Notification onClose={setShowNotification} />}
+
       <motion.div className=" max-w-[1200px] mx-auto text-white w-full flex items-center justify-between h-full">
         <Link
           href="/"
@@ -129,6 +128,7 @@ const Header = () => {
 
           <Badge count={1} className="mr-4 cursor-pointer">
             <Avatar
+              onClick={() => setShowNotification(true)}
               icon={<IoMdNotifications size={16} className="text-[#09ea4c]" />}
             />
           </Badge>

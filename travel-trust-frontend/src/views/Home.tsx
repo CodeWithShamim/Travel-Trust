@@ -115,7 +115,7 @@ const HomePage = () => {
       </div>
 
       {/* sponsor carousel  */}
-      <div className="max-w-[1200px] mx-auto px-4 pb-10 md:pb-14 lg:pb-20">
+      <div className="max-w-[1200px] mx-auto md:px-4 pb-5 mt-[-40px] lg:mt-0 md:pb-14 lg:pb-20">
         <SponsorCarousel />
       </div>
 

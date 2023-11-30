@@ -9,6 +9,7 @@ import { IService } from "@/types";
 import { Button, Drawer, Input, Select } from "antd";
 import Image from "next/image";
 import { useState } from "react";
+import { AiOutlineSearch } from "react-icons/ai";
 import { BiFilter, BiReset } from "react-icons/bi";
 
 const SearchPage = () => {
@@ -69,7 +70,7 @@ const SearchPage = () => {
   return (
     <div className="max-w-[1200px] mx-auto p-4 flex items-start flex-row">
       {/* Filter  */}
-      <div className="basis-1/4">
+      <div className="lg:basis-1/4">
         <div className="hidden lg:block">
           <FilterSideBar
             setStatus={setStatus}
@@ -79,7 +80,7 @@ const SearchPage = () => {
           />
         </div>
 
-        <div>
+        <div className="w-[90%] absolute right-0 top-0 bottom-0">
           <Drawer
             title="Filters"
             placement="right"
@@ -107,6 +108,7 @@ const SearchPage = () => {
               className="text-black mr-6 lg:mr-0 h-10 lg:h-8 rounded-md border-neutral-200"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              prefix={<AiOutlineSearch size={24} className="text-[#09ea4c]" />}
             />
             <div className="lg:hidden">
               <span className="flex items-center">

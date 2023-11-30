@@ -3,6 +3,8 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Website](https://img.shields.io/website-up-down-green-red/https/travel-trust-codewithshamim.vercel.app.svg)](https://travel-trust-codewithshamim.vercel.app/)
 
+[**API DOCUMENTATION**](https://documenter.getpostman.com/view/22498570/2s9YeHZqod)
+
 ## Overview
 
 This repository contains the source code and assets for the Travel Trust website. A travel agency service website simplifies travel planning with streamlined bookings for flights, accommodations, and tours,

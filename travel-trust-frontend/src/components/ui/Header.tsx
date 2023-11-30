@@ -109,14 +109,12 @@ const Header = () => {
   return (
     <HeaderLayout className="z-[999999] shadow-md bg-transparent w-full px-4">
       <motion.div className=" max-w-[1200px] mx-auto text-white w-full flex items-center justify-between h-full">
-        <div className="md:text-xl">
-          <Link
-            href="/"
-            className="text-xl md:text-2xl lg:text-3xl font-extrabold shadow-2xl uppercase text-[#09ea4c]"
-          >
-            Travel Trust
-          </Link>
-        </div>
+        <Link
+          href="/"
+          className="text-xl md:text-2xl lg:text-3xl font-extrabold shadow-2xl uppercase text-[#09ea4c] z-50"
+        >
+          Travel Trust
+        </Link>
 
         <div className="flex gap-2 items-center z-50">
           <Link href="/service/search" className="pt-2">

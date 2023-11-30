@@ -10,24 +10,20 @@ const SponsorCarousel = () => {
     <>
       <ScrollCarousel
         autoplay
-        autoplaySpeed={8}
-        speed={7}
+        autoplaySpeed={10}
+        speed={10}
         onReady={() => console.log("I am ready")}
       >
         {sponsorItems?.map((item) => (
-          <div
-            key={item?.id}
-            className="bg-blue-300/20 border-2 border-blue-300/70 rounded h-32 w-48 cursor-pointer"
-          >
+          <div key={item?.id} className="h-32 w-28 cursor-pointer">
             <Image
               src={item?.image}
               alt={"sponsor image"}
-              width={150}
-              height={150}
+              width={120}
+              height={120}
               layout="responsive"
               loading="lazy"
               objectFit="cover"
-              className="mx-auto card-img pb-3 w-full absolute inset-0"
             />
           </div>
         ))}

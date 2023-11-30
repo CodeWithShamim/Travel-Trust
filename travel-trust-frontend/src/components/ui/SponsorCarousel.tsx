@@ -12,7 +12,7 @@ const SponsorCarousel = () => {
         autoplay
         autoplaySpeed={10}
         speed={10}
-        onReady={() => console.log("I am ready")}
+        // onReady={() => console.log("I am ready")}
       >
         {sponsorItems?.map((item) => (
           <div key={item?.id} className="h-32 w-28 cursor-pointer">

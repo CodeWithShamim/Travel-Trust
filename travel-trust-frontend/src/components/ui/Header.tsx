@@ -8,6 +8,7 @@ import {
   Space,
   Avatar,
   Badge,
+  message,
 } from "antd";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -105,6 +106,11 @@ const Header = () => {
       ),
     },
   ];
+
+  if ((error as any)?.data?.message === "Jwt expired") {
+    message.error((error as any)?.data?.message);
+    signOut();
+  }
 
   return (
     <HeaderLayout className="z-[999999] shadow-md bg-transparent w-full px-4">

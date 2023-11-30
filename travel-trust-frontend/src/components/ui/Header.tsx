@@ -31,15 +31,21 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { IoMdNotifications } from "react-icons/io";
 import Notification from "@/views/Notification";
 import { INotification } from "@/types";
+import { useGetAllNotificationQuery } from "@/redux/api/notificationApi";
 
 const { Header: HeaderLayout } = Layout;
 
 const Header = () => {
   const { id } = getUserInfo();
   const { data, isLoading, error } = useGetUserByIdQuery(id);
+
+  const { data: data2, isLoading: isLoading2 } =
+    useGetAllNotificationQuery(null);
+
   const dispatch: any = useAppDispatch();
 
   const [notifications, setNotifications] = useState<INotification[]>([]);
+
   const [showNotification, setShowNotification] = useState<boolean>(false);
 
   const userData = useAppSelector((state) => state.user?.data) as any;
@@ -49,6 +55,21 @@ const Header = () => {
 
   const cart = useAppSelector((state) => state.service?.cart);
 
+  // notification received by socket
+  useEffect(() => {
+    if (socket) {
+      socket.on("notification:service", (notificaion: any) => {
+        setNotifications((prev) => [notificaion, ...prev]);
+      });
+    }
+  }, [socket]);
+
+  useEffect(() => {
+    const newNotification = data2?.notifications as INotification[];
+    newNotification?.length > 0 && setNotifications(newNotification);
+  }, [data2]);
+
+  // get cart value from local storage
   useEffect(() => {
     const cartValue = getValueFromLocalStorage(cartKey);
     const parseCartValue = JSON.parse(cartValue as string);
@@ -115,18 +136,14 @@ const Header = () => {
     signOut();
   }
 
-  useEffect(() => {
-    if (socket) {
-      socket.on("notification:service", (notificaion: any) => {
-        setNotifications((prev) => [...prev, notificaion]);
-      });
-    }
-  }, [socket]);
-
   return (
     <HeaderLayout className="z-[999999] shadow-md bg-transparent w-full px-4">
       {showNotification && (
-        <Notification data={notifications} onClose={setShowNotification} />
+        <Notification
+          data={notifications}
+          onClose={setShowNotification}
+          isLoading={isLoading2}
+        />
       )}
 
       <motion.div className=" max-w-[1200px] mx-auto text-white w-full flex items-center justify-between h-full">
@@ -142,7 +159,7 @@ const Header = () => {
             <AiOutlineSearch size={24} className="text-[#09ea4c]" />
           </Link>
 
-          <Badge count={1} className="mr-4 cursor-pointer">
+          <Badge count={notifications?.length} className="mr-4 cursor-pointer">
             <Avatar
               onClick={() => setShowNotification(true)}
               icon={<IoMdNotifications size={16} className="text-[#09ea4c]" />}

@@ -50,7 +50,7 @@ export const serviceApi = baseApi.injectEndpoints({
         url: `${SERVICE_URL}/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["service"],
+      invalidatesTags: ["service", "notification"],
     }),
   }),
 });

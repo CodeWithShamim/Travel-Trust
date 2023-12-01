@@ -2,7 +2,7 @@ import { AppDispatch, RootState } from "./store";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { io, Socket } from "socket.io-client";
-import { backendURL, baseURL } from "@/constants/url";
+import { backendURL } from "@/constants/url";
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
@@ -30,7 +30,7 @@ export const useSocket = () => {
   const [socket, setSocket] = useState<any>();
 
   useEffect((): any => {
-    const newSocket = io(backendURL);
+    const newSocket = io(backendURL?.split("/api")[0]);
     setSocket(newSocket);
 
     return () => newSocket.close();

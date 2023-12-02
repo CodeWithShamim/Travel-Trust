@@ -1,4 +1,5 @@
 import { timeAgo } from "@/utils/common";
+import { useEffect, useRef } from "react";
 import { BiDotsVertical } from "react-icons/bi";
 
 interface IChatMessageProps {
@@ -12,6 +13,12 @@ const ChatMessage = ({
   timestamp,
   isCurrentUser,
 }: IChatMessageProps) => {
+  const scrollRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [content]);
+
   return (
     <div className="flex items-center">
       <div
@@ -20,7 +27,10 @@ const ChatMessage = ({
         }`}
       >
         <span className="flex items-center">
-          <p className="whitespace-pre-line tracking-wide text-gray-800">
+          <p
+            ref={scrollRef}
+            className="whitespace-pre-line tracking-wide text-gray-800"
+          >
             {content}
           </p>
           <span className="cursor-pointer pt-2 pl-2">

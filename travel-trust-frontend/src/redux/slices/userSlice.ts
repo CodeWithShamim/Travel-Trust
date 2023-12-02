@@ -1,8 +1,9 @@
 import { IUser } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: IUser | { data: {} } = {
+const initialState: IUser | { data: {}; isLoading: boolean } = {
   data: {},
+  isLoading: false,
 };
 
 export const userSlice = createSlice({
@@ -15,9 +16,13 @@ export const userSlice = createSlice({
     removeUserData: (state) => {
       state.data = {};
     },
+    setUserLoading: (state, {payload}) => {
+      state.isLoading = payload;
+    },
   },
 });
 
-export const { setUserData, removeUserData } = userSlice.actions;
+export const { setUserData, removeUserData, setUserLoading } =
+  userSlice.actions;
 
 export default userSlice.reducer;

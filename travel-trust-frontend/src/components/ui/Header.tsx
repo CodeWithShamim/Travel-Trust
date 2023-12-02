@@ -16,7 +16,11 @@ import { UserOutlined } from "@ant-design/icons";
 import { useGetUserByIdQuery } from "@/redux/api/authApi";
 import { getUserInfo } from "@/helpers/persist/user.persist";
 import { useAppDispatch, useAppSelector, useSocket } from "@/redux/hooks";
-import { removeUserData, setUserData } from "@/redux/slices/userSlice";
+import {
+  removeUserData,
+  setUserData,
+  setUserLoading,
+} from "@/redux/slices/userSlice";
 import { useEffect } from "react";
 import {
   getValueFromLocalStorage,
@@ -78,6 +82,8 @@ const Header = () => {
 
   // get cart value from local storage
   useEffect(() => {
+    dispatch(setUserLoading(isLoading));
+
     const cartValue = getValueFromLocalStorage(cartKey);
     const parseCartValue = JSON.parse(cartValue as string);
 
@@ -87,8 +93,9 @@ const Header = () => {
 
     if (data?.id) {
       dispatch(setUserData(data));
+      dispatch(setUserLoading(isLoading));
     }
-  }, [data, dispatch]);
+  }, [data, dispatch, isLoading]);
 
   const signOut = () => {
     removeValueFromLocalStorage(authKey);

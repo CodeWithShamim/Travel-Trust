@@ -82,3 +82,11 @@ export type INotification = {
   message: string;
   createdAt: string;
 };
+
+export type IMessage = {
+  id?: string;
+  senderId: string;
+  receiver: string;
+  content: string;
+  createdAt: string;
+};

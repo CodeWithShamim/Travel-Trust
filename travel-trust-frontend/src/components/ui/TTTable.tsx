@@ -51,7 +51,11 @@ const TTTable = ({
       dataSource={dataSource}
       pagination={paginationConfig}
       onChange={onTableChange}
-      style={{ overflowX: "auto", width: Number(window?.innerWidth) - 118 }}
+      style={{
+        overflowX: "auto",
+        width: Number(window?.innerWidth) - 118,
+        backgroundColor: "white",
+      }}
       title={() =>
         isButton ? (
           <Button onClick={onClickBtn} type="primary" size="middle">

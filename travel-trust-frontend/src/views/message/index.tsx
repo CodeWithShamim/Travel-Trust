@@ -1,28 +1,51 @@
 "use client";
 
-import { Button, Input, Layout, Modal } from "antd";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import ChatMessage from "@/components/ui/ChatMessage";
+import { Button, Input, Layout } from "antd";
+import React, { useState } from "react";
 const { Sider, Content } = Layout;
 import { CiMenuKebab } from "react-icons/ci";
 
 const { TextArea } = Input;
 
-const Message = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+interface IMessage {
+  id: string;
+  content: string;
+  senderId?: string;
+  receiverId?: string;
+  createdAt: string;
+  isCurrentUser: boolean;
+}
 
-  useEffect(() => {
-    setIsOpen(true);
-  }, []);
+const Message = () => {
+  const audioRef = React.useRef<HTMLAudioElement>(null);
+  const [message, setMessage] = useState<string>("");
+  const [messages, setMessages] = useState<IMessage[]>([]);
+
+  const handleSendMessage = () => {
+    const newMsg = {
+      id: 1,
+      content: message,
+      createdAt: "2023-11-01 12:00:00",
+      isCurrentUser: true,
+    };
+
+    setMessages((prev: any) => [...prev, newMsg]);
+    audioRef?.current?.play();
+    setMessage("");
+  };
+
   return (
-    <div className="max-w-[1200px] mx-auto px-4 relative">
+    <div className="max-w-[1250px] mx-auto px-4 relative py-2">
+      <audio ref={audioRef} src={"/notifacation.wav"}></audio>
+
       <Layout hasSider className="bg-white">
-        <Sider className="h-screen w-24 bg-white shadow-2xl text-center p-4">
-          <div className="flex flex-col gap-2 overflow-hidden">
-            {Array.from({ length: 10 }).map((item, index) => (
+        <Sider className="h-screen w-24 bg-white shadow-2xl text-center px-4">
+          <div className="flex flex-col gap-2 overflow-hidden py-2">
+            {Array.from({ length: 1 }).map((item, index) => (
               <div
                 key={index}
-                className="font-sembold bg-green-400 px-4 py-2 rounded-lg cursor-pointer hover:bg-red-400 hover:text-white flex items-center justify-between transition-all "
+                className="font-sembold bg-green-100 px-4 py-2 rounded-lg cursor-pointer hover:bg-red-400 hover:text-white flex items-center justify-between transition-all "
               >
                 <p>shamim</p>
                 <CiMenuKebab />
@@ -31,24 +54,33 @@ const Message = () => {
           </div>
         </Sider>
 
-        <Modal open={isOpen} title="Comming soon..." footer={null}>
-          <p className="pb-4 text-red-500">
-            Work in progress. Stay tuned for updates!
-          </p>
-          <Link href={"/"}>
-            <Button type="primary">Go Home</Button>
-          </Link>
-        </Modal>
+        <Content className="relative pb-10">
+          <div className="py-10 mb-2 px-4 bg-gray-100 rounded min-h-[70%] max-h-[400px] overflow-y-auto">
+            {messages?.map((message: IMessage) => (
+              <ChatMessage
+                key={message?.id}
+                content={message?.content}
+                timestamp={message?.createdAt}
+                isCurrentUser={message?.isCurrentUser}
+              />
+            ))}
+          </div>
 
-        <Content className="relative">
-          <div className="absolute bottom-4 left-2 w-full flex items-center gap-3">
+          <div className="absolute left-2 w-full flex flex-col items-end gap-3">
             <TextArea
-              rows={4}
+              rows={3}
               className="w-full"
-              placeholder="Write text..."
+              placeholder="Write message..."
+              onChange={(e) => setMessage(e.target.value)}
+              value={message}
               allowClear
             />
-            <Button type="primary" size="large">
+            <Button
+              onClick={handleSendMessage}
+              type="primary"
+              className="w-[15%]"
+              size="large"
+            >
               Send
             </Button>
           </div>

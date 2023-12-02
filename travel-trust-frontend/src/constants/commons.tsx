@@ -20,11 +20,11 @@ export const headerItems = ({
     },
     {
       key: 2,
-      label: <Link href="/dashboard/profile">Profile</Link>,
+      label: <Link href="/message">Message</Link>,
     },
     {
       key: 3,
-      label: <Link href="/service/search">Search</Link>,
+      label: <Link href="/dashboard/profile">Profile</Link>,
     },
     {
       key: 4,

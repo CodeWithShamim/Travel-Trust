@@ -17,7 +17,7 @@ const createService = async (data: Service): Promise<Service> => {
   if (service?.id) {
     const notification = await prisma.notification.create({
       data: {
-        message: `New service ${service?.name} added`,
+        message: `New service "${service?.name}" added`,
         notificationDataId: service?.id,
       },
     });

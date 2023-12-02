@@ -27,6 +27,8 @@ model User {
   bookings     Booking[]
   reviews      Review[]
   Notification Notification[]
+  senders      Message[]      @relation(name: "senders")
+  receivers    Message[]      @relation(name: "receivers")
 
   @@map("users")
 }
@@ -97,6 +99,19 @@ model Notification {
   createdAt DateTime @default(now())
 
   @@map("notifications")
+}
+
+model Message {
+  id         String @id @default(uuid())
+  senderId   String
+  receiverId String
+  content    String
+  sender     User   @relation(fields: [senderId], references: [id], name: "senders")
+  receiver   User   @relation(fields: [receiverId], references: [id], name: "receivers")
+
+  createdAt DateTime @default(now())
+
+  @@map("messages")
 }
 
 enum SERVICE_CATEGORY {

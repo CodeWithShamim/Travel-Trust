@@ -26,14 +26,14 @@ io.on('connection', (socket: Socket) => {
   socket.on('message', async (data: Message) => {
     const receiverId = data?.receiverId;
 
+    if (receiverId && connectedUsers[receiverId]) {
+      io.to(connectedUsers[receiverId]).emit('message', data);
+    }
+
     // save the message to the database
-    const message = await prisma.message.create({
+    await prisma.message.create({
       data,
     });
-
-    if (receiverId && connectedUsers[receiverId]) {
-      io.to(connectedUsers[receiverId]).emit('message', message);
-    }
   });
 
   socket.on('disconnect', () => {

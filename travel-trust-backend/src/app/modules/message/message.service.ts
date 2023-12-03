@@ -8,10 +8,21 @@ const createMessage = async (data: Message): Promise<Message> => {
   return result;
 };
 
-const getAllMessage = async (): Promise<Message[]> => {
+const getAllMessage = async (filters: {
+  senderId: string;
+  receiverId: string;
+}): Promise<Message[]> => {
+  const { senderId, receiverId } = filters;
+
   const result = await prisma.message.findMany({
+    where: {
+      OR: [
+        { senderId, receiverId },
+        { senderId: receiverId, receiverId: senderId },
+      ],
+    },
     orderBy: {
-      createdAt: 'desc',
+      createdAt: 'asc',
     },
   });
   return result;

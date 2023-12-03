@@ -4,6 +4,8 @@ import sendResponse from '../../../shared/sendResponse';
 import { MessageService } from './message.service';
 import { Request, Response } from 'express';
 import { Message } from '@prisma/client';
+import { MessageFilterableFields } from './message.contant';
+import pick from '../../../shared/pick';
 
 const createMessage = catchAsync(async (req: Request, res: Response) => {
   const data = req.body;
@@ -18,7 +20,14 @@ const createMessage = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getAllMessage = catchAsync(async (req: Request, res: Response) => {
-  const result = await MessageService.getAllMessage();
+  const filters = pick(req.query, MessageFilterableFields);
+
+  const result = await MessageService.getAllMessage(
+    filters as {
+      senderId: string;
+      receiverId: string;
+    }
+  );
 
   sendResponse<Message[]>(res, {
     success: true,

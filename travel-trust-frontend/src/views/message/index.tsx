@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 const { Sider, Content } = Layout;
 import { CiMenuKebab } from "react-icons/ci";
+import styles from "@/styles/common.module.css";
 
 const { TextArea } = Input;
 
@@ -27,6 +28,8 @@ interface IMessage {
 }
 
 const Message = () => {
+  const query: Record<string, any> = {};
+
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<IMessage[]>([]);
@@ -36,11 +39,14 @@ const Message = () => {
   const router = useRouter();
   const socket = useSocket();
 
+  query["senderId"] = data?.id;
+  query["receiverId"] = receiverId;
+
   const {
     data: data2,
     isLoading: isLoading2,
     error,
-  } = useGetAllMessageQuery(null);
+  } = useGetAllMessageQuery({ ...query }, { refetchOnMountOrArgChange: true });
 
   const { data: data3, isLoading: isLoading3 } = useGetAllUserQuery(null);
 
@@ -60,11 +66,13 @@ const Message = () => {
   // received message from databse
   const handleSetMessages = () => {
     const newMessages = data2?.messages as any;
-    newMessages?.length > 0 && setMessages(newMessages);
+    newMessages?.length > 0 ? setMessages(newMessages) : setMessages([]);
   };
 
   useEffect(() => {
-    receiverId && handleSetMessages();
+    if (receiverId) {
+      handleSetMessages();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data2, receiverId]);
 
@@ -110,102 +118,107 @@ const Message = () => {
   };
 
   return (
-    <div className="max-w-[1250px] mx-auto px-4 relative">
-      <div>
-        <audio ref={audioRef} src={"/send.mp3"}></audio>
-      </div>
+    <div className={`${styles["chat-bg-image"]}`}>
+      <section className={`max-w-[1650px] mx-auto relative`}>
+        <div>
+          <audio ref={audioRef} src={"/send.mp3"}></audio>
+        </div>
 
-      <Layout hasSider className="bg-white">
-        <Sider className="min-h-screen bg-white shadow-2xl text-center px-4 overflow-y-auto py-2">
-          <div className="flex flex-col gap-2 overflow-hidden py-2">
-            {isLoading3 && <Loader />}
+        <Layout hasSider className="bg-white">
+          <Sider className="min-h-screen bg-white shadow-2xl text-center px-4 overflow-y-auto py-2">
+            <div className="flex flex-col gap-2 overflow-hidden py-2">
+              {isLoading3 && <Loader />}
 
-            {data3?.users?.map(
-              (user: IUser, index: number) =>
-                user?.id !== data?.id && (
-                  <div
-                    key={index}
-                    className={`${
-                      receiverId === user?.id
-                        ? "bg-green-500 text-white"
-                        : "bg-green-50"
-                    } font-sembold px-4 py-2 rounded-sm cursor-pointer hover:bg-green-400 hover:text-white flex items-center justify-between transition-all`}
-                    onClick={() => handleSelectedUserToChat(user)}
-                  >
-                    <div className="flex item-center gap-2">
-                      <Avatar
-                        src={user?.profileImage}
-                        size="small"
-                        style={{ backgroundColor: "#87d068" }}
-                        icon={<UserOutlined />}
-                      />
-                      <span className="text-left">
-                        <p className="capitalize">{user?.username}</p>
-                        <h6 className="text-xs">
-                          {timeAgo(user?.createdAt as string)}
-                        </h6>
+              {data3?.users?.map(
+                (user: IUser, index: number) =>
+                  user?.id !== data?.id && (
+                    <div
+                      key={index}
+                      className={`${
+                        receiverId === user?.id
+                          ? "bg-green-500 text-white"
+                          : "bg-green-50"
+                      } font-sembold px-4 py-2 rounded-sm cursor-pointer hover:bg-green-400 hover:text-white flex items-center justify-between transition-all`}
+                      onClick={() => handleSelectedUserToChat(user)}
+                    >
+                      <div className="flex item-center gap-2">
+                        <Avatar
+                          src={user?.profileImage}
+                          size="small"
+                          style={{ backgroundColor: "#87d068" }}
+                          icon={<UserOutlined />}
+                        />
+                        <span className="text-left">
+                          <p className="capitalize">{user?.username}</p>
+                          <h6 className="text-xs">
+                            {timeAgo(user?.createdAt as string)}
+                          </h6>
+                        </span>
+                      </div>
+                      <span>
+                        <CiMenuKebab />
                       </span>
                     </div>
-                    <span>
-                      <CiMenuKebab />
-                    </span>
+                  )
+              )}
+            </div>
+          </Sider>
+
+          <Content className="relative">
+            <div
+              className={`${styles["chat-bg-image2"]} bg-opacity-50 py-10 mb-2 px-4 pb-36 rounded min-h-[70%] absolute inset-0  overflow-y-auto`}
+            >
+              {isLoading || isLoading2 ? <Loader /> : null}
+
+              <div>
+                {(!receiverId && !isLoading2) ||
+                (messages?.length < 1 && !isLoading2) ? (
+                  <div className="h-[300px] flex flex-col justify-center items-center shadow">
+                    <Image
+                      src={require("@/assets/select.png")}
+                      objectFit="cover"
+                      width={200}
+                      alt="not found image"
+                    />
+                    <p className="text-xl font-semibold text-center text-white">
+                      Select user to start message
+                    </p>
                   </div>
-                )
-            )}
-          </div>
-        </Sider>
+                ) : null}
+              </div>
 
-        <Content className="relative pb-10 py-5">
-          <div className="py-10 mb-2 px-4 bg-gray-100 rounded min-h-[70%] max-h-[400px] overflow-y-auto">
-            {isLoading || isLoading2 ? <Loader /> : null}
-
-            <div>
-              {!receiverId && !isLoading2 ? (
-                <div className="h-[300px] flex flex-col justify-center items-center">
-                  <Image
-                    src={require("@/assets/select.png")}
-                    objectFit="cover"
-                    width={200}
-                    alt="not found image"
-                  />
-                  <p className="text-xl font-serif text-center">
-                    Select user to start message
-                  </p>
-                </div>
-              ) : null}
+              {messages?.map((message: IMessage) => (
+                <ChatMessage
+                  key={message?.id}
+                  content={message?.content}
+                  timestamp={message?.createdAt}
+                  isCurrentUser={data?.id === message?.senderId}
+                />
+              ))}
             </div>
 
-            {messages?.map((message: IMessage) => (
-              <ChatMessage
-                key={message?.id}
-                content={message?.content}
-                timestamp={message?.createdAt}
-                isCurrentUser={data?.id === message?.senderId}
+            <div className="absolute left-0 bottom-0 p-2 w-full flex flex-col items-end bg-white">
+              <TextArea
+                rows={2}
+                className="w-full rounded-none"
+                placeholder="Write message..."
+                onChange={(e) => setMessage(e.target.value)}
+                value={message}
+                allowClear
               />
-            ))}
-          </div>
-
-          <div className="absolute left-2 w-full flex flex-col items-end gap-3 ">
-            <TextArea
-              rows={3}
-              className="w-full"
-              placeholder="Write message..."
-              onChange={(e) => setMessage(e.target.value)}
-              value={message}
-              allowClear
-            />
-            <Button
-              onClick={handleSendMessage}
-              type="primary"
-              className="w-[15%]"
-              size="large"
-              loading={isLoading || isLoading2 || isLoading3}
-            >
-              Send
-            </Button>
-          </div>
-        </Content>
-      </Layout>
+              <Button
+                onClick={handleSendMessage}
+                type="primary"
+                className="w-[15%] rounded-none"
+                size="large"
+                loading={isLoading || isLoading2 || isLoading3}
+              >
+                <span className="font-semibold uppercase">Send</span>
+              </Button>
+            </div>
+          </Content>
+        </Layout>
+      </section>
     </div>
   );
 };

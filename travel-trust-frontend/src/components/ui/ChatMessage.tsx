@@ -22,7 +22,7 @@ const ChatMessage = ({
   return (
     <div className="flex items-center">
       <div
-        className={`flex flex-col lg:max-w-[90%] my-2 p-2 rounded ${
+        className={`flex flex-col lg:max-w-[80%] my-2 p-2 rounded ${
           isCurrentUser ? "ml-auto bg-gray-200" : "mr-auto bg-green-300"
         }`}
       >

@@ -6,9 +6,10 @@ const MESSAGE_URL = "/message";
 export const messageApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getAllMessage: build.query({
-      query: () => ({
+      query: (filterData: any) => ({
         url: `${MESSAGE_URL}`,
         method: "GET",
+        params: filterData,
       }),
       transformResponse: (response: IMessage[], meta: IMeta) => {
         return {

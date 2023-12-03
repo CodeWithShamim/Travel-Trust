@@ -2,7 +2,7 @@
 
 import ChatMessage from "@/components/ui/ChatMessage";
 import Loader from "@/components/ui/Loader";
-import { useGetAllUserQuery } from "@/redux/api/authApi";
+import { useGetAllUserQuery, useGetUserByIdQuery } from "@/redux/api/authApi";
 import { useGetAllMessageQuery } from "@/redux/api/messageApi";
 import { useAppSelector, useSocket } from "@/redux/hooks";
 import { IUser } from "@/types";
@@ -15,6 +15,7 @@ import React, { useEffect, useState } from "react";
 const { Sider, Content } = Layout;
 import { CiMenuKebab } from "react-icons/ci";
 import styles from "@/styles/common.module.css";
+import { getUserInfo } from "@/helpers/persist/user.persist";
 
 const { TextArea } = Input;
 
@@ -35,7 +36,8 @@ const Message = () => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [receiverId, setReceiverId] = useState<string>("");
 
-  const { data, isLoading } = useAppSelector((state) => state.user) as any;
+  const { id } = getUserInfo();
+  const { data, isLoading } = useGetUserByIdQuery(id);
   const router = useRouter();
   const socket = useSocket();
 
@@ -64,16 +66,12 @@ const Message = () => {
   }, [socket, data, router, isLoading]);
 
   // received message from databse
-  const handleSetMessages = () => {
-    const newMessages = data2?.messages as any;
-    newMessages?.length > 0 ? setMessages(newMessages) : setMessages([]);
-  };
-
   useEffect(() => {
+    const newMessages = data2?.messages as any;
+
     if (receiverId) {
-      handleSetMessages();
+      newMessages?.length > 0 ? setMessages(newMessages) : setMessages([]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data2, receiverId]);
 
   // received message via socket
@@ -187,14 +185,15 @@ const Message = () => {
                 ) : null}
               </div>
 
-              {messages?.map((message: IMessage) => (
-                <ChatMessage
-                  key={message?.id}
-                  content={message?.content}
-                  timestamp={message?.createdAt}
-                  isCurrentUser={data?.id === message?.senderId}
-                />
-              ))}
+              {receiverId &&
+                messages?.map((message: IMessage) => (
+                  <ChatMessage
+                    key={message?.id}
+                    content={message?.content}
+                    timestamp={message?.createdAt}
+                    isCurrentUser={data?.id === message?.senderId}
+                  />
+                ))}
             </div>
 
             <div className="absolute left-0 bottom-0 p-2 w-full flex flex-col items-end bg-white">
@@ -211,6 +210,7 @@ const Message = () => {
                 type="primary"
                 className="w-[15%] rounded-none"
                 size="large"
+                disabled={receiverId ? false : true}
                 loading={isLoading || isLoading2 || isLoading3}
               >
                 <span className="font-semibold uppercase">Send</span>

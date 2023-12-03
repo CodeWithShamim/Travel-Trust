@@ -120,69 +120,76 @@ const Header = () => {
 
       <audio ref={audioRef} src={"/notifacation.wav"}></audio>
 
-      <motion.div className=" max-w-[1200px] mx-auto text-white w-full flex items-center justify-between h-full">
-        <Link
-          href="/"
-          className="text-xl md:text-2xl lg:text-3xl font-extrabold shadow-2xl uppercase text-[#09ea4c] z-50"
-        >
-          Travel Trust
-        </Link>
-
-        <div className="flex gap-2 items-center z-50">
-          <Link href="/service/search" className="pt-2">
-            <AiOutlineSearch size={24} className="text-[#09ea4c]" />
+      {isLoading || (
+        <motion.div className=" max-w-[1200px] mx-auto text-white w-full flex items-center justify-between h-full">
+          <Link
+            href="/"
+            className="text-xl md:text-2xl lg:text-3xl font-extrabold shadow-2xl uppercase text-[#09ea4c] z-50"
+          >
+            Travel Trust
           </Link>
 
-          <Badge count={notifications?.length} className="mr-4 cursor-pointer">
-            <Avatar
-              onClick={() => setShowNotification(true)}
-              icon={<IoMdNotifications size={16} className="text-[#09ea4c]" />}
-            />
-          </Badge>
+          <div className="flex gap-2 items-center z-50">
+            <Link href="/service/search" className="pt-2">
+              <AiOutlineSearch size={24} className="text-[#09ea4c]" />
+            </Link>
 
-          <Link href="/dashboard/profile">
-            <Badge count={cart?.length} className="mr-4">
+            <Badge
+              count={notifications?.length}
+              className="mr-4 cursor-pointer"
+            >
               <Avatar
+                onClick={() => setShowNotification(true)}
                 icon={
-                  <BsFillCartCheckFill size={16} className="text-[#09ea4c]" />
+                  <IoMdNotifications size={16} className="text-[#09ea4c]" />
                 }
               />
             </Badge>
-          </Link>
 
-          <Link href="/message" className="hidden md:block">
-            <Button
-              type="link"
-              className="text-xs md:text-sm"
-              // icon={<AiFillMessage size={20} className="text-green-400 pt-2" />}
+            <Link href="/dashboard/profile">
+              <Badge count={cart?.length} className="mr-4">
+                <Avatar
+                  icon={
+                    <BsFillCartCheckFill size={16} className="text-[#09ea4c]" />
+                  }
+                />
+              </Badge>
+            </Link>
+
+            <Link href="/message" className="hidden md:block">
+              <Button
+                type="link"
+                className="text-xs md:text-sm"
+                // icon={<AiFillMessage size={20} className="text-green-400 pt-2" />}
+              >
+                <span className="font-bold text-green-400 tracking-wide">
+                  Message
+                </span>
+              </Button>
+            </Link>
+
+            <Link href="/dashboard/profile" className="hidden md:block">
+              <Button type="default" className="text-xs md:text-sm">
+                Dashboard
+              </Button>
+            </Link>
+
+            <Dropdown
+              menu={{ items: headerItems({ userData, isLoading, signOut }) }}
+              className="z-50 cursor-pointer"
             >
-              <span className="font-bold text-green-400 tracking-wide">
-                Message
-              </span>
-            </Button>
-          </Link>
-
-          <Link href="/dashboard/profile" className="hidden md:block">
-            <Button type="default" className="text-xs md:text-sm">
-              Dashboard
-            </Button>
-          </Link>
-
-          <Dropdown
-            menu={{ items: headerItems({ userData, isLoading, signOut }) }}
-            className="z-50 cursor-pointer"
-          >
-            <Space wrap size={16}>
-              <Avatar
-                src={userData?.profileImage}
-                size="large"
-                style={{ backgroundColor: "#87d068" }}
-                icon={<UserOutlined />}
-              />
-            </Space>
-          </Dropdown>
-        </div>
-      </motion.div>
+              <Space wrap size={16}>
+                <Avatar
+                  src={userData?.profileImage}
+                  size="large"
+                  style={{ backgroundColor: "#87d068" }}
+                  icon={<UserOutlined />}
+                />
+              </Space>
+            </Dropdown>
+          </div>
+        </motion.div>
+      )}
     </HeaderLayout>
   );
 };

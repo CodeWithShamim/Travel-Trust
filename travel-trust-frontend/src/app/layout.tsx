@@ -21,9 +21,9 @@ export default function RootLayout({
       <html lang="en">
         <body>
           <ProgressBar />
-          {/* <Header /> */}
+          <Header />
           <div className="min-h-screen mx-auto">{children}</div>
-          {/* <Footer /> */}
+          <Footer />
         </body>
       </html>
     </Providers>

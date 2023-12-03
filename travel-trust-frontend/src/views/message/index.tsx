@@ -16,6 +16,7 @@ const { Sider, Content } = Layout;
 import { CiMenuKebab } from "react-icons/ci";
 import styles from "@/styles/common.module.css";
 import { getUserInfo } from "@/helpers/persist/user.persist";
+import HomeBackButton from "@/components/ui/HomeBackButton";
 
 const { TextArea } = Input;
 
@@ -124,6 +125,8 @@ const Message = () => {
 
         <Layout hasSider className="bg-white">
           <Sider className="min-h-screen bg-white shadow-2xl text-center px-4 overflow-y-auto py-2">
+            <HomeBackButton />
+
             <div className="flex flex-col gap-2 overflow-hidden py-2">
               {isLoading3 && <Loader />}
 
@@ -164,7 +167,7 @@ const Message = () => {
 
           <Content className="relative">
             <div
-              className={`${styles["chat-bg-image2"]} bg-opacity-50 py-10 mb-2 px-4 pb-36 rounded min-h-[70%] absolute inset-0  overflow-y-auto`}
+              className={`${styles["chat-bg-image2"]} bg-opacity-50 py-10 mb-2 px-4 pb-24 rounded min-h-[70%] absolute inset-0  overflow-y-auto`}
             >
               {isLoading || isLoading2 ? <Loader /> : null}
 
@@ -196,25 +199,27 @@ const Message = () => {
                 ))}
             </div>
 
-            <div className="absolute left-0 bottom-0 p-2 w-full flex flex-col items-end bg-white">
-              <TextArea
-                rows={2}
-                className="w-full rounded-none"
-                placeholder="Write message..."
-                onChange={(e) => setMessage(e.target.value)}
-                value={message}
-                allowClear
-              />
-              <Button
-                onClick={handleSendMessage}
-                type="primary"
-                className="w-[15%] rounded-none"
-                size="large"
-                disabled={receiverId ? false : true}
-                loading={isLoading || isLoading2 || isLoading3}
-              >
-                <span className="font-semibold uppercase">Send</span>
-              </Button>
+            <div className="absolute left-0 bottom-0 w-full bg-slate-200">
+              <div className="p-2 flex items-center">
+                <TextArea
+                  rows={2}
+                  className="w-full rounded-none border-green-400"
+                  placeholder="Write message..."
+                  onChange={(e) => setMessage(e.target.value)}
+                  value={message}
+                  allowClear
+                />
+                <Button
+                  onClick={handleSendMessage}
+                  type="primary"
+                  className="w-[15%] rounded-none h-16"
+                  size="large"
+                  disabled={receiverId ? false : true}
+                  loading={isLoading || isLoading2 || isLoading3}
+                >
+                  <span className="font-semibold uppercase">Send</span>
+                </Button>
+              </div>
             </div>
           </Content>
         </Layout>

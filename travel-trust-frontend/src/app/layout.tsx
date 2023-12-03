@@ -1,7 +1,5 @@
 import Providers from "@/lib/Providers";
 import "./globals.css";
-import Header from "@/components/ui/Header";
-import Footer from "@/components/ui/Footer";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 
@@ -21,9 +19,7 @@ export default function RootLayout({
       <html lang="en">
         <body>
           <ProgressBar />
-          <Header />
           <div className="min-h-screen mx-auto">{children}</div>
-          <Footer />
         </body>
       </html>
     </Providers>

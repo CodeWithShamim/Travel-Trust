@@ -133,7 +133,7 @@ const Profile = () => {
             <h1 className="text-xl md:text-2xl text-black md:text-white fancy capitalize tracking-wider">
               {user?.username}
             </h1>
-            <p className="text-gray-500 tracking-widest font-bold">
+            <p className="text-gray-700 tracking-widest font-bold">
               Role : {user?.role}
             </p>
           </div>

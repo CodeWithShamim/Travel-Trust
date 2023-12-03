@@ -29,7 +29,7 @@ const ManageAdmin = () => {
   const [handleCreateSuperAdmin] = useCreateAdminToSuperAdminMutation();
 
   const [page, setPage] = useState<number>(1);
-  const [size, setSize] = useState<number>(5);
+  const [size, setSize] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -239,15 +239,6 @@ const ManageAdmin = () => {
 
   return (
     <div className="lg:w-[95%] h-[100%] items-center justify-center">
-      <Input
-        placeholder="Search users"
-        type="text"
-        allowClear
-        className="text-black border-r-0 mb-6 lg:w-[40%] h-16 rounded-md border-neutral-200"
-        style={{ width: Number(window?.innerWidth) - 118 }}
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
       <TTTable
         loading={isLoading}
         columns={columns}
@@ -258,6 +249,9 @@ const ManageAdmin = () => {
         onPaginationChange={onPaginationChange}
         onTableChange={onTableChange}
         showPagination={true}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        type="Admins"
       />
 
       {/* Edit modal */}

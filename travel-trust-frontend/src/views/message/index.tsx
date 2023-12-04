@@ -255,7 +255,7 @@ const Message = () => {
               ) : null}
 
               {/* messages  */}
-              <div className="p-4">
+              <div className="p-4 mb-6">
                 {receiverUser?.id &&
                   messages?.map((message: IMessage) => (
                     <ChatMessage

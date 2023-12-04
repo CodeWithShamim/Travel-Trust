@@ -1,4 +1,5 @@
 "use client";
+import Header from "@/components/ui/Header";
 import Loader from "@/components/ui/Loader";
 import SideBar from "@/components/ui/SideBar";
 import { getUserInfo } from "@/helpers/persist/user.persist";
@@ -37,12 +38,18 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <Layout hasSider className="min-h-screen w-full">
-      <SideBar user={user} />
-      <Content className="relative inset-x-auto left-[3%] md:left-[6%] lg:left-[10%] w-full">
-        <div className="w-full max-w-[1200px] mx-auto h-[100%]">{children}</div>
-      </Content>
-    </Layout>
+    <>
+      <Header />
+      <Layout hasSider className="min-h-screen w-full">
+        <SideBar user={user} />
+
+        <Content className="relative p-4 w-full">
+          <div className="w-full max-w-[1200px] mx-auto h-[100%]">
+            {children}
+          </div>
+        </Content>
+      </Layout>
+    </>
   );
 };
 

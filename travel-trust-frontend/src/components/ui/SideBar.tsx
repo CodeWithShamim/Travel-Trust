@@ -31,17 +31,17 @@ const SideBar = ({ user }: { user: IUser }) => {
       width={isMobile ? 20 : 200}
       style={{
         backgroundColor: "#FFFFFF",
-        position: "fixed",
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        zIndex: 9999,
+        // position: "sticky",
+        // top: 0,
+        // bottom: 0,
+        // left: 0,
+        // right: 0,
+        // zIndex: 9999,
       }}
     >
-      <div className="text-center ml-0 pt-2">
+      {/* <div className="text-center ml-0 pt-2">
         <HomeBackButton />
-      </div>
+      </div> */}
 
       {isMobile || (
         <div className="flex items-center justify-evenly">

@@ -182,15 +182,16 @@ const ServiceDetails = () => {
               <div>
                 <MouseScroll />
               </div>
-              {service?.status === "upcoming" && (
-                <div className="absolute inset-x-0 box-content top-1/4 m-auto text-center h-32">
-                  <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl text-green-400 text-center drop-shadow-lg capitalize">
-                    {service?.status}
-                  </h1>
-                </div>
-              )}
             </motion.div>
           </div>
+
+          {service?.status === "upcoming" && (
+            <div className="absolute inset-x-0 top-1/4 m-auto text-center h-32]">
+              <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl text-green-400 text-center capitalize">
+                {service?.status}
+              </h1>
+            </div>
+          )}
 
           {/* header details content  */}
           <section>

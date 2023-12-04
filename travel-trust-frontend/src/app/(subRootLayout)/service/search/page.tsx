@@ -13,7 +13,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { BiFilter, BiReset } from "react-icons/bi";
 
 const SearchPage = () => {
-  const query: any = {};
+  const query: any = { limit: 12 };
   const searchData = useAppSelector((state) => state.service?.search) as any;
 
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
@@ -78,22 +78,6 @@ const SearchPage = () => {
             setLocation={setLocation}
             setCategory={setCategory}
           />
-        </div>
-
-        <div className="w-[90%] absolute right-0 top-0 bottom-0">
-          <Drawer
-            title="Filters"
-            placement="right"
-            open={drawerOpen}
-            onClose={() => setDrawerOpen(false)}
-          >
-            <FilterSideBar
-              setStatus={setStatus}
-              setPrices={setPrices}
-              setLocation={setLocation}
-              setCategory={setCategory}
-            />
-          </Drawer>
         </div>
       </div>
 
@@ -185,6 +169,22 @@ const SearchPage = () => {
             />
           </div>
         ) : null}
+
+        <div className="">
+          <Drawer
+            title="Filters"
+            placement="right"
+            open={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+          >
+            <FilterSideBar
+              setStatus={setStatus}
+              setPrices={setPrices}
+              setLocation={setLocation}
+              setCategory={setCategory}
+            />
+          </Drawer>
+        </div>
       </div>
     </div>
   );

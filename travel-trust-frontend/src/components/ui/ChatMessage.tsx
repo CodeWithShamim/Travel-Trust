@@ -16,7 +16,7 @@ const ChatMessage = ({
   const scrollRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    scrollRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, [content]);
 
   return (

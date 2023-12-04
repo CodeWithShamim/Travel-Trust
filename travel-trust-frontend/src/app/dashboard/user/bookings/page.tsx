@@ -1,6 +1,6 @@
-import Booking from "@/views/Booking";
 import React from "react";
 import { Metadata } from "next";
+import ManageBooking from "@/views/adminDashboard/ManageBooking";
 
 export const metadata: Metadata = {
   title: "Bookings for user",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 const BookingsPage = () => {
   return (
     <>
-      <Booking />
+      <ManageBooking />
     </>
   );
 };

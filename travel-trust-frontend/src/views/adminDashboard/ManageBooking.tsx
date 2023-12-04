@@ -13,6 +13,8 @@ import { useDebounced } from "@/redux/hooks";
 import { IBooking } from "@/types";
 import { BookingStatus } from "@/constants/booking";
 import CustomSelect from "@/components/ui/CustomSelect";
+import PiChart from "@/components/charts/PiChart";
+import LineChart from "@/components/charts/LineChart";
 
 const ManageBooking = () => {
   const query: Record<string, any> = {};
@@ -164,8 +166,55 @@ const ManageBooking = () => {
     }
   };
 
+  const PiChartData = {
+    labels: ["Confirmed", "Cancelled", "Pending"],
+    datasets: [
+      {
+        label: "Status",
+        data: [30, 25, 35],
+        backgroundColor: ["#09ea4c", "#FF6384", "#FF9F40"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const LineChartData = {
+    labels: ["January", "February", "March", "April", "May", "June", "July"],
+    datasets: [
+      {
+        label: "Booking Confirmed",
+        data: [0, 2, 0, 0, 1, 3, 2],
+        fill: false,
+        borderColor: "#09ea4c",
+        tension: 0.1,
+        borderWidth: 1.5,
+      },
+      {
+        label: "Booking Cancelled",
+        data: [0, 0, 3, 0, 5, 0, 1],
+        fill: false,
+        borderColor: "#FF6384",
+        tension: 0.1,
+        borderWidth: 1.5,
+      },
+      {
+        label: "Booking Pending",
+        data: [0, 0, 0, 0, 1, 2, 1],
+        fill: false,
+        borderColor: "#FF9F40",
+        tension: 0.1,
+        borderWidth: 1.5,
+      },
+    ],
+  };
+
   return (
     <div className="h-[100%] items-center justify-center">
+      <div className="h-[30%] w-full flex flex-col lg:flex-row items-end justify-center gap-8 my-10">
+        <PiChart data={PiChartData} />
+        <LineChart data={LineChartData} />
+      </div>
+
       <TTTable
         loading={isLoading ?? updateStatusLoading}
         columns={columns}

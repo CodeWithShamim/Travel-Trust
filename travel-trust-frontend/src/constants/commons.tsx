@@ -57,3 +57,14 @@ export const headerItems = ({
 
   return items;
 };
+
+export const ChartOptionsData = {
+  responsive: true,
+  maintainAspectRatio: false,
+  fill: true,
+  scales: {
+    y: {
+      beginAtZero: true,
+    },
+  },
+};

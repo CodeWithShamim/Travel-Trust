@@ -51,7 +51,7 @@ const Register = () => {
       if (res?.accessToken) {
         reset();
         message.success("Registartion successfully complete!");
-        router.push("/");
+        router.replace("/");
       }
 
       setValueToLocalStorage(authKey, res?.accessToken);

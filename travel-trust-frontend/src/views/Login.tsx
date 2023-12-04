@@ -12,7 +12,7 @@ import { authKey } from "@/constants/storageKey";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/hooks";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 type FormValues = {
   email: string;
@@ -26,7 +26,7 @@ const Login = () => {
 
   useEffect(() => {
     if (userData?.id) {
-      router.back();
+      router.push("/");
     }
   }, [userData, router]);
 
@@ -36,7 +36,7 @@ const Login = () => {
       if (res?.accessToken) {
         reset();
         message.success("User successfully login");
-        router.push("/");
+        router.replace("/");
       }
 
       setValueToLocalStorage(authKey, res?.accessToken);

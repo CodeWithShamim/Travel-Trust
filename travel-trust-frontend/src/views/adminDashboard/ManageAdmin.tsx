@@ -238,7 +238,7 @@ const ManageAdmin = () => {
   };
 
   return (
-    <div className="lg:w-[95%] h-[100%] items-center justify-center">
+    <div className="h-[100%] items-center justify-center">
       <TTTable
         loading={isLoading}
         columns={columns}

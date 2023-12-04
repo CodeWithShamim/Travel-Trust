@@ -40,7 +40,7 @@ const ServiceCard = ({ service, loading, index = 0 }: ServiceCardProps) => {
     <motion.div
       initial="hidden"
       whileInView="show"
-      variants={fadeIn("", "scroll", index * 0.2, 0.5)}
+      variants={fadeIn("", "scroll", index * 0.08, 0.5)}
       className="w-full mx-auto flex justify-center"
     >
       <Card

@@ -56,13 +56,12 @@ const TTTable = ({
 
   return (
     <>
-      <div className="bg-white mb-6 p-2 rounded flex items-center justify-between">
+      <div className="bg-white mb-6 p-2 rounded flex items-center justify-between gap-2">
         <Input
           placeholder="Search"
           type="text"
           allowClear
           className="text-black lg:w-[40%] h-16 rounded-md border-neutral-200 z-50"
-          style={{ width: Number(window?.innerWidth) - 118 }}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -102,7 +101,7 @@ const TTTable = ({
         onChange={onTableChange}
         style={{
           overflowX: "auto",
-          width: Number(window?.innerWidth) - 118,
+          width: "100%",
           backgroundColor: "white",
         }}
         title={() =>

@@ -205,7 +205,7 @@ const Message = () => {
                   onClick={() => setDrawerOpen(true)}
                   className="md:hidden cursor-pointer pt-1 animate-pulse"
                 >
-                  <BiMenu size={16} className="md:hidden" />
+                  <BiMenu size={24} className="md:hidden" />
                 </span>
               </div>
             </div>
@@ -217,7 +217,7 @@ const Message = () => {
               {isLoading || isLoading2 ? <Loader /> : null}
 
               {/* Drawer for mobile device  */}
-              <div className="w-[90%] absolute right-0 top-0 bottom-0">
+              <div className="">
                 <Drawer
                   title="Select User"
                   placement="right"
@@ -234,10 +234,9 @@ const Message = () => {
               </div>
 
               {/* Empty content  */}
-
               {(!receiverUser?.id && !isLoading2) ||
               (messages?.length < 1 && !isLoading2) ? (
-                <div className="flex flex-col justify-center items-center h-full">
+                <div className="flex flex-col justify-center items-center h-[92%]">
                   (
                   <div className="flex flex-col justify-center items-center shadow">
                     <Image

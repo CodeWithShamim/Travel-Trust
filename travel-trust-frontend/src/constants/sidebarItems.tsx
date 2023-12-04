@@ -1,12 +1,14 @@
 import type { MenuProps } from "antd";
-import {
-  ProfileOutlined,
-  TableOutlined,
-  AppstoreOutlined,
-} from "@ant-design/icons";
-import { FaRegUserCircle } from "react-icons/fa";
+import { TableOutlined, AppstoreOutlined } from "@ant-design/icons";
+import { FcManager } from "react-icons/fc";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
+import {
+  MdOutlineManageHistory,
+  MdManageAccounts,
+  MdAirplaneTicket,
+} from "react-icons/md";
+
 export const sidebarItems = (role: string) => {
   const DAHBOARD_URL = "/dashboard";
 
@@ -14,7 +16,7 @@ export const sidebarItems = (role: string) => {
     {
       label: <Link href={`${DAHBOARD_URL}/profile`}>Profile</Link>,
       key: 1,
-      icon: <FaRegUserCircle />,
+      icon: <FcManager size={24} />,
       // children: [
       //   {
       //     label: <Link href={`${DAHBOARD_URL}/profile`}>Account Profile</Link>,
@@ -35,7 +37,7 @@ export const sidebarItems = (role: string) => {
   const commonAdminSidebarItems: MenuProps["items"] = [
     {
       label: <Link href={`${DAHBOARD_URL}/manage-users`}>Manage Users</Link>,
-      icon: <TableOutlined />,
+      icon: <MdManageAccounts size={24} />,
       key: `/${role}/manage-users`,
     },
   ];
@@ -50,7 +52,7 @@ export const sidebarItems = (role: string) => {
         </Link>
       ),
       key: "manage-services",
-      icon: <TableOutlined />,
+      icon: <MdOutlineManageHistory size={24} />,
     },
     {
       label: (
@@ -59,7 +61,7 @@ export const sidebarItems = (role: string) => {
         </Link>
       ),
       key: "manage-bookings",
-      icon: <AppstoreOutlined />,
+      icon: <MdAirplaneTicket size={24} />,
     },
   ];
 
@@ -72,7 +74,7 @@ export const sidebarItems = (role: string) => {
           Manage Admins
         </Link>
       ),
-      icon: <TableOutlined />,
+      icon: <TableOutlined size={24} />,
       key: `/${role}/admin`,
     },
   ];
@@ -81,7 +83,7 @@ export const sidebarItems = (role: string) => {
     ...defaultSidebarItems,
     {
       label: <Link href={`${DAHBOARD_URL}/${role}/bookings`}>Bookings</Link>,
-      icon: <TableOutlined />,
+      icon: <MdAirplaneTicket size={24} />,
       key: `/${role}/bookings`,
     },
   ];

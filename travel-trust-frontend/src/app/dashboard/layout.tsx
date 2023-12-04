@@ -43,7 +43,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <Layout hasSider className="min-h-screen w-full">
         <SideBar user={user} />
 
-        <Content className="relative p-4 w-full">
+        <Content className="relative p-4 inset-x-0 ">
           <div className="w-full max-w-[1200px] mx-auto h-[100%]">
             {children}
           </div>

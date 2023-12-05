@@ -90,3 +90,8 @@ export type IMessage = {
   content: string;
   createdAt: string;
 };
+
+export type ILocation = {
+  latitude: number;
+  longitude: number;
+};

@@ -1,3 +1,7 @@
+import { config } from "@/helpers/config/envConfig";
+import { message } from "antd";
+import axios from "axios";
+
 export const getTimeAndDate = () => {
   const currentDate = new Date();
 
@@ -38,5 +42,34 @@ export const timeAgo = (timestamp: string) => {
     return `${hours} hours ago`;
   } else {
     return `${minutes} minutes ago`;
+  }
+};
+
+export const getCoordinates = async (location: string) => {
+  try {
+    const response = await axios.get(
+      `https://api.mapbox.com/geocoding/v5/mapbox.places/${location}.json`,
+      {
+        params: {
+          access_token: config.mapbox_token,
+          limit: 1,
+        },
+      }
+    );
+
+    const features = response.data.features;
+    if (features.length > 0) {
+      const { center } = features[0];
+      const [longitude, latitude] = center;
+      return { latitude, longitude };
+    } else {
+      message.error(`No coordinates found for ${location}`);
+      return null;
+    }
+  } catch (error: any) {
+    console.error(
+      `Error fetching coordinates for ${location}: ${error.message}`
+    );
+    return null;
   }
 };

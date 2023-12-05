@@ -7,4 +7,5 @@ export const config = {
   yt_video_url: process.env.NEXT_PUBLIC_YT_VIDEO_URL,
   fb_app_id: process.env.NEXT_PUBLIC_FB_APP_ID,
   base_url: process.env.NEXT_PUBLIC_API_FRONTEND_URL,
+  mapbox_token: process.env.NEXT_PUBLIC_MAPBOX_TOKEN,
 };

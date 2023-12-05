@@ -1,9 +1,9 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
 
-import { IBooking, IReview, IService } from "@/types";
+import { IBooking, ILocation, IReview, IService } from "@/types";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   DatePicker,
@@ -18,7 +18,7 @@ import {
   message,
 } from "antd";
 import { useGetSingleServiceQuery } from "@/redux/api/serviceApi";
-import { getTimeAndDate, timeAgo } from "@/utils/common";
+import { getCoordinates, getTimeAndDate, timeAgo } from "@/utils/common";
 import { getUserInfo } from "@/helpers/persist/user.persist";
 import { useCreatebookingMutation } from "@/redux/api/bookingApi";
 import Loader from "@/components/ui/Loader";
@@ -44,6 +44,7 @@ import Link from "next/link";
 import { AiFillMessage } from "react-icons/ai";
 import ShareButton from "@/components/ui/ShareService";
 import ShareService from "@/components/ui/ShareService";
+import MapView from "@/components/ui/MapView";
 
 const { TextArea } = Input;
 
@@ -75,6 +76,7 @@ const ServiceDetails = () => {
   const [limit, setLimit] = useState<number>(2);
 
   const [isShareService, setIsShareService] = useState<boolean>(false);
+  const [coordinate, setCoordinate] = useState<ILocation>();
 
   query["serviceId"] = id;
   query["page"] = currentPage;
@@ -149,9 +151,22 @@ const ServiceDetails = () => {
     setCurrentPage(page);
   };
 
+  useEffect(() => {
+    const handleGetCoordinate = async () => {
+      const res: any = await getCoordinates(service?.location);
+      if (res) {
+        setCoordinate(res);
+      }
+    };
+
+    service?.location && handleGetCoordinate();
+  }, [service]);
+
   if (isLoading) {
     return <Loader />;
   }
+
+  console.log({ coordinate });
 
   return (
     <>
@@ -311,6 +326,13 @@ const ServiceDetails = () => {
                   <span className="text-xl font-bold">Booking Now</span>
                 </Button>
               </div>
+            </div>
+          </section>
+
+          {/* maps  */}
+          <section>
+            <div className="max-w-[1200px] px-4 mx-auto rounded-xl">
+              {coordinate && <MapView zoom={11} location={coordinate} />}
             </div>
           </section>
 

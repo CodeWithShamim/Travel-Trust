@@ -183,7 +183,7 @@ const ManageBooking = () => {
     datasets: [
       {
         label: "Booking Confirmed",
-        data: [0, 2, 0, 0, 1, 3, 2],
+        data: [0, 1, 0, 0, 0, 0, 0],
         fill: false,
         borderColor: "#09ea4c",
         tension: 0.1,
@@ -191,7 +191,7 @@ const ManageBooking = () => {
       },
       {
         label: "Booking Cancelled",
-        data: [0, 0, 3, 0, 5, 0, 1],
+        data: [0, 0, 2, 0, 0, 0, 0],
         fill: false,
         borderColor: "#FF6384",
         tension: 0.1,
@@ -199,7 +199,7 @@ const ManageBooking = () => {
       },
       {
         label: "Booking Pending",
-        data: [0, 0, 0, 0, 1, 2, 1],
+        data: [0, 0, 0, 0, 0, 0, 5],
         fill: false,
         borderColor: "#FF9F40",
         tension: 0.1,

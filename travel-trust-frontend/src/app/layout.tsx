@@ -2,7 +2,6 @@ import Providers from "@/lib/Providers";
 import "./globals.css";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-
 const ProgressBar = dynamic(() => import("@/components/common/ProgressBar"));
 
 export const metadata: Metadata = {

@@ -7,12 +7,22 @@ import {
   Scrollbar,
   A11y,
 } from "swiper/modules";
-import { reviewsItems } from "@/data/reviews";
 import { Rate } from "antd";
-import { fadeIn, zoomIn } from "@/utils/motion";
+import { fadeIn } from "@/utils/motion";
 import { motion } from "framer-motion";
+import { useGetAllReviewQuery } from "@/redux/api/reviewApi";
+import { IReview } from "@/types";
 
 const ReviewSlider = () => {
+  const query: any = {};
+
+  query["limit"] = 5;
+  const { data, isLoading } = useGetAllReviewQuery({
+    ...query,
+  });
+
+  console.log({ r: data?.reviews });
+
   return (
     <motion.div
       initial="hidden"
@@ -44,20 +54,20 @@ const ReviewSlider = () => {
         }}
         modules={[Navigation, Pagination, Scrollbar, Autoplay, A11y]}
       >
-        {reviewsItems.map((item) => (
+        {data?.reviews?.map((item: IReview) => (
           <SwiperSlide key={item.id}>
             <div className="bg-white p-2 h-[200px] flex flex-col justify-center items-center rounded text-center text-gray-600 leading-snug tracking-wider shadow-sm mb-4">
-              <p>{item.review}</p>
+              <p>{item.comment}</p>
               <Rate
                 className="text-[#09ea4c]"
                 disabled
-                defaultValue={item.rating}
+                defaultValue={item.ratings[0]}
               />
             </div>
 
             <div>
               <h1 className="font-bold">{item.name}</h1>
-              <p className="text-xs">{item.destination}</p>
+              <p className="text-xs">{item.email}</p>
             </div>
           </SwiperSlide>
         ))}

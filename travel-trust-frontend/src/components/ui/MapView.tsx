@@ -5,6 +5,7 @@ import {
 } from "@/constants/map";
 import { config } from "@/helpers/config/envConfig";
 import { ILocation } from "@/types";
+import { Button } from "antd";
 import React, { useCallback, useState } from "react";
 import Map, { Layer, Marker, Source } from "react-map-gl";
 
@@ -19,7 +20,12 @@ const locationData = {
 };
 
 const MapView = ({ location = locationData, zoom }: MapContainerProps) => {
-  const mapStyle = "mapbox://styles/mapbox/streets-v11";
+  const [isSatelliteMode, setIsSatelliteMode] = useState<boolean>(false);
+
+  const mapStyle = `mapbox://styles/mapbox/${
+    isSatelliteMode ? "satellite-streets" : "streets"
+  }-v11`;
+
   const [settings, setSettings] = useState({
     scrollZoom: true,
     boxZoom: true,
@@ -52,7 +58,7 @@ const MapView = ({ location = locationData, zoom }: MapContainerProps) => {
   };
 
   return (
-    <>
+    <div className="relative">
       <Map
         initialViewState={initialViewState}
         {...settings}
@@ -73,7 +79,17 @@ const MapView = ({ location = locationData, zoom }: MapContainerProps) => {
           <Layer {...unclusteredPointLayer} />
         </Source>
       </Map>
-    </>
+      <Button
+        onClick={() => setIsSatelliteMode(!isSatelliteMode)}
+        type="primary"
+        className="pb-4 rounded-none absolute bottom-0 right-0"
+        ghost={isSatelliteMode}
+      >
+        <span className="text-white font-semibold">
+          {isSatelliteMode ? "Normal Mode" : "Satellite Mode"}
+        </span>
+      </Button>
+    </div>
   );
 };
 

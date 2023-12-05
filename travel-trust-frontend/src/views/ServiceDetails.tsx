@@ -42,6 +42,8 @@ import ReviewCard from "@/components/ui/ReviewCard";
 import MouseScroll from "@/components/common/MouseScroll";
 import Link from "next/link";
 import { AiFillMessage } from "react-icons/ai";
+import ShareButton from "@/components/ui/ShareService";
+import ShareService from "@/components/ui/ShareService";
 
 const { TextArea } = Input;
 
@@ -71,6 +73,8 @@ const ServiceDetails = () => {
   const [time, setTime] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(2);
+
+  const [isShareService, setIsShareService] = useState<boolean>(false);
 
   query["serviceId"] = id;
   query["page"] = currentPage;
@@ -238,10 +242,21 @@ const ServiceDetails = () => {
                 <p>Posted {timeAgo(service?.createdAt)}</p>
               </span>
               <span>
-                <Button type="primary" size="small" icon={<ShareAltOutlined />}>
+                <Button
+                  onClick={() => setIsShareService(true)}
+                  type="primary"
+                  size="small"
+                  icon={<ShareAltOutlined />}
+                >
                   Share
                 </Button>
               </span>
+
+              <ShareService
+                id={id as string}
+                isShareService={isShareService}
+                setIsShareService={setIsShareService}
+              />
             </div>
             <Divider className="text-gray-400" />
           </section>

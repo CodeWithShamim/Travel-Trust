@@ -210,7 +210,7 @@ const ManageBooking = () => {
 
   return (
     <div className="h-[100%] items-center justify-center">
-      <div className="h-[30%] w-full flex flex-col lg:flex-row items-end justify-center gap-8 my-10">
+      <div className="h-[25%] lg:h-[20%] w-full flex flex-col lg:flex-row items-end lg:items-center justify-center gap-8 my-10 lg:my-2">
         <PiChart data={PiChartData} />
         <LineChart data={LineChartData} />
       </div>

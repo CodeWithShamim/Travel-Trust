@@ -51,9 +51,7 @@ const FormInput = ({
               {...field}
               value={value ? value : field.value}
               defaultValue={defaultValue}
-              className={`${
-                isStyles && "bg-green-100 border-0 custom-placeholder py-6"
-              }`}
+              className={`${isStyles && " custom-placeholder py-4"}`}
             />
           )
         }

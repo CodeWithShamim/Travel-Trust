@@ -17,7 +17,10 @@ import {
   TimePicker,
   message,
 } from "antd";
-import { useGetSingleServiceQuery } from "@/redux/api/serviceApi";
+import {
+  useGetAllServiceQuery,
+  useGetSingleServiceQuery,
+} from "@/redux/api/serviceApi";
 import { getCoordinates, getTimeAndDate, timeAgo } from "@/utils/common";
 import { getUserInfo } from "@/helpers/persist/user.persist";
 import { useCreatebookingMutation } from "@/redux/api/bookingApi";
@@ -45,6 +48,7 @@ import { AiFillMessage } from "react-icons/ai";
 import ShareButton from "@/components/ui/ShareService";
 import ShareService from "@/components/ui/ShareService";
 import MapView from "@/components/ui/MapView";
+import ServiceCard from "@/components/ui/ServiceCard";
 
 const { TextArea } = Input;
 
@@ -57,15 +61,19 @@ const ServiceDetails = () => {
 
   const params = useParams();
   const id = params?.id;
-  const {
-    data: service,
-    isLoading,
-    error,
-  } = useGetSingleServiceQuery(id as string);
+  const { data: service, isLoading } = useGetSingleServiceQuery(id as string);
   const [createBooking, { isLoading: bookingCreateLoading }] =
     useCreatebookingMutation();
   const [createReview, { isLoading: addReviewLoading }] =
     useCreateReviewMutation();
+
+  const serviceQuery: any = {};
+  serviceQuery["limit"] = 4;
+  serviceQuery["sortOrder"] = "asc";
+  const { data: suggestedService, isLoading: serviceLoading } =
+    useGetAllServiceQuery({
+      ...serviceQuery,
+    });
 
   const [ratings, setRatings] = useState<number[]>([5, 3, 4, 5, 5]);
   const [types, setTypes] = useState<string>("");
@@ -165,8 +173,6 @@ const ServiceDetails = () => {
   if (isLoading) {
     return <Loader />;
   }
-
-  console.log({ coordinate });
 
   return (
     <>
@@ -288,7 +294,7 @@ const ServiceDetails = () => {
                 </p>
               </div>
 
-              <div className="bg-green-100 w-full md:basis-4/12 p-4 md:p-8 rounded-md flex flex-col gap-4">
+              <div className="bg-green-100 w-full lg:h-[450px] md:basis-4/12 p-4 md:p-8 rounded-md flex flex-col gap-4">
                 <h1 className="text-lg font-bold tracking-widest">
                   Booking Tour
                 </h1>
@@ -338,12 +344,13 @@ const ServiceDetails = () => {
 
           {/* show review  */}
           <section className="max-w-[1200px] mx-auto px-4 pt-8 md:pt-12 lg:pt-14">
+            <Divider type="vertical" className="text-black h-full" />
             <div className="w-full lg:w-[80%]">
               {reviewsData?.reviews?.map((review: IReview) => (
                 <ReviewCard review={review} key={review?.id} />
               ))}
             </div>
-            <div>
+            <div className="w-full lg:w-[80%]">
               {Number(reviewsData?.meta?.total) > 0 ? (
                 <Pagination
                   current={currentPage}
@@ -400,7 +407,7 @@ const ServiceDetails = () => {
                           {item.name}
                         </p>
                         <Rate
-                          className="text-green-400 ant-star"
+                          className="text-green-400 ant-star custom-rate"
                           value={ratings[index]}
                           onChange={(value) => handleRateChange(value, index)}
                         />
@@ -413,9 +420,9 @@ const ServiceDetails = () => {
                   name="comment"
                   render={({ field }) => (
                     <TextArea
-                      rows={7}
+                      rows={5}
                       placeholder="Write comment..."
-                      className="bg-green-100 border-none custom-placeholder text-black"
+                      className="custom-placeholder text-black"
                       {...field}
                     />
                   )}
@@ -434,6 +441,26 @@ const ServiceDetails = () => {
                   </span>
                 </Button>
               </Form>
+            </div>
+          </section>
+
+          {/* Related service  */}
+          <section className="max-w-[1200px] mx-auto px-4 py-8 md:py-12">
+            <h1 className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest">
+              Suggested for you
+            </h1>
+
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 py-4 md:py-6 lg:py-10">
+              {(suggestedService as any)?.services?.map(
+                (service: IService, index: number) => (
+                  <ServiceCard
+                    key={service.id}
+                    service={service}
+                    loading={isLoading}
+                    index={index}
+                  />
+                )
+              )}
             </div>
           </section>
         </div>

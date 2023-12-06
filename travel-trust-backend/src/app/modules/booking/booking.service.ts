@@ -11,6 +11,7 @@ import { JwtPayload } from 'jsonwebtoken';
 import { ENUM_USER_ROLE } from '../../../enums/user';
 import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
+import io, { connectedUsers } from '../../../shared/socket';
 
 const createBooking = async (data: Booking): Promise<Booking> => {
   const Booking = await prisma.booking.create({
@@ -104,15 +105,31 @@ const updateBooking = async (
 };
 
 const updateStatuses = async (
-  data: { id: string; value: string }[]
+  data: { id: string; userId: string; value: string }[]
 ): Promise<any> => {
   try {
     await prisma.$transaction(async prisma => {
-      for (const { id, value } of data) {
-        await prisma.booking.update({
+      for (const { id, userId, value } of data) {
+        const booking = await prisma.booking.update({
           where: { id },
           data: { status: value as BookingStatus },
         });
+
+        const notification = await prisma.notification.create({
+          data: {
+            userId,
+            notificationDataId: booking?.id,
+            message: `Your booking 🤷‍♀️👏 "${value}"✔`,
+          },
+          // select: {
+          //   user: true,
+          // },
+        });
+
+        // send message by socket trigger
+        if (userId && connectedUsers[userId]) {
+          io.to(connectedUsers[userId]).emit('notification', notification);
+        }
       }
     });
 
@@ -141,6 +158,14 @@ const deleteBooking = async (
       service: true,
     },
   });
+
+  if (result?.id) {
+    await prisma.notification.deleteMany({
+      where: {
+        notificationDataId: result?.id,
+      },
+    });
+  }
 
   return result;
 };

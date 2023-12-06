@@ -42,6 +42,7 @@ const updateStatuses = z.object({
     statuses: z.array(
       z.object({
         id: z.string(),
+        userId: z.string(),
         value: z.string(),
       })
     ),

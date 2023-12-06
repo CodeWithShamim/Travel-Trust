@@ -13,7 +13,7 @@ const io = new Server(newServer, {
   },
 });
 
-const connectedUsers: Record<string, string> = {};
+export const connectedUsers: Record<string, string> = {};
 
 io.on('connection', (socket: Socket) => {
   console.log('User connected:', socket.id);

@@ -23,7 +23,7 @@ const createService = async (data: Service): Promise<Service> => {
     });
 
     // socket trigger
-    io.emit(`notification:service`, notification);
+    io.emit(`notification`, notification);
   }
 
   return service;

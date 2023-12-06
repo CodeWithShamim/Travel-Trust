@@ -7,16 +7,17 @@ import pick from '../../../shared/pick';
 import { paginationFields } from '../../../constants/pagination';
 import { PaymentFilterableFields } from './payment.constant';
 import { PaymentService } from './payment.service';
+import { IPaymentIntentResponse } from './payment.interface';
 
 const createPaymentIntent = catchAsync(async (req: Request, res: Response) => {
   const data = req.body;
   const result = await PaymentService.createPaymentIntent(data);
 
-  sendResponse<{ clientSecret: string }>(res, {
+  sendResponse<IPaymentIntentResponse>(res, {
     success: true,
     statusCode: httpStatus.OK,
     message: 'Payment intent created successfully',
-    data: { clientSecret: result as string },
+    data: result,
   });
 });
 

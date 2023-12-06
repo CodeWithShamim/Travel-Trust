@@ -12,8 +12,16 @@ router.post(
   PaymentController.createPaymentIntent
 );
 
-router.get('/', PaymentController.getAllPayment);
-router.get('/:id', PaymentController.getSinglePayment);
+router.get(
+  '/',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  PaymentController.getAllPayment
+);
+router.get(
+  '/:id',
+  auth(ENUM_USER_ROLE.USER, ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  PaymentController.getSinglePayment
+);
 
 router.patch(
   '/:id',

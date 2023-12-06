@@ -4,7 +4,7 @@ import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import { IGenericResponse } from '../../../interfaces/common';
 import handleFilters from '../../../shared/handleFilters';
-import { IFilters } from './payment.interface';
+import { IFilters, IPaymentIntentResponse } from './payment.interface';
 import { PaymentSearchableFields } from './payment.constant';
 import stripe from 'stripe';
 import config from '../../../config';
@@ -12,19 +12,22 @@ import { generateUniqueTransactionId } from '../../../shared/utils';
 const stripeInstance = new stripe(config.stripe_secret_key as string);
 
 // create payment intent & get client secret
-const createPaymentIntent = async (data: Payment): Promise<string | null> => {
-  const { amount, currency = 'usd', bookingId } = data;
+const createPaymentIntent = async (
+  data: Payment
+): Promise<IPaymentIntentResponse> => {
+  const { amount, currency = 'USD', bookingId } = data;
 
   const transactionId = generateUniqueTransactionId();
 
-  const clientSecret = await prisma.$transaction(async tx => {
+  const res = await prisma.$transaction(async tx => {
     const paymentIntent = await stripeInstance.paymentIntents.create({
-      amount: Number(amount),
+      amount: Number(amount) * 100,
       currency,
       description: bookingId,
+      receipt_email: 'shamimislamonline@gmail.com',
     });
 
-    await tx.payment.create({
+    const createdPayment = await tx.payment.create({
       data: {
         amount,
         currency,
@@ -34,10 +37,13 @@ const createPaymentIntent = async (data: Payment): Promise<string | null> => {
       },
     });
 
-    return paymentIntent.client_secret;
+    return {
+      clientSecret: paymentIntent.client_secret,
+      id: createdPayment?.id,
+    };
   });
 
-  return clientSecret;
+  return res;
 };
 
 const getAllPayment = async (

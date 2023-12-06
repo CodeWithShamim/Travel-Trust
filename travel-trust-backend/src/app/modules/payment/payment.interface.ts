@@ -5,3 +5,8 @@ export type IFilters = {
   paymentIntent?: string;
   searchTerm?: string;
 };
+
+export type IPaymentIntentResponse = {
+  id: string;
+  clientSecret: string | null;
+};

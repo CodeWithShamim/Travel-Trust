@@ -8,11 +8,14 @@ import { IFilters } from './payment.interface';
 import { PaymentSearchableFields } from './payment.constant';
 import stripe from 'stripe';
 import config from '../../../config';
+import { generateUniqueTransactionId } from '../../../shared/utils';
 const stripeInstance = new stripe(config.stripe_secret_key as string);
 
 // create payment intent & get client secret
 const createPaymentIntent = async (data: Payment): Promise<string | null> => {
-  const { amount, currency, bookingId } = data;
+  const { amount, currency = 'usd', bookingId } = data;
+
+  const transactionId = generateUniqueTransactionId();
 
   const clientSecret = await prisma.$transaction(async tx => {
     const paymentIntent = await stripeInstance.paymentIntents.create({
@@ -22,7 +25,13 @@ const createPaymentIntent = async (data: Payment): Promise<string | null> => {
     });
 
     await tx.payment.create({
-      data,
+      data: {
+        amount,
+        currency,
+        bookingId,
+        transactionId: transactionId,
+        paymentIntent: paymentIntent?.client_secret as string,
+      },
     });
 
     return paymentIntent.client_secret;

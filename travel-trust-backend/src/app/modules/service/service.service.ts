@@ -19,6 +19,8 @@ const createService = async (data: Service): Promise<Service> => {
       data: {
         message: `New service "${service?.name}" added`,
         notificationDataId: service?.id,
+        type: 'service',
+        avatar: service?.image,
       },
     });
 

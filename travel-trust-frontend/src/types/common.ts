@@ -75,11 +75,15 @@ export type IReview = {
   createdAt?: string;
 };
 
+export type NotificationType = "service" | "booking" | "review" | "message";
+
 export type INotification = {
   id?: string;
   userId?: string;
+  type?: NotificationType;
   notificationDataId?: string;
   message: string;
+  avatar: string;
   createdAt: string;
 };
 

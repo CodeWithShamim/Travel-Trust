@@ -45,9 +45,12 @@ const Header = () => {
   const { data, isLoading, error } = useGetUserByIdQuery(id);
   const audioRef = React.useRef<HTMLAudioElement>(null);
 
-  const { data: data2, isLoading: isLoading2 } = useGetAllNotificationQuery({
-    userId: data?.id,
-  });
+  const { data: data2, isLoading: isLoading2 } = useGetAllNotificationQuery(
+    {
+      userId: data?.id,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
 
   const dispatch: any = useAppDispatch();
 

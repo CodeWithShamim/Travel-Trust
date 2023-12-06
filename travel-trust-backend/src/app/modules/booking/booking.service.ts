@@ -113,6 +113,9 @@ const updateStatuses = async (
         const booking = await prisma.booking.update({
           where: { id },
           data: { status: value as BookingStatus },
+          include: {
+            service: true,
+          },
         });
 
         const notification = await prisma.notification.create({
@@ -120,6 +123,8 @@ const updateStatuses = async (
             userId,
             notificationDataId: booking?.id,
             message: `Your booking 🤷‍♀️👏 "${value}"✔`,
+            type: 'booking',
+            avatar: booking?.service?.image,
           },
           // select: {
           //   user: true,

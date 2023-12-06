@@ -1,7 +1,9 @@
 import Loader from "@/components/ui/Loader";
 import { INotification } from "@/types";
 import { timeAgo } from "@/utils/common";
-import { Drawer } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import { Avatar, Drawer } from "antd";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { IoClose, IoNotificationsOffCircle } from "react-icons/io5";
@@ -13,6 +15,25 @@ interface INotificationProps {
 }
 
 const Notification = ({ onClose, data, isLoading }: INotificationProps) => {
+  const findRoute = (notifacation: INotification) => {
+    let route;
+
+    switch (notifacation?.type) {
+      case "booking":
+        route = `/dashboard/user/bookings`;
+        break;
+
+      case "message":
+        route = `/message`;
+        break;
+
+      default:
+        route = `/service-details/${notifacation?.notificationDataId}`;
+    }
+
+    return route;
+  };
+
   return (
     <div>
       <Drawer
@@ -34,22 +55,32 @@ const Notification = ({ onClose, data, isLoading }: INotificationProps) => {
 
           {data?.map((item: INotification) => (
             <Link
-              href={`/service-details/${item?.notificationDataId}`}
+              href={findRoute(item)}
               key={item?.id}
               className="flex items-center justify-between gap-2 cursor-pointer hover:bg-green-100 transition-all rounded p-1"
               onClick={() => onClose(false)}
             >
-              <div className="flex items-start gap-2">
-                <IoNotificationsOffCircle
-                  size={32}
-                  className="text-green-400"
+              <div className="w-full flex items-center justify-between gap-2">
+                <div className="flex items-start">
+                  <IoNotificationsOffCircle
+                    size={32}
+                    className="text-green-400"
+                  />
+                  <span>
+                    <p className="text-black font-semibold">{item?.message}</p>
+                    <h5 className="text-green-600 text-sm">
+                      {timeAgo(item?.createdAt)}
+                    </h5>
+                  </span>
+                </div>
+
+                <Image
+                  width={40}
+                  height={40}
+                  className="rounded"
+                  src={item?.avatar}
+                  alt="notification image"
                 />
-                <span>
-                  <p className="text-black font-semibold">{item?.message}</p>
-                  <h5 className="text-green-600 text-sm">
-                    {timeAgo(item?.createdAt)}
-                  </h5>
-                </span>
               </div>
               <IoClose size={17} className="text-black z-50" />
             </Link>

@@ -82,7 +82,7 @@ const ServiceForm = ({ mode = ADD }: { mode?: "ADD" | "EDIT" }) => {
         }
       })
       .catch((error) => {
-        console.log({ error });
+        // console.log({ error });
         message.error(error?.message || "Something went wrong");
       });
   };

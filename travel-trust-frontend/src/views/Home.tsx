@@ -21,6 +21,8 @@ import ImageGallery from "@/components/ui/ImageGallery";
 import { useRouter } from "next/navigation";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import dynamic from "next/dynamic";
+import { ServiceStatus } from "@/constants/service";
+import Loader from "@/components/ui/Loader";
 
 const SponsorCarousel = dynamic(
   () => import("@/components/ui/SponsorCarousel"),
@@ -28,27 +30,24 @@ const SponsorCarousel = dynamic(
 );
 
 const HomePage = () => {
-  const query: any = {};
-  query["limit"] = 20;
-  const { data, isLoading, error } = useGetAllServiceQuery({ ...query });
+  const { data: availableService, isLoading } = useGetAllServiceQuery({
+    status: ServiceStatus[0],
+    limit: 8,
+  });
+
+  const { data: upcomingService, isLoading: isLoading2 } =
+    useGetAllServiceQuery({
+      status: ServiceStatus[1],
+      limit: 5,
+    });
 
   const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false);
   const [onReady, setOnReady] = useState<boolean>(false);
 
   const router = useRouter();
 
-  const services = data?.services as any;
-
-  const availableService = services?.filter(
-    (service: IService) => service?.status === "available"
-  );
-  const upcomingService = services?.filter(
-    (service: IService) => service?.status === "upcoming"
-  );
-
   return (
     <div className="w-full">
-      {/* <motion.div className="progress-bar" style={{ scaleX }} /> */}
       <div>
         <FloatButton.BackTop
           shape="circle"
@@ -129,21 +128,21 @@ const HomePage = () => {
           Available service
         </motion.h1>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center py-6">
-          {!availableService &&
+          {isLoading &&
             Array.from({ length: 8 }).map((n, index) => (
               <ServiceCardSkeleton key={index} />
             ))}
 
-          {availableService
-            ?.slice(0, 8)
-            ?.map((service: IService, index: number) => (
+          {(availableService as any)?.services?.map(
+            (service: IService, index: number) => (
               <ServiceCard
                 key={service.id}
                 service={service}
                 loading={isLoading}
                 index={index}
               />
-            ))}
+            )
+          )}
         </div>
 
         <div className="mt-10 md:mt-14 lg:mt-20">
@@ -155,21 +154,22 @@ const HomePage = () => {
           >
             Upcoming service
           </motion.h1>
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center py-6">
-            {!upcomingService &&
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 justify-center py-6">
+            {isLoading2 &&
               Array.from({ length: 4 }).map((n, index) => (
                 <ServiceCardSkeleton key={index} />
               ))}
-            {upcomingService
-              ?.slice(0, 4)
-              ?.map((service: IService, index: number) => (
+
+            {(upcomingService as any)?.services?.map(
+              (service: IService, index: number) => (
                 <ServiceCard
                   key={service.id}
                   service={service}
                   loading={isLoading}
                   index={index}
                 />
-              ))}
+              )
+            )}
           </div>
         </div>
       </motion.div>
@@ -222,7 +222,7 @@ const HomePage = () => {
 
           {onReady || (
             <div className="w-full h-[20rem] lg:h-[35rem] text-center text-white bg-black absolute inset-0 flex items-center justify-center">
-              <Spin />
+              <Loader />
               <span className="pl-2">Loading video...</span>
             </div>
           )}

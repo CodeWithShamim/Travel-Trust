@@ -17,6 +17,7 @@ import { useUpdateUserMutation } from "@/redux/api/authApi";
 import { setUserData } from "@/redux/slices/userSlice";
 import { SubmitHandler } from "react-hook-form";
 import UpdateUserInfo from "@/components/ui/UpdateUserInfo";
+import Loader from "@/components/ui/Loader";
 
 const Profile = () => {
   const user: any = useAppSelector((state) => state.user?.data);
@@ -103,7 +104,7 @@ const Profile = () => {
           {uploadBannerLoading && (
             <>
               <span className="absolute inset-1/2">
-                <Spin />
+                <Loader />
               </span>
               <div className="absolute bg-black inset-0 h-full w-full opacity-60"></div>
             </>
@@ -248,7 +249,7 @@ export const ProfileImageUpload = (
     {uploadLoading && (
       <>
         <span className="absolute inset-16">
-          <Spin />
+          <Loader />
         </span>
         <div className="absolute bg-black inset-0 h-full w-full rounded-full opacity-60"></div>
       </>

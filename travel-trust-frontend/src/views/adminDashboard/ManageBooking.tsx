@@ -9,12 +9,13 @@ import {
   useGetAllBookingQuery,
   useUpdateStatusesMutation,
 } from "@/redux/api/bookingApi";
-import { useDebounced } from "@/redux/hooks";
+import { useAppSelector, useDebounced } from "@/redux/hooks";
 import { IBooking } from "@/types";
 import { BookingStatus } from "@/constants/booking";
 import CustomSelect from "@/components/ui/CustomSelect";
 import PiChart from "@/components/charts/PiChart";
 import LineChart from "@/components/charts/LineChart";
+import { USER_ROLE } from "@/constants/role";
 
 const ManageBooking = () => {
   const query: Record<string, any> = {};
@@ -44,7 +45,12 @@ const ManageBooking = () => {
     query["searchTerm"] = debouncedTerm;
   }
 
-  const { data, isLoading, error } = useGetAllBookingQuery({ ...query });
+  const user: any = useAppSelector((state) => state?.user?.data);
+
+  const { data, isLoading, error } = useGetAllBookingQuery(
+    { ...query },
+    { refetchOnMountOrArgChange: true }
+  );
 
   const meta = data?.meta as any;
 
@@ -79,10 +85,10 @@ const ManageBooking = () => {
     });
   };
 
-  const handleStatusChange = (id: string, value: string) => {
+  const handleStatusChange = (id: string, userId: string, value: string) => {
     setStatuses((prev: { id: string; value: string }[]) => [
       ...prev,
-      { id, value },
+      { id, userId, value },
     ]);
   };
 
@@ -126,9 +132,11 @@ const ManageBooking = () => {
 
         return (
           <CustomSelect
-            onChange={(value: any) => handleStatusChange(data?.id, value)}
+            onChange={(value: any) =>
+              handleStatusChange(data?.id, data?.user?.id, value)
+            }
             defaultValue={data?.status}
-            disabled={isCancel}
+            disabled={isCancel || user?.role === USER_ROLE.USER}
             optionsValue={["pending", "confirmed", "cancel"]}
             style={{
               ...styles,
@@ -210,7 +218,7 @@ const ManageBooking = () => {
 
   return (
     <div className="h-[100%] items-center justify-center">
-      <div className="h-[25%] lg:h-[20%] w-full flex flex-col lg:flex-row items-end lg:items-center justify-center gap-8 my-10 lg:my-2">
+      <div className="h-[25%] lg:h-[20%] w-full flex flex-col lg:flex-row items-end lg:items-center justify-center gap-8 my-10 lg:my-2 pt-4">
         <PiChart data={PiChartData} />
         <LineChart data={LineChartData} />
       </div>

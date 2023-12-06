@@ -1,13 +1,8 @@
+import Loader from "@/components/ui/Loader";
 import { Spin } from "antd";
 
 const Loading = () => {
-  return (
-    <div className="pt-[20%]">
-      <Spin tip="Loading..." size="large">
-        <div className="content" />
-      </Spin>
-    </div>
-  );
+  return <Loader />;
 };
 
 export default Loading;

@@ -45,8 +45,9 @@ const Header = () => {
   const { data, isLoading, error } = useGetUserByIdQuery(id);
   const audioRef = React.useRef<HTMLAudioElement>(null);
 
-  const { data: data2, isLoading: isLoading2 } =
-    useGetAllNotificationQuery(null);
+  const { data: data2, isLoading: isLoading2 } = useGetAllNotificationQuery({
+    userId: data?.id,
+  });
 
   const dispatch: any = useAppDispatch();
 
@@ -68,7 +69,7 @@ const Header = () => {
   // notification received by socket
   useEffect(() => {
     if (socket) {
-      socket.on("notification:service", (notificaion: any) => {
+      socket.on("notification", (notificaion: any) => {
         playSound();
         setNotifications((prev) => [notificaion, ...prev]);
       });
@@ -79,6 +80,13 @@ const Header = () => {
     const newNotification = data2?.notifications as INotification[];
     newNotification?.length > 0 && setNotifications(newNotification);
   }, [data2]);
+
+  // join socket
+  useEffect(() => {
+    if (socket && data?.id) {
+      socket.emit("join", data?.id);
+    }
+  }, [socket, data?.id]);
 
   // get cart value from local storage
   useEffect(() => {

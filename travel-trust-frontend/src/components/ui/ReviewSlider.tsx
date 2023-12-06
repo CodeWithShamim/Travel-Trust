@@ -21,8 +21,6 @@ const ReviewSlider = () => {
     ...query,
   });
 
-  console.log({ r: data?.reviews });
-
   return (
     <motion.div
       initial="hidden"

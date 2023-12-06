@@ -42,7 +42,7 @@ export const useUploadImage = () => {
       onSuccess();
     } catch (error) {
       onError();
-      console.log("Error uploading image:", error);
+      // console.log("Error uploading image:", error);
     } finally {
       setUploadLoading(false);
     }

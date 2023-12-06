@@ -100,7 +100,7 @@ const ManageUser = () => {
             message.success("User Deleted successfully");
           }
         } catch (err: any) {
-          console.log({ err });
+          // console.log({ err });
           message.error(err.message || "Something went wrong!");
         }
       },
@@ -122,7 +122,7 @@ const ManageUser = () => {
             message.success("admin successfully created");
           }
         } catch (err: any) {
-          console.log({ err });
+          // console.log({ err });
           message.error(err.message || "Something went wrong!");
         }
       },

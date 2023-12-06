@@ -3,3 +3,9 @@ export enum USER_ROLE {
   ADMIN = "admin",
   SUPER_ADMIN = "super_admin",
 }
+
+export enum PAYMENT_ROLE {
+  PROCESSING = "processing",
+  SUCCEEDED = "succeeded",
+  FAILED = "failed",
+}

@@ -15,7 +15,8 @@ import { BookingStatus } from "@/constants/booking";
 import CustomSelect from "@/components/ui/CustomSelect";
 import PiChart from "@/components/charts/PiChart";
 import LineChart from "@/components/charts/LineChart";
-import { USER_ROLE } from "@/constants/role";
+import { PAYMENT_ROLE, USER_ROLE } from "@/constants/role";
+import PaymentModal from "@/components/common/PaymentModal";
 
 const ManageBooking = () => {
   const query: Record<string, any> = {};
@@ -30,6 +31,7 @@ const ManageBooking = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [statuses, setStatuses] = useState<any>([]);
+  const [bookingId, setBookingId] = useState<string>("");
 
   query["limit"] = size;
   query["page"] = page;
@@ -92,6 +94,23 @@ const ManageBooking = () => {
     ]);
   };
 
+  const getPaymentCondition = (data: any) => {
+    return data?.payments[data?.payments?.length - 1]?.paymentStatus ===
+      PAYMENT_ROLE.SUCCEEDED ? (
+      <span className="bg-green-400 px-6 py-1 rounded-xl text-white">Paid</span>
+    ) : user?.role === USER_ROLE.USER ? (
+      <Button
+        onClick={() => setBookingId(data?.id)}
+        type="primary"
+        size="middle"
+      >
+        Payment
+      </Button>
+    ) : (
+      <span className="bg-red-400 px-6 py-1 rounded-xl text-white">Unpaid</span>
+    );
+  };
+
   const columns = [
     {
       title: "Name",
@@ -116,6 +135,18 @@ const ManageBooking = () => {
       title: "Ticket",
       dataIndex: "ticket",
     },
+
+    {
+      title: "Payment",
+      render: function (data: any) {
+        return (
+          <>
+            <div>{getPaymentCondition(data)}</div>
+          </>
+        );
+      },
+    },
+
     {
       title: "Status",
       render: (data: any) => {
@@ -221,6 +252,10 @@ const ManageBooking = () => {
       <div className="h-[25%] lg:h-[20%] w-full flex flex-col lg:flex-row items-end lg:items-center justify-center gap-8 my-10 lg:my-2 pt-4">
         <PiChart data={PiChartData} />
         <LineChart data={LineChartData} />
+      </div>
+
+      <div>
+        <PaymentModal bookingId={bookingId} setBookingId={setBookingId} />
       </div>
 
       <TTTable

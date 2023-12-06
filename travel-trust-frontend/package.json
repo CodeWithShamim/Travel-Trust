@@ -12,6 +12,8 @@
     "@ant-design/cssinjs": "^1.17.2",
     "@ant-design/icons": "^5.2.6",
     "@reduxjs/toolkit": "^1.9.7",
+    "@stripe/react-stripe-js": "^2.4.0",
+    "@stripe/stripe-js": "^2.2.0",
     "antd": "^5.10.1",
     "axios": "^1.5.1",
     "chart.js": "^4.4.0",

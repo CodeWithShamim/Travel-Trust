@@ -1,4 +1,5 @@
 import { BookingStatus } from "@/constants/booking";
+import { PAYMENT_ROLE } from "@/constants/role";
 
 export interface IMeta {
   limit: number;
@@ -98,4 +99,14 @@ export type IMessage = {
 export type ILocation = {
   latitude: number;
   longitude: number;
+};
+
+export type IPayment = {
+  id?: string;
+  amount: string;
+  bookingId: string;
+  currency?: string;
+  transactionId?: string;
+  paymentIntent?: string;
+  paymentStatus?: PAYMENT_ROLE;
 };

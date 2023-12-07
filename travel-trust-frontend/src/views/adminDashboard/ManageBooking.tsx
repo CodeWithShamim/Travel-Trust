@@ -10,13 +10,15 @@ import {
   useUpdateStatusesMutation,
 } from "@/redux/api/bookingApi";
 import { useAppSelector, useDebounced } from "@/redux/hooks";
-import { IBooking } from "@/types";
+import { IBooking, IService } from "@/types";
 import { BookingStatus } from "@/constants/booking";
 import CustomSelect from "@/components/ui/CustomSelect";
 import PiChart from "@/components/charts/PiChart";
 import LineChart from "@/components/charts/LineChart";
 import { PAYMENT_ROLE, USER_ROLE } from "@/constants/role";
 import PaymentModal from "@/components/common/PaymentModal";
+import Image from "next/image";
+import Link from "next/link";
 
 const ManageBooking = () => {
   const query: Record<string, any> = {};
@@ -31,7 +33,7 @@ const ManageBooking = () => {
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [statuses, setStatuses] = useState<any>([]);
-  const [bookingId, setBookingId] = useState<string>("");
+  const [bookingData, setBookingData] = useState<IBooking | null>(null);
 
   query["limit"] = size;
   query["page"] = page;
@@ -95,25 +97,46 @@ const ManageBooking = () => {
   };
 
   const getPaymentCondition = (data: any) => {
-    return data?.payments[data?.payments?.length - 1]?.paymentStatus ===
-      PAYMENT_ROLE.SUCCEEDED ? (
-      <span className="bg-green-400 px-6 py-1 rounded-xl text-white">Paid</span>
-    ) : user?.role === USER_ROLE.USER ? (
+    const status = data?.payments[data?.payments?.length - 1]?.paymentStatus;
+
+    return status === PAYMENT_ROLE.SUCCEEDED ? (
+      <span className="bg-green-500 px-8 py-[1px] rounded-md text-green-700">
+        {status}✔
+      </span>
+    ) : (
       <Button
-        onClick={() => setBookingId(data?.id)}
+        onClick={() => setBookingData(data)}
         type="primary"
         size="middle"
+        disabled={data?.status === BookingStatus.CANCEL}
       >
-        Payment
+        Payment Now
       </Button>
-    ) : (
-      <span className="bg-red-400 px-6 py-1 rounded-xl text-white">Unpaid</span>
     );
   };
 
   const columns = [
     {
-      title: "Name",
+      title: "",
+      dataIndex: "service",
+      render: (service: IService) => {
+        return (
+          <Link href={`/service-details/${service?.id}`}>
+            <Image
+              src={service?.image}
+              width={40}
+              height={40}
+              className="h-[40px] w-[40px] object-cover rounded"
+              layout="responsive"
+              alt="service image"
+            />
+          </Link>
+        );
+      },
+    },
+    ,
+    {
+      title: "Service Name",
       dataIndex: "service",
       render: function (data: any) {
         return <>{data?.name}</>;
@@ -159,15 +182,29 @@ const ManageBooking = () => {
             : isConfirm
             ? "1px solid #09ea4c"
             : "1px solid #d1d100",
+          backgroundColor: isCancel
+            ? "#FF7875"
+            : isConfirm
+            ? "#22C55E"
+            : "#d1d100",
         };
 
-        return (
+        return user?.role === USER_ROLE.USER ? (
+          <span
+            style={{
+              ...styles,
+            }}
+            className="px-8 py-[1px] rounded-md text-green-700"
+          >
+            {data?.status}
+          </span>
+        ) : (
           <CustomSelect
             onChange={(value: any) =>
               handleStatusChange(data?.id, data?.user?.id, value)
             }
             defaultValue={data?.status}
-            disabled={isCancel || user?.role === USER_ROLE.USER}
+            disabled={isCancel}
             optionsValue={["pending", "confirmed", "cancel"]}
             style={{
               ...styles,
@@ -181,7 +218,15 @@ const ManageBooking = () => {
       title: "Delete",
       render: function (data: any) {
         return (
-          <Button onClick={() => deleteHandler(data?.id)} type="primary" danger>
+          <Button
+            onClick={() => deleteHandler(data?.id)}
+            type="primary"
+            danger
+            disabled={
+              data?.payments[data?.payments?.length - 1]?.paymentStatus ===
+                PAYMENT_ROLE.SUCCEEDED && user?.role === USER_ROLE.USER
+            }
+          >
             <DeleteOutlined />
           </Button>
         );
@@ -255,7 +300,10 @@ const ManageBooking = () => {
       </div>
 
       <div>
-        <PaymentModal bookingId={bookingId} setBookingId={setBookingId} />
+        <PaymentModal
+          bookingData={bookingData}
+          setBookingData={setBookingData}
+        />
       </div>
 
       <TTTable

@@ -49,6 +49,7 @@ import ShareButton from "@/components/ui/ShareService";
 import ShareService from "@/components/ui/ShareService";
 import MapView from "@/components/ui/MapView";
 import ServiceCard from "@/components/ui/ServiceCard";
+import PaymentModal from "@/components/common/PaymentModal";
 
 const { TextArea } = Input;
 
@@ -85,6 +86,7 @@ const ServiceDetails = () => {
 
   const [isShareService, setIsShareService] = useState<boolean>(false);
   const [coordinate, setCoordinate] = useState<ILocation>();
+  const [bookingData, setBookingData] = useState<IBooking | null>(null);
 
   query["serviceId"] = id;
   query["page"] = currentPage;
@@ -121,7 +123,8 @@ const ServiceDetails = () => {
       const res: any = await createBooking(data);
       if (res?.data?.id) {
         message.success("Booking created successfully.");
-        router?.push("/dashboard/user/bookings");
+        // router?.push("/dashboard/user/bookings");
+        setBookingData(res?.data);
       }
     } catch (error) {
       message.error("Failed to booking.");
@@ -186,6 +189,13 @@ const ServiceDetails = () => {
               icon={<AiFillMessage size={22} />}
             />
           </Link>
+
+          <div>
+            <PaymentModal
+              bookingData={bookingData}
+              setBookingData={setBookingData}
+            />
+          </div>
 
           <div className="overflow-hidden">
             <motion.div

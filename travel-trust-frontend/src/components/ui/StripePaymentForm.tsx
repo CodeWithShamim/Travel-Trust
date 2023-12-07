@@ -1,22 +1,25 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import Form from "../forms/Form";
 import { SubmitHandler } from "react-hook-form";
-import FormInput from "../forms/FormInput";
-import { Button, message } from "antd";
+import { Button, Steps, message } from "antd";
 import {
   useCreatePaymentIntentMutation,
   useUpdatePaymentMutation,
 } from "@/redux/api/paymentApi";
-import { PAYMENT_ROLE } from "@/constants/role";
-import { useState } from "react";
+import { PAYMENT_ROLE, USER_ROLE } from "@/constants/role";
+import { useCallback, useState } from "react";
+import { IPaymentModal } from "@/types";
+import { StripeElementsStyles } from "@/constants/commons";
+import { useAppSelector } from "@/redux/hooks";
+import { useRouter } from "next/navigation";
+import ConfettiComponent from "./Confetti";
 
 const StripePaymentForm = ({
-  bookingId,
-  setBookingId,
-}: {
-  bookingId: string;
-  setBookingId: (v: string) => void;
-}) => {
+  bookingData,
+  setBookingData,
+  setIsPaymentSuccess,
+}: IPaymentModal & { setIsPaymentSuccess: (v: boolean) => void } & {}) => {
   const [handleCreatePaymentIntent, { data, isLoading }] =
     useCreatePaymentIntentMutation();
 
@@ -26,6 +29,27 @@ const StripePaymentForm = ({
   const [loading, setLoading] = useState<boolean>(false);
   const stripe = useStripe();
   const elements = useElements();
+
+  const router = useRouter();
+  const user: any = useAppSelector((state) => state.user?.data);
+
+  const [isConfettiActive, setConfettiActive] = useState(false);
+
+  const handleShowConfetti = useCallback(() => {
+    // message.success("Congratulation! payment success");
+    setConfettiActive(true);
+    setIsPaymentSuccess(true);
+
+    setTimeout(() => {
+      setConfettiActive(false);
+      router.push(
+        user?.role === USER_ROLE.USER
+          ? "/dashboard/user/bookings"
+          : "/dashboard/admin/manage-bookings"
+      );
+      setBookingData(null);
+    }, 5000);
+  }, []);
 
   const handlePaymentSubmit: SubmitHandler<any> = async (
     data: any,
@@ -38,6 +62,8 @@ const StripePaymentForm = ({
 
     try {
       setLoading(true);
+
+      // >> step-1 <<
       const { paymentMethod, error } = await stripe.createPaymentMethod({
         type: "card",
         card: elements.getElement(CardElement) as any,
@@ -48,9 +74,10 @@ const StripePaymentForm = ({
         setLoading(false);
         return;
       } else {
+        // >> step-2 <<
         const clientSecretRes: any = await handleCreatePaymentIntent({
-          amount: data?.amount,
-          bookingId,
+          amount: String(bookingData?.service?.price),
+          bookingId: bookingData?.id as string,
         });
 
         if (!clientSecretRes?.data?.clientSecret) {
@@ -59,6 +86,7 @@ const StripePaymentForm = ({
           return;
         }
 
+        // >> step-3 <<
         const { paymentIntent, error } = await stripe.confirmCardPayment(
           clientSecretRes?.data?.clientSecret,
           {
@@ -71,6 +99,7 @@ const StripePaymentForm = ({
           setLoading(false);
         } else {
           if (paymentIntent?.id) {
+            // >> step-4 <<
             // update payment status
             const res: any = await handleUpdatePayment({
               id: clientSecretRes?.data?.id,
@@ -78,16 +107,10 @@ const StripePaymentForm = ({
               paymentIntent: paymentIntent?.id,
             });
 
-            if (res?.error) {
-              message.success(res?.error?.data?.message);
-              setLoading(false);
-              return;
-            }
+            const cardElement = elements.getElement(CardElement);
+            cardElement?.clear();
 
-            if (res?.data?.id) {
-              setBookingId("");
-              message.success("Congratulation! payment success");
-            }
+            handleShowConfetti();
           }
 
           setLoading(false);
@@ -104,20 +127,45 @@ const StripePaymentForm = ({
 
   return (
     <Form submitHandler={handlePaymentSubmit}>
-      <CardElement />
-
-      <div className="mt-4">
-        <FormInput name="amount" type="number" size="large" label="Amount" />
+      {/* confetti  */}
+      <div>
+        <ConfettiComponent active={isConfettiActive} />
       </div>
 
-      <Button
-        type="primary"
-        htmlType="submit"
-        className=" mt-4 w-full"
-        loading={loading || isLoading || updateLoading}
-      >
-        Pay
-      </Button>
+      <div className="py-5">
+        <h2 className="font-bold text-green-500">
+          Payable Amount: ${bookingData?.service?.price}
+        </h2>
+      </div>
+
+      <div className="custom-card-element w-full">
+        <CardElement options={StripeElementsStyles} />
+      </div>
+
+      <div className="flex items-center justify-between gap-5 w-full">
+        <Button
+          onClick={() => setBookingData(null)}
+          type="primary"
+          className=" mt-4 w-full bg-red-500"
+        >
+          Cancel
+        </Button>
+        <Button
+          type="primary"
+          htmlType="submit"
+          className=" mt-4 w-full"
+          loading={loading || isLoading || updateLoading}
+        >
+          Pay Now
+        </Button>
+      </div>
+
+      <p className="text-xs py-4">
+        Payment secured by <span className="font-semibold text-xs">Stripe</span>
+        . You’ll be taken to a thank you page after the payment.
+        <span className="font-semibold  text-xs">Terms</span> and{" "}
+        <span className="font-semibold  text-xs">Privacy</span>.
+      </p>
     </Form>
   );
 };

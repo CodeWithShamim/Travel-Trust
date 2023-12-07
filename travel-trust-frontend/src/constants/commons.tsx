@@ -68,3 +68,26 @@ export const ChartOptionsData = {
     },
   },
 };
+
+export const StripeElementsStyles = {
+  style: {
+    base: {
+      iconColor: "black",
+      color: "black",
+      fontWeight: 300,
+      fontFamily: "'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif",
+      fontSize: "16px",
+      fontSmoothing: "antialiased",
+      ":-webkit-autofill": {
+        color: "#fce883",
+      },
+      "::placeholder": {
+        color: "lightgrey",
+      },
+    },
+    invalid: {
+      iconColor: "red",
+      color: "red",
+    },
+  },
+};

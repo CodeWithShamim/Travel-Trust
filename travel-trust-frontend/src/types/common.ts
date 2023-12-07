@@ -110,3 +110,10 @@ export type IPayment = {
   paymentIntent?: string;
   paymentStatus?: PAYMENT_ROLE;
 };
+
+export type IPaymentModal = {
+  bookingData: IBooking | null;
+  setBookingData: (v: IBooking | null) => void;
+};
+
+export type IPaymentMethod = "stripe" | "sslcommerz";

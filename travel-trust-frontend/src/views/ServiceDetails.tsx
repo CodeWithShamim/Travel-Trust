@@ -135,6 +135,8 @@ const ServiceDetails = () => {
   const handleAddReview: SubmitHandler<any> = async (data: any, reset: any) => {
     const reviewData: IReview = {
       ...data,
+      name: user?.username ?? data?.name,
+      email: user?.email ?? data?.email,
       ratings: ratings,
       userId: user?.id ?? undefined,
       serviceId: id as string,
@@ -144,6 +146,9 @@ const ServiceDetails = () => {
       const res: any = await createReview(reviewData);
       if (res?.data?.id) {
         message.success("Review added successfully.");
+      }
+      if (res?.error) {
+        message.error(res.error?.data?.message);
       }
     } catch (error) {
       message.error("Failed to add review.");
@@ -319,10 +324,12 @@ const ServiceDetails = () => {
                   format="YYYY-MM-DD"
                   className="text-black custom-picker bg-white border-none w-full py-5 rounded-xl"
                   onChange={(date, currentDate) => setDate(currentDate)}
+                  inputReadOnly
                 />
                 <TimePicker
                   className="text-black custom-picker bg-white border-none w-full py-5 rounded-xl"
                   onChange={(time, currentTime) => setTime(currentTime)}
+                  inputReadOnly
                 />
                 <CustomSelect
                   placeholder="Choose Ticket"
@@ -331,16 +338,31 @@ const ServiceDetails = () => {
                   optionsValue={TravelCategory}
                 />
 
-                <Button
-                  type="primary"
-                  onClick={handleServiceBooking}
-                  disabled={service?.status === "upcoming"}
-                  loading={bookingCreateLoading}
-                  className="w-full"
-                  size="large"
-                >
-                  <span className="text-xl font-bold">Booking Now</span>
-                </Button>
+                {user?.id ? (
+                  <Button
+                    type="primary"
+                    onClick={handleServiceBooking}
+                    disabled={service?.status === "upcoming" || !user?.id}
+                    loading={bookingCreateLoading}
+                    className="w-full"
+                    size="large"
+                  >
+                    <span className="text-xl font-bold">Booking Now</span>
+                  </Button>
+                ) : (
+                  <Link href={"/login"}>
+                    <Button
+                      type="primary"
+                      ghost
+                      className="w-full"
+                      size="large"
+                    >
+                      <span className="font-bold text-red-500 capitalize">
+                        Please login for booking
+                      </span>
+                    </Button>
+                  </Link>
+                )}
               </div>
             </div>
           </section>
@@ -388,16 +410,23 @@ const ServiceDetails = () => {
                         placeholder="Name"
                         type="text"
                         size="large"
+                        value={user?.username}
+                        disabled={user?.username}
                         isStyles
                       />
                     </span>
-                    <FormInput
-                      name="email"
-                      placeholder="Email"
-                      type="email"
-                      size="large"
-                      isStyles
-                    />
+                    <span className="bg-green-100">
+                      <FormInput
+                        name="email"
+                        placeholder="Email"
+                        type="email"
+                        size="large"
+                        value={user?.email}
+                        disabled={user?.email}
+                        isStyles
+                      />
+                    </span>
+
                     <FormInput
                       name="reviewTitle"
                       placeholder="Review Title"

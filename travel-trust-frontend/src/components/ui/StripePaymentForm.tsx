@@ -126,47 +126,50 @@ const StripePaymentForm = ({
   };
 
   return (
-    <Form submitHandler={handlePaymentSubmit}>
-      {/* confetti  */}
-      <div>
-        <ConfettiComponent active={isConfettiActive} />
-      </div>
+    <div>
+      <Form submitHandler={handlePaymentSubmit}>
+        {/* confetti  */}
+        <div className="w-full">
+          <ConfettiComponent active={isConfettiActive} />
+        </div>
 
-      <div className="py-5">
-        <h2 className="font-bold text-green-500">
-          Payable Amount: ${bookingData?.service?.price}
-        </h2>
-      </div>
+        <div className="py-5">
+          <h2 className="font-bold text-green-500">
+            Payable Amount: ${bookingData?.service?.price}
+          </h2>
+        </div>
 
-      <div className="custom-card-element w-full">
-        <CardElement options={StripeElementsStyles} />
-      </div>
+        <div className="custom-card-element w-full">
+          <CardElement options={StripeElementsStyles} />
+        </div>
 
-      <div className="flex items-center justify-between gap-5 w-full">
-        <Button
-          onClick={() => setBookingData(null)}
-          type="primary"
-          className=" mt-4 w-full bg-red-500"
-        >
-          Cancel
-        </Button>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className=" mt-4 w-full"
-          loading={loading || isLoading || updateLoading}
-        >
-          Pay Now
-        </Button>
-      </div>
+        <div className="flex items-center justify-between gap-5 w-full">
+          <Button
+            onClick={() => setBookingData(null)}
+            type="primary"
+            className=" mt-4 w-full bg-red-500"
+          >
+            Cancel
+          </Button>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className=" mt-4 w-full"
+            loading={loading || isLoading || updateLoading}
+          >
+            Pay Now
+          </Button>
+        </div>
 
-      <p className="text-xs py-4">
-        Payment secured by <span className="font-semibold text-xs">Stripe</span>
-        . You’ll be taken to a thank you page after the payment.
-        <span className="font-semibold  text-xs">Terms</span> and{" "}
-        <span className="font-semibold  text-xs">Privacy</span>.
-      </p>
-    </Form>
+        <p className="text-xs py-4">
+          Payment secured by{" "}
+          <span className="font-semibold text-xs">Stripe</span>. You’ll be taken
+          to a thank you page after the payment.
+          <span className="font-semibold  text-xs">Terms</span> and{" "}
+          <span className="font-semibold  text-xs">Privacy</span>.
+        </p>
+      </Form>
+    </div>
   );
 };
 

@@ -15,6 +15,7 @@ import { useUploadImage } from "@/utils/upload";
 import Link from "next/link";
 import { useAppSelector } from "@/redux/hooks";
 import { useEffect } from "react";
+import Loader from "@/components/ui/Loader";
 
 type FormValues = {
   username: string;
@@ -29,13 +30,19 @@ const Register = () => {
   const { handleUpload, imageUrl, uploadLoading } = useUploadImage();
   const router = useRouter();
 
-  const userData = useAppSelector((state) => state.user?.data) as any;
+  const { data: user, isLoading: userLoading } = useAppSelector(
+    (state) => state.user
+  ) as any;
 
   useEffect(() => {
-    if (userData?.id) {
+    if (user?.id) {
       router.push("/");
     }
-  }, [userData, router]);
+  }, [user, router]);
+
+  if (userLoading) {
+    return <Loader />;
+  }
 
   const onSubmit: SubmitHandler<FormValues> = async (data: any, reset: any) => {
     if (!imageUrl) {

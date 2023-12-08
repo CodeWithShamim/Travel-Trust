@@ -23,6 +23,7 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import dynamic from "next/dynamic";
 import { ServiceStatus } from "@/constants/service";
 import Loader from "@/components/ui/Loader";
+import Link from "next/link";
 
 const SponsorCarousel = dynamic(
   () => import("@/components/ui/SponsorCarousel"),
@@ -284,14 +285,16 @@ const HomePage = () => {
           Where Adventure Awaits – Explore the World with Us!
         </p>
 
-        <Button
-          type="primary"
-          className="mt-6 w-48  rounded-full hover:bg-transparent hover:border-[#09ea4c] transition duration-300 ease-in-out"
-          size="large"
-          onClick={() => router.push("/service/search")}
-        >
-          <span className="font-bold">Book Tour</span>
-        </Button>
+        <Link href={"/service/search"}>
+          <Button
+            type="primary"
+            className="mt-6 w-48  rounded-full hover:bg-transparent hover:border-[#09ea4c] transition duration-300 ease-in-out"
+            size="large"
+            onClick={() => router.push("")}
+          >
+            <span className="font-bold">Book Tour</span>
+          </Button>
+        </Link>
       </div>
 
       {/* reviews  */}

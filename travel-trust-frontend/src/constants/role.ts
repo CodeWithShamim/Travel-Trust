@@ -9,3 +9,8 @@ export enum PAYMENT_ROLE {
   SUCCEEDED = "succeeded",
   FAILED = "failed",
 }
+
+export enum PAYMENT_METHOD_ROLE {
+  STRIPE = "stripe",
+  SSLCOMMERZ = "sslcommerz",
+}

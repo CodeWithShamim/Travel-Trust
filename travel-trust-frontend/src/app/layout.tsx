@@ -2,6 +2,7 @@ import Providers from "@/lib/Providers";
 import "./globals.css";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
+import UserInfo from "@/components/common/UserInfo";
 const ProgressBar = dynamic(() => import("@/components/common/ProgressBar"));
 
 export const metadata: Metadata = {
@@ -18,7 +19,9 @@ export default function RootLayout({
       <html lang="en">
         <body>
           <ProgressBar />
-          <div className="min-h-screen mx-auto">{children}</div>
+          <UserInfo>
+            <div className="min-h-screen mx-auto">{children}</div>
+          </UserInfo>
         </body>
       </html>
     </Providers>

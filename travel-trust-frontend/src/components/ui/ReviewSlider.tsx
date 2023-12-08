@@ -12,6 +12,7 @@ import { fadeIn } from "@/utils/motion";
 import { motion } from "framer-motion";
 import { useGetAllReviewQuery } from "@/redux/api/reviewApi";
 import { IReview } from "@/types";
+import { calculateAverateRating } from "@/utils/common";
 
 const ReviewSlider = () => {
   const query: any = {};
@@ -59,7 +60,7 @@ const ReviewSlider = () => {
               <Rate
                 className="text-[#09ea4c]"
                 disabled
-                defaultValue={item.ratings[0]}
+                defaultValue={calculateAverateRating(item.ratings)}
               />
             </div>
 

@@ -1,33 +1,14 @@
 "use client";
 
-import {
-  Layout,
-  Button,
-  MenuProps,
-  Dropdown,
-  Space,
-  Avatar,
-  Badge,
-  message,
-} from "antd";
+import { Layout, Button, Dropdown, Space, Avatar, Badge } from "antd";
 import Link from "next/link";
 import React, { useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
-import { useGetUserByIdQuery } from "@/redux/api/authApi";
-import { getUserInfo } from "@/helpers/persist/user.persist";
 import { useAppDispatch, useAppSelector, useSocket } from "@/redux/hooks";
-import {
-  removeUserData,
-  setUserData,
-  setUserLoading,
-} from "@/redux/slices/userSlice";
+
 import { useEffect } from "react";
-import {
-  getValueFromLocalStorage,
-  removeValueFromLocalStorage,
-} from "@/utils/local-storage";
-import { authKey, cartKey } from "@/constants/storageKey";
-import { useRouter } from "next/navigation";
+import { getValueFromLocalStorage } from "@/utils/local-storage";
+import { cartKey } from "@/constants/storageKey";
 import { BsFillCartCheckFill } from "react-icons/bs";
 import { motion } from "framer-motion";
 import { addAllServiceToCart } from "@/redux/slices/serviceSlice";
@@ -37,13 +18,21 @@ import Notification from "@/views/Notification";
 import { INotification } from "@/types";
 import { useGetAllNotificationQuery } from "@/redux/api/notificationApi";
 import { headerItems } from "@/constants/commons";
+import { useRouter } from "next/navigation";
+import { SignOut } from "@/utils/common";
 
 const { Header: HeaderLayout } = Layout;
 
 const Header = () => {
-  const { id } = getUserInfo();
-  const { data, isLoading, error } = useGetUserByIdQuery(id);
   const audioRef = React.useRef<HTMLAudioElement>(null);
+
+  const dispatch: any = useAppDispatch();
+
+  const [notifications, setNotifications] = useState<INotification[]>([]);
+
+  const [showNotification, setShowNotification] = useState<boolean>(false);
+
+  const data = useAppSelector((state) => state.user?.data) as any;
 
   const { data: data2, isLoading: isLoading2 } = useGetAllNotificationQuery(
     {
@@ -52,13 +41,6 @@ const Header = () => {
     { refetchOnMountOrArgChange: true }
   );
 
-  const dispatch: any = useAppDispatch();
-
-  const [notifications, setNotifications] = useState<INotification[]>([]);
-
-  const [showNotification, setShowNotification] = useState<boolean>(false);
-
-  const userData = useAppSelector((state) => state.user?.data) as any;
   const router = useRouter();
 
   const socket = useSocket();
@@ -79,6 +61,7 @@ const Header = () => {
     }
   }, [socket]);
 
+  // set initial notifications
   useEffect(() => {
     const newNotification = data2?.notifications as INotification[];
     newNotification?.length > 0 && setNotifications(newNotification);
@@ -93,31 +76,17 @@ const Header = () => {
 
   // get cart value from local storage
   useEffect(() => {
-    dispatch(setUserLoading(isLoading));
-
     const cartValue = getValueFromLocalStorage(cartKey);
     const parseCartValue = JSON.parse(cartValue as string);
 
     if (parseCartValue?.length) {
       dispatch(addAllServiceToCart(parseCartValue));
     }
-
-    if (data?.id) {
-      dispatch(setUserData(data));
-      dispatch(setUserLoading(isLoading));
-    }
-  }, [data, dispatch, isLoading]);
+  }, [dispatch]);
 
   const signOut = () => {
-    removeValueFromLocalStorage(authKey);
-    dispatch(removeUserData());
-    router.push("/login");
+    SignOut({ router, dispatch });
   };
-
-  if ((error as any)?.data?.message === "Jwt expired") {
-    message.error((error as any)?.data?.message);
-    signOut();
-  }
 
   return (
     <HeaderLayout className="z-[999999] shadow-md bg-transparent w-full px-4">
@@ -180,12 +149,14 @@ const Header = () => {
           </Link>
 
           <Dropdown
-            menu={{ items: headerItems({ userData, isLoading, signOut }) }}
+            menu={{
+              items: headerItems({ user: data, signOut }),
+            }}
             className="z-50 cursor-pointer"
           >
             <Space wrap size={16}>
               <Avatar
-                src={userData?.profileImage}
+                src={data?.profileImage}
                 size="large"
                 style={{ backgroundColor: "#87d068" }}
                 icon={<UserOutlined />}

@@ -1,6 +1,9 @@
 import { config } from "@/helpers/config/envConfig";
 import { message } from "antd";
 import axios from "axios";
+import { removeValueFromLocalStorage } from "./local-storage";
+import { authKey } from "@/constants/storageKey";
+import { removeUserData } from "@/redux/slices/userSlice";
 
 export const getTimeAndDate = () => {
   const currentDate = new Date();
@@ -82,4 +85,18 @@ export const generateRandomHexColor = () => {
   }
 
   return color;
+};
+
+export const calculateAverateRating = (ratings: number[]) => {
+  const sumOfRatings = ratings.reduce((acc, rating) => acc + rating, 0);
+
+  const averageRating = sumOfRatings / ratings.length;
+
+  return averageRating;
+};
+
+export const SignOut = ({ router, dispatch }: any) => {
+  removeValueFromLocalStorage(authKey);
+  dispatch(removeUserData());
+  router.push("/login");
 };

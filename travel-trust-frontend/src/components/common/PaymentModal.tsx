@@ -12,12 +12,17 @@ import {
   SmileOutlined,
   SolutionOutlined,
 } from "@ant-design/icons";
+import { useRouter } from "next/navigation";
+import { PAYMENT_METHOD_ROLE } from "@/constants/role";
 
 const stripePromise = loadStripe(config.stripe_publishable_key as string);
 
 const PaymentModal = ({ bookingData, setBookingData }: IPaymentModal) => {
-  const [paymentMethod, setPaymentMethod] = useState<string>("");
+  const [paymentMethod, setPaymentMethod] = useState<string>(
+    PAYMENT_METHOD_ROLE.STRIPE
+  );
   const [isPaymentSuccess, setIsPaymentSuccess] = useState<boolean>(false);
+  const router = useRouter();
 
   return (
     <div>
@@ -47,7 +52,7 @@ const PaymentModal = ({ bookingData, setBookingData }: IPaymentModal) => {
                 icon: <SmileOutlined />,
               },
             ]}
-            className="py-6"
+            className="py-6 hidden md:flex"
           />
 
           {/* payment success message  */}
@@ -81,7 +86,7 @@ const PaymentModal = ({ bookingData, setBookingData }: IPaymentModal) => {
                 Select payment method
               </h2>
             </Divider>
-            <div className="flex items-center justify-center gap-8">
+            <div className="flex items-center justify-center gap-5 md:gap-8">
               {["stripe", "sslcommerz"].map((method: string, index: number) => (
                 <div
                   key={index}
@@ -97,7 +102,7 @@ const PaymentModal = ({ bookingData, setBookingData }: IPaymentModal) => {
           </div>
 
           {/* stripe form & feature */}
-          {paymentMethod === "stripe" ? (
+          {paymentMethod === PAYMENT_METHOD_ROLE.STRIPE ? (
             <Elements stripe={stripePromise}>
               <StripePaymentForm
                 bookingData={bookingData}
@@ -108,7 +113,10 @@ const PaymentModal = ({ bookingData, setBookingData }: IPaymentModal) => {
           ) : null}
 
           <Button
-            onClick={() => setBookingData(null)}
+            onClick={() => {
+              setBookingData(null);
+              router.push("/dashboard/user/bookings");
+            }}
             className="w-full my-5"
             type="primary"
             ghost

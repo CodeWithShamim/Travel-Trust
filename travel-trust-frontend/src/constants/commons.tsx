@@ -3,16 +3,11 @@ import { Button, MenuProps } from "antd";
 import Link from "next/link";
 
 interface IHeaderItemsProps {
-  userData: IUser;
-  isLoading: boolean;
+  user: IUser;
   signOut: () => void;
 }
 
-export const headerItems = ({
-  userData,
-  isLoading,
-  signOut,
-}: IHeaderItemsProps) => {
+export const headerItems = ({ user, signOut }: IHeaderItemsProps) => {
   const items: MenuProps["items"] = [
     {
       key: 1,
@@ -30,12 +25,12 @@ export const headerItems = ({
       key: 4,
       label: (
         <>
-          {userData?.id ? (
+          {user?.id ? (
             <Button
               onClick={() => signOut()}
               type="primary"
               className="bg-primary text-xs md:text-sm"
-              loading={isLoading}
+              // loading={isLoading}
             >
               Logout
             </Button>
@@ -44,7 +39,7 @@ export const headerItems = ({
               <Button
                 type="primary"
                 className="bg-primary text-xs md:text-sm"
-                loading={isLoading}
+                // loading={isLoading}
               >
                 Signin
               </Button>

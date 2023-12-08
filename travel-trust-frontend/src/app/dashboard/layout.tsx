@@ -20,6 +20,7 @@ import {
   Title,
   CategoryScale,
 } from "chart.js";
+import BottomBar from "@/components/ui/BottomBar";
 
 ChartJS.register(
   LineController,
@@ -61,7 +62,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     <>
       <Header />
       <Layout hasSider className="min-h-screen w-full">
+        {/* for tablet & desktop */}
         <SideBar user={user} />
+
+        {/* for mobile  */}
+        <BottomBar user={user} />
 
         <Content className="relative p-4 inset-x-0 ">
           <div className="w-full max-w-[1200px] mx-auto h-[100%]">

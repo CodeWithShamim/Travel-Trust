@@ -6,8 +6,8 @@ const ConfettiComponent = ({ active }: { active: boolean }) => {
     <Confetti
       numberOfPieces={200}
       recycle={false}
-      width={window?.innerWidth}
-      height={window?.innerHeight}
+      width={window?.innerWidth - 20}
+      height={window?.innerHeight - 20}
       run={active}
     />
   );

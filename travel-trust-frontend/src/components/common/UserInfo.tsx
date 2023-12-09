@@ -11,10 +11,11 @@ import { useRouter } from "next/navigation";
 import { SignOut } from "@/utils/common";
 
 interface IUserInfoProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  isDashboard?: boolean;
 }
 
-const UserInfo = ({ children }: IUserInfoProps) => {
+const UserInfo = ({ children, isDashboard }: IUserInfoProps) => {
   const { id } = getUserInfo();
   const { data, isLoading, error } = useGetUserByIdQuery(id);
   const dispatch = useAppDispatch();
@@ -32,9 +33,23 @@ const UserInfo = ({ children }: IUserInfoProps) => {
       dispatch(setUserData(data));
       dispatch(setUserLoading(isLoading));
     }
-  }, [data, dispatch, isLoading]);
 
-  return <>{isLoading ? <Loader /> : children}</>;
+    if (!data?.id && !isLoading && isDashboard) {
+      router.push("/login");
+    }
+  }, [data, dispatch, isLoading, isDashboard, router]);
+
+  return (
+    <>
+      {isLoading ? (
+        <div className="absolute inset-0 bg-green-300 opacity-40 z-[99999]">
+          <Loader />
+        </div>
+      ) : (
+        children
+      )}
+    </>
+  );
 };
 
 export default UserInfo;

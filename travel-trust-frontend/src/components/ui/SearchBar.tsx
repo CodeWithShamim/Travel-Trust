@@ -3,22 +3,16 @@
 import { TravelCategory, TravelDestinations } from "@/constants/service";
 import { Button, Input, Select } from "antd";
 import React, { useState } from "react";
-import {
-  DownCircleOutlined,
-  DownOutlined,
-  SearchOutlined,
-} from "@ant-design/icons";
-import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
+import { DownCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
 import { addSearchData } from "@/redux/slices/serviceSlice";
-import Loader from "./Loader";
 
 const SearchBar = () => {
   const [from, setFrom] = useState<string>("");
   const [destination, setDestination] = useState<string | null>(null);
   const [category, setCategory] = useState<string | null>(null);
-  const { data: services, isLoading, error } = useGetAllServiceQuery(null);
+
   const [searchLoading, setSearchLoading] = useState<boolean>(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -41,10 +35,6 @@ const SearchBar = () => {
     setCategory(null);
     setTimeout(() => setSearchLoading(false), 1000);
   };
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <div className="z-50 hidden md:block w-full mx-auto backdrop-blur-md bg-white/10 p-5">

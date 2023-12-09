@@ -17,11 +17,9 @@ export default function RootLayout({
   return (
     <Providers>
       <html lang="en">
-        <body>
+        <body className="relative inset-0">
           <ProgressBar />
-          <UserInfo>
-            <div className="min-h-screen mx-auto">{children}</div>
-          </UserInfo>
+          <div className="min-h-screen mx-auto">{children}</div>
         </body>
       </html>
     </Providers>

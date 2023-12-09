@@ -128,6 +128,7 @@ const HomePage = () => {
         >
           Available service
         </motion.h1>
+
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center py-6">
           {isLoading &&
             Array.from({ length: 8 }).map((n, index) => (

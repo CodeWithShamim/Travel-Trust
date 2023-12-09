@@ -108,34 +108,32 @@ const Header = () => {
           Travel Trust
         </Link>
 
-        <div className="flex gap-2 items-center z-50">
+        <div className="flex gap-3 md:gap-4 items-center z-50">
           <Link href="/service/search" className="pt-2">
             <AiOutlineSearch size={24} className="text-[#09ea4c]" />
           </Link>
 
-          <Badge count={notifications?.length} className="mr-4 cursor-pointer">
+          <Badge count={notifications?.length} className="cursor-pointer">
             <Avatar
               onClick={() => setShowNotification(true)}
               icon={<IoMdNotifications size={16} className="text-[#09ea4c]" />}
+              className="bg-transparent"
             />
           </Badge>
 
           <Link href="/dashboard/profile">
-            <Badge count={cart?.length} className="mr-4">
+            <Badge count={cart?.length}>
               <Avatar
                 icon={
                   <BsFillCartCheckFill size={16} className="text-[#09ea4c]" />
                 }
+                className="bg-transparent"
               />
             </Badge>
           </Link>
 
           <Link href="/message" className="hidden md:block">
-            <Button
-              type="link"
-              className="text-xs md:text-sm"
-              // icon={<AiFillMessage size={20} className="text-green-400 pt-2" />}
-            >
+            <Button type="link" className="text-xs md:text-sm">
               <span className="font-bold text-green-400 tracking-wide">
                 Message
               </span>

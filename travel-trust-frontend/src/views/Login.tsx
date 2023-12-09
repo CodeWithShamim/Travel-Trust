@@ -23,6 +23,8 @@ const Login = () => {
   const [userLogin, { isLoading }] = useLoginMutation();
   const router = useRouter();
   const userData = useAppSelector((state) => state.user?.data) as any;
+  const defaultEmail = "dummyuser@gmail.com";
+  const defaultPass = "Test12345";
 
   useEffect(() => {
     if (userData?.id) {
@@ -31,8 +33,13 @@ const Login = () => {
   }, [userData, router]);
 
   const onSubmit: SubmitHandler<FormValues> = async (data: any, reset: any) => {
+    const newData = {
+      email: data?.email || defaultEmail,
+      password: data?.password || defaultPass,
+    };
+
     try {
-      const res = await userLogin(data).unwrap();
+      const res = await userLogin(newData).unwrap();
       if (res?.accessToken) {
         reset();
         message.success("User successfully login");
@@ -74,6 +81,7 @@ const Login = () => {
                     type="email"
                     size="large"
                     label="Email"
+                    defaultValue={defaultEmail}
                   />
                 </div>
                 <div
@@ -86,6 +94,7 @@ const Login = () => {
                     type="password"
                     size="large"
                     label="Password"
+                    defaultValue={defaultPass}
                   />
                 </div>
               </div>

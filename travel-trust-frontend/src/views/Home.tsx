@@ -223,7 +223,7 @@ const HomePage = () => {
 
           {onReady || (
             <div className="w-full h-[20rem] lg:h-[35rem] text-center text-white bg-black absolute inset-0 flex items-center justify-center">
-              <Loader />
+              <Spin />
               <span className="pl-2">Loading video...</span>
             </div>
           )}

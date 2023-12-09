@@ -99,6 +99,9 @@ const ManageAdmin = () => {
           if (res?.data?.id) {
             message.success("User Deleted successfully");
           }
+          if (res?.error) {
+            message.error(res?.error?.data?.message);
+          }
         } catch (err: any) {
           // console.log({ err });
           message.error(err.message || "Something went wrong!");

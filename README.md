@@ -36,6 +36,16 @@ ensuring a hassle-free and enjoyable experience for users. The website is built 
 
 ## Features
 
+- Spearheaded the implementation of a comprehensive dashboard, empowering administrators to efficiently manage service bookings, user interactions, and overall platform activities.
+
+- Successfully implemented real-time notification functionality, enhancing user engagement and providing instant updates on bookings and travel-related information.
+
+- Integrated Stripe payment gateway, enabling secure and seamless online payment transactions for customers, resulting in improved user experience and increased revenue.
+
+- Developed a messaging system to facilitate communication between clients, travel agents, and other stakeholders, fostering efficient and direct communication channels within the platform.
+
+- Integrated Mapbox for interactive maps, enhancing the user interface and providing users with a visually appealing and informative experience when planning their travels.
+
 - **Interactive User Interface:**
 
   - User-friendly interface that allows users to navigate the website easily and find information.
@@ -45,7 +55,10 @@ ensuring a hassle-free and enjoyable experience for users. The website is built 
   - An integrated system that enables users to book flights, hotels, and other services.
 
 - **User Reviews and Ratings:**
+
   - A section where users can share their experiences, reviews, and ratings about the service.
+
+- Actively involved in optimizing application performance, scalability, and security to ensure a robust and reliable travel platform.
 
 ## Getting Started
 

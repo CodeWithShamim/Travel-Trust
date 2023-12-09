@@ -110,18 +110,38 @@ const deleteUser = async (id: string, req: Request): Promise<any> => {
   await prisma.$transaction(async tnx => {
     const isExitsUser = await prisma.user.findUnique({
       where,
-      include: {
-        bookings: true,
-      },
     });
 
     if (!isExitsUser) {
       throw new ApiError(httpStatus.NOT_FOUND, 'User not found.');
     }
 
+    const userId = isUser ? user.id : isExitsUser?.id;
+
+    await tnx.payment.deleteMany({
+      where: {
+        booking: {
+          userId,
+        },
+      },
+    });
+
     await tnx.booking.deleteMany({
       where: {
-        userId: isUser ? user.id : id,
+        userId,
+      },
+    });
+
+    await tnx.message.deleteMany({
+      where: {
+        OR: [
+          {
+            senderId: userId,
+          },
+          {
+            receiverId: userId,
+          },
+        ],
       },
     });
 

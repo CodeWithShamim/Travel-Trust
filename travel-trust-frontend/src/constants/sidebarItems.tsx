@@ -74,7 +74,7 @@ export const sidebarItems = (role: string) => {
           Manage Admins
         </Link>
       ),
-      icon: <TableOutlined size={24} />,
+      icon: <MdManageAccounts size={24} />,
       key: `/${role}/admin`,
     },
   ];

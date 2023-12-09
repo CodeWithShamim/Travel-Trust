@@ -34,11 +34,7 @@ const UserInfo = ({ children }: IUserInfoProps) => {
     }
   }, [data, dispatch, isLoading]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  return <>{children}</>;
+  return <>{isLoading ? <Loader /> : children}</>;
 };
 
 export default UserInfo;

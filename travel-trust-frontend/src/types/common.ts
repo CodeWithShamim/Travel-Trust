@@ -47,6 +47,7 @@ export type IService = {
   location: string;
   category: string;
   status: string;
+  createdAt: string;
 };
 
 export type IBooking = {
@@ -117,3 +118,8 @@ export type IPaymentModal = {
 };
 
 export type IPaymentMethod = "stripe" | "sslcommerz";
+
+export type IMetadataProps = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};

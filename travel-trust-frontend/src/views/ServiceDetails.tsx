@@ -57,12 +57,12 @@ interface IServiceProps {
   service: IService;
 }
 
-const ServiceDetails = () => {
+const ServiceDetails = ({ service }: IServiceProps) => {
   const query: any = {};
 
   const params = useParams();
   const id = params?.id;
-  const { data: service, isLoading } = useGetSingleServiceQuery(id as string);
+
   const [createBooking, { isLoading: bookingCreateLoading }] =
     useCreatebookingMutation();
   const [createReview, { isLoading: addReviewLoading }] =
@@ -178,9 +178,9 @@ const ServiceDetails = () => {
     service?.location && handleGetCoordinate();
   }, [service]);
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  // if (isLoading) {
+  //   return <Loader />;
+  // }
 
   return (
     <>
@@ -495,7 +495,7 @@ const ServiceDetails = () => {
                   <ServiceCard
                     key={service.id}
                     service={service}
-                    loading={isLoading}
+                    // loading={isLoading}
                     index={index}
                   />
                 )

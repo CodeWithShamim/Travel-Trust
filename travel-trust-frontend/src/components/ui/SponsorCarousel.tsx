@@ -8,12 +8,7 @@ import ScrollCarousel from "scroll-carousel-react";
 const SponsorCarousel = () => {
   return (
     <div>
-      <ScrollCarousel
-        autoplay
-        autoplaySpeed={7}
-        speed={7}
-        // onReady={() => console.log("I am ready")}
-      >
+      <ScrollCarousel autoplay autoplaySpeed={7} speed={7}>
         {sponsorItems?.map((item) => (
           <Image
             key={item?.id}

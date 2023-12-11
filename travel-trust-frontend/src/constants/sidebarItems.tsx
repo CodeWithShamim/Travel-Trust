@@ -1,5 +1,4 @@
 import type { MenuProps } from "antd";
-import { TableOutlined, AppstoreOutlined } from "@ant-design/icons";
 import { FcManager } from "react-icons/fc";
 import Link from "next/link";
 import { USER_ROLE } from "./role";
@@ -12,23 +11,23 @@ import {
 export const sidebarItems = (role: string) => {
   const DAHBOARD_URL = "/dashboard";
 
+  const profilePath = `${DAHBOARD_URL}/profile`;
+  const changePassPath = `${DAHBOARD_URL}/profile/change-password`;
+  const manageUserPath = `${DAHBOARD_URL}/manage-users`;
+  const manageServicePath = `${DAHBOARD_URL}/${role}/manage-services`;
+  const manageBookingsPath = `${DAHBOARD_URL}/${role}/manage-bookings`;
+  const manageAdminsPath = `${DAHBOARD_URL}/${role}/manage-admins`;
+  const bookingPath = `${DAHBOARD_URL}/${role}/bookings`;
+
   const defaultSidebarItems: MenuProps["items"] = [
     {
-      label: <Link href={`${DAHBOARD_URL}/profile`}>Profile</Link>,
-      key: 1,
+      label: <Link href={profilePath}>Profile</Link>,
+      key: profilePath,
       icon: <FcManager size={24} />,
       // children: [
       //   {
-      //     label: <Link href={`${DAHBOARD_URL}/profile`}>Account Profile</Link>,
-      //     key: `/profile`,
-      //   },
-      //   {
-      //     label: (
-      //       <Link href={`${DAHBOARD_URL}/profile/edit-profile`}>
-      //         Edit Profile
-      //       </Link>
-      //     ),
-      //     key: `/edit-profile`,
+      //     label: <Link href={changePassPath}>Change Password</Link>,
+      //     key: changePassPath,
       //   },
       // ],
     },
@@ -36,9 +35,9 @@ export const sidebarItems = (role: string) => {
 
   const commonAdminSidebarItems: MenuProps["items"] = [
     {
-      label: <Link href={`${DAHBOARD_URL}/manage-users`}>Manage Users</Link>,
+      label: <Link href={manageUserPath}>Manage Users</Link>,
       icon: <MdManageAccounts size={24} />,
-      key: `/${role}/manage-users`,
+      key: manageUserPath,
     },
   ];
 
@@ -46,21 +45,13 @@ export const sidebarItems = (role: string) => {
     ...defaultSidebarItems,
     ...commonAdminSidebarItems,
     {
-      label: (
-        <Link href={`${DAHBOARD_URL}/${role}/manage-services`}>
-          Manage Services
-        </Link>
-      ),
-      key: "manage-services",
+      label: <Link href={manageServicePath}>Manage Services</Link>,
+      key: manageServicePath,
       icon: <MdOutlineManageHistory size={24} />,
     },
     {
-      label: (
-        <Link href={`${DAHBOARD_URL}/${role}/manage-bookings`}>
-          Manage Bookings
-        </Link>
-      ),
-      key: "manage-bookings",
+      label: <Link href={manageBookingsPath}>Manage Bookings</Link>,
+      key: manageBookingsPath,
       icon: <MdAirplaneTicket size={24} />,
     },
   ];
@@ -69,22 +60,18 @@ export const sidebarItems = (role: string) => {
     ...defaultSidebarItems,
     ...commonAdminSidebarItems,
     {
-      label: (
-        <Link href={`${DAHBOARD_URL}/${role}/manage-admins`}>
-          Manage Admins
-        </Link>
-      ),
+      label: <Link href={manageAdminsPath}>Manage Admins</Link>,
       icon: <MdManageAccounts size={24} />,
-      key: `/${role}/admin`,
+      key: manageAdminsPath,
     },
   ];
 
   const userSidebarItems: MenuProps["items"] = [
     ...defaultSidebarItems,
     {
-      label: <Link href={`${DAHBOARD_URL}/${role}/bookings`}>Bookings</Link>,
+      label: <Link href={bookingPath}>Bookings</Link>,
       icon: <MdAirplaneTicket size={24} />,
-      key: `/${role}/bookings`,
+      key: bookingPath,
     },
   ];
 

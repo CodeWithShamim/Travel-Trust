@@ -6,11 +6,13 @@ import { Button, Layout, Menu } from "antd";
 import { sidebarItems } from "@/constants/sidebarItems";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { IUser } from "@/types";
+import { usePathname } from "next/navigation";
 
 const { Sider } = Layout;
 
 const SideBar = ({ user }: { user: IUser }) => {
   const [collapsed, setCollapsed] = useState<boolean>(false);
+  const defaultKey = usePathname();
 
   return (
     <Sider
@@ -48,7 +50,7 @@ const SideBar = ({ user }: { user: IUser }) => {
 
       <Menu
         theme="light"
-        defaultSelectedKeys={["1"]}
+        defaultSelectedKeys={[defaultKey]}
         mode={"inline"}
         items={sidebarItems(user?.role)}
       />

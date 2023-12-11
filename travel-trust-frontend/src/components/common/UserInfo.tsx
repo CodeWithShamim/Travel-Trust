@@ -17,11 +17,12 @@ interface IUserInfoProps {
 
 const UserInfo = ({ children, isDashboard }: IUserInfoProps) => {
   const { id } = getUserInfo();
+
   const { data, isLoading, error } = useGetUserByIdQuery(id);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  if ((error as any)?.data?.message === "Jwt expired") {
+  if ((error as any)?.data?.message === "jwt expired") {
     message.error((error as any)?.data?.message);
     SignOut({ router, dispatch });
   }
@@ -42,7 +43,7 @@ const UserInfo = ({ children, isDashboard }: IUserInfoProps) => {
   return (
     <>
       {isLoading ? (
-        <div className="absolute inset-0 bg-green-300 opacity-40 z-[99999]">
+        <div className="absolute inset-0 bg-green-400 opacity-50 z-[99999]">
           <Loader />
         </div>
       ) : (

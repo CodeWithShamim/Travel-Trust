@@ -4,7 +4,7 @@ import SideBar from "@/components/ui/SideBar";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setUserData } from "@/redux/slices/userSlice";
 import { Layout } from "antd";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 import "chart.js/auto";

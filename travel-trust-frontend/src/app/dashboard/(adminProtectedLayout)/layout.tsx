@@ -1,21 +1,20 @@
 "use client";
 import Loader from "@/components/ui/Loader";
 import { USER_ROLE } from "@/constants/role";
-import { getUserInfo } from "@/helpers/persist/user.persist";
+import { useAppSelector } from "@/redux/hooks";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
-  const userLoggedIn = getUserInfo();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { data, isLoading } = useAppSelector((state) => state.user);
+  const user: any = data;
 
   useEffect(() => {
-    if (userLoggedIn?.role === USER_ROLE.USER) {
+    if (user?.role === USER_ROLE.USER && !isLoading) {
       router.push("/");
     }
-    setIsLoading(true);
-  }, [userLoggedIn, router, isLoading]);
+  }, [user, router, isLoading]);
 
   if (!isLoading) {
     return <Loader />;

@@ -38,9 +38,9 @@ const ServicePage = async ({ params }: { params: { id: string } }) => {
   const service = await fetchService(id);
 
   return (
-    <>
+    <div>
       <ServiceDetails service={service} />
-    </>
+    </div>
   );
 };
 

@@ -7,10 +7,11 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import colors from "@/constants/colors";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector, useBlurDataURL } from "@/redux/hooks";
 import { addServiceToCart } from "@/redux/slices/serviceSlice";
 import { motion, useAnimation } from "framer-motion";
 import { fadeIn, slideIn, zoomIn } from "@/utils/motion";
+import { dynamicBlurDataUrl } from "@/utils/base64";
 
 const { Meta } = Card;
 
@@ -24,6 +25,7 @@ const ServiceCard = ({ service, loading, index = 0 }: ServiceCardProps) => {
   const { id, name, price, image, category, status } = service;
   const cart = useAppSelector((state) => state.service.cart);
   const dispatch = useAppDispatch();
+  const { blurDataURL, isLoading } = useBlurDataURL(image);
 
   const handleAddToCart = (type: "add" | "remove") => {
     if (cart.length >= 5 && type === "add") {
@@ -63,18 +65,19 @@ const ServiceCard = ({ service, loading, index = 0 }: ServiceCardProps) => {
         </div>
 
         <Link href={`/service-details/${id}`} className="text-white h-full">
-          <Image
-            src={image ?? require("@/assets/login.webp")}
-            alt={name}
-            // width={200}
-            // height={250}
-            fill
-            quality={100}
-            // layout="responsive"
-            loading="lazy"
-            objectFit="cover"
-            className="mx-auto h-full w-full card-img pb-3 absolute inset-0"
-          />
+          {blurDataURL && (
+            <Image
+              src={image ?? require("@/assets/login.webp")}
+              alt={name}
+              fill
+              quality={100}
+              loading="lazy"
+              objectFit="cover"
+              className="mx-auto h-full w-full card-img pb-3 absolute inset-0"
+              placeholder="blur"
+              blurDataURL={blurDataURL}
+            />
+          )}
           <h1 className="absolute z-40 text-white font-extrabold text-2xl text-left shadow-sm">
             {name}
           </h1>

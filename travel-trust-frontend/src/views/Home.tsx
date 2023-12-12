@@ -24,6 +24,7 @@ import { ServiceStatus } from "@/constants/service";
 import Loader from "@/components/ui/Loader";
 import Link from "next/link";
 import ServiceCard from "@/components/ui/ServiceCard";
+import { galleryItems } from "@/data/common";
 
 const SponsorCarousel = dynamic(
   () => import("@/components/ui/SponsorCarousel"),
@@ -272,7 +273,11 @@ const HomePage = () => {
           </motion.h1>
         </Divider>
 
-        <ImageGallery />
+        <div className="galleryLayout rounded-xl">
+          {galleryItems?.map((item: { id: number; url: string }) => {
+            return <ImageGallery key={item.id} item={item} />;
+          })}
+        </div>
       </div>
 
       {/* section  */}

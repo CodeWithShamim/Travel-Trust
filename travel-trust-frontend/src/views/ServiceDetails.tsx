@@ -178,10 +178,6 @@ const ServiceDetails = ({ service }: IServiceProps) => {
     service?.location && handleGetCoordinate();
   }, [service]);
 
-  // if (isLoading) {
-  //   return <Loader />;
-  // }
-
   return (
     <>
       {service?.id ? (
@@ -328,7 +324,9 @@ const ServiceDetails = ({ service }: IServiceProps) => {
                 />
                 <TimePicker
                   className="text-black custom-picker bg-white border-none w-full py-5 rounded-xl"
-                  onChange={(time, currentTime) => setTime(currentTime)}
+                  onChange={(time: string, currentTime: string) =>
+                    setTime(currentTime)
+                  }
                   inputReadOnly
                 />
                 <CustomSelect

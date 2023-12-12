@@ -123,6 +123,7 @@ const Login = () => {
             loading="lazy"
             objectFit="cover"
             alt="login image"
+            placeholder="blur"
           />
         </Col>
       </Row>

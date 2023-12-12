@@ -186,7 +186,7 @@ const Profile = () => {
           </h1>
           {cart.length === 0 ? (
             <Image
-              src={user?.profileImage ?? require("@/assets/gallery/1.webp")}
+              src={user?.profileImage}
               width={800}
               height={300}
               className="md:h-full lg:h-[25.3rem] w-full object-cover rounded"

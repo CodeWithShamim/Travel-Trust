@@ -137,12 +137,6 @@ const SearchPage = () => {
           </div>
         </div>
 
-        {isLoading && (
-          <div className="z-50">
-            <Loading />
-          </div>
-        )}
-
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center p-4">
           {isLoading ||
             services

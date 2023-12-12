@@ -4,7 +4,6 @@ import ServiceCardSkeleton from "@/components/skeletons/ServiceCardSkeleton";
 import MapView from "@/components/ui/MapView";
 import NewsCard from "@/components/ui/NewsCard";
 import SearchBar from "@/components/ui/SearchBar";
-import ServiceCard from "@/components/ui/ServiceCard";
 import { newses } from "@/data/news";
 import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
 import { IService } from "@/types";
@@ -24,6 +23,7 @@ import dynamic from "next/dynamic";
 import { ServiceStatus } from "@/constants/service";
 import Loader from "@/components/ui/Loader";
 import Link from "next/link";
+import ServiceCard from "@/components/ui/ServiceCard";
 
 const SponsorCarousel = dynamic(
   () => import("@/components/ui/SponsorCarousel"),

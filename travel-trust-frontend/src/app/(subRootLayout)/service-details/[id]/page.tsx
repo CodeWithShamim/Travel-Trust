@@ -1,7 +1,9 @@
 import { config } from "@/helpers/config/envConfig";
 import { IMetadataProps, IService } from "@/types";
-import ServiceDetails from "@/views/ServiceDetails";
 import { Metadata, ResolvingMetadata } from "next";
+import dynamic from "next/dynamic";
+
+const ServiceDetails = dynamic(() => import("@/views/ServiceDetails"));
 
 const fetchService = async (id: string): Promise<IService> => {
   const res = await fetch(`${config.backend_url}/service/${id}`).then((res) =>
@@ -25,6 +27,7 @@ export async function generateMetadata(
     description: service.description,
     openGraph: {
       title: service?.name,
+      description: service?.description,
       images: [service.image, ...previousImages],
     },
   };

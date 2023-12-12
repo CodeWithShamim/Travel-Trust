@@ -48,77 +48,73 @@ export const footerLinks = [
 export const galleryItems = [
   {
     id: 1,
-    url: require("@/assets/gallery/1.webp"),
+    url: "https://res.cloudinary.com/djdrjwmfc/image/upload/v1702378086/gallery/1_gdmhoe.webp",
   },
   {
     id: 2,
-    url: require("@/assets/gallery/2.webp"),
+    url: "https://res.cloudinary.com/djdrjwmfc/image/upload/v1702378083/gallery/2_uloyfk.webp",
   },
-  // {
-  //   id: 3,
-  //   url: require("@/assets/gallery/1.mp4"),
-  // },
   {
     id: 3,
-    url: require("@/assets/gallery/3.webp"),
+    url: "https://res.cloudinary.com/djdrjwmfc/image/upload/v1702378084/gallery/3_ps7rhf.webp",
   },
   {
     id: 4,
-    url: require("@/assets/gallery/4.webp"),
+    url: "https://res.cloudinary.com/djdrjwmfc/image/upload/v1702378084/gallery/4_lrtkkx.webp",
   },
-  // {
-  //   id: 6,
-  //   url: require("@/assets/gallery/2.mp4"),
-  // },
+
   {
     id: 5,
-    url: require("@/assets/gallery/5.webp"),
+    url: "https://res.cloudinary.com/djdrjwmfc/image/upload/v1702378084/gallery/5_yztybf.webp",
   },
   {
     id: 6,
-    url: require("@/assets/gallery/6.webp"),
+    url: "https://res.cloudinary.com/djdrjwmfc/image/upload/v1702378085/gallery/6_hc7lpz.webp",
   },
-  // {
-  //   id: 10,
-  //   url: require("@/assets/gallery/3.mp4"),
-  // },
   {
     id: 7,
-    url: require("@/assets/gallery/7.webp"),
+    url: "https://res.cloudinary.com/djdrjwmfc/image/upload/v1702378084/gallery/7_sklcgp.webp",
   },
   {
     id: 8,
-    url: require("@/assets/gallery/8.webp"),
+    url: "https://res.cloudinary.com/djdrjwmfc/image/upload/v1702378085/gallery/8_hmdjeb.webp",
   },
 ];
 
 export const sponsorItems = [
   {
     id: 1,
-    image: require("@/assets/sponsor/1.jpg"),
+    image:
+      "https://res.cloudinary.com/djdrjwmfc/image/upload/v1702378807/sponsor/1_xv3hg1.jpg",
   },
   {
     id: 2,
-    image: require("@/assets/sponsor/2.png"),
+    image:
+      "https://res.cloudinary.com/djdrjwmfc/image/upload/v1702378807/sponsor/2_xas6ay.png",
   },
   {
     id: 3,
-    image: require("@/assets/sponsor/3.jpg"),
+    image:
+      "https://res.cloudinary.com/djdrjwmfc/image/upload/v1702378808/sponsor/3_dsi59j.jpg",
   },
   {
     id: 4,
-    image: require("@/assets/sponsor/4.jpg"),
+    image:
+      "https://res.cloudinary.com/djdrjwmfc/image/upload/v1702378809/sponsor/4_oam1gj.jpg",
   },
   {
     id: 5,
-    image: require("@/assets/sponsor/5.jpg"),
+    image:
+      "https://res.cloudinary.com/djdrjwmfc/image/upload/v1702378810/sponsor/5_yhowsp.jpg",
   },
   {
     id: 6,
-    image: require("@/assets/sponsor/6.jpg"),
+    image:
+      "https://res.cloudinary.com/djdrjwmfc/image/upload/v1702378806/sponsor/6_w9icrf.jpg",
   },
   {
     id: 7,
-    image: require("@/assets/sponsor/7.png"),
+    image:
+      "https://res.cloudinary.com/djdrjwmfc/image/upload/v1702378806/sponsor/7_w3eq8q.png",
   },
 ];

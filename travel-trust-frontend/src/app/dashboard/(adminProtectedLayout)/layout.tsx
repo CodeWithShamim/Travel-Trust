@@ -16,7 +16,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
     }
   }, [user, router, isLoading]);
 
-  if (!isLoading) {
+  if (isLoading) {
     return <Loader />;
   }
 

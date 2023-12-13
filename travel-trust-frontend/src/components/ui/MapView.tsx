@@ -58,13 +58,14 @@ const MapView = ({ location = locationData, zoom }: MapContainerProps) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative" aria-label="map container">
       <Map
         initialViewState={initialViewState}
         {...settings}
         mapStyle={mapStyle}
         mapboxAccessToken={config.mapbox_token}
         style={{ height: 300 }}
+        aria-label="map container"
       >
         <Source
           id="earthquakes"
@@ -85,7 +86,7 @@ const MapView = ({ location = locationData, zoom }: MapContainerProps) => {
         className="pb-4 rounded-none absolute bottom-0 right-0"
         ghost={isSatelliteMode}
       >
-        <span className="text-white font-semibold">
+        <span className="text-[#303030] hover:text-white font-semibold">
           {isSatelliteMode ? "Normal Mode" : "Satellite Mode"}
         </span>
       </Button>

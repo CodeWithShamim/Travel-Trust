@@ -291,14 +291,16 @@ const HomePage = () => {
           Where Adventure Awaits – Explore the World with Us!
         </p>
 
-        <Link href={"/service/search"}>
+        <Link href={"/service/search"} className="mt-6">
           <Button
             type="primary"
-            className="mt-6 w-48  rounded-full hover:bg-transparent hover:border-[#09ea4c] transition duration-300 ease-in-out"
+            className="w-48 rounded-full hover:bg-transparent hover:border-[#09ea4c] transition duration-300 ease-in-out"
             size="large"
             onClick={() => router.push("")}
           >
-            <span className="font-bold">Book Tour</span>
+            <span className="font-bold text-[#303030] hover:text-white">
+              Book Tour
+            </span>
           </Button>
         </Link>
       </div>

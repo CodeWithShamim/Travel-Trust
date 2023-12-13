@@ -7,6 +7,7 @@ import { DownCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/redux/hooks";
 import { addSearchData } from "@/redux/slices/serviceSlice";
+import { BiSearch } from "react-icons/bi";
 
 const SearchBar = () => {
   const [from, setFrom] = useState<string>("");
@@ -70,9 +71,6 @@ const SearchBar = () => {
             onChange={(value) => setCategory(value)}
             className="text-black custom-select"
             value={category}
-            // dropdownStyle={{
-            //   backgroundColor: "#09ea4c",
-            // }}
             suffixIcon={<DownCircleOutlined />}
             options={TravelCategory.map((province: string) => ({
               label: province,
@@ -82,18 +80,19 @@ const SearchBar = () => {
         </div>
 
         <Button
-          className="absolute right-0 top-0 bottom-0 "
+          className="absolute right-0 top-0 bottom-0 h-full flex items-center justify-center gap-1"
           type="primary"
-          icon={<SearchOutlined />}
           style={{
             width: "22%",
-            height: 70.8,
             borderRadius: "0px",
           }}
           loading={searchLoading}
           onClick={handleSearchService}
         >
-          <span className="uppercase font-bold text-lg">Search Now</span>
+          <BiSearch size={24} />
+          <span className="uppercase font-bold text-lg text-[#303030] hover:text-white">
+            Search Now
+          </span>
         </Button>
       </div>
     </div>

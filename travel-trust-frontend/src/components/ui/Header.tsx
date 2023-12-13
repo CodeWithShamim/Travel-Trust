@@ -109,7 +109,11 @@ const Header = () => {
         </Link>
 
         <div className="flex gap-3 md:gap-4 items-center z-50">
-          <Link href="/service/search" className="pt-2">
+          <Link
+            href="/service/search"
+            className="pt-2"
+            aria-label="service search"
+          >
             <AiOutlineSearch size={24} className="text-[#09ea4c]" />
           </Link>
 
@@ -121,7 +125,7 @@ const Header = () => {
             />
           </Badge>
 
-          <Link href="/dashboard/profile">
+          <Link href="/dashboard/profile" aria-label="dashboard profile">
             <Badge count={cart?.length}>
               <Avatar
                 icon={

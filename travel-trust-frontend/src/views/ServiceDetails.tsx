@@ -324,9 +324,10 @@ const ServiceDetails = ({ service }: IServiceProps) => {
                 />
                 <TimePicker
                   className="text-black custom-picker bg-white border-none w-full py-5 rounded-xl"
-                  onChange={(time: string, currentTime: string) =>
-                    setTime(currentTime)
-                  }
+                  onChange={(
+                    time: any,
+                    currentTime: React.SetStateAction<string>
+                  ) => setTime(currentTime)}
                   inputReadOnly
                 />
                 <CustomSelect

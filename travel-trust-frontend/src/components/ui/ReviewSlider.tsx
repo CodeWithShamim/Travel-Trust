@@ -57,11 +57,13 @@ const ReviewSlider = () => {
           <SwiperSlide key={item.id}>
             <div className="bg-white p-2 h-[200px] flex flex-col justify-center items-center rounded text-center text-gray-600 leading-snug tracking-wider shadow-sm mb-4">
               <p>{item.comment}</p>
-              <Rate
-                className="text-[#09ea4c]"
-                disabled
-                defaultValue={calculateAverateRating(item.ratings)}
-              />
+              <ul>
+                <Rate
+                  className="text-[#09ea4c]"
+                  disabled
+                  defaultValue={calculateAverateRating(item.ratings)}
+                />
+              </ul>
             </div>
 
             <div>

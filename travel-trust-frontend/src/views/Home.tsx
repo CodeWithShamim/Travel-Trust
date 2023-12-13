@@ -1,8 +1,6 @@
 "use client";
 
 import ServiceCardSkeleton from "@/components/skeletons/ServiceCardSkeleton";
-import MapView from "@/components/ui/MapView";
-import NewsCard from "@/components/ui/NewsCard";
 import SearchBar from "@/components/ui/SearchBar";
 import { newses } from "@/data/news";
 import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
@@ -11,20 +9,24 @@ import { Button, Carousel, Divider, FloatButton, Modal, Spin } from "antd";
 import Image from "next/image";
 import { useState } from "react";
 import styles from "@/styles/home.module.css";
-import ReviewSlider from "@/components/ui/ReviewSlider";
-import VideoPlayer from "@/components/ui/VideoPlayer";
+
 import { motion } from "framer-motion";
 import { fadeIn, imageVariants, textVariant } from "@/utils/motion";
 import { UpOutlined } from "@ant-design/icons";
-import ImageGallery from "@/components/ui/ImageGallery";
-import { useRouter } from "next/navigation";
+
 import { IoCloseCircleOutline } from "react-icons/io5";
-import dynamic from "next/dynamic";
-import { ServiceStatus } from "@/constants/service";
-import Loader from "@/components/ui/Loader";
-import Link from "next/link";
-import ServiceCard from "@/components/ui/ServiceCard";
 import { galleryItems } from "@/data/common";
+import { ServiceStatus } from "@/constants/service";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const MapView = dynamic(() => import("@/components/ui/MapView"));
+const VideoPlayer = dynamic(() => import("@/components/ui/VideoPlayer"));
+const ReviewSlider = dynamic(() => import("@/components/ui/ReviewSlider"));
+const ServiceCard = dynamic(() => import("@/components/ui/ServiceCard"));
+const ImageGallery = dynamic(() => import("@/components/ui/ImageGallery"));
+const NewsCard = dynamic(() => import("@/components/ui/NewsCard"));
 
 const SponsorCarousel = dynamic(
   () => import("@/components/ui/SponsorCarousel"),

@@ -3,7 +3,7 @@ import styles from "@/styles/loader.module.css";
 
 const Loader = () => {
   return (
-    <div className="w-full min-h-screen bg-transparent mx-auto flex justify-center items-center">
+    <div className="w-full min-h-screen mx-auto flex justify-center items-center">
       <span className={`${styles["loader1"]}`}></span>
     </div>
   );

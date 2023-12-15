@@ -89,8 +89,8 @@ const SearchBar = () => {
           loading={searchLoading}
           onClick={handleSearchService}
         >
-          <BiSearch size={24} />
-          <span className="font-bold text-lg text-[#303030] hover:text-white">
+          <BiSearch size={24} className="text-[#303030]" />
+          <span className="font-semibold text-lg text-[#303030] hover:text-white">
             Search Now
           </span>
         </Button>

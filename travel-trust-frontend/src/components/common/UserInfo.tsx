@@ -38,7 +38,7 @@ const UserInfo = ({ children }: IUserInfoProps) => {
   return (
     <>
       {isLoading ? (
-        <div className="absolute inset-0 bg-transparent bg-opacity-30 z-[99999]">
+        <div className="absolute inset-0 z-[99999]">
           <Loader />
         </div>
       ) : (

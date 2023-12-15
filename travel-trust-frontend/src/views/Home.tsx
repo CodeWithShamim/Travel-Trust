@@ -68,7 +68,7 @@ const HomePage = () => {
         <Carousel
           effect="fade"
           autoplay={true}
-          className="z-[-1] overflow-hidden"
+          className="z-[-1] overflow-hidden bg-green-900"
         >
           {[1, 2, 3].map((item: number) => (
             <motion.div
@@ -111,7 +111,7 @@ const HomePage = () => {
           </motion.p>
         </div>
 
-        <motion.div className="absolute bottom-20 left-0 right-0 max-w-[1100px] mx-auto">
+        <motion.div className="absolute bottom-20 left-0 right-0 max-w-[1100px] mx-auto z-50">
           <SearchBar />
         </motion.div>
       </div>

@@ -12,10 +12,9 @@ import { SignOut } from "@/utils/common";
 
 interface IUserInfoProps {
   children?: React.ReactNode;
-  isDashboard?: boolean;
 }
 
-const UserInfo = ({ children, isDashboard }: IUserInfoProps) => {
+const UserInfo = ({ children }: IUserInfoProps) => {
   const { id } = getUserInfo();
 
   const { data, isLoading, error } = useGetUserByIdQuery(id);
@@ -34,16 +33,12 @@ const UserInfo = ({ children, isDashboard }: IUserInfoProps) => {
       dispatch(setUserData(data));
       dispatch(setUserLoading(isLoading));
     }
-
-    if (!data?.id && !isLoading && isDashboard) {
-      router.push("/login");
-    }
-  }, [data, dispatch, isLoading, isDashboard, router]);
+  }, [data, dispatch, isLoading, router]);
 
   return (
     <>
       {isLoading ? (
-        <div className="absolute inset-0 bg-green-400 bg-opacity-30 z-[99999]">
+        <div className="absolute inset-0 bg-transparent bg-opacity-30 z-[99999]">
           <Loader />
         </div>
       ) : (

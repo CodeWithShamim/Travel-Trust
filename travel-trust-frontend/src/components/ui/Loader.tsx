@@ -3,10 +3,7 @@ import styles from "@/styles/loader.module.css";
 
 const Loader = () => {
   return (
-    <div className="pt-[20%] mx-auto w-full flex justify-center items-center">
-      {/* <Spin tip="Loading..." size="large" className="text-green-400">
-        <div className="content" />
-      </Spin> */}
+    <div className="w-full min-h-screen bg-transparent mx-auto flex justify-center items-center">
       <span className={`${styles["loader1"]}`}></span>
     </div>
   );

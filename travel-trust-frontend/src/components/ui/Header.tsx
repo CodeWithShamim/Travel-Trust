@@ -20,6 +20,8 @@ import { useGetAllNotificationQuery } from "@/redux/api/notificationApi";
 import { headerItems } from "@/constants/commons";
 import { useRouter } from "next/navigation";
 import { SignOut } from "@/utils/common";
+import DateTime from "../common/DateTime";
+import { FaPlane } from "react-icons/fa";
 
 const { Header: HeaderLayout } = Layout;
 
@@ -98,6 +100,8 @@ const Header = () => {
         />
       )}
 
+      <DateTime />
+
       <audio ref={audioRef} src={"/notifacation.wav"}></audio>
 
       <motion.div className=" max-w-[1200px] mx-auto text-white w-full flex items-center justify-between h-full">
@@ -109,43 +113,44 @@ const Header = () => {
         </Link>
 
         <div className="flex gap-3 md:gap-4 items-center z-50">
-          <Link
-            href="/service/search"
-            className="pt-2"
-            aria-label="service search"
-          >
-            <AiOutlineSearch size={24} className="text-[#09ea4c]" />
-          </Link>
+          {/* icon  */}
+          <div className="flex gap-3 md:gap-4 items-center mt-2">
+            <Link href="/service/search" aria-label="service search">
+              <AiOutlineSearch size={25} className="text-[#09ea4c]" />
+            </Link>
 
-          <Badge count={notifications?.length} className="cursor-pointer">
-            <Avatar
-              onClick={() => setShowNotification(true)}
-              icon={<IoMdNotifications size={16} className="text-[#09ea4c]" />}
-              className="bg-transparent"
-            />
-          </Badge>
-
-          <Link href="/dashboard/profile" aria-label="dashboard profile">
-            <Badge count={cart?.length}>
+            <Badge count={notifications?.length} className="cursor-pointer">
               <Avatar
+                onClick={() => setShowNotification(true)}
                 icon={
-                  <BsFillCartCheckFill size={16} className="text-[#09ea4c]" />
+                  <IoMdNotifications size={22} className="text-[#09ea4c]" />
                 }
                 className="bg-transparent"
               />
             </Badge>
-          </Link>
+
+            <Link href="/dashboard/profile" aria-label="dashboard profile">
+              <Badge count={cart?.length}>
+                <Avatar
+                  icon={
+                    <BsFillCartCheckFill size={22} className="text-[#09ea4c]" />
+                  }
+                  className="bg-transparent"
+                />
+              </Badge>
+            </Link>
+          </div>
 
           <Link href="/message" className="hidden md:block">
             <Button type="link" className="text-xs md:text-sm">
-              <span className="font-bold text-green-400 tracking-wide">
+              <span className="font-bold text-green-400 tracking-wide text-lg">
                 Message
               </span>
             </Button>
           </Link>
 
           <Link href="/dashboard/profile" className="hidden md:block">
-            <Button type="default" className="text-xs md:text-sm">
+            <Button type="default" size="middle" className="text-xs md:text-sm">
               Dashboard
             </Button>
           </Link>

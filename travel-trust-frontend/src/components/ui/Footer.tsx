@@ -85,7 +85,7 @@ const Footer = () => {
             <div className="flex">
               <Input placeholder="Email" className="border-none rounded-none" />
               <Button type="primary" size="large" className="rounded-none">
-                <span className="font-bold text-lg text-[#303030] hover:text-white">
+                <span className="font-semibold text-lg text-[#303030] hover:text-white">
                   Subscribe
                 </span>
               </Button>

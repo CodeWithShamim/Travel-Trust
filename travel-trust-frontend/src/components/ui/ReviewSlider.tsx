@@ -64,6 +64,8 @@ const ReviewSlider = () => {
               />
             </ul>
 
+            
+
             <div>
               <h1 className="font-bold">{item.name}</h1>
               <p className="text-xs">{item.email}</p>

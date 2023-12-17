@@ -87,6 +87,9 @@ const HomePage = () => {
                 objectFit="cover"
                 layout="responsive"
               />
+
+
+              
               <div className="absolute inset-0 bg-[#000] opacity-30"></div>
             </motion.div>
           ))}

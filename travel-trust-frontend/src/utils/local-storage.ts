@@ -5,7 +5,7 @@ export const setValueToLocalStorage = (key: string, token: string) => {
   return localStorage.setItem(key, token);
 };
 
-export const getValueFromLocalStorage = (key: string) => {
+export const getValueFromLocalStorage = (key: string): string | null => {
   if (!key || typeof window === "undefined") {
     return "";
   }

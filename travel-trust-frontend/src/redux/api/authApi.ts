@@ -31,6 +31,14 @@ export const authApi = baseApi.injectEndpoints({
       }),
       providesTags: ["user"],
     }),
+    getMe: build.query({
+      query: (access_token: string | null) => ({
+        url: `${USER_URL}/getme`,
+        Authorization: access_token,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
     getAllUser: build.query({
       query: (filtersData?: any) => {
         return {
@@ -86,6 +94,7 @@ export const {
   useRegisterMutation,
   useLoginMutation,
   useGetUserByIdQuery,
+  useGetMeQuery,
   useGetAllUserQuery,
   useUpdateUserMutation,
   useDeleteSingleUserMutation,

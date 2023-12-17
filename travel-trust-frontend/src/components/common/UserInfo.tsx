@@ -1,7 +1,5 @@
 "use client";
 
-import { getUserInfo } from "@/helpers/persist/user.persist";
-import { useGetUserByIdQuery } from "@/redux/api/authApi";
 import { useAppDispatch } from "@/redux/hooks";
 import { setUserData, setUserLoading } from "@/redux/slices/userSlice";
 import { message } from "antd";
@@ -9,15 +7,18 @@ import React, { useEffect } from "react";
 import Loader from "../ui/Loader";
 import { useRouter } from "next/navigation";
 import { SignOut } from "@/utils/common";
+import { useGetMeQuery } from "@/redux/api/authApi";
+import { authKey } from "@/constants/storageKey";
+import { getValueFromLocalStorage } from "@/utils/local-storage";
 
 interface IUserInfoProps {
   children?: React.ReactNode;
 }
 
 const UserInfo = ({ children }: IUserInfoProps) => {
-  const { id } = getUserInfo();
+  const accessToken = getValueFromLocalStorage(authKey);
 
-  const { data, isLoading, error } = useGetUserByIdQuery(id);
+  const { data, isLoading, error } = useGetMeQuery(accessToken);
   const dispatch = useAppDispatch();
   const router = useRouter();
 

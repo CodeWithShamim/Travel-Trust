@@ -84,6 +84,17 @@ const getSingleUser = async (
   return returnUserValue(result);
 };
 
+const getMe = async (user: JwtPayload | null): Promise<User | null> => {
+  console.log({ user });
+
+  const result = await prisma.user.findUnique({
+    where: {
+      id: user?.id,
+    },
+  });
+  return returnUserValue(result);
+};
+
 const updateUser = async (
   id: string,
   data: Partial<User>,
@@ -226,6 +237,7 @@ export const UserService = {
   createUser,
   getAllUser,
   getSingleUser,
+  getMe,
   updateUser,
   deleteUser,
   createAdmin,

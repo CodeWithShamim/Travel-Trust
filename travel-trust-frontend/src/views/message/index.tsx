@@ -2,9 +2,9 @@
 
 import ChatMessage from "@/components/ui/ChatMessage";
 import Loader from "@/components/ui/Loader";
-import { useGetAllUserQuery, useGetUserByIdQuery } from "@/redux/api/authApi";
+import { useGetAllUserQuery } from "@/redux/api/authApi";
 import { useGetAllMessageQuery } from "@/redux/api/messageApi";
-import { useSocket } from "@/redux/hooks";
+import { useAppSelector, useSocket } from "@/redux/hooks";
 import { IUser } from "@/types";
 import { timeAgo } from "@/utils/common";
 import { UserOutlined } from "@ant-design/icons";
@@ -15,7 +15,6 @@ import React, { useEffect, useState } from "react";
 const { Sider, Content } = Layout;
 import { CiMenuKebab } from "react-icons/ci";
 import styles from "@/styles/common.module.css";
-import { getUserInfo } from "@/helpers/persist/user.persist";
 import HomeBackButton from "@/components/ui/HomeBackButton";
 import { USER_ROLE } from "@/constants/role";
 import { FaVideo } from "react-icons/fa";
@@ -44,8 +43,8 @@ const Message = () => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [receiverUser, setReceiverUser] = useState<any>();
 
-  const { id } = getUserInfo();
-  const { data, isLoading } = useGetUserByIdQuery(id);
+  const { data, isLoading } = useAppSelector((state) => state.user) as any;
+
   const router = useRouter();
   const socket = useSocket();
 

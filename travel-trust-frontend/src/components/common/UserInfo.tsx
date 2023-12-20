@@ -10,12 +10,14 @@ import { SignOut } from "@/utils/common";
 import { useGetMeQuery } from "@/redux/api/authApi";
 import { authKey } from "@/constants/storageKey";
 import { getValueFromLocalStorage } from "@/utils/local-storage";
+import { setDictionaries } from "@/redux/slices/i18nSlice";
 
 interface IUserInfoProps {
   children?: React.ReactNode;
+  dict: any;
 }
 
-const UserInfo = ({ children }: IUserInfoProps) => {
+const UserInfo = ({ children, dict }: IUserInfoProps) => {
   const accessToken = getValueFromLocalStorage(authKey);
 
   const { data, isLoading, error } = useGetMeQuery(accessToken);
@@ -28,13 +30,14 @@ const UserInfo = ({ children }: IUserInfoProps) => {
   }
 
   useEffect(() => {
+    dispatch(setDictionaries(dict));
     dispatch(setUserLoading(isLoading));
 
     if (data?.id) {
       dispatch(setUserData(data));
       dispatch(setUserLoading(isLoading));
     }
-  }, [data, dispatch, isLoading, router]);
+  }, [data, dispatch, isLoading, router, dict]);
 
   return (
     <>

@@ -2,6 +2,7 @@
 
 import Loading from "@/app/loading";
 import FilterSideBar from "@/components/ui/FilterSideBar";
+import Loader from "@/components/ui/Loader";
 import ServiceCard from "@/components/ui/ServiceCard";
 import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
 import { useAppSelector, useDebounced } from "@/redux/hooks";
@@ -136,6 +137,8 @@ const SearchPage = () => {
             </div>
           </div>
         </div>
+
+        {isLoading && <Loader />}
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center p-4">
           {isLoading ||

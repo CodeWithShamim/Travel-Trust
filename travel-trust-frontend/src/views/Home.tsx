@@ -20,6 +20,7 @@ import { ServiceStatus } from "@/constants/service";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { useAppSelector } from "@/redux/hooks";
 
 const MapView = dynamic(() => import("@/components/ui/MapView"));
 const VideoPlayer = dynamic(() => import("@/components/ui/VideoPlayer"));
@@ -47,6 +48,8 @@ const HomePage = () => {
 
   const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false);
   const [onReady, setOnReady] = useState<boolean>(false);
+
+  const { dictionaries } = useAppSelector((state) => state.i18n);
 
   const router = useRouter();
 
@@ -88,8 +91,6 @@ const HomePage = () => {
                 layout="responsive"
               />
 
-
-              
               <div className="absolute inset-0 bg-[#000] opacity-30"></div>
             </motion.div>
           ))}

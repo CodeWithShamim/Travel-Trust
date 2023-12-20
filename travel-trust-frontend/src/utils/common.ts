@@ -100,3 +100,6 @@ export const SignOut = ({ router, dispatch }: any) => {
   dispatch(removeUserData());
   router.push("/login");
 };
+
+
+

@@ -1,5 +1,31 @@
 {
-  "products": {
-    "cart": "Add to Cart"
+  "home": {
+    "header": {
+      "message": "Message",
+      "dashboard": "Dashboard"
+    },
+    "heading": "EXPORE THE WORLD WITH",
+    "headingSide": "TRAVEL",
+    "subHeading": "Where Would You Like To Go?",
+    "searchBar": {
+      "from": "From",
+      "destination": "Destination",
+      "category": "Category",
+      "buttonText": "Search"
+    },
+    "service": {
+      "available": "AVAILABLE SERVICE",
+      "upcoming": "UPCOMING SERVICE"
+    },
+    "videoPlayText": "GOOD TIME",
+    "videoPlaySubText": "PLAN THE PERFECT VACATIONS",
+    "latestNews": "LATEST NEWS",
+    "photoGallery": "PHOTO GALLERY",
+    "bookTourText": {
+      "text": "Are You Still Intarested To Tour?",
+      "subText": "Where Adventure Awaits – Explore the World with Us!",
+      "btnText": "Book Tour"
+    },
+    "customerReview": "CUSTOMER REVIEW"
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Layout, Button, Dropdown, Space, Avatar, Badge } from "antd";
+import { Layout, Button, Dropdown, Space, Avatar, Badge, Select } from "antd";
 import Link from "next/link";
 import React, { useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 import { SignOut } from "@/utils/common";
 import DateTime from "../common/DateTime";
 import { FaPlane } from "react-icons/fa";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const { Header: HeaderLayout } = Layout;
 
@@ -90,6 +91,10 @@ const Header = () => {
     SignOut({ router, dispatch });
   };
 
+  const { dictionaries } = useAppSelector((state) => state.i18n);
+
+  const header = dictionaries?.home?.header;
+
   return (
     <HeaderLayout className="z-[999999] shadow-md bg-transparent w-full px-4">
       {showNotification && (
@@ -106,7 +111,7 @@ const Header = () => {
 
       <motion.div className=" max-w-[1200px] mx-auto text-white w-full flex items-center justify-between h-full">
         <Link
-          href="/"
+          href="/en"
           className="text-xl md:text-2xl lg:text-3xl font-extrabold shadow-2xl uppercase text-[#09ea4c] z-50"
         >
           Travel Trust
@@ -144,14 +149,14 @@ const Header = () => {
           <Link href="/message" className="hidden md:block">
             <Button type="link" className="text-xs md:text-sm">
               <span className="font-bold text-green-400 tracking-wide text-lg">
-                Message
+                {header?.message}
               </span>
             </Button>
           </Link>
 
           <Link href="/dashboard/profile" className="hidden md:block">
             <Button type="default" size="middle" className="text-xs md:text-sm">
-              Dashboard
+              {header?.dashboard}
             </Button>
           </Link>
 
@@ -170,6 +175,10 @@ const Header = () => {
               />
             </Space>
           </Dropdown>
+
+          <div className="hidden md:block">
+            <LanguageSwitcher />
+          </div>
         </div>
       </motion.div>
     </HeaderLayout>

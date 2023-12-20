@@ -8,16 +8,21 @@ import Loader from "../ui/Loader";
 import { useRouter } from "next/navigation";
 import { SignOut } from "@/utils/common";
 import { useGetMeQuery } from "@/redux/api/authApi";
-import { authKey } from "@/constants/storageKey";
-import { getValueFromLocalStorage } from "@/utils/local-storage";
-import { setDictionaries } from "@/redux/slices/i18nSlice";
+import { authKey, langKey } from "@/constants/storageKey";
+import {
+  getValueFromLocalStorage,
+  setValueToLocalStorage,
+} from "@/utils/local-storage";
+import { setDictionaries, setLanguage } from "@/redux/slices/i18nSlice";
+import { ILanguage } from "@/types";
 
 interface IUserInfoProps {
   children?: React.ReactNode;
   dict: any;
+  lang: ILanguage;
 }
 
-const UserInfo = ({ children, dict }: IUserInfoProps) => {
+const UserInfo = ({ children, dict, lang }: IUserInfoProps) => {
   const accessToken = getValueFromLocalStorage(authKey);
 
   const { data, isLoading, error } = useGetMeQuery(accessToken);
@@ -30,14 +35,16 @@ const UserInfo = ({ children, dict }: IUserInfoProps) => {
   }
 
   useEffect(() => {
+    setValueToLocalStorage(langKey, lang);
     dispatch(setDictionaries(dict));
+    dispatch(setLanguage(lang));
     dispatch(setUserLoading(isLoading));
 
     if (data?.id) {
       dispatch(setUserData(data));
       dispatch(setUserLoading(isLoading));
     }
-  }, [data, dispatch, isLoading, router, dict]);
+  }, [data, dispatch, isLoading, router, dict, lang]);
 
   return (
     <>

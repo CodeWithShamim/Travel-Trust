@@ -123,3 +123,5 @@ export type IMetadataProps = {
   params: { id: string };
   searchParams: { [key: string]: string | string[] | undefined };
 };
+
+export type ILanguage = "en" | "bn" | "hi";

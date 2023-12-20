@@ -48,10 +48,10 @@ const HomePage = () => {
 
   const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false);
   const [onReady, setOnReady] = useState<boolean>(false);
-
+  const router = useRouter();
   const { dictionaries } = useAppSelector((state) => state.i18n);
 
-  const router = useRouter();
+  const home = dictionaries?.home;
 
   return (
     <div className="w-full">
@@ -103,7 +103,7 @@ const HomePage = () => {
             variants={fadeIn("down", "tween", 0, 1.5)}
             className="custom-head-text px-4 text-6xl lg:text-8xl tracking-wide text-white font-extrabold uppercase text-center drop-shadow-md"
           >
-            Expore the world with <span className="fancy">Travel</span>
+            {home?.heading} <span className="fancy">{home?.headingSide}</span>
           </motion.h1>
           <motion.p
             initial="hidden"
@@ -111,7 +111,7 @@ const HomePage = () => {
             variants={fadeIn("up", "tween", 0, 1.5)}
             className="custom-sub-text hero-banner__stroked-title text-center text-white text-2xl lg:text-3xl tracking-[1px] capitalize font-semibold pt-10"
           >
-            Where would you like to go?
+            {home?.subHeading}
           </motion.p>
         </div>
 
@@ -133,7 +133,7 @@ const HomePage = () => {
           variants={textVariant(0.4)}
           className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest"
         >
-          Available service
+          {home?.service?.available}
         </motion.h1>
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center py-6">
@@ -161,7 +161,7 @@ const HomePage = () => {
             variants={textVariant(0.4)}
             className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest"
           >
-            Upcoming service
+            {home?.service?.upcoming}
           </motion.h1>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 justify-center py-6">
             {isLoading2 &&
@@ -208,11 +208,9 @@ const HomePage = () => {
           />
         </motion.span>
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold shadow-2xl text-white uppercase">
-          Good Time
+          {home?.videoPlayText}
         </h1>
-        <p className="text-white text-lg uppercase">
-          Plan the perfect vacations
-        </p>
+        <p className="text-white text-lg uppercase">{home?.videoPlaySubText}</p>
       </motion.div>
       {isVideoPlay && (
         <Modal
@@ -251,7 +249,7 @@ const HomePage = () => {
             variants={textVariant(0.4)}
             className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest"
           >
-            Latest news
+            {home?.latestNews}
           </motion.h1>
         </Divider>
 
@@ -275,7 +273,7 @@ const HomePage = () => {
             variants={textVariant(0.4)}
             className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest"
           >
-            Photo Gallery
+            {home?.photoGallery}
           </motion.h1>
         </Divider>
 
@@ -291,11 +289,9 @@ const HomePage = () => {
         className={`${styles["background-image2"]} flex flex-col  my-14 md:my-16 lg:my-24 items-center justify-center w-full gap-4 text-center px-4`}
       >
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold shadow-2xl text-white">
-          Are You Still Intarested To Tour?
+          {home?.bookTourText?.text}
         </h1>
-        <p className="text-white text-lg">
-          Where Adventure Awaits – Explore the World with Us!
-        </p>
+        <p className="text-white text-lg">{home?.bookTourText?.subText}</p>
 
         <Link href={"/service/search"} className="mt-6">
           <Button
@@ -305,7 +301,7 @@ const HomePage = () => {
             onClick={() => router.push("")}
           >
             <span className="font-bold text-[#303030] hover:text-white">
-              Book Tour
+              {home?.bookTourText?.btnText}
             </span>
           </Button>
         </Link>
@@ -325,7 +321,7 @@ const HomePage = () => {
               variants={textVariant(0.4)}
               className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest"
             >
-              Customer Review
+              {home?.customerReview}
             </motion.h1>
           </Divider>
         </div>

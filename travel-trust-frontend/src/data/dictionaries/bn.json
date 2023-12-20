@@ -1,5 +1,31 @@
 {
-  "products": {
-    "cart": "Toevoegen aan Winkelwagen"
+  "home": {
+    "header": {
+      "message": "বার্তা",
+      "dashboard": "ড্যাশবোর্ড"
+    },
+    "heading": "ভ্রমণ করুন পুরো",
+    "headingSide": "বিশ্বজুড়ে",
+    "subHeading": "আপনি কোথায় যেতে চান?",
+    "searchBar": {
+      "from": "থেকে",
+      "destination": "গন্তব্য",
+      "category": "বিভাগ",
+      "buttonText": "অনুসন্ধান"
+    },
+    "service": {
+      "available": "বর্তমান সার্ভিস",
+      "upcoming": "আসন্ন সার্ভিস"
+    },
+    "videoPlayText": "ভালো সময়",
+    "videoPlaySubText": "পারফেক্ট ভ্যাকেশন পরিকল্পনা করুন",
+    "latestNews": "সর্বশেষ খবর",
+    "photoGallery": "ফটো গ্যালারি",
+    "bookTourText": {
+      "text": "আপনি কি এখনো ভ্রমণ করতে চান?",
+      "subText": "যেখানে অ্যাডভেঞ্চার অপেক্ষা করছে - আমাদের সাথে বিশ্ব অন্বেষণ করুন!",
+      "btnText": "ভ্রমণ বুক"
+    },
+    "customerReview": "গ্রাহকের পর্যালোচনা"
   }
 }

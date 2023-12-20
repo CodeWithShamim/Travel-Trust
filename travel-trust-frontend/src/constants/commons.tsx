@@ -1,3 +1,4 @@
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { IUser } from "@/types";
 import { Button, MenuProps } from "antd";
 import Link from "next/link";
@@ -11,18 +12,34 @@ export const headerItems = ({ user, signOut }: IHeaderItemsProps) => {
   const items: MenuProps["items"] = [
     {
       key: 1,
-      label: <Link href="/dashboard/profile">Dashboard</Link>,
-    },
-    {
-      key: 2,
-      label: <Link href="/message">Message</Link>,
-    },
-    {
-      key: 3,
       label: <Link href="/dashboard/profile">Profile</Link>,
     },
     {
+      key: 2,
+      label: (
+        <Link className="md:hidden" href="/message">
+          Message
+        </Link>
+      ),
+    },
+    {
+      key: 3,
+      label: (
+        <Link className="md:hidden" href="/dashboard/profile">
+          Dashboard
+        </Link>
+      ),
+    },
+    {
       key: 4,
+      label: (
+        <div className="block md:hidden">
+          <LanguageSwitcher />
+        </div>
+      ),
+    },
+    {
+      key: 5,
       label: (
         <>
           {user?.id ? (
@@ -30,17 +47,12 @@ export const headerItems = ({ user, signOut }: IHeaderItemsProps) => {
               onClick={() => signOut()}
               type="primary"
               className="bg-primary text-xs md:text-sm"
-              // loading={isLoading}
             >
               Logout
             </Button>
           ) : (
             <Link href="/login">
-              <Button
-                type="primary"
-                className="bg-primary text-xs md:text-sm"
-                // loading={isLoading}
-              >
+              <Button type="primary" className="bg-primary text-xs md:text-sm">
                 Signin
               </Button>
             </Link>

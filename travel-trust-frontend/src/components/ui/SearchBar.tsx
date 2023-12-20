@@ -5,7 +5,7 @@ import { Button, Input, Select } from "antd";
 import React, { useState } from "react";
 import { DownCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { addSearchData } from "@/redux/slices/serviceSlice";
 import { BiSearch } from "react-icons/bi";
 
@@ -17,6 +17,9 @@ const SearchBar = () => {
   const [searchLoading, setSearchLoading] = useState<boolean>(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
+
+  const { dictionaries } = useAppSelector((state) => state.i18n);
+  const searchBar = dictionaries?.home?.searchBar;
 
   const handleSearchService = () => {
     setSearchLoading(true);
@@ -42,7 +45,7 @@ const SearchBar = () => {
       <div className="flex items-center justify-center bg-white w-full py-6 relative shadow-2xl">
         <div className="w-full">
           <Input
-            placeholder="From"
+            placeholder={searchBar?.from}
             type="text"
             allowClear
             bordered={false}
@@ -52,7 +55,7 @@ const SearchBar = () => {
             onChange={(e) => setFrom(e.target.value)}
           />
           <Select
-            placeholder="Destination"
+            placeholder={searchBar?.destination}
             bordered={false}
             style={{ width: "22%", color: "#000" }}
             onChange={(value) => setDestination(value)}
@@ -65,7 +68,7 @@ const SearchBar = () => {
             }))}
           />
           <Select
-            placeholder="Category"
+            placeholder={searchBar?.category}
             bordered={false}
             style={{ width: "22%", color: "#000" }}
             onChange={(value) => setCategory(value)}
@@ -91,7 +94,7 @@ const SearchBar = () => {
         >
           <BiSearch size={24} className="text-[#303030]" />
           <span className="font-semibold text-lg text-[#303030] hover:text-white">
-            Search Now
+            {searchBar?.buttonText}
           </span>
         </Button>
       </div>

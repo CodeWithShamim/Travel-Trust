@@ -13,7 +13,7 @@ export default async function RootLayout({
 
   return (
     <>
-      <UserInfo dict={dict} />
+      <UserInfo dict={dict} lang={lang} />
       {children}
     </>
   );

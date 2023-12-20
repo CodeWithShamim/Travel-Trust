@@ -1,0 +1,31 @@
+{
+  "home": {
+    "header": {
+      "message": "संदेश",
+      "dashboard": "डैशबोर्ड"
+    },
+    "heading": "पूरे रास्ते यात्रा करें",
+    "headingSide": "दुनिया भर में",
+    "subHeading": "आप कहाँ जाना चाहेंगे?",
+    "searchBar": {
+      "from": "से",
+      "destination": "गंतव्य",
+      "category": "श्रेणी",
+      "buttonText": "खोज"
+    },
+    "service": {
+      "available": "वर्तमान सेवा",
+      "upcoming": "आगामी सेवा"
+    },
+    "videoPlayText": "अच्छा समय",
+    "videoPlaySubText": "पूर्ण छुट्टियों की योजना करें",
+    "latestNews": "नवीनतम समाचार",
+    "photoGallery": "फोटो गैलरी",
+    "bookTourText": {
+      "text": "क्या आप अभी भी यात्रा करना चाहते हैं?",
+      "subText": "जहां रोमांच इंतजार कर रहा है - हमारे साथ दुनिया का अन्वेषण करें!",
+      "btnText": "यात्रा करें"
+    },
+    "customerReview": "ग्राहक सम"
+  }
+}

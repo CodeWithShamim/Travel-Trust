@@ -1,99 +1,99 @@
-"use client";
+'use client'
 
-import { Layout, Button, Dropdown, Space, Avatar, Badge, Select } from "antd";
-import Link from "next/link";
-import React, { useState } from "react";
-import { UserOutlined } from "@ant-design/icons";
-import { useAppDispatch, useAppSelector, useSocket } from "@/redux/hooks";
+import { Layout, Button, Dropdown, Space, Avatar, Badge, Select } from 'antd'
+import Link from 'next/link'
+import React, { useState } from 'react'
+import { UserOutlined } from '@ant-design/icons'
+import { useAppDispatch, useAppSelector, useSocket } from '@/redux/hooks'
 
-import { useEffect } from "react";
-import { getValueFromLocalStorage } from "@/utils/local-storage";
-import { cartKey } from "@/constants/storageKey";
-import { BsFillCartCheckFill } from "react-icons/bs";
-import { motion } from "framer-motion";
-import { addAllServiceToCart } from "@/redux/slices/serviceSlice";
-import { AiOutlineSearch } from "react-icons/ai";
-import { IoMdNotifications } from "react-icons/io";
-import Notification from "@/views/Notification";
-import { INotification } from "@/types";
-import { useGetAllNotificationQuery } from "@/redux/api/notificationApi";
-import { headerItems } from "@/constants/commons";
-import { useRouter } from "next/navigation";
-import { SignOut } from "@/utils/common";
-import DateTime from "../common/DateTime";
-import { FaPlane } from "react-icons/fa";
-import LanguageSwitcher from "./LanguageSwitcher";
+import { useEffect } from 'react'
+import { getValueFromLocalStorage } from '@/utils/local-storage'
+import { cartKey } from '@/constants/storageKey'
+import { BsFillCartCheckFill } from 'react-icons/bs'
+import { motion } from 'framer-motion'
+import { addAllServiceToCart } from '@/redux/slices/serviceSlice'
+import { AiOutlineSearch } from 'react-icons/ai'
+import { IoMdNotifications } from 'react-icons/io'
+import Notification from '@/views/Notification'
+import { INotification } from '@/types'
+import { useGetAllNotificationQuery } from '@/redux/api/notificationApi'
+import { headerItems } from '@/constants/commons'
+import { useRouter } from 'next/navigation'
+import { SignOut } from '@/utils/common'
+import DateTime from '../common/DateTime'
+import { FaPlane } from 'react-icons/fa'
+import LanguageSwitcher from './LanguageSwitcher'
 
-const { Header: HeaderLayout } = Layout;
+const { Header: HeaderLayout } = Layout
 
 const Header = () => {
-  const audioRef = React.useRef<HTMLAudioElement>(null);
+  const audioRef = React.useRef<HTMLAudioElement>(null)
 
-  const dispatch: any = useAppDispatch();
+  const dispatch: any = useAppDispatch()
 
-  const [notifications, setNotifications] = useState<INotification[]>([]);
+  const [notifications, setNotifications] = useState<INotification[]>([])
 
-  const [showNotification, setShowNotification] = useState<boolean>(false);
+  const [showNotification, setShowNotification] = useState<boolean>(false)
 
-  const data = useAppSelector((state) => state.user?.data) as any;
+  const data = useAppSelector((state) => state.user?.data) as any
 
   const { data: data2, isLoading: isLoading2 } = useGetAllNotificationQuery(
     {
       userId: data?.id,
     },
     { refetchOnMountOrArgChange: true }
-  );
+  )
 
-  const router = useRouter();
+  const router = useRouter()
 
-  const socket = useSocket();
+  const socket = useSocket()
 
-  const cart = useAppSelector((state) => state.service?.cart);
+  const cart = useAppSelector((state) => state.service?.cart)
 
   const playSound = () => {
-    audioRef?.current?.play();
-  };
+    audioRef?.current?.play()
+  }
 
   // notification received by socket
   useEffect(() => {
     if (socket) {
-      socket.on("notification", (notificaion: any) => {
-        playSound();
-        setNotifications((prev) => [notificaion, ...prev]);
-      });
+      socket.on('notification', (notificaion: any) => {
+        playSound()
+        setNotifications((prev) => [notificaion, ...prev])
+      })
     }
-  }, [socket]);
+  }, [socket])
 
   // set initial notifications
   useEffect(() => {
-    const newNotification = data2?.notifications as INotification[];
-    newNotification?.length > 0 && setNotifications(newNotification);
-  }, [data2]);
+    const newNotification = data2?.notifications as INotification[]
+    newNotification?.length > 0 && setNotifications(newNotification)
+  }, [data2])
 
   // join socket
   useEffect(() => {
     if (socket && data?.id) {
-      socket.emit("join", data?.id);
+      socket.emit('join', data?.id)
     }
-  }, [socket, data?.id]);
+  }, [socket, data?.id])
 
   // get cart value from local storage
   useEffect(() => {
-    const cartValue = getValueFromLocalStorage(cartKey);
-    const parseCartValue = JSON.parse(cartValue as string);
+    const cartValue = getValueFromLocalStorage(cartKey)
+    const parseCartValue = JSON.parse(cartValue as string)
 
     if (parseCartValue?.length) {
-      dispatch(addAllServiceToCart(parseCartValue));
+      dispatch(addAllServiceToCart(parseCartValue))
     }
-  }, [dispatch]);
+  }, [dispatch])
 
   const signOut = () => {
-    SignOut({ router, dispatch });
-  };
+    SignOut({ router, dispatch })
+  }
 
-  const { dictionaries } = useAppSelector((state) => state.i18n);
+  const { dictionaries } = useAppSelector((state) => state.i18n)
 
-  const header = dictionaries?.home?.header;
+  const header = dictionaries?.home?.header
 
   return (
     <HeaderLayout className="z-[999999] shadow-md bg-transparent w-full px-4">
@@ -107,12 +107,12 @@ const Header = () => {
 
       <DateTime />
 
-      <audio ref={audioRef} src={"/notifacation.wav"}></audio>
+      <audio ref={audioRef} src={'/notifacation.wav'}></audio>
 
       <motion.div className=" max-w-[1200px] mx-auto text-white w-full flex items-center justify-between h-full">
         <Link
           href="/en"
-          className="text-xl md:text-2xl lg:text-3xl font-extrabold shadow-2xl uppercase text-[#09ea4c] z-50"
+          className="text-xl md:text-2xl lg:text-3xl font-extrabold shadow-2xl uppercase text-[#FFD20A] z-50"
         >
           Travel Trust
         </Link>
@@ -121,14 +121,14 @@ const Header = () => {
           {/* icon  */}
           <div className="flex gap-3 md:gap-4 items-center mt-2">
             <Link href="/service/search" aria-label="service search">
-              <AiOutlineSearch size={25} className="text-[#09ea4c]" />
+              <AiOutlineSearch size={25} className="text-[#FFD20A]" />
             </Link>
 
             <Badge count={notifications?.length} className="cursor-pointer">
               <Avatar
                 onClick={() => setShowNotification(true)}
                 icon={
-                  <IoMdNotifications size={22} className="text-[#09ea4c]" />
+                  <IoMdNotifications size={22} className="text-[#FFD20A]" />
                 }
                 className="bg-transparent"
               />
@@ -138,7 +138,7 @@ const Header = () => {
               <Badge count={cart?.length}>
                 <Avatar
                   icon={
-                    <BsFillCartCheckFill size={22} className="text-[#09ea4c]" />
+                    <BsFillCartCheckFill size={22} className="text-[#FFD20A]" />
                   }
                   className="bg-transparent"
                 />
@@ -148,7 +148,7 @@ const Header = () => {
 
           <Link href="/message" className="hidden md:block">
             <Button type="link" className="text-xs md:text-sm">
-              <span className="font-bold text-green-400 tracking-wide text-lg">
+              <span className="font-bold text-[#FFD20A] tracking-wide text-lg">
                 {header?.message}
               </span>
             </Button>
@@ -170,7 +170,7 @@ const Header = () => {
               <Avatar
                 src={data?.profileImage}
                 size="large"
-                style={{ backgroundColor: "#87d068" }}
+                style={{ backgroundColor: '#87d068' }}
                 icon={<UserOutlined />}
               />
             </Space>
@@ -182,7 +182,7 @@ const Header = () => {
         </div>
       </motion.div>
     </HeaderLayout>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

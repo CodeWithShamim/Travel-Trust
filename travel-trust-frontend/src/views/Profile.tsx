@@ -1,40 +1,40 @@
-"use client";
+'use client'
 
-import CartCard from "@/components/ui/CartCard";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { IService, IUser } from "@/types";
-import { Spin, Upload, message } from "antd";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import CartCard from '@/components/ui/CartCard'
+import { useAppDispatch, useAppSelector } from '@/redux/hooks'
+import { IService, IUser } from '@/types'
+import { Spin, Upload, message } from 'antd'
+import Image from 'next/image'
+import React, { useEffect, useState } from 'react'
 
-import { AiOutlineMail, AiOutlineContacts } from "react-icons/ai";
-import { FaRegAddressCard } from "react-icons/fa";
-import { BsCameraFill } from "react-icons/bs";
-import { BiEdit } from "react-icons/bi";
+import { AiOutlineMail, AiOutlineContacts } from 'react-icons/ai'
+import { FaRegAddressCard } from 'react-icons/fa'
+import { BsCameraFill } from 'react-icons/bs'
+import { BiEdit } from 'react-icons/bi'
 
-import { useUploadImage } from "@/utils/upload";
-import { useUpdateUserMutation } from "@/redux/api/authApi";
-import { setUserData } from "@/redux/slices/userSlice";
-import { SubmitHandler } from "react-hook-form";
-import UpdateUserInfo from "@/components/ui/UpdateUserInfo";
-import Loader from "@/components/ui/Loader";
+import { useUploadImage } from '@/utils/upload'
+import { useUpdateUserMutation } from '@/redux/api/authApi'
+import { setUserData } from '@/redux/slices/userSlice'
+import { SubmitHandler } from 'react-hook-form'
+import UpdateUserInfo from '@/components/ui/UpdateUserInfo'
+import Loader from '@/components/ui/Loader'
 
 const Profile = () => {
-  const user: any = useAppSelector((state) => state.user?.data);
-  const cart: IService[] = useAppSelector((state) => state.service?.cart);
-  const dispatch = useAppDispatch();
-  const { handleUpload, imageUrl, uploadLoading } = useUploadImage();
+  const user: any = useAppSelector((state) => state.user?.data)
+  const cart: IService[] = useAppSelector((state) => state.service?.cart)
+  const dispatch = useAppDispatch()
+  const { handleUpload, imageUrl, uploadLoading } = useUploadImage()
   const {
     handleUpload: handleUploadBanner,
     imageUrl: bannerUrl,
     uploadLoading: uploadBannerLoading,
-  } = useUploadImage();
+  } = useUploadImage()
 
-  const updateData: any = {};
-  const [handeUpdateUser, { data, isLoading, error }] = useUpdateUserMutation();
-  const [showEditModal, setShowEditModal] = useState<boolean>(false);
-  const [gender, setGender] = useState<string | undefined>(undefined);
-  const [age, setAge] = useState<string | undefined>(undefined);
+  const updateData: any = {}
+  const [handeUpdateUser, { data, isLoading, error }] = useUpdateUserMutation()
+  const [showEditModal, setShowEditModal] = useState<boolean>(false)
+  const [gender, setGender] = useState<string | undefined>(undefined)
+  const [age, setAge] = useState<string | undefined>(undefined)
 
   const contactLists = [
     {
@@ -42,57 +42,57 @@ const Profile = () => {
       icon: <AiOutlineMail />,
     },
     {
-      value: user?.contactNo ?? "+88017-6282-2568",
+      value: user?.contactNo ?? '+88017-6282-2568',
       icon: <AiOutlineContacts />,
     },
     {
-      value: user?.address ?? "Dhaka, Mirpur-1000, Bangladesh",
+      value: user?.address ?? 'Dhaka, Mirpur-1000, Bangladesh',
       icon: <FaRegAddressCard />,
     },
-  ];
+  ]
 
   useEffect(() => {
-    updateData["id"] = user?.id;
+    updateData['id'] = user?.id
     if (imageUrl) {
-      updateData["profileImage"] = imageUrl;
+      updateData['profileImage'] = imageUrl
     }
     if (bannerUrl) {
-      updateData["bannerImage"] = bannerUrl;
+      updateData['bannerImage'] = bannerUrl
     }
 
     if (imageUrl || bannerUrl) {
-      handeUpdateUser(updateData);
+      handeUpdateUser(updateData)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imageUrl, bannerUrl]);
+  }, [imageUrl, bannerUrl])
 
   if (data?.id) {
-    dispatch(setUserData(data));
+    dispatch(setUserData(data))
   }
 
   const handleProfileUpdate: SubmitHandler<any> = async (
     data?: IUser,
     reset?: any
   ) => {
-    const newData = { id: user?.id, ...data, gender, age };
+    const newData = { id: user?.id, ...data, gender, age }
     try {
-      const res = await handeUpdateUser(newData).unwrap();
+      const res = await handeUpdateUser(newData).unwrap()
     } catch (error: any) {
-      message.error(error?.data.message);
+      message.error(error?.data.message)
     } finally {
-      setShowEditModal(false);
-      setAge(undefined);
-      setGender(undefined);
-      reset();
+      setShowEditModal(false)
+      setAge(undefined)
+      setGender(undefined)
+      reset()
     }
-  };
+  }
 
   return (
     <div>
       <section>
         <div className="relative">
           <Image
-            src={user?.bannerImage ?? require("@/assets/home1.webp")}
+            src={user?.bannerImage ?? require('@/assets/home1.webp')}
             width={1300}
             height={400}
             className="h-[18rem] w-full object-cover"
@@ -148,7 +148,7 @@ const Profile = () => {
             onClick={() => setShowEditModal(true)}
             className="absolute top-3 right-3 bg-green-400 rounded-full p-2 h-10 w-10 hover:bg-green-300 cursor-pointer text-center"
           >
-            {/* <Tooltip title="Edit" color="#09ea4c"> */}
+            {/* <Tooltip title="Edit" color="#FFD20A"> */}
             <BiEdit size={20} color="#FFF" />
             {/* </Tooltip> */}
           </span>
@@ -175,7 +175,7 @@ const Profile = () => {
               Age : <span className="">{user?.age ?? 20}</span>
             </p>
             <p>
-              Gender : <span className="">{user?.gender ?? "Male"}</span>
+              Gender : <span className="">{user?.gender ?? 'Male'}</span>
             </p>
           </div>
         </div>
@@ -223,10 +223,10 @@ const Profile = () => {
         )}
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default Profile;
+export default Profile
 
 export const ProfileImageUpload = (
   user: IUser | null,
@@ -235,7 +235,7 @@ export const ProfileImageUpload = (
 ) => (
   <div className="relative cursor-pointer">
     <Image
-      src={user?.profileImage ?? require("@/assets/home1.webp")}
+      src={user?.profileImage ?? require('@/assets/home1.webp')}
       className="h-[50px] w-[50px] md:h-[80px] md:w-[80px] lg:h-[120px] lg:w-[120px]  rounded-full bordered object-cover shadow lg:shadow-2xl"
       width={120}
       height={120}
@@ -266,4 +266,4 @@ export const ProfileImageUpload = (
       </Upload>
     </span>
   </div>
-);
+)

@@ -1,32 +1,32 @@
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import React from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import {
   Autoplay,
   Pagination,
   Navigation,
   Scrollbar,
   A11y,
-} from "swiper/modules";
-import { Rate } from "antd";
-import { fadeIn } from "@/utils/motion";
-import { motion } from "framer-motion";
-import { useGetAllReviewQuery } from "@/redux/api/reviewApi";
-import { IReview } from "@/types";
-import { calculateAverateRating } from "@/utils/common";
+} from 'swiper/modules'
+import { Rate } from 'antd'
+import { fadeIn } from '@/utils/motion'
+import { motion } from 'framer-motion'
+import { useGetAllReviewQuery } from '@/redux/api/reviewApi'
+import { IReview } from '@/types'
+import { calculateAverateRating } from '@/utils/common'
 
 const ReviewSlider = () => {
-  const query: any = {};
+  const query: any = {}
 
-  query["limit"] = 5;
+  query['limit'] = 5
   const { data, isLoading } = useGetAllReviewQuery({
     ...query,
-  });
+  })
 
   return (
     <motion.div
       initial="hidden"
       whileInView="show"
-      variants={fadeIn("down", "tween", 0.5, 0.5)}
+      variants={fadeIn('down', 'tween', 0.5, 0.5)}
       className="max-w-[1200px] m-auto py-16 text-center"
     >
       <Swiper
@@ -58,13 +58,11 @@ const ReviewSlider = () => {
             <ul className="bg-white p-2 h-[200px] flex flex-col justify-center items-center rounded text-center text-gray-600 leading-snug tracking-wider shadow-sm mb-4">
               <p>{item.comment}</p>
               <Rate
-                className="text-[#09ea4c]"
+                className="text-[#FFD20A]"
                 disabled
                 defaultValue={calculateAverateRating(item.ratings)}
               />
             </ul>
-
-            
 
             <div>
               <h1 className="font-bold">{item.name}</h1>
@@ -74,7 +72,7 @@ const ReviewSlider = () => {
         ))}
       </Swiper>
     </motion.div>
-  );
-};
+  )
+}
 
-export default ReviewSlider;
+export default ReviewSlider

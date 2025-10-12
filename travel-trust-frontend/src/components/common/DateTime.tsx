@@ -1,21 +1,21 @@
-"use client";
+'use client'
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react'
 
 const DateTime = () => {
-  const [currentDateTime, setCurrentDateTime] = useState<Date>();
+  const [currentDateTime, setCurrentDateTime] = useState<Date>()
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setCurrentDateTime(new Date());
-    }, 1000);
+      setCurrentDateTime(new Date())
+    }, 1000)
 
     return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
+      clearInterval(intervalId)
+    }
+  }, [])
 
-  const formattedDateTime = currentDateTime?.toLocaleString();
+  const formattedDateTime = currentDateTime?.toLocaleString()
 
   return (
     <p
@@ -23,7 +23,7 @@ const DateTime = () => {
     >
       {formattedDateTime}
     </p>
-  );
-};
+  )
+}
 
-export default DateTime;
+export default DateTime

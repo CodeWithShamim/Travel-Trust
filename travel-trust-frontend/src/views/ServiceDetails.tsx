@@ -1,9 +1,9 @@
-"use client";
-import { useParams, useRouter } from "next/navigation";
+'use client'
+import { useParams, useRouter } from 'next/navigation'
 
-import { IBooking, ILocation, IReview, IService } from "@/types";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import { IBooking, ILocation, IReview, IService } from '@/types'
+import Image from 'next/image'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   DatePicker,
@@ -16,97 +16,97 @@ import {
   Select,
   TimePicker,
   message,
-} from "antd";
+} from 'antd'
 import {
   useGetAllServiceQuery,
   useGetSingleServiceQuery,
-} from "@/redux/api/serviceApi";
-import { getCoordinates, getTimeAndDate, timeAgo } from "@/utils/common";
-import { getUserInfo } from "@/helpers/persist/user.persist";
-import { useCreatebookingMutation } from "@/redux/api/bookingApi";
-import Loader from "@/components/ui/Loader";
-import { useAppSelector } from "@/redux/hooks";
+} from '@/redux/api/serviceApi'
+import { getCoordinates, getTimeAndDate, timeAgo } from '@/utils/common'
+import { getUserInfo } from '@/helpers/persist/user.persist'
+import { useCreatebookingMutation } from '@/redux/api/bookingApi'
+import Loader from '@/components/ui/Loader'
+import { useAppSelector } from '@/redux/hooks'
 import {
   useCreateReviewMutation,
   useGetAllReviewQuery,
-} from "@/redux/api/reviewApi";
+} from '@/redux/api/reviewApi'
 
-import { BiSolidTimeFive } from "react-icons/bi";
-import { ShareAltOutlined } from "@ant-design/icons";
-import { TravelCategory } from "@/constants/service";
-import CustomSelect from "@/components/ui/CustomSelect";
-import { motion } from "framer-motion";
-import { imageVariants } from "@/utils/motion";
-import FormInput from "@/components/forms/FormInput";
-import { Controller, SubmitHandler, useFormContext } from "react-hook-form";
-import Form from "@/components/forms/Form";
-import { reviewsLists, serviceDetailsLists } from "@/data/service";
-import ReviewCard from "@/components/ui/ReviewCard";
-import MouseScroll from "@/components/common/MouseScroll";
-import Link from "next/link";
-import { AiFillMessage } from "react-icons/ai";
-import ShareButton from "@/components/ui/ShareService";
-import ShareService from "@/components/ui/ShareService";
-import MapView from "@/components/ui/MapView";
-import ServiceCard from "@/components/ui/ServiceCard";
-import PaymentModal from "@/components/common/PaymentModal";
+import { BiSolidTimeFive } from 'react-icons/bi'
+import { ShareAltOutlined } from '@ant-design/icons'
+import { TravelCategory } from '@/constants/service'
+import CustomSelect from '@/components/ui/CustomSelect'
+import { motion } from 'framer-motion'
+import { imageVariants } from '@/utils/motion'
+import FormInput from '@/components/forms/FormInput'
+import { Controller, SubmitHandler, useFormContext } from 'react-hook-form'
+import Form from '@/components/forms/Form'
+import { reviewsLists, serviceDetailsLists } from '@/data/service'
+import ReviewCard from '@/components/ui/ReviewCard'
+import MouseScroll from '@/components/common/MouseScroll'
+import Link from 'next/link'
+import { AiFillMessage } from 'react-icons/ai'
+import ShareButton from '@/components/ui/ShareService'
+import ShareService from '@/components/ui/ShareService'
+import MapView from '@/components/ui/MapView'
+import ServiceCard from '@/components/ui/ServiceCard'
+import PaymentModal from '@/components/common/PaymentModal'
 
-const { TextArea } = Input;
+const { TextArea } = Input
 
 interface IServiceProps {
-  service: IService;
+  service: IService
 }
 
 const ServiceDetails = ({ service }: IServiceProps) => {
-  const query: any = {};
+  const query: any = {}
 
-  const params = useParams();
-  const id = params?.id;
+  const params = useParams()
+  const id = params?.id
 
   const [createBooking, { isLoading: bookingCreateLoading }] =
-    useCreatebookingMutation();
+    useCreatebookingMutation()
   const [createReview, { isLoading: addReviewLoading }] =
-    useCreateReviewMutation();
+    useCreateReviewMutation()
 
-  const serviceQuery: any = {};
-  serviceQuery["limit"] = 4;
-  serviceQuery["sortOrder"] = "asc";
+  const serviceQuery: any = {}
+  serviceQuery['limit'] = 4
+  serviceQuery['sortOrder'] = 'asc'
   const { data: suggestedService, isLoading: serviceLoading } =
     useGetAllServiceQuery({
       ...serviceQuery,
-    });
+    })
 
-  const [ratings, setRatings] = useState<number[]>([5, 3, 4, 5, 5]);
-  const [types, setTypes] = useState<string>("");
-  const [ticket, setTicket] = useState<string>("");
-  const [date, setDate] = useState<string>("");
-  const [time, setTime] = useState<string>("");
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(2);
+  const [ratings, setRatings] = useState<number[]>([5, 3, 4, 5, 5])
+  const [types, setTypes] = useState<string>('')
+  const [ticket, setTicket] = useState<string>('')
+  const [date, setDate] = useState<string>('')
+  const [time, setTime] = useState<string>('')
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [limit, setLimit] = useState<number>(2)
 
-  const [isShareService, setIsShareService] = useState<boolean>(false);
-  const [coordinate, setCoordinate] = useState<ILocation>();
-  const [bookingData, setBookingData] = useState<IBooking | null>(null);
+  const [isShareService, setIsShareService] = useState<boolean>(false)
+  const [coordinate, setCoordinate] = useState<ILocation>()
+  const [bookingData, setBookingData] = useState<IBooking | null>(null)
 
-  query["serviceId"] = id;
-  query["page"] = currentPage;
-  query["limit"] = limit;
+  query['serviceId'] = id
+  query['page'] = currentPage
+  query['limit'] = limit
   const { data: reviewsData, isLoading: reviewLoading } = useGetAllReviewQuery({
     ...query,
-  });
+  })
 
-  const user = useAppSelector((state) => state.user?.data) as any;
-  const router = useRouter();
+  const user = useAppSelector((state) => state.user?.data) as any
+  const router = useRouter()
 
   // add service booking
   const handleServiceBooking = async () => {
     if (!user?.id) {
-      router.push("/login");
-      return;
+      router.push('/login')
+      return
     }
 
     if (!date || !time || !ticket || !types) {
-      return;
+      return
     }
 
     // const { date, time } = getTimeAndDate();
@@ -117,19 +117,19 @@ const ServiceDetails = ({ service }: IServiceProps) => {
       ticket,
       userId: user?.id,
       serviceId: id as string,
-    };
+    }
 
     try {
-      const res: any = await createBooking(data);
+      const res: any = await createBooking(data)
       if (res?.data?.id) {
-        message.success("Booking created successfully.");
+        message.success('Booking created successfully.')
         // router?.push("/dashboard/user/bookings");
-        setBookingData(res?.data);
+        setBookingData(res?.data)
       }
     } catch (error) {
-      message.error("Failed to booking.");
+      message.error('Failed to booking.')
     }
-  };
+  }
 
   // add review
   const handleAddReview: SubmitHandler<any> = async (data: any, reset: any) => {
@@ -140,49 +140,49 @@ const ServiceDetails = ({ service }: IServiceProps) => {
       ratings: ratings,
       userId: user?.id ?? undefined,
       serviceId: id as string,
-    };
+    }
 
     try {
-      const res: any = await createReview(reviewData);
+      const res: any = await createReview(reviewData)
       if (res?.data?.id) {
-        message.success("Review added successfully.");
+        message.success('Review added successfully.')
       }
       if (res?.error) {
-        message.error(res.error?.data?.message);
+        message.error(res.error?.data?.message)
       }
     } catch (error) {
-      message.error("Failed to add review.");
+      message.error('Failed to add review.')
     } finally {
-      reset();
+      reset()
     }
-  };
+  }
 
   const handleRateChange = (value: number, index: number) => {
-    const newRatings = [...ratings];
-    newRatings[index] = value;
-    setRatings(newRatings);
-  };
+    const newRatings = [...ratings]
+    newRatings[index] = value
+    setRatings(newRatings)
+  }
 
-  const onChange: PaginationProps["onChange"] = (page) => {
-    setCurrentPage(page);
-  };
+  const onChange: PaginationProps['onChange'] = (page) => {
+    setCurrentPage(page)
+  }
 
   useEffect(() => {
     const handleGetCoordinate = async () => {
-      const res: any = await getCoordinates(service?.location);
+      const res: any = await getCoordinates(service?.location)
       if (res) {
-        setCoordinate(res);
+        setCoordinate(res)
       }
-    };
+    }
 
-    service?.location && handleGetCoordinate();
-  }, [service]);
+    service?.location && handleGetCoordinate()
+  }, [service])
 
   return (
     <>
       {service?.id ? (
         <div className="">
-          <Link href={"/message"}>
+          <Link href={'/message'}>
             <FloatButton
               shape="circle"
               type="primary"
@@ -221,7 +221,7 @@ const ServiceDetails = ({ service }: IServiceProps) => {
             </motion.div>
           </div>
 
-          {service?.status === "upcoming" && (
+          {service?.status === 'upcoming' && (
             <div className="absolute inset-x-0 top-1/4 m-auto text-center h-32]">
               <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl text-green-400 text-center capitalize">
                 {service?.status}
@@ -240,8 +240,8 @@ const ServiceDetails = ({ service }: IServiceProps) => {
                   <p>
                     <span className="text-xl text-green-400 font-extrabold tracking-widest">
                       ${service?.price}
-                    </span>{" "}
-                    /{" "}
+                    </span>{' '}
+                    /{' '}
                     <span className="text-gray-500 tracking-widest">
                       Per person
                     </span>
@@ -270,7 +270,7 @@ const ServiceDetails = ({ service }: IServiceProps) => {
 
             <div className="max-w-[1200px] w-full mx-auto px-4 flex items-center justify-between py-6">
               <span className="flex items-center gap-3">
-                <BiSolidTimeFive size={16} color="#09ea4c" />
+                <BiSolidTimeFive size={16} color="#FFD20A" />
                 <p>Posted {timeAgo(service?.createdAt)}</p>
               </span>
               <span>
@@ -341,7 +341,7 @@ const ServiceDetails = ({ service }: IServiceProps) => {
                   <Button
                     type="primary"
                     onClick={handleServiceBooking}
-                    disabled={service?.status === "upcoming" || !user?.id}
+                    disabled={service?.status === 'upcoming' || !user?.id}
                     loading={bookingCreateLoading}
                     className="w-full"
                     size="large"
@@ -349,7 +349,7 @@ const ServiceDetails = ({ service }: IServiceProps) => {
                     <span className="text-xl font-bold">Booking Now</span>
                   </Button>
                 ) : (
-                  <Link href={"/login"}>
+                  <Link href={'/login'}>
                     <Button
                       type="primary"
                       ghost
@@ -471,7 +471,7 @@ const ServiceDetails = ({ service }: IServiceProps) => {
                   htmlType="submit"
                   size="large"
                   loading={addReviewLoading}
-                  disabled={service?.status === "upcoming"}
+                  disabled={service?.status === 'upcoming'}
                   className="my-6"
                 >
                   <span className="font-bold text-xl uppercase">
@@ -484,7 +484,7 @@ const ServiceDetails = ({ service }: IServiceProps) => {
 
           {/* Related service  */}
           <section className="max-w-[1200px] mx-auto px-4 py-8 md:py-12">
-            <h1 className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest">
+            <h1 className="font-bold text-3xl md:uppercase text-[#FFD20A] tracking-widest">
               Suggested for you
             </h1>
 
@@ -508,7 +508,7 @@ const ServiceDetails = ({ service }: IServiceProps) => {
         </h1>
       )}
     </>
-  );
-};
+  )
+}
 
-export default ServiceDetails;
+export default ServiceDetails

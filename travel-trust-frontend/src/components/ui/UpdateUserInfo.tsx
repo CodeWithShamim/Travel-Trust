@@ -1,24 +1,24 @@
-import EditModal from "./EditModal";
-import Form from "../forms/Form";
-import FormInput from "../forms/FormInput";
-import { IUser } from "@/types";
-import { ProfileImageUpload } from "@/views/Profile";
-import CustomSelect from "./CustomSelect";
-import { Button } from "antd";
+import EditModal from './EditModal'
+import Form from '../forms/Form'
+import FormInput from '../forms/FormInput'
+import { IUser } from '@/types'
+import { ProfileImageUpload } from '@/views/Profile'
+import CustomSelect from './CustomSelect'
+import { Button } from 'antd'
 
 interface IUpdateUserInfo {
-  user: IUser | null;
-  gender: "Male" | "Female" | "Custom" | string;
-  age: string;
-  showEditModal: boolean;
+  user: IUser | null
+  gender: 'Male' | 'Female' | 'Custom' | string
+  age: string
+  showEditModal: boolean
 
-  isLoading: boolean;
-  uploadLoading: boolean;
-  setShowEditModal: (data: boolean) => void;
-  setGender: (data: string) => void;
-  setAge: (data: string) => void;
-  handleProfileUpdate: (data: any) => void;
-  handleUpload: any;
+  isLoading: boolean
+  uploadLoading: boolean
+  setShowEditModal: (data: boolean) => void
+  setGender: (data: string) => void
+  setAge: (data: string) => void
+  handleProfileUpdate: (data: any) => void
+  handleUpload: any
 }
 
 const UpdateUserInfo = ({
@@ -85,9 +85,9 @@ const UpdateUserInfo = ({
               placeholder="Gender"
               onChange={setGender}
               value={gender ?? user?.gender ?? null}
-              optionsValue={["Male", "Female", "Custom"]}
+              optionsValue={['Male', 'Female', 'Custom']}
               style={{
-                border: "1px solid #09ea4c",
+                border: '1px solid #FFD20A',
               }}
             />
             <CustomSelect
@@ -96,7 +96,7 @@ const UpdateUserInfo = ({
               value={age ?? user?.age ?? null}
               optionsValue={[20, 21, 22, 23, 24, 25, 26]}
               style={{
-                border: "1px solid #09ea4c",
+                border: '1px solid #FFD20A',
               }}
             />
           </div>
@@ -112,7 +112,7 @@ const UpdateUserInfo = ({
         </div>
       </Form>
     </EditModal>
-  );
-};
+  )
+}
 
-export default UpdateUserInfo;
+export default UpdateUserInfo

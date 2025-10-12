@@ -2,29 +2,29 @@ import {
   clusterCountLayer,
   clusterLayer,
   unclusteredPointLayer,
-} from "@/constants/map";
-import { config } from "@/helpers/config/envConfig";
-import { ILocation } from "@/types";
-import { Button } from "antd";
-import React, { useCallback, useState } from "react";
-import Map, { Layer, Marker, Source } from "react-map-gl";
+} from '@/constants/map'
+import { config } from '@/helpers/config/envConfig'
+import { ILocation } from '@/types'
+import { Button } from 'antd'
+import React, { useCallback, useState } from 'react'
+import Map, { Layer, Marker, Source } from 'react-map-gl'
 
 interface MapContainerProps {
-  location?: ILocation;
-  zoom?: number;
+  location?: ILocation
+  zoom?: number
 }
 
 const locationData = {
   latitude: 41.902782,
   longitude: 12.496366,
-};
+}
 
 const MapView = ({ location = locationData, zoom }: MapContainerProps) => {
-  const [isSatelliteMode, setIsSatelliteMode] = useState<boolean>(false);
+  const [isSatelliteMode, setIsSatelliteMode] = useState<boolean>(false)
 
   const mapStyle = `mapbox://styles/mapbox/${
-    isSatelliteMode ? "satellite-streets" : "streets"
-  }-v11`;
+    isSatelliteMode ? 'satellite-streets' : 'streets'
+  }-v11`
 
   const [settings, setSettings] = useState({
     scrollZoom: true,
@@ -39,7 +39,7 @@ const MapView = ({ location = locationData, zoom }: MapContainerProps) => {
     maxZoom: 20,
     minPitch: 0,
     maxPitch: 85,
-  });
+  })
 
   // const updateSettings = useCallback(
   //   (name: string, value: string) =>
@@ -55,7 +55,7 @@ const MapView = ({ location = locationData, zoom }: MapContainerProps) => {
     zoom: zoom || 0,
     bearing: 0,
     pitch: 50,
-  };
+  }
 
   return (
     <div className="relative" aria-label="map container">
@@ -80,18 +80,20 @@ const MapView = ({ location = locationData, zoom }: MapContainerProps) => {
           <Layer {...unclusteredPointLayer} />
         </Source>
       </Map>
-      <Button
-        onClick={() => setIsSatelliteMode(!isSatelliteMode)}
-        type="primary"
-        className="pb-4 rounded-none absolute bottom-0 right-0"
-        ghost={isSatelliteMode}
-      >
-        <span className="text-[#303030] hover:text-white font-semibold">
-          {isSatelliteMode ? "Normal Mode" : "Satellite Mode"}
-        </span>
-      </Button>
-    </div>
-  );
-};
 
-export default MapView;
+      <span className="pb-4 rounded-none absolute bottom-0 right-0">
+        <Button
+          onClick={() => setIsSatelliteMode(!isSatelliteMode)}
+          type="primary"
+          ghost={isSatelliteMode}
+        >
+          <span className="text-[#303030] hover:text-white font-semibold">
+            {isSatelliteMode ? 'Normal Mode' : 'Satellite Mode'}
+          </span>
+        </Button>
+      </span>
+    </div>
+  )
+}
+
+export default MapView

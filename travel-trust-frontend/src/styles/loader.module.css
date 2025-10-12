@@ -16,13 +16,13 @@
 .loader1:before {
     animation: ball1 1s infinite;
     background-color: #ff3d00;
-    box-shadow: 30px 0 0 #09ea4c;
+    box-shadow: 30px 0 0 #FFD20A;
     margin-bottom: 10px;
 }
 
 .loader1:after {
     animation: ball2 1s infinite;
-    background-color: #09ea4c;
+    background-color: #FFD20A;
     box-shadow: 30px 0 0 #ff3d00;
 }
 
@@ -46,7 +46,7 @@
     }
 
     50% {
-        box-shadow: 0 0 0 #09ea4c;
+        box-shadow: 0 0 0 #FFD20A;
         margin-bottom: 0;
         transform: translate(15px, 15px);
     }
@@ -63,7 +63,7 @@
     }
 
     50% {
-        box-shadow: 0 0 0 #09ea4c;
+        box-shadow: 0 0 0 #FFD20A;
         margin-top: -20px;
         transform: translate(15px, 15px);
     }

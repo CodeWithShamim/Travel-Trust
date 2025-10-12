@@ -1,17 +1,18 @@
-import Providers from "@/lib/Providers";
-import "./globals.css";
-import type { Metadata } from "next";
-import dynamic from "next/dynamic";
-const ProgressBar = dynamic(() => import("@/components/common/ProgressBar"));
+import Providers from '@/lib/Providers'
+import 'antd/dist/reset.css'
+import './globals.css'
+import type { Metadata } from 'next'
+import dynamic from 'next/dynamic'
+const ProgressBar = dynamic(() => import('@/components/common/ProgressBar'))
 
 export const metadata: Metadata = {
-  title: "Travel Trust Agency Website",
-};
+  title: 'Travel Trust Agency Website',
+}
 
 export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <Providers>
@@ -23,5 +24,5 @@ export default async function RootLayout({
         </body>
       </html>
     </Providers>
-  );
+  )
 }

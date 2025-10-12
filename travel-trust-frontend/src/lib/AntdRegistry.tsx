@@ -1,47 +1,39 @@
-"use client";
+'use client'
 
-import React from "react";
-import { createCache, extractStyle, StyleProvider } from "@ant-design/cssinjs";
-import type Entity from "@ant-design/cssinjs/es/Cache";
-import { useServerInsertedHTML } from "next/navigation";
-import { ConfigProvider } from "antd";
+import React from 'react'
+import { createCache, extractStyle, StyleProvider } from '@ant-design/cssinjs'
+import type Entity from '@ant-design/cssinjs/es/Cache'
+import { useServerInsertedHTML } from 'next/navigation'
+import { ConfigProvider, theme } from 'antd'
 
 const StyledComponentsRegistry = ({ children }: React.PropsWithChildren) => {
-  const cache = React.useMemo<Entity>(() => createCache(), []);
+  // ✅ Create Ant Design cache
+  const cache = React.useMemo<Entity>(() => createCache(), [])
+
+  // ✅ Inject Ant Design CSS during SSR
   useServerInsertedHTML(() => (
     <style
       id="antd"
       dangerouslySetInnerHTML={{ __html: extractStyle(cache, true) }}
     />
-  ));
+  ))
+
   return (
-    <StyleProvider cache={cache}>
+    <StyleProvider cache={cache} hashPriority="high">
       <ConfigProvider
         theme={{
+          hashed: false, // ✅ Important: disables hashed classNames (enables Tailwind to override)
           token: {
-            colorPrimary: "#09ea4c",
+            colorPrimary: '#FFD20A',
+            borderRadius: 6,
           },
+          algorithm: theme.defaultAlgorithm,
           components: {
-            // Button: {
-            //   colorPrimary: "#09ea4c",
-            //   algorithm: true,
-            // },
-            // Input: {
-            //   colorPrimary: "#09ea4c",
-            //   algorithm: true,
-            // },
-            // FloatButton: {
-            //   colorPrimary: "#09ea4c",
-            //   algorithm: true,
-            // },
-            // Pagination: {
-            //   itemBg: "#09ea4c",
-            // },
             Menu: {
-              itemHoverBg: "#c1ffd2",
-              itemActiveBg: "#09ea4c",
-              itemSelectedBg: "#09ea4c",
-              itemSelectedColor: "#FFF",
+              itemHoverBg: '#c1ffd2',
+              itemActiveBg: '#FFD20A',
+              itemSelectedBg: '#FFD20A',
+              itemSelectedColor: '#fff',
             },
           },
         }}
@@ -49,7 +41,7 @@ const StyledComponentsRegistry = ({ children }: React.PropsWithChildren) => {
         {children}
       </ConfigProvider>
     </StyleProvider>
-  );
-};
+  )
+}
 
-export default StyledComponentsRegistry;
+export default StyledComponentsRegistry

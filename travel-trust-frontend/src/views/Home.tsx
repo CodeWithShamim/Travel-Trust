@@ -1,57 +1,57 @@
-"use client";
+'use client'
 
-import ServiceCardSkeleton from "@/components/skeletons/ServiceCardSkeleton";
-import SearchBar from "@/components/ui/SearchBar";
-import { newses } from "@/data/news";
-import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
-import { IService } from "@/types";
-import { Button, Carousel, Divider, FloatButton, Modal, Spin } from "antd";
-import Image from "next/image";
-import { useState } from "react";
-import styles from "@/styles/home.module.css";
+import ServiceCardSkeleton from '@/components/skeletons/ServiceCardSkeleton'
+import SearchBar from '@/components/ui/SearchBar'
+import { newses } from '@/data/news'
+import { useGetAllServiceQuery } from '@/redux/api/serviceApi'
+import { IService } from '@/types'
+import { Button, Carousel, Divider, FloatButton, Modal, Spin } from 'antd'
+import Image from 'next/image'
+import { useState } from 'react'
+import styles from '@/styles/home.module.css'
 
-import { motion } from "framer-motion";
-import { fadeIn, imageVariants, textVariant } from "@/utils/motion";
-import { UpOutlined } from "@ant-design/icons";
+import { motion } from 'framer-motion'
+import { fadeIn, imageVariants, textVariant } from '@/utils/motion'
+import { UpOutlined } from '@ant-design/icons'
 
-import { IoCloseCircleOutline } from "react-icons/io5";
-import { galleryItems } from "@/data/common";
-import { ServiceStatus } from "@/constants/service";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import dynamic from "next/dynamic";
-import { useAppSelector } from "@/redux/hooks";
+import { IoCloseCircleOutline } from 'react-icons/io5'
+import { galleryItems } from '@/data/common'
+import { ServiceStatus } from '@/constants/service'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import dynamic from 'next/dynamic'
+import { useAppSelector } from '@/redux/hooks'
 
-const MapView = dynamic(() => import("@/components/ui/MapView"));
-const VideoPlayer = dynamic(() => import("@/components/ui/VideoPlayer"));
-const ReviewSlider = dynamic(() => import("@/components/ui/ReviewSlider"));
-const ServiceCard = dynamic(() => import("@/components/ui/ServiceCard"));
-const ImageGallery = dynamic(() => import("@/components/ui/ImageGallery"));
-const NewsCard = dynamic(() => import("@/components/ui/NewsCard"));
+const MapView = dynamic(() => import('@/components/ui/MapView'))
+const VideoPlayer = dynamic(() => import('@/components/ui/VideoPlayer'))
+const ReviewSlider = dynamic(() => import('@/components/ui/ReviewSlider'))
+const ServiceCard = dynamic(() => import('@/components/ui/ServiceCard'))
+const ImageGallery = dynamic(() => import('@/components/ui/ImageGallery'))
+const NewsCard = dynamic(() => import('@/components/ui/NewsCard'))
 
 const SponsorCarousel = dynamic(
-  () => import("@/components/ui/SponsorCarousel"),
+  () => import('@/components/ui/SponsorCarousel'),
   { ssr: false }
-);
+)
 
 const HomePage = () => {
   const { data: availableService, isLoading } = useGetAllServiceQuery({
     status: ServiceStatus[0],
     limit: 8,
-  });
+  })
 
   const { data: upcomingService, isLoading: isLoading2 } =
     useGetAllServiceQuery({
       status: ServiceStatus[1],
       limit: 5,
-    });
+    })
 
-  const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false);
-  const [onReady, setOnReady] = useState<boolean>(false);
-  const router = useRouter();
-  const { dictionaries } = useAppSelector((state) => state.i18n);
+  const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false)
+  const [onReady, setOnReady] = useState<boolean>(false)
+  const router = useRouter()
+  const { dictionaries } = useAppSelector((state) => state.i18n)
 
-  const home = dictionaries?.home;
+  const home = dictionaries?.home
 
   return (
     <div className="w-full">
@@ -65,7 +65,6 @@ const HomePage = () => {
           icon={<UpOutlined />}
         />
       </div>
-
       {/* Hero section  */}
       <div className="relative top-[-65px] left-0 right-0">
         <Carousel
@@ -100,7 +99,7 @@ const HomePage = () => {
           <motion.h1
             initial="hidden"
             animate="show"
-            variants={fadeIn("down", "tween", 0, 1.5)}
+            variants={fadeIn('down', 'tween', 0, 1.5)}
             className="custom-head-text px-4 text-6xl lg:text-8xl tracking-wide text-white font-extrabold uppercase text-center drop-shadow-md"
           >
             {home?.heading} <span className="fancy">{home?.headingSide}</span>
@@ -108,7 +107,7 @@ const HomePage = () => {
           <motion.p
             initial="hidden"
             animate="show"
-            variants={fadeIn("up", "tween", 0, 1.5)}
+            variants={fadeIn('up', 'tween', 0, 1.5)}
             className="custom-sub-text hero-banner__stroked-title text-center text-white text-2xl lg:text-3xl tracking-[1px] capitalize font-semibold pt-10"
           >
             {home?.subHeading}
@@ -119,19 +118,17 @@ const HomePage = () => {
           <SearchBar />
         </motion.div>
       </div>
-
       {/* sponsor carousel  */}
       <div className="max-w-[1200px] mx-auto md:px-4 pb-5 mt-[-40px] lg:mt-0 md:pb-14 lg:pb-20">
         <SponsorCarousel />
       </div>
-
       {/* services  */}
       <motion.div className="max-w-[1200px] mx-auto px-4">
         <motion.h1
           initial="hidden"
           whileInView="show"
           variants={textVariant(0.4)}
-          className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest"
+          className="font-bold text-3xl md:uppercase text-[#FFD20A] tracking-widest"
         >
           {home?.service?.available}
         </motion.h1>
@@ -159,7 +156,7 @@ const HomePage = () => {
             initial="hidden"
             whileInView="show"
             variants={textVariant(0.4)}
-            className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest"
+            className="font-bold text-3xl md:uppercase text-[#FFD20A] tracking-widest"
           >
             {home?.service?.upcoming}
           </motion.h1>
@@ -182,10 +179,9 @@ const HomePage = () => {
           </div>
         </div>
       </motion.div>
-
       {/* videos  */}
       <motion.div
-        className={`${styles["background-image"]} flex flex-col items-center justify-center w-full gap-4 text-center px-4 mt-12 md:mt-16 lg:mt-20`}
+        className={`${styles['background-image']} flex flex-col items-center justify-center w-full gap-4 text-center px-4 mt-12 md:mt-16 lg:mt-20`}
         // style={{ scale: scrollYProgress }}
       >
         <motion.span
@@ -196,7 +192,7 @@ const HomePage = () => {
           className="blinking-animation"
         >
           <Image
-            src={require("@/assets/play.webp")}
+            src={require('@/assets/play.webp')}
             width={100}
             height={100}
             objectFit="cover"
@@ -212,30 +208,38 @@ const HomePage = () => {
         </h1>
         <p className="text-white text-lg uppercase">{home?.videoPlaySubText}</p>
       </motion.div>
+      z
       {isVideoPlay && (
         <Modal
           open={isVideoPlay}
-          onCancel={() => setIsVideoPlay(false)}
+          onCancel={() => {
+            setIsVideoPlay(false)
+            setOnReady(false)
+          }}
           closeIcon={
             <IoCloseCircleOutline size={20} className="text-green-400" />
           }
-          className="w-[100%] md:w-[80%] lg:w-[70%] h-[20rem] lg:h-[35rem] bg-[#000]"
-          style={{ position: "relative" }}
+          className="!w-[80%] !md:w-[50%] !lg:w-[60%] !h-[20rem] !lg:h-[45rem] bg-[#000]"
+          style={{ position: 'relative' }}
           footer={null}
         >
-          <div className="w-full h-[20rem] lg:h-[35rem] absolute inset-0">
-            <VideoPlayer onReady={() => setOnReady(true)} />
-          </div>
-
           {onReady || (
             <div className="w-full h-[20rem] lg:h-[35rem] text-center text-white bg-black absolute inset-0 flex items-center justify-center">
-              <Spin />
+              {/* <Spin /> */}
               <span className="pl-2">Loading video...</span>
             </div>
           )}
+
+          <div className="w-full h-[30rem] lg:h-[35rem] absolute inset-0">
+            <VideoPlayer
+              onReady={() => {
+                setOnReady(true)
+                setIsVideoPlay(true)
+              }}
+            />
+          </div>
         </Modal>
       )}
-
       {/* news  */}
       <div className="max-w-[1200px] mx-auto px-4 my-14 md:my-20 lg:my-24">
         <Divider
@@ -247,7 +251,7 @@ const HomePage = () => {
             initial="hidden"
             whileInView="show"
             variants={textVariant(0.4)}
-            className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest"
+            className="font-bold text-3xl md:uppercase text-[#FFD20A] tracking-widest"
           >
             {home?.latestNews}
           </motion.h1>
@@ -259,7 +263,6 @@ const HomePage = () => {
           ))}
         </div>
       </div>
-
       {/* gallery  */}
       <div className="max-w-[1200px] mx-auto px-4 pb-10 md:pb-14 lg:pb-20">
         <Divider
@@ -271,7 +274,7 @@ const HomePage = () => {
             initial="hidden"
             whileInView="show"
             variants={textVariant(0.4)}
-            className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest"
+            className="font-bold text-3xl md:uppercase text-[#FFD20A] tracking-widest"
           >
             {home?.photoGallery}
           </motion.h1>
@@ -279,26 +282,25 @@ const HomePage = () => {
 
         <div className="galleryLayout rounded-xl">
           {galleryItems?.map((item: { id: number; url: string }) => {
-            return <ImageGallery key={item.id} item={item} />;
+            return <ImageGallery key={item.id} item={item} />
           })}
         </div>
       </div>
-
       {/* section  */}
       <div
-        className={`${styles["background-image2"]} flex flex-col  my-14 md:my-16 lg:my-24 items-center justify-center w-full gap-4 text-center px-4`}
+        className={`${styles['background-image2']} flex flex-col  my-14 md:my-16 lg:my-24 items-center justify-center w-full gap-4 text-center px-4`}
       >
         <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold shadow-2xl text-white">
           {home?.bookTourText?.text}
         </h1>
         <p className="text-white text-lg">{home?.bookTourText?.subText}</p>
 
-        <Link href={"/service/search"} className="mt-6">
+        <Link href={'/service/search'} className="mt-6">
           <Button
             type="primary"
-            className="w-48 rounded-full hover:bg-transparent hover:border-[#09ea4c] transition duration-300 ease-in-out"
+            className="w-48 rounded-full hover:bg-transparent hover:border-[#FFD20A] transition duration-300 ease-in-out"
             size="large"
-            onClick={() => router.push("")}
+            onClick={() => router.push('')}
           >
             <span className="font-bold text-[#303030] hover:text-white">
               {home?.bookTourText?.btnText}
@@ -306,7 +308,6 @@ const HomePage = () => {
           </Button>
         </Link>
       </div>
-
       {/* reviews  */}
       <div className="bg-[#F7F7F7] px-4">
         <div className="max-w-[1200px] m-auto pt-12">
@@ -319,7 +320,7 @@ const HomePage = () => {
               initial="hidden"
               whileInView="show"
               variants={textVariant(0.4)}
-              className="font-bold text-3xl md:uppercase text-[#34d364] tracking-widest"
+              className="font-bold text-3xl md:uppercase text-[#FFD20A] tracking-widest"
             >
               {home?.customerReview}
             </motion.h1>
@@ -328,14 +329,13 @@ const HomePage = () => {
 
         <ReviewSlider />
       </div>
-
       {/* maps  */}
       <div className="">
         <MapView />
       </div>
-      <div className={`${styles["background-image3"]} hidden md:block`}></div>
+      <div className={`${styles['background-image3']} hidden md:block`}></div>
     </div>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

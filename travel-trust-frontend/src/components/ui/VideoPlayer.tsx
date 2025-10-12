@@ -1,21 +1,21 @@
-import { config } from "@/helpers/config/envConfig";
-import ReactPlayer from "react-player";
+import { config } from '@/helpers/config/envConfig'
+import ReactPlayer from 'react-player'
 
 interface IVideoPlayer {
-  onReady: () => void;
+  onReady: () => void
 }
 
 const VideoPlayer = ({ onReady }: IVideoPlayer) => {
   return (
     <ReactPlayer
       playing
-      url={config.yt_video_url}
+      src={config.yt_video_url}
       controls
       width="100%"
       height="100%"
       onReady={onReady}
     />
-  );
-};
+  )
+}
 
-export default VideoPlayer;
+export default VideoPlayer

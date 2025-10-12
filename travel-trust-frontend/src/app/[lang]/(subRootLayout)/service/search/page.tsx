@@ -1,72 +1,72 @@
-"use client";
+'use client'
 
-import Loading from "@/app/loading";
-import FilterSideBar from "@/components/ui/FilterSideBar";
-import Loader from "@/components/ui/Loader";
-import ServiceCard from "@/components/ui/ServiceCard";
-import { useGetAllServiceQuery } from "@/redux/api/serviceApi";
-import { useAppSelector, useDebounced } from "@/redux/hooks";
-import { IService } from "@/types";
-import { Button, Drawer, Input, Select } from "antd";
-import Image from "next/image";
-import { useState } from "react";
-import { AiOutlineSearch } from "react-icons/ai";
-import { BiFilter, BiReset } from "react-icons/bi";
+import Loading from '@/app/loading'
+import FilterSideBar from '@/components/ui/FilterSideBar'
+import Loader from '@/components/ui/Loader'
+import ServiceCard from '@/components/ui/ServiceCard'
+import { useGetAllServiceQuery } from '@/redux/api/serviceApi'
+import { useAppSelector, useDebounced } from '@/redux/hooks'
+import { IService } from '@/types'
+import { Button, Drawer, Input, Select } from 'antd'
+import Image from 'next/image'
+import { useState } from 'react'
+import { AiOutlineSearch } from 'react-icons/ai'
+import { BiFilter, BiReset } from 'react-icons/bi'
 
 const SearchPage = () => {
-  const query: any = { limit: 12 };
-  const searchData = useAppSelector((state) => state.service?.search) as any;
+  const query: any = { limit: 12 }
+  const searchData = useAppSelector((state) => state.service?.search) as any
 
-  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false)
 
-  const [status, setStatus] = useState<string>("");
-  const [prices, setPrices] = useState<number[]>([]);
-  const [location, setLocation] = useState<string>(searchData?.destination);
-  const [category, setCategory] = useState<string>(searchData?.category);
-  const [searchTerm, setSearchTerm] = useState<string>(searchData?.from);
-  const [sortBy, setSortBy] = useState<string>("");
+  const [status, setStatus] = useState<string>('')
+  const [prices, setPrices] = useState<number[]>([])
+  const [location, setLocation] = useState<string>(searchData?.destination)
+  const [category, setCategory] = useState<string>(searchData?.category)
+  const [searchTerm, setSearchTerm] = useState<string>(searchData?.from)
+  const [sortBy, setSortBy] = useState<string>('')
 
   if (status) {
-    query["status"] = status;
+    query['status'] = status
   }
   if (prices[0]) {
-    query["minPrice"] = prices[0];
+    query['minPrice'] = prices[0]
   }
   if (prices[1]) {
-    query["maxPrice"] = prices[1];
+    query['maxPrice'] = prices[1]
   }
   if (location) {
-    query["location"] = location;
+    query['location'] = location
   }
   if (category) {
-    query["category"] = category;
+    query['category'] = category
   }
   if (sortBy) {
-    query["sortBy"] = "price";
-    query["sortOrder"] = sortBy === "lh" ? "asc" : "desc";
+    query['sortBy'] = 'price'
+    query['sortOrder'] = sortBy === 'lh' ? 'asc' : 'desc'
   }
 
   const debouncedTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
-  });
+  })
 
   if (!!debouncedTerm) {
-    query["searchTerm"] = debouncedTerm;
+    query['searchTerm'] = debouncedTerm
   }
 
-  const { data, isLoading, error } = useGetAllServiceQuery({ ...query });
+  const { data, isLoading, error } = useGetAllServiceQuery({ ...query })
 
-  const services = data?.services as any;
+  const services = data?.services as any
 
   const handleReset = () => {
-    setStatus("");
-    setPrices([]);
-    setLocation("");
-    setCategory("");
-    setSearchTerm("");
-    setSortBy("");
-  };
+    setStatus('')
+    setPrices([])
+    setLocation('')
+    setCategory('')
+    setSearchTerm('')
+    setSortBy('')
+  }
 
   return (
     <div className="max-w-[1200px] mx-auto p-4 flex items-start flex-row">
@@ -93,7 +93,7 @@ const SearchPage = () => {
               className="text-black mr-6 lg:mr-0 h-10 lg:h-8 rounded-md border-neutral-200"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              prefix={<AiOutlineSearch size={18} className="text-[#09ea4c]" />}
+              prefix={<AiOutlineSearch size={18} className="text-[#FFD20A]" />}
             />
 
             <div className="lg:hidden">
@@ -129,9 +129,9 @@ const SearchPage = () => {
                 style={{ width: 160 }}
                 onChange={(value: string) => setSortBy(value)}
                 options={[
-                  { value: "", label: "Price >> Default" },
-                  { value: "lh", label: "Price >> Low to High" },
-                  { value: "hl", label: "Price >> High to Low" },
+                  { value: '', label: 'Price >> Default' },
+                  { value: 'lh', label: 'Price >> Low to High' },
+                  { value: 'hl', label: 'Price >> High to Low' },
                 ]}
               />
             </div>
@@ -158,7 +158,7 @@ const SearchPage = () => {
               <p>Please try another search</p>
             </div>
             <Image
-              src={require("@/assets/search-not-found.webp")}
+              src={require('@/assets/search-not-found.webp')}
               width={300}
               className="mt-4 px-4"
               alt="search not found"
@@ -184,7 +184,7 @@ const SearchPage = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SearchPage;
+export default SearchPage

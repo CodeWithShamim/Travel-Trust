@@ -48,7 +48,7 @@ const SearchBar = () => {
             placeholder={searchBar?.from}
             type="text"
             allowClear
-            bordered={false}
+            variant="borderless"
             style={{ width: '22%' }}
             className="text-black custom-input"
             value={from}
@@ -56,7 +56,7 @@ const SearchBar = () => {
           />
           <Select
             placeholder={searchBar?.destination}
-            bordered={false}
+            variant="borderless"
             style={{ width: '22%', color: '#000' }}
             onChange={(value) => setDestination(value)}
             className="text-black custom-select"
@@ -69,7 +69,7 @@ const SearchBar = () => {
           />
           <Select
             placeholder={searchBar?.category}
-            bordered={false}
+            variant="borderless"
             style={{ width: '22%', color: '#000' }}
             onChange={(value) => setCategory(value)}
             className="text-black custom-select"

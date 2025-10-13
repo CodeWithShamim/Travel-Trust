@@ -23,6 +23,7 @@ import { SignOut } from '@/utils/common'
 import DateTime from '../common/DateTime'
 import { FaPlane } from 'react-icons/fa'
 import LanguageSwitcher from './LanguageSwitcher'
+import WalletConnect from '../common/ConnectWallet'
 
 const { Header: HeaderLayout } = Layout
 
@@ -119,7 +120,7 @@ const Header = () => {
 
         <div className="flex gap-3 md:gap-4 items-center z-50">
           {/* icon  */}
-          <div className="flex gap-3 md:gap-4 items-center mt-2">
+          <div className="flex gap-3 md:gap-4 items-center justify-center mt-2">
             <Link href="/service/search" aria-label="service search">
               <AiOutlineSearch size={25} className="text-[#FFD20A]" />
             </Link>
@@ -160,25 +161,7 @@ const Header = () => {
             </Button>
           </Link>
 
-          <Dropdown
-            menu={{
-              items: headerItems({ user: data, signOut }),
-            }}
-            className="z-50 cursor-pointer"
-          >
-            <Space wrap size={16}>
-              <Avatar
-                src={data?.profileImage}
-                size="large"
-                style={{ backgroundColor: '#87d068' }}
-                icon={<UserOutlined />}
-              />
-            </Space>
-          </Dropdown>
-
-          <div className="hidden md:block">
-            <LanguageSwitcher />
-          </div>
+          <WalletConnect />
         </div>
       </motion.div>
     </HeaderLayout>

@@ -22,6 +22,7 @@ interface ServiceCardProps {
 }
 
 const ServiceCard = ({ service, loading, index = 0 }: ServiceCardProps) => {
+
   const { id, name, price, image, category, status } = service
   const cart = useAppSelector((state) => state.service.cart)
   const dispatch = useAppDispatch()

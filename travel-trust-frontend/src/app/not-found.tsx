@@ -1,12 +1,12 @@
-import Image from "next/image";
-import notFoundImage from "@/assets/404.webp";
-import Link from "next/link";
+import Image from 'next/image'
+import notFoundImage from '@/assets/404.webp'
+import Link from 'next/link'
 
 const NotFound = () => {
   return (
     <div className="flex flex-col lg:flex-row justify-center items-center min-h-screen">
       <h3 className="text-xl font-bold ">
-        Opps! Page not found <Link href={"/"}>Go Home</Link>
+        Opps! Page not found <Link href={'/'}>Go Home</Link>
       </h3>
       <Image
         src={notFoundImage}
@@ -15,7 +15,7 @@ const NotFound = () => {
         alt="not found image"
       />
     </div>
-  );
-};
+  )
+}
 
-export default NotFound;
+export default NotFound

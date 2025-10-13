@@ -13,14 +13,19 @@ import { motion } from 'framer-motion'
 import { useGetAllReviewQuery } from '@/redux/api/reviewApi'
 import { IReview } from '@/types'
 import { calculateAverateRating } from '@/utils/common'
+import { reviewItems } from '@/data/common'
 
 const ReviewSlider = () => {
   const query: any = {}
 
   query['limit'] = 5
-  const { data, isLoading } = useGetAllReviewQuery({
-    ...query,
-  })
+  // const { data, isLoading } = useGetAllReviewQuery({
+  //   ...query,
+  // })
+
+  const data: any = {
+    reviews: reviewItems,
+  }
 
   return (
     <motion.div

@@ -3,7 +3,7 @@
 import ServiceCardSkeleton from '@/components/skeletons/ServiceCardSkeleton'
 import SearchBar from '@/components/ui/SearchBar'
 import { newses } from '@/data/news'
-import { useGetAllServiceQuery } from '@/redux/api/serviceApi'
+import { useGetSingleServiceQuery } from '@/redux/api/serviceApi'
 import { IService } from '@/types'
 import { Button, Carousel, Divider, FloatButton, Modal, Spin } from 'antd'
 import Image from 'next/image'
@@ -35,16 +35,19 @@ const SponsorCarousel = dynamic(
 )
 
 const HomePage = () => {
-  const { data: availableService, isLoading } = useGetAllServiceQuery({
-    status: ServiceStatus[0],
-    limit: 8,
-  })
+  //   const { data: availableService, isLoading } = useGetSingleServiceQuery({
+  //     status: ServiceStatus[0],
+  //     limit: 8,
+  //   })
 
-  const { data: upcomingService, isLoading: isLoading2 } =
-    useGetAllServiceQuery({
-      status: ServiceStatus[1],
-      limit: 5,
-    })
+  //   const { data: upcomingService, isLoading: isLoading2 } =
+  //     useGetSingleServiceQuery({
+  //       status: ServiceStatus[1],
+  //       limit: 5,
+  //     })
+
+  const isLoading = false
+  const isLoading2 = false
 
   const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false)
   const [onReady, setOnReady] = useState<boolean>(false)
@@ -72,7 +75,7 @@ const HomePage = () => {
           autoplay={true}
           className="z-[-1] overflow-hidden bg-green-900"
         >
-          {[1, 2, 3]?.map((item: number) => (
+          {[1, 2, 3].map((item: number) => (
             <motion.div
               initial="hidden"
               animate="show"
@@ -139,14 +142,16 @@ const HomePage = () => {
               <ServiceCardSkeleton key={index} />
             ))}
 
-          {(serviceItems as any)?.map((service: IService, index: number) => (
-            <ServiceCard
-              key={service.id}
-              service={service}
-              loading={isLoading}
-              index={index}
-            />
-          ))}
+          {(serviceItems as any)?.services?.map(
+            (service: IService, index: number) => (
+              <ServiceCard
+                key={service.id}
+                service={service}
+                loading={isLoading}
+                index={index}
+              />
+            )
+          )}
         </div>
 
         <div className="mt-10 md:mt-14 lg:mt-20">
@@ -164,14 +169,16 @@ const HomePage = () => {
                 <ServiceCardSkeleton key={index} />
               ))}
 
-            {(serviceItems as any)?.map((service: IService, index: number) => (
-              <ServiceCard
-                key={service.id}
-                service={service}
-                loading={isLoading}
-                index={index}
-              />
-            ))}
+            {(serviceItems as any)?.services?.map(
+              (service: IService, index: number) => (
+                <ServiceCard
+                  key={service.id}
+                  service={service}
+                  loading={isLoading}
+                  index={index}
+                />
+              )
+            )}
           </div>
         </div>
       </motion.div>

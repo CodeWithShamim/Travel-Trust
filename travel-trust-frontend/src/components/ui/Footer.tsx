@@ -7,6 +7,7 @@ import { PhoneOutlined, MailOutlined, HomeOutlined } from '@ant-design/icons'
 import { footerLinks } from '@/data/common'
 import Link from 'next/link'
 import styles from '@/styles/footer.module.css'
+import LanguageSwitcher from './LanguageSwitcher'
 
 const items = [
   {
@@ -91,6 +92,10 @@ const Footer = () => {
               </Button>
             </div>
           </div>
+        </div>
+
+        <div className="hidden md:block">
+          <LanguageSwitcher />
         </div>
 
         <Divider style={{ backgroundColor: '#FFD20A' }}></Divider>

@@ -17,10 +17,7 @@ import {
   TimePicker,
   message,
 } from 'antd'
-import {
-  useGetAllServiceQuery,
-  useGetSingleServiceQuery,
-} from '@/redux/api/serviceApi'
+import { useGetSingleServiceQuery } from '@/redux/api/serviceApi'
 import { getCoordinates, getTimeAndDate, timeAgo } from '@/utils/common'
 import { getUserInfo } from '@/helpers/persist/user.persist'
 import { useCreatebookingMutation } from '@/redux/api/bookingApi'
@@ -50,6 +47,10 @@ import ShareService from '@/components/ui/ShareService'
 import MapView from '@/components/ui/MapView'
 import ServiceCard from '@/components/ui/ServiceCard'
 import PaymentModal from '@/components/common/PaymentModal'
+import { serviceItems } from '@/data/common'
+
+import { useAccount } from 'wagmi'
+import ReviewSlider from '@/components/ui/ReviewSlider'
 
 const { TextArea } = Input
 
@@ -63,6 +64,10 @@ const ServiceDetails = ({ service }: IServiceProps) => {
   const params = useParams()
   const id = params?.id
 
+  const { address } = useAccount()
+
+  // console.log({ address })
+
   const [createBooking, { isLoading: bookingCreateLoading }] =
     useCreatebookingMutation()
   const [createReview, { isLoading: addReviewLoading }] =
@@ -71,10 +76,9 @@ const ServiceDetails = ({ service }: IServiceProps) => {
   const serviceQuery: any = {}
   serviceQuery['limit'] = 4
   serviceQuery['sortOrder'] = 'asc'
-  const { data: suggestedService, isLoading: serviceLoading } =
-    useGetAllServiceQuery({
-      ...serviceQuery,
-    })
+  // const { data: suggestedService, isLoading: serviceLoading } = FFD20A({
+  //   ...serviceQuery,
+  // })
 
   const [ratings, setRatings] = useState<number[]>([5, 3, 4, 5, 5])
   const [types, setTypes] = useState<string>('')
@@ -167,16 +171,16 @@ const ServiceDetails = ({ service }: IServiceProps) => {
     setCurrentPage(page)
   }
 
-  useEffect(() => {
-    const handleGetCoordinate = async () => {
-      const res: any = await getCoordinates(service?.location)
-      if (res) {
-        setCoordinate(res)
-      }
-    }
+  // useEffect(() => {
+  //   const handleGetCoordinate = async () => {
+  //     const res: any = await getCoordinates(service?.location)
+  //     if (res) {
+  //       setCoordinate(res)
+  //     }
+  //   }
 
-    service?.location && handleGetCoordinate()
-  }, [service])
+  //   service?.location && handleGetCoordinate()
+  // }, [service])
 
   return (
     <>
@@ -191,12 +195,12 @@ const ServiceDetails = ({ service }: IServiceProps) => {
             />
           </Link>
 
-          <div>
+          {/* <div>
             <PaymentModal
               bookingData={bookingData}
               setBookingData={setBookingData}
             />
-          </div>
+          </div> */}
 
           <div className="overflow-hidden">
             <motion.div
@@ -319,15 +323,14 @@ const ServiceDetails = ({ service }: IServiceProps) => {
                 <DatePicker
                   format="YYYY-MM-DD"
                   className="text-black custom-picker bg-white border-none w-full py-5 rounded-xl"
-                  onChange={(date, currentDate) => setDate(currentDate)}
+                  onChange={(date, currentDate: any) => setDate(currentDate)}
                   inputReadOnly
                 />
                 <TimePicker
                   className="text-black custom-picker bg-white border-none w-full py-5 rounded-xl"
-                  onChange={(
-                    time: any,
-                    currentTime: React.SetStateAction<string>
-                  ) => setTime(currentTime)}
+                  onChange={(time: any, currentTime: any) =>
+                    setTime(currentTime)
+                  }
                   inputReadOnly
                 />
                 <CustomSelect
@@ -337,11 +340,11 @@ const ServiceDetails = ({ service }: IServiceProps) => {
                   optionsValue={TravelCategory}
                 />
 
-                {user?.id ? (
+                {address ? (
                   <Button
                     type="primary"
                     onClick={handleServiceBooking}
-                    disabled={service?.status === 'upcoming' || !user?.id}
+                    disabled={service?.status === 'upcoming'}
                     loading={bookingCreateLoading}
                     className="w-full"
                     size="large"
@@ -349,18 +352,11 @@ const ServiceDetails = ({ service }: IServiceProps) => {
                     <span className="text-xl font-bold">Booking Now</span>
                   </Button>
                 ) : (
-                  <Link href={'/login'}>
-                    <Button
-                      type="primary"
-                      ghost
-                      className="w-full"
-                      size="large"
-                    >
-                      <span className="font-bold text-red-500 capitalize">
-                        Please login for booking
-                      </span>
-                    </Button>
-                  </Link>
+                  <Button type="primary" ghost className="w-full" size="large">
+                    <span className="font-bold text-red-500 capitalize">
+                      Connect your wallet for booking
+                    </span>
+                  </Button>
                 )}
               </div>
             </div>
@@ -482,6 +478,10 @@ const ServiceDetails = ({ service }: IServiceProps) => {
             </div>
           </section>
 
+          <section>
+            <ReviewSlider />
+          </section>
+
           {/* Related service  */}
           <section className="max-w-[1200px] mx-auto px-4 py-8 md:py-12">
             <h1 className="font-bold text-3xl md:uppercase text-[#FFD20A] tracking-widest">
@@ -489,7 +489,7 @@ const ServiceDetails = ({ service }: IServiceProps) => {
             </h1>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 py-4 md:py-6 lg:py-10">
-              {(suggestedService as any)?.services?.map(
+              {(serviceItems as any)?.map(
                 (service: IService, index: number) => (
                   <ServiceCard
                     key={service.id}

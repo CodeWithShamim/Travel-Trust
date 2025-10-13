@@ -4,6 +4,7 @@ import Loading from '@/app/loading'
 import FilterSideBar from '@/components/ui/FilterSideBar'
 import Loader from '@/components/ui/Loader'
 import ServiceCard from '@/components/ui/ServiceCard'
+import { serviceItems } from '@/data/common'
 import { useGetAllServiceQuery } from '@/redux/api/serviceApi'
 import { useAppSelector, useDebounced } from '@/redux/hooks'
 import { IService } from '@/types'
@@ -57,7 +58,8 @@ const SearchPage = () => {
 
   const { data, isLoading, error } = useGetAllServiceQuery({ ...query })
 
-  const services = data?.services as any
+  // const services = data?.services as any
+  const services = serviceItems as any
 
   const handleReset = () => {
     setStatus('')

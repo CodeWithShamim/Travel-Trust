@@ -1,17 +1,17 @@
-import { DownCircleOutlined } from "@ant-design/icons";
-import React from "react";
-import { Select } from "antd";
-import { Controller } from "react-hook-form";
+import { DownCircleOutlined } from '@ant-design/icons'
+import React from 'react'
+import { Select } from 'antd'
+import { Controller } from 'react-hook-form'
 
 type ICustomSelect = {
-  placeholder?: string;
-  value?: string | null;
-  onChange: (value: string) => void;
-  optionsValue: any;
-  defaultValue?: string;
-  style?: any;
-  disabled?: boolean;
-};
+  placeholder?: string
+  value?: string | null
+  onChange: (value: string) => void
+  optionsValue: any
+  defaultValue?: string
+  style?: any
+  disabled?: boolean
+}
 
 const CustomSelect = ({
   placeholder,
@@ -25,7 +25,7 @@ const CustomSelect = ({
   return (
     <Select
       placeholder={placeholder}
-      bordered={false}
+      variant="borderless"
       style={{ ...style }}
       className="text-black bg-white custom-select w-full py-6 rounded-xl"
       defaultValue={defaultValue}
@@ -38,7 +38,7 @@ const CustomSelect = ({
         value: province,
       }))}
     />
-  );
-};
+  )
+}
 
-export default CustomSelect;
+export default CustomSelect

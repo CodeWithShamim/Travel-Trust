@@ -1,4 +1,3 @@
-import Register from "@/views/Register";
 import { baseApi } from "./baseApi";
 import { IMeta, IUser } from "@/types";
 import { USER_ROLE } from "@/constants/role";

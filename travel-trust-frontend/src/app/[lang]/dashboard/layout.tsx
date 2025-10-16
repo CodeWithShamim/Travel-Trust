@@ -1,12 +1,12 @@
-"use client";
-import Header from "@/components/ui/Header";
-import SideBar from "@/components/ui/SideBar";
-import { useAppSelector } from "@/redux/hooks";
-import { Layout } from "antd";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+'use client'
+import Header from '@/components/ui/Header'
+import SideBar from '@/components/ui/SideBar'
+import { useAppSelector, useAppToast } from '@/redux/hooks'
+import { Layout } from 'antd'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
-import "chart.js/auto";
+import 'chart.js/auto'
 import {
   Chart as ChartJS,
   LineController,
@@ -15,8 +15,10 @@ import {
   LinearScale,
   Title,
   CategoryScale,
-} from "chart.js";
-import BottomBar from "@/components/ui/BottomBar";
+} from 'chart.js'
+import BottomBar from '@/components/ui/BottomBar'
+import { useAccount } from 'wagmi'
+import toast from 'react-hot-toast'
 
 ChartJS.register(
   LineController,
@@ -25,21 +27,24 @@ ChartJS.register(
   LinearScale,
   Title,
   CategoryScale
-);
+)
 
-const { Content } = Layout;
+const { Content } = Layout
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const { data, isLoading } = useAppSelector((state) => state.user);
-  const user: any = data;
+  const { data, isLoading } = useAppSelector((state) => state.user)
+  const user: any = data
 
-  const router = useRouter();
+  const { isConnected } = useAccount()
+  const { showToast } = useAppToast()
+
+  const router = useRouter()
 
   useEffect(() => {
-    if (!user?.id && !isLoading) {
-      router.push("/login");
+    if (!isConnected) {
+      showToast('Connect wallet to access dashboard', 'error')
     }
-  }, [user, isLoading, router]);
+  }, [isConnected])
 
   return (
     <>
@@ -58,7 +63,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         </Content>
       </Layout>
     </>
-  );
-};
+  )
+}
 
-export default DashboardLayout;
+export default DashboardLayout

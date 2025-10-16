@@ -209,17 +209,6 @@ export const serviceItems = [
     status: "available",
   },
   {
-    id: "4d23e6a2-01b3-4b56-9124-7c33bdb0cf72",
-    name: "Luxury Spa Experience",
-    description:
-      "Relax and rejuvenate with a 3-hour luxury spa package including aromatherapy and massage.",
-    price: 200.0,
-    image: "https://images.unsplash.com/photo-1587019153369-147831c5c81b",
-    location: "Bali, Indonesia",
-    category: "WELLNESS",
-    status: "available",
-  },
-  {
     id: "5a14e5c8-65f8-4e79-8f8d-128e7de26cf0",
     name: "Professional Photography Session",
     description:
@@ -231,7 +220,7 @@ export const serviceItems = [
     status: "available",
   },
   {
-    id: "6b3d8e3a-7f9f-44d4-9f76-9f5b67d6a03c",
+    id: "6b3d8e3a-7f9f-44d4-9f76-9f5b67d6a13c",
     name: "Culinary Workshop",
     description:
       "Learn to cook authentic local dishes with a professional chef in a hands-on workshop.",
@@ -264,25 +253,70 @@ export const serviceItems = [
     status: "available",
   },
   {
-    id: "9e41c3e9-79d0-4bcb-a3b4-18b61b72e2b2",
-    name: "Snowboarding Weekend Camp",
+    id: "6b3d8e3a-7f9f-44d4-9f76-9f5b67d6a03c",
+    name: "Culinary Workshop",
     description:
-      "A 3-day snowboarding trip with training, accommodation, and equipment included.",
-    price: 280.0,
-    image: "https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f",
-    location: "Whistler, Canada",
-    category: "SPORTS",
+      "Learn to cook authentic local dishes with a professional chef in a hands-on workshop.",
+    price: 95.0,
+    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+    location: "Bangkok, Thailand",
+    category: "FOOD",
     status: "available",
   },
+
   {
-    id: "10df6b84-7c1e-482a-9d4e-2a7b6b76bcb1",
-    name: "Art & Culture Tour",
+    id: "a2f3e47d-82b5-4f3f-8d21-1dbe93b0f2a3",
+    name: "Desert Star Gazing Camp",
     description:
-      "Guided tour exploring museums, galleries, and cultural landmarks.",
-    price: 110.0,
-    image: "https://images.unsplash.com/photo-1505666286783-6a5a10f1e5c1",
-    location: "Paris, France",
-    category: "CULTURE",
-    status: "available",
+      "Spend the night under the stars in a luxury desert camp with guided astronomy sessions.",
+    price: 250.0,
+    image: "https://images.unsplash.com/photo-1523413651479-597eb2da0ad6",
+    location: "Dubai, UAE",
+    category: "ADVENTURE",
+    status: "upcoming",
+  },
+  {
+    id: "b8d3f8f6-1234-4c28-a902-b0e14d881175",
+    name: "Northern Lights Photography Tour",
+    description:
+      "Join professional photographers to capture the Aurora Borealis from the best scenic spots.",
+    price: 430.0,
+    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d",
+    location: "Reykjavík, Iceland",
+    category: "TOUR",
+    status: "upcoming",
+  },
+  {
+    id: "a2f3e47d-82b5-4f3f-8d21-1dbe93b0f2a3",
+    name: "Desert Star Gazing Camp",
+    description:
+      "Spend the night under the stars in a luxury desert camp with guided astronomy sessions.",
+    price: 250.0,
+    image: "https://images.unsplash.com/photo-1523413651479-597eb2da0ad6",
+    location: "Dubai, UAE",
+    category: "ADVENTURE",
+    status: "upcoming",
+  },
+  {
+    id: "b8d3f8f6-1234-4c28-a902-b0e14d881114",
+    name: "Northern Lights Photography Tour",
+    description:
+      "Join professional photographers to capture the Aurora Borealis from the best scenic spots.",
+    price: 430.0,
+    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d",
+    location: "Reykjavík, Iceland",
+    category: "TOUR",
+    status: "upcoming",
+  },
+  {
+    id: "3e98b4f1-2a15-49a0-9e8b-76f4c5929acb",
+    name: "Mountain Trekking Adventure",
+    description:
+      "Join a guided trek through scenic mountain trails with camping and meals included.",
+    price: 120.0,
+    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
+    location: "Kathmandu, Nepal",
+    category: "ADVENTURE",
+    status: "upcoming",
   },
 ];

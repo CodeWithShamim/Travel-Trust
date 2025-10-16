@@ -64,7 +64,7 @@ const ServiceDetails = ({ service }: IServiceProps) => {
   const params = useParams()
   const id = params?.id
 
-  const { address } = useAccount()
+  const { address, isConnected } = useAccount()
 
   // console.log({ address })
 
@@ -104,8 +104,8 @@ const ServiceDetails = ({ service }: IServiceProps) => {
 
   // add service booking
   const handleServiceBooking = async () => {
-    if (!user?.id) {
-      router.push('/login')
+    if (!isConnected) {
+      router.push('/')
       return
     }
 
@@ -489,16 +489,16 @@ const ServiceDetails = ({ service }: IServiceProps) => {
             </h1>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 py-4 md:py-6 lg:py-10">
-              {(serviceItems as any)?.map(
-                (service: IService, index: number) => (
+              {(serviceItems as any)
+                ?.slice(0, 6)
+                .map((service: IService, index: number) => (
                   <ServiceCard
                     key={service.id}
                     service={service}
                     // loading={isLoading}
                     index={index}
                   />
-                )
-              )}
+                ))}
             </div>
           </section>
         </div>

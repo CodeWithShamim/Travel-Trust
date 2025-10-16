@@ -1,26 +1,28 @@
-"use client";
+'use client';
 
-import ChatMessage from "@/components/ui/ChatMessage";
-import Loader from "@/components/ui/Loader";
-import { useGetAllUserQuery } from "@/redux/api/authApi";
-import { useGetAllMessageQuery } from "@/redux/api/messageApi";
-import { useAppSelector, useSocket } from "@/redux/hooks";
-import { IUser } from "@/types";
-import { timeAgo } from "@/utils/common";
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Drawer, Input, Layout } from "antd";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import ChatMessage from '@/components/ui/ChatMessage';
+import Loader from '@/components/ui/Loader';
+import { useGetAllUserQuery } from '@/redux/api/authApi';
+import { useGetAllMessageQuery } from '@/redux/api/messageApi';
+import { useAppSelector, useAppToast, useSocket } from '@/redux/hooks';
+import { IUser } from '@/types';
+import { timeAgo } from '@/utils/common';
+import { UserOutlined } from '@ant-design/icons';
+import { Avatar, Button, Drawer, Input, Layout } from 'antd';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 const { Sider, Content } = Layout;
-import { CiMenuKebab } from "react-icons/ci";
-import styles from "@/styles/common.module.css";
-import HomeBackButton from "@/components/ui/HomeBackButton";
-import { USER_ROLE } from "@/constants/role";
-import { FaVideo } from "react-icons/fa";
-import { MdAddCall } from "react-icons/md";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import { BiMenu } from "react-icons/bi";
+import { CiMenuKebab } from 'react-icons/ci';
+import styles from '@/styles/common.module.css';
+import HomeBackButton from '@/components/ui/HomeBackButton';
+import { USER_ROLE } from '@/constants/role';
+import { FaVideo } from 'react-icons/fa';
+import { MdAddCall } from 'react-icons/md';
+import { BsThreeDotsVertical } from 'react-icons/bs';
+import { BiMenu } from 'react-icons/bi';
+import { useAccount } from 'wagmi';
+import toast from 'react-hot-toast';
 
 const { TextArea } = Input;
 
@@ -39,17 +41,20 @@ const Message = () => {
   const audioRef = React.useRef<HTMLAudioElement>(null);
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const [warning, setWarning] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>("");
+  const [message, setMessage] = useState<string>('');
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [receiverUser, setReceiverUser] = useState<any>();
 
   const { data, isLoading } = useAppSelector((state) => state.user) as any;
 
+  const { showToast } = useAppToast();
+
   const router = useRouter();
   const socket = useSocket();
+  const { isConnected } = useAccount();
 
-  query["senderId"] = data?.id;
-  query["receiverId"] = receiverUser?.id;
+  query['senderId'] = data?.id;
+  query['receiverId'] = receiverUser?.id;
 
   const {
     data: data2,
@@ -61,26 +66,11 @@ const Message = () => {
 
   const users = data3?.users?.filter((user: IUser) => {
     if (data?.role === USER_ROLE.USER) {
-      return (
-        user?.role === USER_ROLE.ADMIN || user?.role === USER_ROLE.SUPER_ADMIN
-      );
+      return user?.role === USER_ROLE.ADMIN || user?.role === USER_ROLE.SUPER_ADMIN;
     } else {
       return user?.role === USER_ROLE.USER;
     }
   });
-
-  // join room
-  useEffect(() => {
-    const userId = data?.id;
-
-    if (!userId && !isLoading) {
-      router.push("/login");
-    }
-
-    if (socket && userId) {
-      socket.emit("join", userId);
-    }
-  }, [socket, data, router, isLoading]);
 
   // received message from databse
   useEffect(() => {
@@ -95,7 +85,7 @@ const Message = () => {
   // received message via socket
   useEffect(() => {
     if (socket) {
-      socket.on("message", (newMsg: IMessage) => {
+      socket.on('message', (newMsg: IMessage) => {
         if (newMsg?.senderId !== data?.id) {
           playSound();
           setMessages((prev: any) => [...prev, newMsg]);
@@ -107,6 +97,10 @@ const Message = () => {
 
   // send message
   const handleSendMessage = () => {
+    if (!isConnected) {
+      showToast('Connect wallet to send message', 'error');
+      return;
+    }
     if (!message) {
       return;
     }
@@ -127,10 +121,10 @@ const Message = () => {
     // step-1
     setMessages((prev: any) => [...prev, newMsg]);
     // step-2
-    socket.emit("message", newMsg);
+    socket.emit('message', newMsg);
 
     playSound();
-    setMessage("");
+    setMessage('');
   };
 
   const handleSelectedUserToChat = (user: IUser) => {
@@ -143,10 +137,10 @@ const Message = () => {
   };
 
   return (
-    <div className={`${styles["chat-bg-image"]}`}>
+    <div className={`${styles['chat-bg-image']}`}>
       <section className={`max-w-[1650px] mx-auto relative`}>
         <div>
-          <audio ref={audioRef} src={"/send.mp3"}></audio>
+          <audio ref={audioRef} src={'/send.mp3'}></audio>
         </div>
 
         <Layout hasSider className="bg-white">
@@ -175,20 +169,14 @@ const Message = () => {
                 <Avatar
                   src={receiverUser?.profileImage}
                   size="small"
-                  style={{ backgroundColor: "#87d068" }}
+                  style={{ backgroundColor: '#87d068' }}
                   icon={<UserOutlined />}
                   className="cursor-pointer"
                 />
-                <p className="capitalize font-semibold">
-                  {receiverUser?.username}
-                </p>
+                <p className="capitalize font-semibold">{receiverUser?.username}</p>
               </div>
 
-              {warning && (
-                <span className="text-red-500 font-bold">
-                  Please select user!
-                </span>
-              )}
+              {warning && <span className="text-red-500 font-bold">Please select user!</span>}
 
               <div className="flex items-center gap-3 md:gap-5">
                 <span className="cursor-pointer text-center h-8 w-8 bg-slate-300 p-2 rounded-full">
@@ -211,7 +199,7 @@ const Message = () => {
 
             {/* Content  */}
             <div
-              className={`${styles["chat-bg-image2"]} bg-opacity-50 py-10 pb-16 rounded absolute inset-0 overflow-y-auto`}
+              className={`${styles['chat-bg-image2']} bg-opacity-50 py-10 pb-16 rounded absolute inset-0 overflow-y-auto`}
             >
               {isLoading || isLoading2 ? <Loader /> : null}
 
@@ -233,13 +221,12 @@ const Message = () => {
               </div>
 
               {/* Empty content  */}
-              {(!receiverUser?.id && !isLoading2) ||
-              (messages?.length < 1 && !isLoading2) ? (
+              {(!receiverUser?.id && !isLoading2) || (messages?.length < 1 && !isLoading2) ? (
                 <div className="flex flex-col justify-center items-center h-[92%]">
                   (
                   <div className="flex flex-col justify-center items-center shadow">
                     <Image
-                      src={require("@/assets/select.png")}
+                      src={require('@/assets/select.png')}
                       objectFit="cover"
                       width={200}
                       alt="not found image"
@@ -316,9 +303,7 @@ const SideBarItem = ({
         <div
           key={index}
           className={`${
-            receiverUser?.id === user?.id
-              ? "bg-green-500 text-white"
-              : "bg-green-100"
+            receiverUser?.id === user?.id ? 'bg-green-500 text-white' : 'bg-green-100'
           } font-sembold px-4 py-2 rounded-sm cursor-pointer hover:bg-green-400 hover:text-white flex items-center justify-between transition-all`}
           onClick={() => handleSelectedUserToChat(user)}
         >
@@ -326,7 +311,7 @@ const SideBarItem = ({
             <Avatar
               src={user?.profileImage}
               size="small"
-              style={{ backgroundColor: "#87d068" }}
+              style={{ backgroundColor: '#87d068' }}
               icon={<UserOutlined />}
             />
 

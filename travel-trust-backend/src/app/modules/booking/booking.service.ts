@@ -48,7 +48,7 @@ const getAllBooking = async (
     include: {
       user: true,
       service: true,
-      payments: true
+      payments: true,
     },
   });
 

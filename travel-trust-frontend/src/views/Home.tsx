@@ -1,57 +1,56 @@
-'use client'
+'use client';
 
-import ServiceCardSkeleton from '@/components/skeletons/ServiceCardSkeleton'
-import SearchBar from '@/components/ui/SearchBar'
-import { newses } from '@/data/news'
-import { useGetAllServiceQuery } from '@/redux/api/serviceApi'
-import { IService } from '@/types'
-import { Button, Carousel, Divider, FloatButton, Modal, Spin } from 'antd'
-import Image from 'next/image'
-import { useState } from 'react'
-import styles from '@/styles/home.module.css'
+import ServiceCardSkeleton from '@/components/skeletons/ServiceCardSkeleton';
+import SearchBar from '@/components/ui/SearchBar';
+import { newses } from '@/data/news';
+import { useGetAllServiceQuery } from '@/redux/api/serviceApi';
+import { IService } from '@/types';
+import { Button, Carousel, Divider, FloatButton, Modal, Spin } from 'antd';
+import Image from 'next/image';
+import { useState } from 'react';
+import styles from '@/styles/home.module.css';
 
-import { motion } from 'framer-motion'
-import { fadeIn, imageVariants, textVariant } from '@/utils/motion'
-import { UpOutlined } from '@ant-design/icons'
+import { motion } from 'framer-motion';
+import { fadeIn, imageVariants, textVariant } from '@/utils/motion';
+import { UpOutlined } from '@ant-design/icons';
 
-import { IoCloseCircleOutline } from 'react-icons/io5'
-import { galleryItems, serviceItems } from '@/data/common'
-import { ServiceStatus } from '@/constants/service'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import dynamic from 'next/dynamic'
-import { useAppSelector } from '@/redux/hooks'
+import { IoCloseCircleOutline } from 'react-icons/io5';
+import { galleryItems, serviceItems } from '@/data/common';
+import { ServiceStatus } from '@/constants/service';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import { useAppSelector } from '@/redux/hooks';
 
-const MapView = dynamic(() => import('@/components/ui/MapView'))
-const VideoPlayer = dynamic(() => import('@/components/ui/VideoPlayer'))
-const ReviewSlider = dynamic(() => import('@/components/ui/ReviewSlider'))
-const ServiceCard = dynamic(() => import('@/components/ui/ServiceCard'))
-const ImageGallery = dynamic(() => import('@/components/ui/ImageGallery'))
-const NewsCard = dynamic(() => import('@/components/ui/NewsCard'))
+const MapView = dynamic(() => import('@/components/ui/MapView'));
+const VideoPlayer = dynamic(() => import('@/components/ui/VideoPlayer'));
+const ReviewSlider = dynamic(() => import('@/components/ui/ReviewSlider'));
+const ServiceCard = dynamic(() => import('@/components/ui/ServiceCard'));
+const ImageGallery = dynamic(() => import('@/components/ui/ImageGallery'));
+const NewsCard = dynamic(() => import('@/components/ui/NewsCard'));
 
-const SponsorCarousel = dynamic(
-  () => import('@/components/ui/SponsorCarousel'),
-  { ssr: false }
-)
+const SponsorCarousel = dynamic(() => import('@/components/ui/SponsorCarousel'), { ssr: false });
 
 const HomePage = () => {
   const { data: availableService, isLoading } = useGetAllServiceQuery({
     status: ServiceStatus[0],
     limit: 8,
-  })
+  });
 
-  const { data: upcomingService, isLoading: isLoading2 } =
-    useGetAllServiceQuery({
-      status: ServiceStatus[1],
-      limit: 5,
-    })
+  const { data: upcomingService, isLoading: isLoading2 } = useGetAllServiceQuery({
+    status: ServiceStatus[1],
+    limit: 5,
+  });
 
-  const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false)
-  const [onReady, setOnReady] = useState<boolean>(false)
-  const router = useRouter()
-  const { dictionaries } = useAppSelector((state) => state.i18n)
+  const availableService1 = serviceItems.filter((s) => s.status === ServiceStatus[0]);
+  const upcomingService1 = serviceItems.filter((s) => s.status === ServiceStatus[1]);
 
-  const home = dictionaries?.home
+  const [isVideoPlay, setIsVideoPlay] = useState<boolean>(false);
+  const [onReady, setOnReady] = useState<boolean>(false);
+  const router = useRouter();
+  const { dictionaries } = useAppSelector((state) => state.i18n);
+
+  const home = dictionaries?.home;
 
   return (
     <div className="w-full">
@@ -67,11 +66,7 @@ const HomePage = () => {
       </div>
       {/* Hero section  */}
       <div className="relative top-[-65px] left-0 right-0">
-        <Carousel
-          effect="fade"
-          autoplay={true}
-          className="z-[-1] overflow-hidden bg-green-900"
-        >
+        <Carousel effect="fade" autoplay={true} className="z-[-1] overflow-hidden bg-green-900">
           {[1, 2, 3]?.map((item: number) => (
             <motion.div
               initial="hidden"
@@ -112,6 +107,15 @@ const HomePage = () => {
           >
             {home?.subHeading}
           </motion.p>
+
+          <motion.p
+            initial="hidden"
+            animate="show"
+            variants={fadeIn('up', 'tween', 0, 1.5)}
+            className="text-center text-amber-500 text-xl tracking-[1px] capitalize font-semibold py-2"
+          >
+            {home?.Zama}
+          </motion.p>
         </div>
 
         <motion.div className="absolute bottom-20 left-0 right-0 max-w-[1100px] mx-auto z-50">
@@ -135,17 +139,10 @@ const HomePage = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 justify-center py-6">
           {isLoading &&
-            Array.from({ length: 8 }).map((n, index) => (
-              <ServiceCardSkeleton key={index} />
-            ))}
+            Array.from({ length: 8 }).map((n, index) => <ServiceCardSkeleton key={index} />)}
 
-          {(serviceItems as any)?.map((service: IService, index: number) => (
-            <ServiceCard
-              key={service.id}
-              service={service}
-              loading={isLoading}
-              index={index}
-            />
+          {(availableService1 as any)?.map((service: IService, index: number) => (
+            <ServiceCard key={service.id} service={service} loading={isLoading} index={index} />
           ))}
         </div>
 
@@ -160,17 +157,10 @@ const HomePage = () => {
           </motion.h1>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 justify-center py-6">
             {isLoading2 &&
-              Array.from({ length: 4 }).map((n, index) => (
-                <ServiceCardSkeleton key={index} />
-              ))}
+              Array.from({ length: 4 }).map((n, index) => <ServiceCardSkeleton key={index} />)}
 
-            {(serviceItems as any)?.map((service: IService, index: number) => (
-              <ServiceCard
-                key={service.id}
-                service={service}
-                loading={isLoading}
-                index={index}
-              />
+            {(upcomingService1 as any)?.map((service: IService, index: number) => (
+              <ServiceCard key={service.id} service={service} loading={isLoading} index={index} />
             ))}
           </div>
         </div>
@@ -209,12 +199,10 @@ const HomePage = () => {
         <Modal
           open={isVideoPlay}
           onCancel={() => {
-            setIsVideoPlay(false)
-            setOnReady(false)
+            setIsVideoPlay(false);
+            setOnReady(false);
           }}
-          closeIcon={
-            <IoCloseCircleOutline size={20} className="text-green-400" />
-          }
+          closeIcon={<IoCloseCircleOutline size={20} className="text-green-400" />}
           className="!w-[80%] !md:w-[50%] !lg:w-[60%] !h-[20rem] !lg:h-[45rem] bg-[#000]"
           style={{ position: 'relative' }}
           footer={null}
@@ -229,8 +217,8 @@ const HomePage = () => {
           <div className="w-full h-[30rem] lg:h-[35rem] absolute inset-0">
             <VideoPlayer
               onReady={() => {
-                setOnReady(true)
-                setIsVideoPlay(true)
+                setOnReady(true);
+                setIsVideoPlay(true);
               }}
             />
           </div>
@@ -238,11 +226,7 @@ const HomePage = () => {
       )}
       {/* news  */}
       <div className="max-w-[1200px] mx-auto px-4 my-14 md:my-20 lg:my-24">
-        <Divider
-          orientation="left"
-          orientationMargin="0"
-          className="border-[#00ff4c]"
-        >
+        <Divider orientation="left" orientationMargin="0" className="border-[#00ff4c]">
           <motion.h1
             initial="hidden"
             whileInView="show"
@@ -261,11 +245,7 @@ const HomePage = () => {
       </div>
       {/* gallery  */}
       <div className="max-w-[1200px] mx-auto px-4 pb-10 md:pb-14 lg:pb-20">
-        <Divider
-          orientation="left"
-          orientationMargin="0"
-          className="border-[#00ff4c]"
-        >
+        <Divider orientation="left" orientationMargin="0" className="border-[#00ff4c]">
           <motion.h1
             initial="hidden"
             whileInView="show"
@@ -278,7 +258,7 @@ const HomePage = () => {
 
         <div className="galleryLayout rounded-xl">
           {galleryItems?.map((item: { id: number; url: string }) => {
-            return <ImageGallery key={item.id} item={item} />
+            return <ImageGallery key={item.id} item={item} />;
           })}
         </div>
       </div>
@@ -307,11 +287,7 @@ const HomePage = () => {
       {/* reviews  */}
       <div className="bg-[#F7F7F7] px-4">
         <div className="max-w-[1200px] m-auto pt-12">
-          <Divider
-            orientation="center"
-            orientationMargin="0"
-            className="border-[#00ff4c] "
-          >
+          <Divider orientation="center" orientationMargin="0" className="border-[#00ff4c] ">
             <motion.h1
               initial="hidden"
               whileInView="show"
@@ -331,7 +307,7 @@ const HomePage = () => {
       </div>
       <div className={`${styles['background-image3']} hidden md:block`}></div>
     </div>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

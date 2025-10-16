@@ -37,7 +37,6 @@ next-env.d.ts
 .env
 .vercel
 cache
-artifacts
 types
 
 # Build output
@@ -50,3 +49,10 @@ coverage/poi77rr
 # Hardhat/Truffle/Foundry
 cache/
 *.tsbuildinfo
+
+# directories
+.coverage_artifacts
+.coverage_cache
+.coverage_contracts
+deployments
+tmp

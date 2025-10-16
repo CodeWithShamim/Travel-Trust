@@ -14,7 +14,7 @@ const MNEMONIC: string =
   process.env.MNEMONIC || 'test test test test test test test test test test test junk';
 const INFURA_API_KEY: string = process.env.INFURA_API_KEY || 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz';
 
-const config: HardhatUserConfig = {
+const config: any = {
   defaultNetwork: 'hardhat',
   namedAccounts: {
     deployer: 0,

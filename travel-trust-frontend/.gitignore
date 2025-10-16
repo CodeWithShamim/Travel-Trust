@@ -36,3 +36,17 @@ next-env.d.ts
 
 .env
 .vercel
+cache
+artifacts
+types
+
+# Build output
+artifacts/
+build/
+dist/
+.cache/
+coverage/poi77rr
+
+# Hardhat/Truffle/Foundry
+cache/
+*.tsbuildinfo

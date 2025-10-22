@@ -1,15 +1,11 @@
-'use client'
+'use client';
 
-import { WagmiProvider, createConfig, http } from 'wagmi'
-import { sepolia } from 'wagmi/chains'
-import '@rainbow-me/rainbowkit/styles.css'
-import {
-  RainbowKitProvider,
-  getDefaultConfig,
-  lightTheme,
-} from '@rainbow-me/rainbowkit'
-import { defineChain } from 'viem'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { WagmiProvider, createConfig, http } from 'wagmi';
+import { sepolia } from 'wagmi/chains';
+import '@rainbow-me/rainbowkit/styles.css';
+import { RainbowKitProvider, getDefaultConfig, lightTheme } from '@rainbow-me/rainbowkit';
+import { defineChain } from 'viem';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const zamaTestnet = defineChain({
   id: 8009,
@@ -27,16 +23,34 @@ const zamaTestnet = defineChain({
   blockExplorers: {
     default: { name: 'Explorer', url: 'https://explorer.zama.ai' },
   },
-})
+});
+
+const sepoliaTest = defineChain({
+  id: 11155111, // ✅ official Sepolia chain ID
+  name: 'Sepolia',
+  network: 'sepolia',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Ether',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://sepolia.infura.io/v3/531b54af7cd34bf3b2081ec8e462da35'], // your RPC URL
+    },
+  },
+  blockExplorers: {
+    default: { name: 'Sepolia Explorer', url: 'https://sepolia.etherscan.io' },
+  },
+});
 
 export const config = getDefaultConfig({
   appName: 'Travel Trust',
   projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID!, // Get this from https://cloud.walletconnect.com
-  chains: [sepolia, zamaTestnet],
-  ssr: true,
-})
+  chains: [sepoliaTest],
+});
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 export function WagmiWrapper({ children }: { children: React.ReactNode }) {
   return (
@@ -55,5 +69,5 @@ export function WagmiWrapper({ children }: { children: React.ReactNode }) {
         </RainbowKitProvider>
       </WagmiProvider>
     </QueryClientProvider>
-  )
+  );
 }

@@ -1,20 +1,24 @@
 // fheClient.ts
-import { initSDK, createInstance, SepoliaConfig } from '@zama-fhe/relayer-sdk';
+let fheInstance: any = null;
 
-let fheInstance: Awaited<ReturnType<typeof createInstance>> | null = null;
+import { TravelTrustContract } from '@/lib/contracts';
+import { config } from '@/lib/Wagmi';
+import { useAppToast } from '@/redux/hooks';
+import { initSDK, createInstance, SepoliaConfig } from '@zama-fhe/relayer-sdk/bundle';
+import { Signer } from 'ethers';
+import { signTypedData } from 'wagmi/actions';
 
 export async function initializeFheInstance() {
   if (typeof window === 'undefined' || !window.ethereum) {
     throw new Error('Ethereum provider not found. Please install MetaMask or connect a wallet.');
   }
 
-  await initSDK(); // loads WASM & relayer runtime
+  await initSDK(); // Loads WASM
 
-  const config = { ...SepoliaConfig, network: window.ethereum };
-
+  const config = { ...SepoliaConfig };
   try {
     fheInstance = await createInstance(config);
-    console.log('✅ FHEVM instance initialized');
+
     return fheInstance;
   } catch (err) {
     console.error('FHEVM instance creation failed:', err);
@@ -23,24 +27,135 @@ export async function initializeFheInstance() {
 }
 
 export function getFheInstance() {
-  if (!fheInstance)
-    throw new Error('FHE instance not initialized. Call initializeFheInstance() first.');
   return fheInstance;
 }
 
 // Decrypt a single encrypted value using the relayer
-export async function decryptValue(encryptedHandle: string): Promise<number> {
-  const fhe = getFheInstance();
+export async function decryptValue(encryptedHandle: string): Promise<any> {
+  const { showToast } = useAppToast();
+
+  if (!fheInstance) {
+    await initializeFheInstance();
+  }
 
   if (!/^0x[a-fA-F0-9]{64}$/.test(encryptedHandle)) {
     throw new Error('Invalid ciphertext handle for decryption');
   }
 
   try {
-    const values = await fhe.publicDecrypt([encryptedHandle]);
+    const values = await fheInstance.publicDecrypt([encryptedHandle]);
     return Number(values[encryptedHandle]);
   } catch (error: any) {
     if (error?.message?.includes('fetch') || error?.message?.includes('NetworkError')) {
+      showToast('Decryption service is temporarily unavailable. Please try again later.', 'error');
+    }
+    if (error.message) {
+      showToast(error.message, 'error');
+    }
+    // throw error;
+  }
+}
+
+export async function userDecrypt(encryptedHandle: string, userAddress: string): Promise<any> {
+  const { showToast } = useAppToast();
+
+  if (!fheInstance) {
+    await initializeFheInstance();
+  }
+
+  if (!/^0x[a-fA-F0-9]{64}$/.test(encryptedHandle)) {
+    throw new Error('Invalid ciphertext handle for decryption');
+  }
+
+  try {
+    // Generate keys
+    const { privateKey, publicKey } = await fheInstance.generateKeypair();
+
+    // Create EIP712 message for signing
+    const eip712 = fheInstance.createEIP712(publicKey, TravelTrustContract.address);
+
+    // ✅ Sign it directly using wagmi (no walletClient needed)
+    const signature = await signTypedData(config, {
+      account: userAddress as `0x${string}`,
+      domain: eip712.domain,
+      types: eip712.types,
+      primaryType: eip712.primaryType,
+      message: eip712.message,
+    });
+
+    // ✅ Decrypt
+    const decryptedRating = await fheInstance.userDecrypt(
+      encryptedHandle,
+      privateKey,
+      publicKey,
+      signature,
+      TravelTrustContract.address,
+      userAddress,
+    );
+
+    console.log({ decryptedRating });
+  } catch (error: any) {
+    if (error?.message?.includes('fetch') || error?.message?.includes('NetworkError')) {
+      showToast('Decryption service is temporarily unavailable. Please try again later.', 'error');
+    }
+    if (error.message) {
+      showToast(error.message, 'error');
+    }
+  }
+}
+
+/**
+ * Request user decryption with EIP-712 signature
+ */
+export async function requestUserDecryption(signer: Signer, ciphertextHandle: string) {
+  const relayer = getFheInstance();
+  if (!relayer) {
+    throw new Error('FHEVM not initialized');
+  }
+
+  try {
+    const keypair = relayer.generateKeypair();
+    const handleContractPairs = [
+      {
+        handle: ciphertextHandle,
+        contractAddress: TravelTrustContract.address,
+      },
+    ];
+
+    const startTimeStamp = Math.floor(Date.now() / 1000).toString();
+    const durationDays = '10';
+    const contractAddresses = [TravelTrustContract.address];
+
+    const eip712 = relayer.createEIP712(
+      keypair.publicKey,
+      contractAddresses,
+      startTimeStamp,
+      durationDays,
+    );
+
+    const signature = await signer.signTypedData(
+      eip712.domain,
+      {
+        UserDecryptRequestVerification: eip712.types.UserDecryptRequestVerification,
+      },
+      eip712.message,
+    );
+
+    const result = await relayer.userDecrypt(
+      handleContractPairs,
+      keypair.privateKey,
+      keypair.publicKey,
+      signature.replace('0x', ''),
+      contractAddresses,
+      await signer.getAddress(),
+      startTimeStamp,
+      durationDays,
+    );
+
+    return Number(result[ciphertextHandle]);
+  } catch (error: any) {
+    // Check for relayer/network error
+    if (error?.message?.includes('Failed to fetch') || error?.message?.includes('NetworkError')) {
       throw new Error('Decryption service is temporarily unavailable. Please try again later.');
     }
     throw error;

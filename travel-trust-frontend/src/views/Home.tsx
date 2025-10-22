@@ -21,6 +21,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useAppSelector } from '@/redux/hooks';
+import { useReadContract, useWatchContractEvent } from 'wagmi';
 
 const MapView = dynamic(() => import('@/components/ui/MapView'));
 const VideoPlayer = dynamic(() => import('@/components/ui/VideoPlayer'));
@@ -28,6 +29,8 @@ const ReviewSlider = dynamic(() => import('@/components/ui/ReviewSlider'));
 const ServiceCard = dynamic(() => import('@/components/ui/ServiceCard'));
 const ImageGallery = dynamic(() => import('@/components/ui/ImageGallery'));
 const NewsCard = dynamic(() => import('@/components/ui/NewsCard'));
+
+import { TravelTrustContract } from '@/lib/contracts';
 
 const SponsorCarousel = dynamic(() => import('@/components/ui/SponsorCarousel'), { ssr: false });
 
@@ -51,6 +54,15 @@ const HomePage = () => {
   const { dictionaries } = useAppSelector((state) => state.i18n);
 
   const home = dictionaries?.home;
+
+  const { data: ServiceCount } = useReadContract({
+    ...TravelTrustContract,
+    functionName: 'ServiceCount',
+  });
+
+  const total = Number(ServiceCount || 0);
+
+  console.log({ total });
 
   return (
     <div className="w-full">
@@ -144,6 +156,10 @@ const HomePage = () => {
           {(availableService1 as any)?.map((service: IService, index: number) => (
             <ServiceCard key={service.id} service={service} loading={isLoading} index={index} />
           ))}
+
+          {/* {Array.from({ length: total }).map((_, i) => (
+            <ServiceCard key={i} index={i} />
+          ))} */}
         </div>
 
         <div className="mt-10 md:mt-14 lg:mt-20">

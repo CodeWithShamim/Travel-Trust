@@ -1,15 +1,11 @@
-import type { MenuProps } from "antd";
-import { FcManager } from "react-icons/fc";
-import Link from "next/link";
-import { USER_ROLE } from "./role";
-import {
-  MdOutlineManageHistory,
-  MdManageAccounts,
-  MdAirplaneTicket,
-} from "react-icons/md";
+import type { MenuProps } from 'antd';
+import { FcManager } from 'react-icons/fc';
+import Link from 'next/link';
+import { USER_ROLE } from './role';
+import { MdOutlineManageHistory, MdManageAccounts, MdAirplaneTicket } from 'react-icons/md';
 
-export const sidebarItems = (role: string) => {
-  const DAHBOARD_URL = "/dashboard";
+export const sidebarItems = (role: string = 'admin') => {
+  const DAHBOARD_URL = '/dashboard';
 
   const profilePath = `${DAHBOARD_URL}/profile`;
   const changePassPath = `${DAHBOARD_URL}/profile/change-password`;
@@ -19,7 +15,7 @@ export const sidebarItems = (role: string) => {
   const manageAdminsPath = `${DAHBOARD_URL}/${role}/manage-admins`;
   const bookingPath = `${DAHBOARD_URL}/${role}/bookings`;
 
-  const defaultSidebarItems: MenuProps["items"] = [
+  const defaultSidebarItems: MenuProps['items'] = [
     {
       label: <Link href={profilePath}>Profile</Link>,
       key: profilePath,
@@ -33,7 +29,7 @@ export const sidebarItems = (role: string) => {
     },
   ];
 
-  const commonAdminSidebarItems: MenuProps["items"] = [
+  const commonAdminSidebarItems: MenuProps['items'] = [
     {
       label: <Link href={manageUserPath}>Manage Users</Link>,
       icon: <MdManageAccounts size={24} />,
@@ -41,9 +37,9 @@ export const sidebarItems = (role: string) => {
     },
   ];
 
-  const adminSidebarItems: MenuProps["items"] = [
+  const adminSidebarItems: MenuProps['items'] = [
     ...defaultSidebarItems,
-    ...commonAdminSidebarItems,
+    // ...commonAdminSidebarItems,
     {
       label: <Link href={manageServicePath}>Manage Services</Link>,
       key: manageServicePath,
@@ -54,9 +50,16 @@ export const sidebarItems = (role: string) => {
       key: manageBookingsPath,
       icon: <MdAirplaneTicket size={24} />,
     },
+
+    // new add
+    {
+      label: <Link href={manageUserPath}>Manage Reviews</Link>,
+      icon: <MdManageAccounts size={24} />,
+      key: manageUserPath,
+    },
   ];
 
-  const superAdminSidebarItems: MenuProps["items"] = [
+  const superAdminSidebarItems: MenuProps['items'] = [
     ...defaultSidebarItems,
     ...commonAdminSidebarItems,
     {
@@ -66,7 +69,7 @@ export const sidebarItems = (role: string) => {
     },
   ];
 
-  const userSidebarItems: MenuProps["items"] = [
+  const userSidebarItems: MenuProps['items'] = [
     ...defaultSidebarItems,
     {
       label: <Link href={bookingPath}>Bookings</Link>,
@@ -78,7 +81,10 @@ export const sidebarItems = (role: string) => {
   if (role === USER_ROLE.SUPER_ADMIN) return superAdminSidebarItems;
   else if (role === USER_ROLE.ADMIN) return adminSidebarItems;
   else if (role === USER_ROLE.USER) return userSidebarItems;
+  // else {
+  //   return defaultSidebarItems;
+  // }
   else {
-    return defaultSidebarItems;
+    return adminSidebarItems;
   }
 };

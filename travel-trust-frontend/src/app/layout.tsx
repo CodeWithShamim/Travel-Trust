@@ -20,14 +20,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <html lang="en">
         <body className="relative inset-0">
           <Suspense>
-            <ProgressBar />
             {/* <UserInfo /> */}
             <WagmiWrapper>
               <div className="absolute inset-0 overflow-hidden">
                 <div className="absolute -inset-10 opacity-50">
-                  <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
-                  <div className="absolute top-3/4 right-1/4 w-96 h-96 bg-cyan-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
-                  <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-2000"></div>
+                  <div className="absolute top-0.5 left-1/6 w-48 h-48 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
+                  <div className="absolute top-3/4 left-1/4 w-48 h-48 bg-green-300 rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-1000"></div>
+                  <div className="absolute top-1/2 right-20 w-72 h-72 bg-[#FFD20A] rounded-full mix-blend-multiply filter blur-xl animate-pulse delay-2000"></div>
                 </div>
               </div>
               <div className="min-h-screen mx-auto">{children}</div>
@@ -42,6 +41,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             //   console.log('✅ ZamaRelayerSDK script loadeddddd');
             // }}
           />
+
+          <ProgressBar />
         </body>
       </html>
     </Providers>

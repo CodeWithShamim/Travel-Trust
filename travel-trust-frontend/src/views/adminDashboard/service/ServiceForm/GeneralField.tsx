@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import { Input, Row, Col, Card, Form, Upload, message, Select } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-import { useUploadImage } from "@/utils/upload";
-import { BiUpload } from "react-icons/bi";
-import Image from "next/image";
+import React, { useEffect, useState } from 'react';
+import { Input, Row, Col, Card, Form, Upload, message, Select } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { useUploadImage } from '@/utils/upload';
+import { BiUpload } from 'react-icons/bi';
+import Image from 'next/image';
 import {
   ServiceStatus,
   TravelCategory,
   TravelDestinations,
   serviceFieldrules,
-} from "@/constants/service";
+} from '@/constants/service';
 
 const { Dragger } = Upload;
 
@@ -24,14 +24,14 @@ const beforeUpload = (file: any) => {
   const isLt20M = file.size / 1024 / 1024 < 20;
 
   if (!isLt20M) {
-    message.error("Image must smaller than 20MB!");
+    message.error('Image must smaller than 20MB!');
     return;
   }
   return isLt20M;
 };
 
 const fileUploadProps = {
-  name: "image",
+  name: 'image',
   showUploadList: false,
 };
 
@@ -56,29 +56,17 @@ const GeneralField = ({ setImageUrl, image }: IGeneralField) => {
           <Form.Item name="name" label="Name" rules={serviceFieldrules.title}>
             <Input placeholder="Name" />
           </Form.Item>
-          <Form.Item
-            name="description"
-            label="Description"
-            rules={serviceFieldrules.description}
-          >
+          <Form.Item name="description" label="Description" rules={serviceFieldrules.description}>
             <Input.TextArea rows={8} placeholder="Description" />
           </Form.Item>
           <Row gutter={16}>
             <Col xs={24} sm={24} md={12}>
-              <Form.Item
-                name="price"
-                label="Price"
-                rules={serviceFieldrules.price}
-              >
+              <Form.Item name="price" label="Price" rules={serviceFieldrules.price}>
                 <Input placeholder="Price" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={12}>
-              <Form.Item
-                name="location"
-                label="Location"
-                rules={serviceFieldrules.location}
-              >
+              <Form.Item name="location" label="Location" rules={serviceFieldrules.location}>
                 <Select className="w-100" placeholder="Status">
                   {TravelDestinations.map((elm, index) => (
                     <option key={index} value={elm}>
@@ -118,17 +106,13 @@ const GeneralField = ({ setImageUrl, image }: IGeneralField) => {
             {uploadLoading && (
               <div className="z-50">
                 <LoadingOutlined className="font-size-xxl text-primary" />
-                <div className="mt-3">Uploading video...</div>
+                <div className="mt-3">Uploading image...</div>
               </div>
             )}
           </Dragger>
         </Card>
         <Card title="Organization">
-          <Form.Item
-            name="category"
-            label="Category"
-            rules={serviceFieldrules.category}
-          >
+          <Form.Item name="category" label="Category" rules={serviceFieldrules.category}>
             <Select className="w-100" placeholder="Category">
               {TravelCategory.map((elm, index) => (
                 <option key={index} value={elm}>

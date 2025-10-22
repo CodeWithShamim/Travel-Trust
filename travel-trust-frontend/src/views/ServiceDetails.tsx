@@ -549,7 +549,7 @@ const ServiceDetails = ({ service }: IServiceProps) => {
                   </div>
                 </div>
 
-                <p className="font-bold text-xl text-red-500 py-2 loader1">
+                <p className="font-bold text-lg text-red-500 py-2 loader1">
                   {encrypt && (
                     <>
                       <Spin></Spin> {encrypt}

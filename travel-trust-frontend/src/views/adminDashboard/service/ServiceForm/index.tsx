@@ -12,7 +12,7 @@ import {
 } from '@/redux/api/serviceApi';
 import { IService } from '@/types';
 import Loader from '@/components/ui/Loader';
-import { hexlify } from 'ethers';
+import { hexlify, parseEther } from 'ethers';
 import { getFheInstance, initializeFheInstance } from '@/utils/fheInstance';
 import TravelTrustABI from '@/abi/TravelTrust.json';
 import { useAccount, useReadContract, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
@@ -20,6 +20,7 @@ import { useAppToast } from '@/redux/hooks';
 import { simulateContract } from 'wagmi/actions';
 import { config } from '@/lib/Wagmi';
 import { serviceItems } from '@/data/common';
+import { SERVICE_FEE } from '@/lib/contracts';
 
 const ADD = 'ADD';
 const EDIT = 'EDIT';
@@ -143,7 +144,9 @@ const ServiceForm = ({ mode = ADD }: { mode?: 'ADD' | 'EDIT' }) => {
             setEncrypt('Waiting for tx confirmation...');
             await simulateContract(config, txData);
 
-            await writeContractAsync(txData);
+            const serviceFee = parseEther((SERVICE_FEE as any)?.toString());
+
+            await writeContractAsync({ ...txData, value: serviceFee });
 
             setEncrypt('Checking status...');
           } catch (error: any) {

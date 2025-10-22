@@ -33,8 +33,21 @@ contract TravelTrust is SepoliaConfig {
 
   mapping(string => ServiceStats) public serviceStats;
 
+  //service => buyer => true/false
+  mapping(string => mapping(address => bool)) public hasPaymented;
+
+  mapping(uint256 => string) internal serviceIdByRequestId;
+  mapping(uint256 => address) internal serviceOwnerByRequestId;
+
+  uint256 public serviceFees;
+
+  // ----event start ----
+  event ServiceFeesWithdrawn(address indexed to, uint256 amount);
   event ServiceAdded(string indexed serviceId, string name, address indexed owner);
+  event ServicePaid(address indexed buyer, address indexed serviceOwner, string indexed serviceId);
+
   event ReviewSubmitted(address indexed reviewer, string indexed serviceId);
+  // -------- event end -----------
 
   constructor() {
     owner = msg.sender;
@@ -45,14 +58,25 @@ contract TravelTrust is SepoliaConfig {
     _;
   }
 
+  function withdrawServiceFees(address to) external onlyOwner {
+    require(serviceFees > 0, 'No fees to withdraw');
+    uint256 amount = serviceFees;
+    serviceFees = 0;
+    (bool sent, ) = payable(to).call{value: amount}('');
+    require(sent, 'Withdraw failed');
+    emit ServiceFeesWithdrawn(to, amount);
+  }
+
   // Add a new service
   function addService(
     string memory serviceId,
     string memory name,
     externalEuint64 encryptedPrice,
     bytes calldata inputProof
-  ) external {
+  ) external payable {
     require(services[msg.sender][serviceId].owner == address(0), 'Service already exists');
+
+    serviceFees += msg.value;
 
     euint64 price = FHE.fromExternal(encryptedPrice, inputProof);
 
@@ -69,6 +93,53 @@ contract TravelTrust is SepoliaConfig {
     FHE.makePubliclyDecryptable(price);
 
     emit ServiceAdded(serviceId, name, msg.sender);
+  }
+
+  // -Pay for a service
+  function servicePayment(address serviceOwner, string memory serviceId) external payable {
+    Service storage svc = services[serviceOwner][serviceId];
+    require(svc.owner != address(0), 'Service not found');
+    require(!hasPaymented[serviceId][msg.sender], 'You already payment for this service');
+
+    // prevent self-payment
+    require(msg.sender != serviceOwner, 'Owner cannot pay self');
+
+    // decrypt encrypted price
+    bytes32[] memory cts = new bytes32[](2);
+    cts[0] = FHE.toBytes32(svc.price);
+
+    uint256 reqId = FHE.requestDecryption(cts, this.priceDycryptCallback.selector);
+    // svc.decryptionRequestId = reqId;
+    serviceIdByRequestId[reqId] = serviceId;
+    serviceOwnerByRequestId[reqId] = serviceOwner;
+  }
+
+  // The relayer passes ABI-encoded cleartexts and a decryption proof
+  function priceDycryptCallback(
+    uint256 requestId,
+    bytes memory cleartexts,
+    bytes memory decryptionProof
+  ) external payable {
+    // Verify signatures against the request and provided cleartexts
+    FHE.checkSignatures(requestId, cleartexts, decryptionProof);
+
+    // Decode the cleartexts back into uint64 values [revealedYes, revealedNo]
+    uint64 price = abi.decode(cleartexts, (uint64));
+
+    address serviceOwner = serviceOwnerByRequestId[requestId];
+    string memory serviceId = serviceIdByRequestId[requestId];
+
+    Service storage svc = services[serviceOwner][serviceId];
+
+    require(msg.value == price, 'Incorrect payment amount');
+
+    // transfer payment to service owner
+    (bool sent, ) = payable(svc.owner).call{value: msg.value}('');
+    require(sent, 'Payment failed');
+
+    hasPaymented[serviceId][msg.sender] = true;
+
+    emit ServicePaid(msg.sender, serviceOwner, serviceId);
   }
 
   // Submit a review for a service owned by serviceOwner. Anyone can call this.

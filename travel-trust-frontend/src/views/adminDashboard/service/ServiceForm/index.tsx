@@ -119,8 +119,10 @@ const ServiceForm = ({ mode = ADD }: { mode?: 'ADD' | 'EDIT' }) => {
 
             const ciphertext = await fhe.createEncryptedInput(contractAddress, address);
 
-            const price = Number(filterData?.price);
+            const price = parseEther((filterData as any)?.price.toString());
             const name = filterData?.name;
+
+            console.log({ price });
 
             ciphertext.add64(BigInt(price));
             const { handles, inputProof } = await ciphertext.encrypt();
@@ -129,7 +131,8 @@ const ServiceForm = ({ mode = ADD }: { mode?: 'ADD' | 'EDIT' }) => {
             const proofHex = hexlify(inputProof);
 
             // await switchChainAsync({ chainId: 11155111 });
-            const serviceId = service?.id ?? Date.now();
+            // const serviceId = service?.id ?? Date.now();
+            const serviceId = '1a9c3f17-4d14-4ab8-8c24-1b9c5efb8a01';
 
             console.log({ serviceId });
 
@@ -203,13 +206,13 @@ const ServiceForm = ({ mode = ADD }: { mode?: 'ADD' | 'EDIT' }) => {
             </h2>
 
             {/* show tx  */}
-            <p className="font-bold text-lg text-green-400 py-2 loader1">
+            <div className="font-bold text-lg text-green-400 py-2 loader1">
               {encrypt && (
                 <>
-                  <Spin></Spin> {encrypt}
+                  <Spin /> {encrypt}
                 </>
               )}
-            </p>
+            </div>
 
             <div className="mb-3">
               <Button

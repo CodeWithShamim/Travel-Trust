@@ -65,9 +65,6 @@ importers:
       framer-motion-3d:
         specifier: ^12.4.13
         version: 12.4.13(@react-three/fiber@8.2.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(three@0.180.0))(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(three@0.180.0)
-      install:
-        specifier: ^0.13.0
-        version: 0.13.0
       mapbox-gl:
         specifier: ^3.15.0
         version: 3.15.0
@@ -222,6 +219,9 @@ importers:
       hardhat-gas-reporter:
         specifier: ^2.3.0
         version: 2.3.0(bufferutil@4.0.9)(hardhat@2.26.3(bufferutil@4.0.9)(ts-node@10.9.2(@types/node@22.18.10)(typescript@5.9.3))(typescript@5.9.3)(utf-8-validate@5.0.10))(typescript@5.9.3)(utf-8-validate@5.0.10)(zod@4.1.12)
+      install:
+        specifier: ^0.13.0
+        version: 0.13.0
       mocha:
         specifier: ^11.7.1
         version: 11.7.4

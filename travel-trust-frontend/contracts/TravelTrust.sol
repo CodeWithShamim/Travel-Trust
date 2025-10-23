@@ -105,7 +105,7 @@ contract TravelTrust is SepoliaConfig {
     require(msg.sender != serviceOwner, 'Owner cannot pay self');
 
     // decrypt encrypted price
-    bytes32[] memory cts = new bytes32[](2);
+    bytes32[] memory cts = new bytes32[](1);
     cts[0] = FHE.toBytes32(svc.price);
 
     uint256 reqId = FHE.requestDecryption(cts, this.priceDycryptCallback.selector);

@@ -163,25 +163,26 @@ const ServiceDetails = ({ service }: IServiceProps) => {
     // if (!date || !time || !ticket || !types) {
     //   return
     // }
-    // // const { date, time } = getTimeAndDate();
-    // const data: IBooking = {
-    //   date,
-    //   time,
-    //   types,
-    //   ticket,
-    //   userId: user?.id,
-    //   serviceId: id as string,
-    // }
-    // try {
-    //   const res: any = await createBooking(data)
-    //   if (res?.data?.id) {
-    //     message.success('Booking created successfully.')
-    //     // router?.push("/dashboard/user/bookings");
-    //     setBookingData(res?.data)
-    //   }
-    // } catch (error) {
-    //   message.error('Failed to booking.')
-    // }
+
+    // const { date, time } = getTimeAndDate();
+    const data: IBooking = {
+      date,
+      time,
+      types,
+      ticket,
+      userId: user?.id,
+      serviceId: id as string,
+    };
+    try {
+      const res: any = await createBooking(data);
+      if (res?.data?.id) {
+        message.success('Booking created successfully.');
+        // router?.push("/dashboard/user/bookings");
+        setBookingData(res?.data);
+      }
+    } catch (error) {
+      message.error('Failed to booking.');
+    }
   };
 
   // add review
@@ -317,12 +318,9 @@ const ServiceDetails = ({ service }: IServiceProps) => {
             />
           </Link>
 
-          {/* <div>
-            <PaymentModal
-              bookingData={bookingData}
-              setBookingData={setBookingData}
-            />
-          </div> */}
+          <div>
+            <PaymentModal bookingData={bookingData} setBookingData={setBookingData} />
+          </div>
 
           <div className="overflow-hidden">
             <motion.div initial="hidden" animate="show" variants={imageVariants()} className="">

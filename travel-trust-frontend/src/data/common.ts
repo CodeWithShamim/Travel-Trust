@@ -322,3 +322,53 @@ export const serviceItems = [
 //   'b8d3f8f6-1234-4c28-a902-b0e14d881114',
 //   '3e98b4f1-2a15-49a0-9e8b-76f4c5929acb',
 // ];
+
+export const bookingItems = [
+  {
+    id: 'f5b91a38-2b42-4d7a-8a91-12c7cfd12b20',
+    serviceId: '1a9c3f17-4d14-4ab8-8c24-1b9c5efb8a01',
+    userId: 'b9876543-21ab-4cde-9f00-abcdef123456',
+    date: '2025-10-25',
+    time: '10:30 AM',
+    types: 'Spa Treatment',
+    ticket: 'TCKT-001',
+    status: 'pending',
+    createdAt: '2025-10-24T10:15:00.000Z',
+    updatedAt: '2025-10-24T10:15:00.000Z',
+    payments: [],
+  },
+  {
+    id: 'a7c43b26-5d99-4c1a-94f8-03b8ad14e201',
+    serviceId: '2f4b0b2e-8d2a-4f75-8b5f-d7c8304e1229',
+    userId: 'd2583697-13bc-4def-9f00-fedcba987654',
+    date: '2025-10-28',
+    time: '3:00 PM',
+    types: 'Private Tour',
+    ticket: 'TCKT-002',
+    status: 'confirmed',
+    createdAt: '2025-10-24T11:45:00.000Z',
+    updatedAt: '2025-10-24T11:45:00.000Z',
+    payments: [
+      {
+        id: 'pay-101',
+        amount: 150.0,
+        currency: 'USD',
+        method: 'ETH',
+        status: 'completed',
+      },
+    ],
+  },
+  {
+    id: 'd1c22b64-6aef-4c77-a132-909b7cbf23a4',
+    serviceId: '3e98b4f1-2a15-49a0-9e8b-76f4c5928acb',
+    userId: 'e123abc4-5678-9def-0000-aaaabbbbcccc',
+    date: '2025-11-02',
+    time: '6:45 PM',
+    types: 'Dinner Reservation',
+    ticket: 'TCKT-003',
+    status: 'cancelled',
+    createdAt: '2025-10-24T12:30:00.000Z',
+    updatedAt: '2025-10-24T12:45:00.000Z',
+    payments: [],
+  },
+];

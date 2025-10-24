@@ -1,12 +1,12 @@
-'use client'
-import Header from '@/components/ui/Header'
-import SideBar from '@/components/ui/SideBar'
-import { useAppSelector, useAppToast } from '@/redux/hooks'
-import { Layout } from 'antd'
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+'use client';
+import Header from '@/components/ui/Header';
+import SideBar from '@/components/ui/SideBar';
+import { useAppSelector, useAppToast } from '@/redux/hooks';
+import { Layout } from 'antd';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
-import 'chart.js/auto'
+import 'chart.js/auto';
 import {
   Chart as ChartJS,
   LineController,
@@ -15,36 +15,29 @@ import {
   LinearScale,
   Title,
   CategoryScale,
-} from 'chart.js'
-import BottomBar from '@/components/ui/BottomBar'
-import { useAccount } from 'wagmi'
-import toast from 'react-hot-toast'
+} from 'chart.js';
+import BottomBar from '@/components/ui/BottomBar';
+import { useAccount } from 'wagmi';
+import toast from 'react-hot-toast';
 
-ChartJS.register(
-  LineController,
-  LineElement,
-  PointElement,
-  LinearScale,
-  Title,
-  CategoryScale
-)
+ChartJS.register(LineController, LineElement, PointElement, LinearScale, Title, CategoryScale);
 
-const { Content } = Layout
+const { Content } = Layout;
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const { data, isLoading } = useAppSelector((state) => state.user)
-  const user: any = data
+  const { data, isLoading } = useAppSelector((state) => state.user);
+  const user: any = data;
 
-  const { isConnected } = useAccount()
-  const { showToast } = useAppToast()
+  const { isConnected } = useAccount();
+  const { showToast } = useAppToast();
 
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     if (!isConnected) {
-      showToast('Connect wallet to access dashboard', 'error')
+      showToast('Connect wallet to access dashboard', 'error');
     }
-  }, [isConnected])
+  }, [isConnected, showToast]);
 
   return (
     <>
@@ -57,13 +50,11 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         <BottomBar user={user} />
 
         <Content className="relative p-4 inset-x-0 ">
-          <div className="w-full max-w-[1200px] mx-auto h-[100%]">
-            {children}
-          </div>
+          <div className="w-full max-w-[1200px] mx-auto h-[100%]">{children}</div>
         </Content>
       </Layout>
     </>
-  )
-}
+  );
+};
 
-export default DashboardLayout
+export default DashboardLayout;

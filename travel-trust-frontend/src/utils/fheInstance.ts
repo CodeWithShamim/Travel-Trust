@@ -3,7 +3,6 @@ let fheInstance: any = null;
 
 import { TravelTrustContract } from '@/lib/contracts';
 import { config } from '@/lib/Wagmi';
-import { useAppToast } from '@/redux/hooks';
 import { initSDK, createInstance, SepoliaConfig } from '@zama-fhe/relayer-sdk/bundle';
 import { Signer } from 'ethers';
 import { signTypedData } from 'wagmi/actions';
@@ -32,8 +31,6 @@ export function getFheInstance() {
 
 // Decrypt a single encrypted value using the relayer
 export async function decryptValue(encryptedHandle: string): Promise<any> {
-  const { showToast } = useAppToast();
-
   if (!fheInstance) {
     await initializeFheInstance();
   }
@@ -47,60 +44,12 @@ export async function decryptValue(encryptedHandle: string): Promise<any> {
     return Number(values[encryptedHandle]);
   } catch (error: any) {
     if (error?.message?.includes('fetch') || error?.message?.includes('NetworkError')) {
-      showToast('Decryption service is temporarily unavailable. Please try again later.', 'error');
+      throw new Error('Decryption service is temporarily unavailable. Please try again later.');
     }
-    if (error.message) {
-      showToast(error.message, 'error');
+    if (error) {
+      throw new Error(error.message);
     }
-    // throw error;
-  }
-}
-
-export async function userDecrypt(encryptedHandle: string, userAddress: string): Promise<any> {
-  const { showToast } = useAppToast();
-
-  if (!fheInstance) {
-    await initializeFheInstance();
-  }
-
-  if (!/^0x[a-fA-F0-9]{64}$/.test(encryptedHandle)) {
-    throw new Error('Invalid ciphertext handle for decryption');
-  }
-
-  try {
-    // Generate keys
-    const { privateKey, publicKey } = await fheInstance.generateKeypair();
-
-    // Create EIP712 message for signing
-    const eip712 = fheInstance.createEIP712(publicKey, TravelTrustContract.address);
-
-    // ✅ Sign it directly using wagmi (no walletClient needed)
-    const signature = await signTypedData(config, {
-      account: userAddress as `0x${string}`,
-      domain: eip712.domain,
-      types: eip712.types,
-      primaryType: eip712.primaryType,
-      message: eip712.message,
-    });
-
-    // ✅ Decrypt
-    const decryptedRating = await fheInstance.userDecrypt(
-      encryptedHandle,
-      privateKey,
-      publicKey,
-      signature,
-      TravelTrustContract.address,
-      userAddress,
-    );
-
-    console.log({ decryptedRating });
-  } catch (error: any) {
-    if (error?.message?.includes('fetch') || error?.message?.includes('NetworkError')) {
-      showToast('Decryption service is temporarily unavailable. Please try again later.', 'error');
-    }
-    if (error.message) {
-      showToast(error.message, 'error');
-    }
+    throw error;
   }
 }
 

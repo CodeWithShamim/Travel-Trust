@@ -64,7 +64,7 @@ const CryptoPaymentForm = ({
       showToast((error as any).message ?? e2?.message, 'error');
     }
 
-    if (data?.status) {
+    if (payData?.status) {
       setEncrypt(null);
       handleShowConfetti();
       showToast('Congratulation! payment success', 'success');
@@ -97,12 +97,12 @@ const CryptoPaymentForm = ({
 
       setEncrypt('Waiting for tx confirmation...');
 
-      const serviceId = '1a9c3f17-4d14-4ab8-8c24-1b9c5efb8a01';
+      //   const serviceId = '1a9c3f17-4d14-4ab8-8c24-1b9c5efb8a01';
 
       const txData: any = {
         ...TravelTrustContract,
         functionName: 'servicePayment',
-        args: [SERVICE_OWNER as `0x${string}`, serviceId],
+        args: [SERVICE_OWNER as `0x${string}`, bookingData?.serviceId],
         chainId: 11155111,
         value: parseEther('0.02'),
       };
@@ -128,7 +128,10 @@ const CryptoPaymentForm = ({
 
         <div className="py-5">
           <h2 className="font-bold text-green-500">
-            Payable Amount: ${bookingData?.service?.price}
+            {/* Payable Amount: ${bookingData?.service?.price} */}
+            {/* ------  */}
+            {/* just for demon  */}
+            Payable Amount: 0.02
           </h2>
         </div>
 

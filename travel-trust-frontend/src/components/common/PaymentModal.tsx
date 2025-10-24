@@ -22,8 +22,7 @@ const PaymentModal = ({ bookingData, setBookingData }: IPaymentModal) => {
   return (
     <div>
       <Modal
-        // open={bookingData?.id ? true : false}
-        open={true}
+        open={bookingData?.id ? true : false}
         onCancel={() => setBookingData(null)}
         footer={null}
         className="lg:w-[60rem]"
@@ -97,13 +96,11 @@ const PaymentModal = ({ bookingData, setBookingData }: IPaymentModal) => {
 
           {/* crypto form & feature */}
           {paymentMethod === PAYMENT_METHOD_ROLE.CRYPTO && (
-            <Elements stripe={stripePromise}>
-              <CryptoPaymentForm
-                bookingData={bookingData}
-                setBookingData={setBookingData}
-                setIsPaymentSuccess={setIsPaymentSuccess}
-              />
-            </Elements>
+            <CryptoPaymentForm
+              bookingData={bookingData}
+              setBookingData={setBookingData}
+              setIsPaymentSuccess={setIsPaymentSuccess}
+            />
           )}
 
           {/* stripe form & feature */}

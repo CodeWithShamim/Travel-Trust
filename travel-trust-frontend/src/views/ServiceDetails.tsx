@@ -45,7 +45,7 @@ import ShareService from '@/components/ui/ShareService';
 import MapView from '@/components/ui/MapView';
 import ServiceCard from '@/components/ui/ServiceCard';
 import PaymentModal from '@/components/common/PaymentModal';
-import { serviceItems } from '@/data/common';
+import { bookingItems, serviceItems } from '@/data/common';
 
 import {
   useAccount,
@@ -92,6 +92,8 @@ const ServiceDetails = ({ service }: IServiceProps) => {
   // const { data: suggestedService, isLoading: serviceLoading } = FFD20A({
   //   ...serviceQuery,
   // })
+
+  const fakeBookingData = bookingItems;
 
   const [ratings, setRatings] = useState<number[]>([5, 3, 4, 5, 5]);
   const [types, setTypes] = useState<string>('');
@@ -154,15 +156,19 @@ const ServiceDetails = ({ service }: IServiceProps) => {
       refetch();
       showToast('Successfully sumitted', 'success');
     }
-  }, [error?.message, e2?.message, data]);
+  }, [error, e2, data, refetch, showToast]);
 
   // const { fhe, ready } = useFhe();
 
   // add service booking
   const handleServiceBooking = async () => {
-    // if (!date || !time || !ticket || !types) {
-    //   return
-    // }
+    if (!date || !time || !ticket || !types) {
+      showToast('Booking data missing!', 'error');
+      return;
+    }
+
+    // payment modal open for crypto payment
+    setBookingData(fakeBookingData[0]);
 
     // const { date, time } = getTimeAndDate();
     const data: IBooking = {

@@ -79,7 +79,7 @@ const ServiceForm = ({ mode = ADD }: { mode?: 'ADD' | 'EDIT' }) => {
       refetch();
       showToast('Successfully created service', 'success');
     }
-  }, [e2?.message, data]);
+  }, [e2?.message, data, refetch, showToast]);
 
   useEffect(() => {
     if (mode === EDIT) {

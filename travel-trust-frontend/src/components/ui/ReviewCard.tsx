@@ -6,12 +6,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import defaultImage from '@/assets/login.webp';
 import { IReview } from '@/types';
-import {
-  decryptValue,
-  initializeFheInstance,
-  requestUserDecryption,
-  userDecrypt,
-} from '@/utils/fheInstance';
+import { decryptValue, initializeFheInstance, requestUserDecryption } from '@/utils/fheInstance';
 import { useAccount, useWalletClient } from 'wagmi';
 import { BrowserProvider } from 'ethers';
 import { useAppToast } from '@/redux/hooks';

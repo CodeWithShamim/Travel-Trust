@@ -33,8 +33,8 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       showToast('Please connect your wallet.', 'error');
     }
 
-    initializeFhevm();
-  }, [isConnected, address]);
+    // initializeFhevm();
+  }, [isConnected, address, showToast]);
 
   if (isLoading) {
     return <Loader />;

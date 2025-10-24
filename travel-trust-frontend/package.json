@@ -46,6 +46,7 @@
     "framer-motion-3d": "^12.4.13",
     "mapbox-gl": "^3.15.0",
     "maplibre-gl": "^2.4.0",
+    "minimatch": "^10.0.3",
     "negotiator": "^0.6.3",
     "next": "15.5.4",
     "nextjs-toploader": "^3.9.17",
@@ -69,6 +70,7 @@
   },
   "devDependencies": {
     "@fhevm/hardhat-plugin": "^0.1.0",
+    "@fhevm/mock-utils": "0.1.0",
     "@fhevm/solidity": "^0.8.0",
     "@nomicfoundation/hardhat-chai-matchers": "^2.1.0",
     "@nomicfoundation/hardhat-ethers": "3.0.9",
@@ -78,6 +80,7 @@
     "@typechain/ethers-v6": "^0.5.1",
     "@typechain/hardhat": "^9.1.0",
     "@types/chai": "^4.3.20",
+    "@types/minimatch": "^6.0.0",
     "@types/mocha": "^10.0.10",
     "@types/negotiator": "^0.6.4",
     "@types/node": "^22.18.10",
@@ -100,6 +103,7 @@
     "hardhat-gas-reporter": "^2.3.0",
     "install": "^0.13.0",
     "mocha": "^11.7.1",
+    "pino-pretty": "^13.1.2",
     "prettier": "^3.6.2",
     "prettier-plugin-solidity": "^2.1.0",
     "rimraf": "^6.0.1",
@@ -113,5 +117,6 @@
   },
   "files": [
     "contracts"
-  ]
+  ],
+  "packageManager": "yarn@1.22.19"
 }

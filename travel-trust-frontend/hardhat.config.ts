@@ -10,7 +10,7 @@ require('dotenv').config(); // load .env
 
 const MNEMONIC =
   process.env.MNEMONIC || 'test test test test test test test test test test test junk';
-const INFURA_API_KEY = process.env.INFURA_API_KEY || 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz';
+const INFURA_API_KEY = process.env.NEXT_PUBLIC_INFURA_API_KEY || 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz';
 
 /** @type {import('hardhat/config').HardhatUserConfig} */
 const config = {

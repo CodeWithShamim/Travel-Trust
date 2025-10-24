@@ -11,11 +11,12 @@ const nextConfig = {
   },
   productionBrowserSourceMaps: false,
   telemetry: false,
-  experimental: {
-    serverActions: true, // if you use server actions
-    turbo: true, // if you’re on Next 15+
-  },
-  transpilePackages: ['@zama-fhe/relayer-sdk'],
+  // experimental: {
+  //   serverActions: true, // if you use server actions
+  //   turbo: true, // if you’re on Next 15+
+  // },
+  transpilePackages: ['@zama-fhe/relayer-sdk']
+
 };
 
 module.exports = nextConfig;

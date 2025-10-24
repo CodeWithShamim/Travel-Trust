@@ -7,6 +7,8 @@ import { RainbowKitProvider, getDefaultConfig, lightTheme } from '@rainbow-me/ra
 import { defineChain } from 'viem';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+const infuraAPIKEY = process.env.NEXT_PUBLIC_INFURA_API_KEY;
+
 const zamaTestnet = defineChain({
   id: 8009,
   name: 'Zama FHE Testnet',
@@ -36,7 +38,7 @@ const sepoliaTest = defineChain({
   },
   rpcUrls: {
     default: {
-      http: ['https://sepolia.infura.io/v3/531b54af7cd34bf3b2081ec8e462da35'], // your RPC URL
+      http: [`https://sepolia.infura.io/v3/${infuraAPIKEY}`],
     },
   },
   blockExplorers: {

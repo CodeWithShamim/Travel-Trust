@@ -56,3 +56,4 @@ cache/
 .coverage_contracts
 deployments
 tmp
+fhevmtemp

@@ -3,6 +3,7 @@ pragma solidity ^0.8.24;
 
 import {FHE, eaddress, euint8, euint32, euint64, externalEuint64, externalEuint8} from '@fhevm/solidity/lib/FHE.sol';
 import {SepoliaConfig} from '@fhevm/solidity/config/ZamaConfig.sol';
+// import 'hardhat/console.sol';
 
 contract TravelTrust is SepoliaConfig {
   struct Review {
@@ -36,8 +37,15 @@ contract TravelTrust is SepoliaConfig {
   //service => buyer => true/false
   mapping(string => mapping(address => bool)) public hasPaymented;
 
-  mapping(uint256 => string) internal serviceIdByRequestId;
-  mapping(uint256 => address) internal serviceOwnerByRequestId;
+  // Temporary storage for pending decryption requests
+  struct PaymentRequest {
+    address buyer;
+    address serviceOwner;
+    string serviceId;
+    uint256 paidAmount;
+  }
+
+  mapping(uint256 => PaymentRequest) public pendingRequests;
 
   uint256 public serviceFees;
 
@@ -45,6 +53,7 @@ contract TravelTrust is SepoliaConfig {
   event ServiceFeesWithdrawn(address indexed to, uint256 amount);
   event ServiceAdded(string indexed serviceId, string name, address indexed owner);
   event ServicePaid(address indexed buyer, address indexed serviceOwner, string indexed serviceId);
+  event ServiceDecryptionRequested(uint256 requestId, string serviceId);
 
   event ReviewSubmitted(address indexed reviewer, string indexed serviceId);
   // -------- event end -----------
@@ -101,6 +110,9 @@ contract TravelTrust is SepoliaConfig {
     require(svc.owner != address(0), 'Service not found');
     require(!hasPaymented[serviceId][msg.sender], 'You already payment for this service');
 
+    // initial this payment paid for prevent duplicates
+    // hasPaymented[serviceId][msg.sender] = true;
+
     // prevent self-payment
     require(msg.sender != serviceOwner, 'Owner cannot pay self');
 
@@ -110,8 +122,15 @@ contract TravelTrust is SepoliaConfig {
 
     uint256 reqId = FHE.requestDecryption(cts, this.priceDycryptCallback.selector);
     // svc.decryptionRequestId = reqId;
-    serviceIdByRequestId[reqId] = serviceId;
-    serviceOwnerByRequestId[reqId] = serviceOwner;
+
+    pendingRequests[reqId] = PaymentRequest({
+      buyer: msg.sender,
+      serviceOwner: serviceOwner,
+      serviceId: serviceId,
+      paidAmount: msg.value
+    });
+
+    emit ServiceDecryptionRequested(reqId, serviceId);
   }
 
   // The relayer passes ABI-encoded cleartexts and a decryption proof
@@ -124,22 +143,21 @@ contract TravelTrust is SepoliaConfig {
     FHE.checkSignatures(requestId, cleartexts, decryptionProof);
 
     // Decode the cleartexts back into uint64 values [revealedYes, revealedNo]
-    uint64 price = abi.decode(cleartexts, (uint64));
+    uint64 decryptedPrice = abi.decode(cleartexts, (uint64));
+    PaymentRequest memory req = pendingRequests[requestId];
 
-    address serviceOwner = serviceOwnerByRequestId[requestId];
-    string memory serviceId = serviceIdByRequestId[requestId];
+    Service storage svc = services[req.serviceOwner][req.serviceId];
 
-    Service storage svc = services[serviceOwner][serviceId];
+    require(req.paidAmount == decryptedPrice, 'Incorrect payment amount');
 
-    require(msg.value == price, 'Incorrect payment amount');
+    // Finalize payment
+    (bool sent, ) = payable(svc.owner).call{value: req.paidAmount}('');
 
-    // transfer payment to service owner
-    (bool sent, ) = payable(svc.owner).call{value: msg.value}('');
     require(sent, 'Payment failed');
 
-    hasPaymented[serviceId][msg.sender] = true;
-
-    emit ServicePaid(msg.sender, serviceOwner, serviceId);
+    hasPaymented[req.serviceId][req.buyer] = true;
+    delete pendingRequests[requestId];
+    emit ServicePaid(req.buyer, req.serviceOwner, req.serviceId);
   }
 
   // Submit a review for a service owned by serviceOwner. Anyone can call this.

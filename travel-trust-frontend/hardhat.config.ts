@@ -1,20 +1,19 @@
-// import '@fhevm/hardhat-plugin';
-// import '@nomicfoundation/hardhat-chai-matchers';
-// import '@nomicfoundation/hardhat-ethers';
-// import '@nomicfoundation/hardhat-verify';
-import '@typechain/hardhat';
-import 'hardhat-deploy';
-import 'hardhat-gas-reporter';
-import 'solidity-coverage';
-import type { HardhatUserConfig } from 'hardhat/config';
+require('@fhevm/hardhat-plugin');
+require('@nomicfoundation/hardhat-chai-matchers');
+require('@nomicfoundation/hardhat-ethers');
+require('@nomicfoundation/hardhat-verify');
+require('@typechain/hardhat');
+require('hardhat-deploy');
+require('hardhat-gas-reporter');
+require('solidity-coverage');
+require('dotenv').config(); // load .env
 
-import 'dotenv/config'; // <- load .env
-
-const MNEMONIC: string =
+const MNEMONIC =
   process.env.MNEMONIC || 'test test test test test test test test test test test junk';
-const INFURA_API_KEY: string = process.env.INFURA_API_KEY || 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz';
+const INFURA_API_KEY = process.env.INFURA_API_KEY || 'zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz';
 
-const config: any = {
+/** @type {import('hardhat/config').HardhatUserConfig} */
+const config = {
   defaultNetwork: 'hardhat',
   namedAccounts: {
     deployer: 0,
@@ -62,4 +61,4 @@ const config: any = {
   },
 };
 
-export default config;
+module.exports = config;

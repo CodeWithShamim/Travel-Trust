@@ -7,7 +7,7 @@ const ConfettiComponent = ({ active }: { active: boolean }) => {
   return (
     <Confetti
       numberOfPieces={400}
-      recycle={true}
+      recycle={false}
       width={window?.innerWidth}
       height={window?.innerHeight}
       run={active}

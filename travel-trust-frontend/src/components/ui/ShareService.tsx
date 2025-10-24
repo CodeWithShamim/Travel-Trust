@@ -1,4 +1,5 @@
 import { config } from "@/helpers/config/envConfig";
+import { useAppToast } from "@/redux/hooks";
 import { Button, Modal, message } from "antd";
 import React, { useState } from "react";
 import {
@@ -25,11 +26,12 @@ const ShareService = ({
 }: IShareServiceProps) => {
   const shareUrl = `${config.base_url}/service-details/${id}`;
   const [isCopied, setIsCopied] = useState(false);
+  const {showToast} = useAppToast()
 
   const handleCopyToClipboard = () => {
     navigator.clipboard.writeText(shareUrl).then(() => {
       setIsCopied(true);
-      message.success("Link copied to clipboard");
+      showToast("Link copied to clipboard", "success");
       setTimeout(() => {
         setIsCopied(false);
       }, 2000);

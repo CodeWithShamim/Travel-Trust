@@ -9,6 +9,7 @@ const ProgressBar = dynamic(() => import('@/components/common/ProgressBar'));
 import { Toaster } from 'react-hot-toast';
 import Script from 'next/script';
 import { Metadata } from 'next';
+import FhScript from '@/components/common/FhScript';
 
 export const metadata: Metadata = {
   title: 'Travel Trust Agency Website',
@@ -34,13 +35,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <Toaster />
           </Suspense>
 
-          <Script
-            src="https://cdn.zama.ai/relayer-sdk-js/0.2.0/relayer-sdk-js.umd.cjs"
-            strategy="afterInteractive"
-            // onLoad={async () => {
-            //   console.log('✅ ZamaRelayerSDK script loadeddddd');
-            // }}
-          />
+          <FhScript />
 
           <ProgressBar />
         </body>

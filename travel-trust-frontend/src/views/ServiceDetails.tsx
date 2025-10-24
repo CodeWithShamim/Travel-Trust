@@ -147,8 +147,8 @@ const ServiceDetails = ({ service }: IServiceProps) => {
 
   // show error & validation
   useEffect(() => {
-    if (error?.message || e2?.message) {
-      showToast((error as any).message ?? e2?.message, 'error');
+    if (e2?.message) {
+      showToast(e2?.message, 'error');
     }
 
     if (data?.status) {
@@ -156,7 +156,13 @@ const ServiceDetails = ({ service }: IServiceProps) => {
       refetch();
       showToast('Successfully sumitted', 'success');
     }
-  }, [error, e2, data, refetch, showToast]);
+  }, [e2, data]);
+
+  useEffect(() => {
+    if (encrypt) {
+      showToast(encrypt, 'loading');
+    }
+  }, [encrypt]);
 
   // const { fhe, ready } = useFhe();
 
@@ -199,6 +205,8 @@ const ServiceDetails = ({ service }: IServiceProps) => {
         return;
       }
       setEncrypt('Encrypting rating...');
+      // instant render ui
+      await new Promise((r) => setTimeout(r, 0));
 
       if (!fhe) {
         fhe = await initializeFheInstance();
@@ -212,7 +220,7 @@ const ServiceDetails = ({ service }: IServiceProps) => {
 
       // average rating
       const avgRating = Math.ceil(ratings.reduce((sum, num) => sum + num, 0) / ratings.length);
-      console.log({ avgRating });
+      // console.log({ avgRating });
 
       ciphertext.add8(BigInt(avgRating));
       const { handles, inputProof } = await ciphertext.encrypt();
@@ -553,13 +561,14 @@ const ServiceDetails = ({ service }: IServiceProps) => {
                   </div>
                 </div>
 
-                <p className="font-bold text-lg text-red-500 py-2 loader1">
+                <div className="font-bold text-lg text-red-500 py-2 loader1 inline-flex items-center gap-2">
                   {encrypt && (
                     <>
-                      <Spin></Spin> {encrypt}
+                      <Spin size="small" />
+                      <span>{encrypt}</span>
                     </>
                   )}
-                </p>
+                </div>
 
                 <Controller
                   name="comment"
@@ -585,10 +594,10 @@ const ServiceDetails = ({ service }: IServiceProps) => {
                 </Button>
               </Form>
             </div>
-            r {/* FHE review show  */}
+            {/* FHE review show  */}
             {(reviewResult as any)?.exists ? (
               <>
-                <p className="text-xl text-red-500 pt-4">
+                <p className="text-sm text-red-500 pt-4">
                   Your review stays fully confidential — securely encrypted on the blockchain and
                   viewable only by you and the admin.
                 </p>

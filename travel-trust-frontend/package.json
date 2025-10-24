@@ -117,6 +117,5 @@
   },
   "files": [
     "contracts"
-  ],
-  "packageManager": "yarn@1.22.19"
+  ]
 }

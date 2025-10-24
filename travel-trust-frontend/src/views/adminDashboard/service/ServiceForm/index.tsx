@@ -79,7 +79,7 @@ const ServiceForm = ({ mode = ADD }: { mode?: 'ADD' | 'EDIT' }) => {
       refetch();
       showToast('Successfully created service', 'success');
     }
-  }, [e2?.message, data, refetch, showToast]);
+  }, [e2, data]);
 
   useEffect(() => {
     if (mode === EDIT) {
@@ -116,13 +116,15 @@ const ServiceForm = ({ mode = ADD }: { mode?: 'ADD' | 'EDIT' }) => {
 
             // encrypted by zama fhe
             setEncrypt('Encrypting...');
+            // for instant ui render
+            await new Promise((r) => setTimeout(r, 0));
 
             const ciphertext = await fhe.createEncryptedInput(contractAddress, address);
 
-            const price = parseEther((filterData as any)?.price.toString());
-            const name = filterData?.name;
+            console.log({ priceee: filterData?.price });
 
-            console.log({ price });
+            const price = parseEther((filterData as any)?.price);
+            const name = filterData?.name;
 
             ciphertext.add64(BigInt(price));
             const { handles, inputProof } = await ciphertext.encrypt();

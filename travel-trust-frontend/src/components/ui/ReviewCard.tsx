@@ -6,7 +6,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import defaultImage from '@/assets/login.webp';
 import { IReview } from '@/types';
-import { decryptValue, initializeFheInstance, requestUserDecryption } from '@/utils/fheInstance';
+import { decryptValue, requestUserDecryption } from '@/utils/fheInstance';
 import { useAccount, useWalletClient } from 'wagmi';
 import { BrowserProvider } from 'ethers';
 import { useAppToast } from '@/redux/hooks';
@@ -43,7 +43,6 @@ const ReviewCard = ({ review }: IReviewCardProps) => {
       const provider = new BrowserProvider(walletClient);
       const signer = await provider.getSigner();
       setDecrypt('Rating decryping...');
-      await initializeFheInstance();
 
       const rating = await requestUserDecryption(signer, review.rating);
       setDRating(rating);

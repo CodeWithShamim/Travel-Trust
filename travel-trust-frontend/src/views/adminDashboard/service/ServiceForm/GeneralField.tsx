@@ -61,8 +61,8 @@ const GeneralField = ({ setImageUrl, image }: IGeneralField) => {
           </Form.Item>
           <Row gutter={16}>
             <Col xs={24} sm={24} md={12}>
-              <Form.Item name="price" label="Price" rules={serviceFieldrules.price}>
-                <Input placeholder="Price" />
+              <Form.Item name="price" label="Price in ETH" initialValue={'0.02'}>
+                <Input placeholder="Enter price in ETH" type="number" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={24} md={12}>
@@ -112,7 +112,7 @@ const GeneralField = ({ setImageUrl, image }: IGeneralField) => {
           </Dragger>
         </Card>
         <Card title="Organization">
-          <Form.Item name="category" label="Category" rules={serviceFieldrules.category}>
+          <Form.Item name="category" label="Category" initialValue={'Any'}>
             <Select className="w-100" placeholder="Category">
               {TravelCategory.map((elm, index) => (
                 <option key={index} value={elm}>
@@ -121,7 +121,7 @@ const GeneralField = ({ setImageUrl, image }: IGeneralField) => {
               ))}
             </Select>
           </Form.Item>
-          <Form.Item name="status" label="Status">
+          <Form.Item name="status" label="Status" initialValue={'available'}>
             <Select className="w-100" placeholder="Status">
               {ServiceStatus.map((elm, index) => (
                 <option key={index} value={elm}>

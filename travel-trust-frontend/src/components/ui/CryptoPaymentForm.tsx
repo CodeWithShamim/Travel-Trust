@@ -9,7 +9,7 @@ import { IPaymentModal } from '@/types';
 import { useAppSelector, useAppToast } from '@/redux/hooks';
 import { useRouter } from 'next/navigation';
 import ConfettiComponent from './Confetti';
-import { getFheInstance, initializeFheInstance } from '@/utils/fheInstance';
+import { getFheInstance } from '@/utils/fheInstance';
 import TravelTrustABI from '@/abi/TravelTrust.json';
 import { useAccount, useWaitForTransactionReceipt, useWriteContract } from 'wagmi';
 import { SERVICE_OWNER, TravelTrustContract } from '@/lib/contracts';
@@ -131,7 +131,7 @@ const CryptoPaymentForm = ({
             {/* Payable Amount: ${bookingData?.service?.price} */}
             {/* ------  */}
             {/* just for demon  */}
-            Payable Amount: 0.02
+            Payable Amount: 0.02 ETH
           </h2>
         </div>
 

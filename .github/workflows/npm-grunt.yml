@@ -3,6 +3,7 @@ name: Build Docker Image & Push on DockerHub
 on:
   push:
     branches: ["main"]
+    
 
 jobs:
   build:

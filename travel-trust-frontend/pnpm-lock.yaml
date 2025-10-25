@@ -71,6 +71,9 @@ importers:
       maplibre-gl:
         specifier: ^2.4.0
         version: 2.4.0
+      media-chrome:
+        specifier: ^4.14.0
+        version: 4.14.0(react@19.2.0)
       minimatch:
         specifier: ^10.0.3
         version: 10.0.3

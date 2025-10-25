@@ -1,56 +1,51 @@
-'use client'
+'use client';
 
-import { IService } from '@/types'
-import Image from 'next/image'
-import { Card, Rate, Tooltip, message } from 'antd'
-import React, { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { ShoppingCartOutlined } from '@ant-design/icons'
-import colors from '@/constants/colors'
-import { useAppDispatch, useAppSelector, useBlurDataURL } from '@/redux/hooks'
-import { addServiceToCart } from '@/redux/slices/serviceSlice'
-import { motion, useAnimation } from 'framer-motion'
-import { fadeIn, slideIn, zoomIn } from '@/utils/motion'
-import { dynamicBlurDataUrl } from '@/utils/base64'
+import { IService } from '@/types';
+import Image from 'next/image';
+import { Card, Rate, Tooltip, message } from 'antd';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { ShoppingCartOutlined } from '@ant-design/icons';
+import colors from '@/constants/colors';
+import { useAppDispatch, useAppSelector, useBlurDataURL } from '@/redux/hooks';
+import { addServiceToCart } from '@/redux/slices/serviceSlice';
+import { motion, useAnimation } from 'framer-motion';
+import { fadeIn, slideIn, zoomIn } from '@/utils/motion';
+import { dynamicBlurDataUrl } from '@/utils/base64';
 
-const { Meta } = Card
+const { Meta } = Card;
 
 interface ServiceCardProps {
-  service: IService
-  loading?: boolean
-  index?: number
+  service: IService;
+  loading?: boolean;
+  index?: number;
 }
 
 const ServiceCard = ({ service, loading, index = 0 }: ServiceCardProps) => {
-
-  const { id, name, price, image, category, status } = service
-  const cart = useAppSelector((state) => state.service.cart)
-  const dispatch = useAppDispatch()
-  const { blurDataURL, isLoading } = useBlurDataURL(image)
+  const { id, name, price, image, category, status } = service;
+  const cart = useAppSelector((state) => state.service.cart);
+  const dispatch = useAppDispatch();
+  const { blurDataURL, isLoading } = useBlurDataURL(image);
 
   const handleAddToCart = (type: 'add' | 'remove') => {
     if (cart.length >= 5 && type === 'add') {
-      message.warning('Maximum cart size exists! total cart 5')
-      return
+      message.warning('Maximum cart size exists! total cart 5');
+      return;
     }
 
-    dispatch(addServiceToCart(service))
-  }
+    dispatch(addServiceToCart(service));
+  };
 
-  const isExistOnCart = cart.some((item: { id: string }) => item?.id === id)
+  const isExistOnCart = cart.some((item: { id: string }) => item?.id === id);
 
   return (
     <motion.div
       initial="hidden"
       whileInView="show"
-      variants={fadeIn('', 'scroll', index * 0.08, 0.5)}
+      // variants={fadeIn('', 'scroll', index * 0.08, 0.5)}
       className="w-full mx-auto flex justify-center"
     >
-      <Card
-        className="w-full h-[200px] shadow custom-card"
-        loading={loading}
-        hoverable
-      >
+      <Card className="w-full h-[200px] shadow custom-card" loading={loading} hoverable>
         <div
           onClick={() => handleAddToCart(isExistOnCart ? 'remove' : 'add')}
           className={`top-0 right-0 bg-primary z-20 text-white text-center absolute rounded-full w-8 h-8 ${
@@ -92,7 +87,7 @@ const ServiceCard = ({ service, loading, index = 0 }: ServiceCardProps) => {
         </Link>
       </Card>
     </motion.div>
-  )
-}
+  );
+};
 
-export default ServiceCard
+export default ServiceCard;

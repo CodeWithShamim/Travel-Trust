@@ -102,10 +102,6 @@ const ServiceForm = ({ mode = ADD }: { mode?: 'ADD' | 'EDIT' }) => {
 
         // add service in onchain
         if (mode === ADD) {
-          if (!isConnected) {
-            showToast('Wallet not connected!', 'error');
-          }
-
           // onchain
           try {
             // Initialize FHEVM if not already initialized

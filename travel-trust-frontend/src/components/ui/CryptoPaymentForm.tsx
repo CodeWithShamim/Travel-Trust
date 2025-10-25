@@ -54,14 +54,14 @@ const CryptoPaymentForm = ({
       //       : '/dashboard/admin/manage-bookings',
       //   );
       setBookingData(null);
-    }, 5000);
+    }, 10000);
   }, []);
 
   // show error & validation
   useEffect(() => {
-    if (error?.message || e2?.message) {
+    if (e2?.message) {
       setEncrypt(null);
-      showToast((error as any).message ?? e2?.message, 'error');
+      showToast(e2?.message, 'error');
     }
 
     if (payData?.status) {
@@ -69,7 +69,7 @@ const CryptoPaymentForm = ({
       handleShowConfetti();
       showToast('Congratulation! payment success', 'success');
     }
-  }, [error?.message, e2?.message, payData]);
+  }, [e2, payData]);
 
   let fhe = getFheInstance();
   const contractAddress: any = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? '0xTest';

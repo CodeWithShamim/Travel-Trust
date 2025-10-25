@@ -1,10 +1,10 @@
-import { Variants } from "framer-motion";
+import { Variants } from 'framer-motion';
 
 // ----------------------
 // 🔹 Custom Types
 // ----------------------
-type IDirection = "up" | "down" | "left" | "right" | "";
-type IType = "spring" | "tween" | "transform" | "scroll";
+type IDirection = 'up' | 'down' | 'left' | 'right' | '';
+type IType = 'spring' | 'tween' | 'transform' | 'scroll';
 
 // ----------------------
 // 🔹 Text Animation
@@ -18,7 +18,7 @@ export const textVariant = (delay: number = 0): Variants => ({
     y: 0,
     opacity: 1,
     transition: {
-      type: "spring",
+      type: 'spring',
       duration: 1.25,
       delay,
     },
@@ -29,14 +29,14 @@ export const textVariant = (delay: number = 0): Variants => ({
 // 🔹 Fade In Animation
 // ----------------------
 export const fadeIn = (
-  direction: IDirection = "",
-  type: IType = "tween",
+  direction: IDirection = '',
+  type: IType = 'tween',
   delay: number = 0,
-  duration: number = 0.6
+  duration: number = 0.6,
 ): any => ({
   hidden: {
-    x: direction === "left" ? 100 : direction === "right" ? -100 : 0,
-    y: direction === "up" ? 100 : direction === "down" ? -100 : 0,
+    x: direction === 'left' ? 100 : direction === 'right' ? -100 : 0,
+    y: direction === 'up' ? 100 : direction === 'down' ? -100 : 0,
     opacity: 0,
   },
   show: {
@@ -47,30 +47,30 @@ export const fadeIn = (
       type,
       delay,
       duration,
-      ease: "easeOut",
+      ease: 'easeOut',
     },
   },
 });
 
 // ----------------------
-// 🔹 Zoom In Animation
-// ----------------------
-export const zoomIn = (
-  delay: number = 0,
-  duration: number = 0.5
-): Variants => ({
+export const zoomIn = (delay: number = 0, duration: number = 0.45): Variants => ({
   hidden: {
-    scale: 0,
+    scale: 0.85, // start closer for smoother zoom
     opacity: 0,
+    filter: 'blur(4px)', // subtle pop effect
+    transformOrigin: 'center',
   },
   show: {
     scale: 1,
     opacity: 1,
+    filter: 'blur(0px)',
     transition: {
-      type: "tween",
       delay,
       duration,
-      ease: "easeOut",
+      ease: [0.25, 0.1, 0.25, 1], // cubic-bezier smoother than easeOut
+      type: 'spring', // feels more natural than tween
+      stiffness: 120,
+      damping: 15,
     },
   },
 });
@@ -79,14 +79,14 @@ export const zoomIn = (
 // 🔹 Slide In Animation
 // ----------------------
 export const slideIn = (
-  direction: IDirection = "",
-  type: IType = "tween",
+  direction: IDirection = '',
+  type: IType = 'tween',
   delay: number = 0,
-  duration: number = 0.6
+  duration: number = 0.6,
 ): any => ({
   hidden: {
-    x: direction === "left" ? "-100%" : direction === "right" ? "100%" : 0,
-    y: direction === "up" ? "100%" : direction === "down" ? "100%" : 0,
+    x: direction === 'left' ? '-100%' : direction === 'right' ? '100%' : 0,
+    y: direction === 'up' ? '100%' : direction === 'down' ? '100%' : 0,
   },
   show: {
     x: 0,
@@ -95,7 +95,7 @@ export const slideIn = (
       type,
       delay,
       duration,
-      ease: "easeOut",
+      ease: 'easeOut',
     },
   },
 });
@@ -103,22 +103,23 @@ export const slideIn = (
 // ----------------------
 // 🔹 Image Hover Animation
 // ----------------------
-export const imageVariants = (
-  type: string = "tween",
-  duration: number = 4
-): any => ({
+export const imageVariants = (type: string = 'tween', duration: number = 3): any => ({
   hidden: {
     scale: 1,
     transition: {
       type,
       duration,
+      ease: 'easeInOut',
     },
   },
   show: {
-    scale: 1.25,
+    scale: 1.1, // smaller zoom to reduce GPU load
     transition: {
       type,
       duration,
+      ease: 'easeInOut',
+      repeat: Infinity,
+      repeatType: 'reverse', // smoothly zooms in/out
     },
   },
 });
@@ -128,7 +129,7 @@ export const imageVariants = (
 // ----------------------
 export const staggerContainer = (
   staggerChildren: number = 0.1,
-  delayChildren: number = 0
+  delayChildren: number = 0,
 ): Variants => ({
   hidden: {},
   show: {

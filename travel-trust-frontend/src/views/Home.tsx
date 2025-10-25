@@ -31,6 +31,7 @@ const ImageGallery = dynamic(() => import('@/components/ui/ImageGallery'));
 const NewsCard = dynamic(() => import('@/components/ui/NewsCard'));
 
 import { TravelTrustContract } from '@/lib/contracts';
+import FHEVMCards from '@/components/ui/FhevmCard.tsx';
 
 const SponsorCarousel = dynamic(() => import('@/components/ui/SponsorCarousel'), { ssr: false });
 
@@ -86,6 +87,10 @@ const HomePage = () => {
               variants={imageVariants()}
               className="h-screen w-full"
               key={item}
+              style={{
+                willChange: 'transform', //force GPU acceleration
+                transformOrigin: 'center center',
+              }}
             >
               <Image
                 src={require(`@/assets/banner${item}.webp`)}
@@ -107,7 +112,7 @@ const HomePage = () => {
             initial="hidden"
             animate="show"
             variants={fadeIn('down', 'tween', 0, 1.5)}
-            className="custom-head-text px-4 text-6xl lg:text-8xl tracking-wide text-white font-extrabold uppercase text-center drop-shadow-md"
+            className="custom-head-text px-4 text-6xl lg:text-6xl tracking-wide text-white font-extrabold uppercase text-center drop-shadow-md"
           >
             {home?.heading} <span className="fancy">{home?.headingSide}</span>
           </motion.h1>
@@ -115,18 +120,9 @@ const HomePage = () => {
             initial="hidden"
             animate="show"
             variants={fadeIn('up', 'tween', 0, 1.5)}
-            className="custom-sub-text hero-banner__stroked-title text-center text-white text-2xl lg:text-3xl tracking-[1px] capitalize font-semibold pt-10"
+            className="custom-sub-text hero-banner__stroked-title text-center text-white text-2xl lg:text-2xl tracking-[1px] capitalize font-semibold pt-10"
           >
             {home?.subHeading}
-          </motion.p>
-
-          <motion.p
-            initial="hidden"
-            animate="show"
-            variants={fadeIn('up', 'tween', 0, 1.5)}
-            className="text-center text-amber-500 text-xl tracking-[1px] capitalize font-semibold py-2"
-          >
-            {home?.Zama}
           </motion.p>
         </div>
 
@@ -134,10 +130,34 @@ const HomePage = () => {
           <SearchBar />
         </motion.div>
       </div>
+      <div>
+        <FHEVMCards />
+      </div>
       {/* sponsor carousel  */}
       <div className="max-w-[1200px] mx-auto md:px-4 pb-5 mt-[-40px] lg:mt-0 md:pb-14 lg:pb-20">
         <SponsorCarousel />
       </div>
+
+      <div className="max-w-[1200px] mx-auto md:px-4 py-5 lg:mt-0 md:py-24 lg:py-36 flex items-center gap-6">
+        <div className="flex items-center gap-3 animate-pulse">
+          <div className="w-1 h-[300px] bg-green-500 rounded-full" />
+
+          <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-white font-bold text-lg">
+            👀
+          </div>
+          <span className="text-xl font-semibold text-green-400">
+            Watch Video & Learn About Travel Trust
+          </span>
+        </div>
+
+        <VideoPlayer
+          onReady={() => {
+            // setOnReady(true);
+            // setIsVideoPlay(true);
+          }}
+        />
+      </div>
+
       {/* services  */}
       <motion.div className="max-w-[1200px] mx-auto px-4">
         <motion.h1
@@ -182,6 +202,7 @@ const HomePage = () => {
         </div>
       </motion.div>
       {/* videos  */}
+
       <motion.div
         className={`${styles['background-image']} flex flex-col items-center justify-center w-full gap-4 text-center px-4 mt-12 md:mt-16 lg:mt-20`}
         // style={{ scale: scrollYProgress }}
@@ -210,8 +231,8 @@ const HomePage = () => {
         </h1>
         <p className="text-white text-lg uppercase">{home?.videoPlaySubText}</p>
       </motion.div>
-      z
-      {isVideoPlay && (
+
+      {/* {isVideoPlay && (
         <Modal
           open={isVideoPlay}
           onCancel={() => {
@@ -226,7 +247,7 @@ const HomePage = () => {
           {onReady || (
             <div className="w-full h-[20rem] lg:h-[35rem] text-center text-white bg-black absolute inset-0 flex items-center justify-center">
               {/* <Spin /> */}
-              <span className="pl-2">Loading video...</span>
+      {/* <span className="pl-2">Loading video...</span>
             </div>
           )}
 
@@ -239,7 +260,8 @@ const HomePage = () => {
             />
           </div>
         </Modal>
-      )}
+      )} */}
+
       {/* news  */}
       <div className="max-w-[1200px] mx-auto px-4 my-14 md:my-20 lg:my-24">
         <Divider orientation="left" orientationMargin="0" className="border-[#00ff4c]">

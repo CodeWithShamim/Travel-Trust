@@ -1,4 +1,5 @@
 {
+  "version": 2,
   "buildCommand": "yarn build",
   "installCommand": "yarn install",
   "outputDirectory": ".next",

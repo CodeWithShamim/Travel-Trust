@@ -112,6 +112,8 @@ export const sponsorItems = [
   },
 ];
 
+// ------------------------------------------------Demon purpose> waiting for backend update--------------------------------------
+
 export const reviewItems = [
   {
     id: 'b7a2b5e4-9b23-4f8f-b1c5-7d9934e7aa12',
@@ -169,7 +171,7 @@ export const serviceItems = [
     name: 'Luxury Beach Resort Stay',
     description:
       'Enjoy a 5-star beachfront resort experience with private villas, infinity pools, and fine dining.',
-    price: 450.0,
+    price: 0.02,
     image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e',
     location: 'Maldives',
     category: 'TRAVEL',
@@ -179,7 +181,7 @@ export const serviceItems = [
     id: '2f4b0b2e-8d2a-4f75-8b5f-d7c8304e1229',
     name: 'City Tour with Guide',
     description: 'Explore historic landmarks and hidden gems with a professional local guide.',
-    price: 80.0,
+    price: 0.02,
     image: 'https://images.unsplash.com/photo-1494526585095-c41746248156',
     location: 'Rome, Italy',
     category: 'TOUR',
@@ -190,7 +192,7 @@ export const serviceItems = [
     name: 'Mountain Trekking Adventure',
     description:
       'Join a guided trek through scenic mountain trails with camping and meals included.',
-    price: 120.0,
+    price: 0.02,
     image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee',
     location: 'Kathmandu, Nepal',
     category: 'ADVENTURE',
@@ -200,7 +202,7 @@ export const serviceItems = [
     id: '5a14e5c8-65f8-4e79-8f8d-128e7de26cf0',
     name: 'Professional Photography Session',
     description: 'Book a 2-hour outdoor or studio shoot with professional editing included.',
-    price: 150.0,
+    price: 0.02,
     image: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f',
     location: 'Los Angeles, USA',
     category: 'CREATIVE',
@@ -211,7 +213,7 @@ export const serviceItems = [
     name: 'Culinary Workshop',
     description:
       'Learn to cook authentic local dishes with a professional chef in a hands-on workshop.',
-    price: 95.0,
+    price: 0.02,
     image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836',
     location: 'Bangkok, Thailand',
     category: 'FOOD',
@@ -222,7 +224,7 @@ export const serviceItems = [
     name: 'Private Yacht Charter',
     description:
       'Rent a luxury yacht for a private cruise with captain, crew, and gourmet catering.',
-    price: 1200.0,
+    price: 0.02,
     image: 'https://images.unsplash.com/photo-1493558103817-58b2924bce98',
     location: 'Monaco',
     category: 'LUXURY',
@@ -233,7 +235,7 @@ export const serviceItems = [
     name: 'Eco Safari Tour',
     description:
       'Discover wildlife and natural landscapes with sustainable travel options and local guides.',
-    price: 350.0,
+    price: 0.02,
     image: 'https://images.unsplash.com/photo-1508672019048-805c876b67e2',
     location: 'Nairobi, Kenya',
     category: 'ADVENTURE',
@@ -244,7 +246,7 @@ export const serviceItems = [
     name: 'Culinary Workshop',
     description:
       'Learn to cook authentic local dishes with a professional chef in a hands-on workshop.',
-    price: 95.0,
+    price: 0.02,
     image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836',
     location: 'Bangkok, Thailand',
     category: 'FOOD',
@@ -256,7 +258,7 @@ export const serviceItems = [
     name: 'Desert Star Gazing Camp',
     description:
       'Spend the night under the stars in a luxury desert camp with guided astronomy sessions.',
-    price: 250.0,
+    price: 0.02,
     image: 'https://images.unsplash.com/photo-1523413651479-597eb2da0ad6',
     location: 'Dubai, UAE',
     category: 'ADVENTURE',
@@ -267,7 +269,7 @@ export const serviceItems = [
     name: 'Northern Lights Photography Tour',
     description:
       'Join professional photographers to capture the Aurora Borealis from the best scenic spots.',
-    price: 430.0,
+    price: 0.02,
     image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d',
     location: 'Reykjavík, Iceland',
     category: 'TOUR',
@@ -278,7 +280,7 @@ export const serviceItems = [
     name: 'Desert Star Gazing Camp',
     description:
       'Spend the night under the stars in a luxury desert camp with guided astronomy sessions.',
-    price: 250.0,
+    price: 0.02,
     image: 'https://images.unsplash.com/photo-1523413651479-597eb2da0ad6',
     location: 'Dubai, UAE',
     category: 'ADVENTURE',
@@ -289,7 +291,7 @@ export const serviceItems = [
     name: 'Northern Lights Photography Tour',
     description:
       'Join professional photographers to capture the Aurora Borealis from the best scenic spots.',
-    price: 430.0,
+    price: 0.02,
     image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d',
     location: 'Reykjavík, Iceland',
     category: 'TOUR',
@@ -300,7 +302,7 @@ export const serviceItems = [
     name: 'Mountain Trekking Adventure',
     description:
       'Join a guided trek through scenic mountain trails with camping and meals included.',
-    price: 120.0,
+    price: 0.1,
     image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee',
     location: 'Kathmandu, Nepal',
     category: 'ADVENTURE',
@@ -336,6 +338,9 @@ export const bookingItems = [
     createdAt: '2025-10-24T10:15:00.000Z',
     updatedAt: '2025-10-24T10:15:00.000Z',
     payments: [],
+    service: {
+      price: 0.02,
+    },
   },
   {
     id: 'a7c43b26-5d99-4c1a-94f8-03b8ad14e201',
@@ -351,12 +356,15 @@ export const bookingItems = [
     payments: [
       {
         id: 'pay-101',
-        amount: 150.0,
+        amount: 0.02,
         currency: 'USD',
         method: 'ETH',
         status: 'completed',
       },
     ],
+    service: {
+      price: 0.02,
+    },
   },
   {
     id: 'd1c22b64-6aef-4c77-a132-909b7cbf23a4',
@@ -370,5 +378,192 @@ export const bookingItems = [
     createdAt: '2025-10-24T12:30:00.000Z',
     updatedAt: '2025-10-24T12:45:00.000Z',
     payments: [],
+    service: {
+      price: 0.02,
+    },
+  },
+  {
+    id: 'b1e22a44-8c6f-47cc-a7c5-0912e4a2b330',
+    serviceId: '5a14e5c8-65f8-4e79-8f8d-128e7de26cf0',
+    userId: 'aa112233-4455-6677-8899-aabbccddeeff',
+    date: '2025-11-05',
+    time: '2:00 PM',
+    types: 'Photo Shoot',
+    ticket: 'TCKT-004',
+    status: 'confirmed',
+    createdAt: '2025-10-25T09:20:00.000Z',
+    updatedAt: '2025-10-25T09:30:00.000Z',
+    payments: [
+      {
+        id: 'pay-102',
+        amount: 0.02,
+        currency: 'USD',
+        method: 'ETH',
+        status: 'completed',
+      },
+    ],
+    service: {
+      price: 0.02,
+    },
+  },
+  {
+    id: 'c2d33b55-9e7f-48ab-9a89-3c1e5e9b4410',
+    serviceId: '6b3d8e3a-7f9f-44d4-9f76-9f5b67d6a13c',
+    userId: 'bb998877-6655-4433-2211-ffeeddccbbaa',
+    date: '2025-11-07',
+    time: '11:00 AM',
+    types: 'Cooking Class',
+    ticket: 'TCKT-005',
+    status: 'confirmed',
+    createdAt: '2025-10-25T13:00:00.000Z',
+    updatedAt: '2025-10-25T13:10:00.000Z',
+    payments: [
+      {
+        id: 'pay-103',
+        amount: 0.02,
+        currency: 'USD',
+        method: 'ETH',
+        status: 'completed',
+      },
+    ],
+    service: {
+      price: 0.02,
+    },
+  },
+  {
+    id: 'd3e44c66-1b9a-4a8f-9244-5b9e7b6d5521',
+    serviceId: '7f62b815-b87a-4b12-a987-24d8d98cb8b0',
+    userId: 'ccaa1122-3344-5566-7788-99aabbccdde0',
+    date: '2025-11-10',
+    time: '4:00 PM',
+    types: 'Luxury Charter',
+    ticket: 'TCKT-006',
+    status: 'pending',
+    createdAt: '2025-10-25T14:00:00.000Z',
+    updatedAt: '2025-10-25T14:00:00.000Z',
+    payments: [],
+    service: {
+      price: 0.02,
+    },
+  },
+  {
+    id: 'e4f55d77-2caa-4b1d-9315-6a2f8c9d6632',
+    serviceId: '8c29e7e4-4f25-4e1c-a3b8-fbaabf509b1f',
+    userId: 'ddeeff00-1122-3344-5566-778899aabbcc',
+    date: '2025-11-12',
+    time: '8:00 AM',
+    types: 'Safari Tour',
+    ticket: 'TCKT-007',
+    status: 'confirmed',
+    createdAt: '2025-10-26T08:30:00.000Z',
+    updatedAt: '2025-10-26T08:30:00.000Z',
+    payments: [
+      {
+        id: 'pay-104',
+        amount: 0.02,
+        currency: 'USD',
+        method: 'ETH',
+        status: 'completed',
+      },
+    ],
+    service: {
+      price: 0.02,
+    },
+  },
+  {
+    id: 'f6a66e88-3bcb-4c2e-8426-7b3f9d0e7743',
+    serviceId: '6b3d8e3a-7f9f-44d4-9f76-9f5b67d6a03c',
+    userId: '11223344-5566-7788-99aa-bbccddeeff00',
+    date: '2025-11-15',
+    time: '9:30 AM',
+    types: 'Cooking Workshop',
+    ticket: 'TCKT-008',
+    status: 'pending',
+    createdAt: '2025-10-26T09:45:00.000Z',
+    updatedAt: '2025-10-26T09:45:00.000Z',
+    payments: [],
+    service: {
+      price: 0.02,
+    },
+  },
+  {
+    id: 'g7b77f99-4cdc-4d3f-9537-8c4f0e1f8854',
+    serviceId: 'a2f3e47d-82b5-4f3f-8d21-1dbe93b0f2a3',
+    userId: '22334455-6677-8899-aabb-ccddeeff1122',
+    date: '2025-11-18',
+    time: '7:00 PM',
+    types: 'Star Gazing Camp',
+    ticket: 'TCKT-009',
+    status: 'confirmed',
+    createdAt: '2025-10-26T10:30:00.000Z',
+    updatedAt: '2025-10-26T10:30:00.000Z',
+    payments: [
+      {
+        id: 'pay-105',
+        amount: 0.02,
+        currency: 'USD',
+        method: 'ETH',
+        status: 'completed',
+      },
+    ],
+    service: {
+      price: 0.02,
+    },
+  },
+  {
+    id: 'h8c88g00-5ded-4e40-a648-9d5f1f2f9965',
+    serviceId: 'b8d3f8f6-1234-4c28-a902-b0e14d881175',
+    userId: '33445566-7788-99aa-bbcc-ddeeff001122',
+    date: '2025-11-22',
+    time: '11:15 PM',
+    types: 'Photography Tour',
+    ticket: 'TCKT-010',
+    status: 'pending',
+    createdAt: '2025-10-26T11:15:00.000Z',
+    updatedAt: '2025-10-26T11:15:00.000Z',
+    payments: [],
+    service: {
+      price: 0.02,
+    },
+  },
+  {
+    id: 'i9d99h11-6efe-4f51-b759-ae6f2031aa76',
+    serviceId: 'b8d3f8f6-1234-4c28-a902-b0e14d881114',
+    userId: '44556677-8899-aabb-ccdd-eeff00112233',
+    date: '2025-11-25',
+    time: '5:00 PM',
+    types: 'Aurora Hunt',
+    ticket: 'TCKT-011',
+    status: 'confirmed',
+    createdAt: '2025-10-26T12:00:00.000Z',
+    updatedAt: '2025-10-26T12:00:00.000Z',
+    payments: [
+      {
+        id: 'pay-106',
+        amount: 0.02,
+        currency: 'USD',
+        method: 'ETH',
+        status: 'completed',
+      },
+    ],
+    service: {
+      price: 0.02,
+    },
+  },
+  {
+    id: 'j0e00i22-7f0f-4g62-c86a-bf7f3142bb87',
+    serviceId: '3e98b4f1-2a15-49a0-9e8b-76f4c5929acb',
+    userId: '55667788-99aa-bbcc-ddee-ff0011223344',
+    date: '2025-11-28',
+    time: '6:30 AM',
+    types: 'Trekking Expedition',
+    ticket: 'TCKT-012',
+    status: 'pending',
+    createdAt: '2025-10-26T12:30:00.000Z',
+    updatedAt: '2025-10-26T12:30:00.000Z',
+    payments: [],
+    service: {
+      price: '0.10',
+    },
   },
 ];

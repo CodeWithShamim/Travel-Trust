@@ -130,7 +130,8 @@ const ServiceForm = ({ mode = ADD }: { mode?: 'ADD' | 'EDIT' }) => {
 
             // await switchChainAsync({ chainId: 11155111 });
             // const serviceId = service?.id ?? Date.now();
-            const serviceId = '1a9c3f17-4d14-4ab8-8c24-1b9c5efb8a01';
+
+            const serviceId = (address as string) + Date.now();
 
             console.log({ serviceId });
 

@@ -52,7 +52,10 @@ export default function Documentation() {
             </div>
           </Header>
 
-          <Content className="p-4 sm:p-8 bg-gray-100 prose z-10 max-w-[1200px">
+          <Content
+            className="p-4 sm:p-8 bg-gray-100 prose z-10 max-w-[1200px overflow-y-auto"
+            style={{ height: 'calc(100vh - 64px)' }}
+          >
             <h2 className="text-2xl">{docs[selectedKey].title}</h2>
             {docs[selectedKey].content}
           </Content>

@@ -174,7 +174,8 @@ const ServiceDetails = ({ service }: IServiceProps) => {
     }
 
     // payment modal open for crypto payment
-    setBookingData(fakeBookingData[0]);
+    const getBookingData: any = fakeBookingData?.find((fk) => fk.serviceId === service?.id);
+    setBookingData(getBookingData);
 
     // const { date, time } = getTimeAndDate();
     const data: IBooking = {
@@ -372,7 +373,7 @@ const ServiceDetails = ({ service }: IServiceProps) => {
                   </h1>
                   <p>
                     <span className="text-xl text-green-400 font-extrabold tracking-widest">
-                      ${service?.price}
+                      ${service?.price} ETH
                     </span>{' '}
                     / <span className="text-gray-500 tracking-widest">Per person</span>
                   </p>

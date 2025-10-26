@@ -1,27 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import Form from "../forms/Form";
-import { SubmitHandler } from "react-hook-form";
-import { Button, Steps, message } from "antd";
-import {
-  useCreatePaymentIntentMutation,
-  useUpdatePaymentMutation,
-} from "@/redux/api/paymentApi";
-import { PAYMENT_ROLE, USER_ROLE } from "@/constants/role";
-import { useCallback, useState } from "react";
-import { IPaymentModal } from "@/types";
-import { StripeElementsStyles } from "@/constants/commons";
-import { useAppSelector } from "@/redux/hooks";
-import { useRouter } from "next/navigation";
-import ConfettiComponent from "./Confetti";
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import Form from '../forms/Form';
+import { SubmitHandler } from 'react-hook-form';
+import { Button, Steps, message } from 'antd';
+import { useCreatePaymentIntentMutation, useUpdatePaymentMutation } from '@/redux/api/paymentApi';
+import { PAYMENT_ROLE, USER_ROLE } from '@/constants/role';
+import { useCallback, useState } from 'react';
+import { IPaymentModal } from '@/types';
+import { StripeElementsStyles } from '@/constants/commons';
+import { useAppSelector } from '@/redux/hooks';
+import { useRouter } from 'next/navigation';
+import ConfettiComponent from './Confetti';
 
 const StripePaymentForm = ({
   bookingData,
   setBookingData,
   setIsPaymentSuccess,
 }: IPaymentModal & { setIsPaymentSuccess: (v: boolean) => void } & {}) => {
-  const [handleCreatePaymentIntent, { data, isLoading }] =
-    useCreatePaymentIntentMutation();
+  const [handleCreatePaymentIntent, { data, isLoading }] = useCreatePaymentIntentMutation();
 
   const [handleUpdatePayment, { data: data2, isLoading: updateLoading }] =
     useUpdatePaymentMutation();
@@ -44,19 +40,16 @@ const StripePaymentForm = ({
       setConfettiActive(false);
       router.push(
         user?.role === USER_ROLE.USER
-          ? "/dashboard/user/bookings"
-          : "/dashboard/admin/manage-bookings"
+          ? '/dashboard/user/bookings'
+          : '/dashboard/admin/manage-bookings',
       );
       setBookingData(null);
     }, 5000);
   }, []);
 
-  const handlePaymentSubmit: SubmitHandler<any> = async (
-    data: any,
-    reset: any
-  ) => {
+  const handlePaymentSubmit: SubmitHandler<any> = async (data: any, reset: any) => {
     if (!stripe || !elements) {
-      message.error("Stripe or Elements is not yet loaded.");
+      message.error('Stripe or Elements is not yet loaded.');
       return;
     }
 
@@ -65,7 +58,7 @@ const StripePaymentForm = ({
 
       // >> step-1 <<
       const { paymentMethod, error } = await stripe.createPaymentMethod({
-        type: "card",
+        type: 'card',
         card: elements.getElement(CardElement) as any,
       });
 
@@ -81,7 +74,7 @@ const StripePaymentForm = ({
         });
 
         if (!clientSecretRes?.data?.clientSecret) {
-          message.error("Client secret not found!");
+          message.error('Client secret not found!');
           setLoading(false);
           return;
         }
@@ -91,7 +84,7 @@ const StripePaymentForm = ({
           clientSecretRes?.data?.clientSecret,
           {
             payment_method: paymentMethod?.id as string,
-          }
+          },
         );
 
         if (error) {
@@ -119,7 +112,7 @@ const StripePaymentForm = ({
       }
     } catch (error: any) {
       setLoading(false);
-      console.error("Error handling payment:", error.message);
+      console.error('Error handling payment:', error.message);
     } finally {
       setLoading(false);
     }
@@ -135,7 +128,7 @@ const StripePaymentForm = ({
 
         <div className="py-5">
           <h2 className="font-bold text-green-500">
-            Payable Amount: ${bookingData?.service?.price}
+            Payable Amount: ${bookingData?.service?.price} ETH
           </h2>
         </div>
 
@@ -162,10 +155,9 @@ const StripePaymentForm = ({
         </div>
 
         <p className="text-xs py-4">
-          Payment secured by{" "}
-          <span className="font-semibold text-xs">Stripe</span>. You’ll be taken
+          Payment secured by <span className="font-semibold text-xs">Stripe</span>. You’ll be taken
           to a thank you page after the payment.
-          <span className="font-semibold  text-xs">Terms</span> and{" "}
+          <span className="font-semibold  text-xs">Terms</span> and{' '}
           <span className="font-semibold  text-xs">Privacy</span>.
         </p>
       </Form>

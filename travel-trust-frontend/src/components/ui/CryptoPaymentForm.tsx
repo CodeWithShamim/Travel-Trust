@@ -5,7 +5,7 @@ import { Button, Spin, Steps, message } from 'antd';
 import { useCreatePaymentIntentMutation, useUpdatePaymentMutation } from '@/redux/api/paymentApi';
 import { PAYMENT_ROLE, USER_ROLE } from '@/constants/role';
 import { useCallback, useEffect, useState } from 'react';
-import { IPaymentModal } from '@/types';
+import { IBooking, IPaymentModal } from '@/types';
 import { useAppSelector, useAppToast } from '@/redux/hooks';
 import { useRouter } from 'next/navigation';
 import ConfettiComponent from './Confetti';
@@ -16,6 +16,7 @@ import { SERVICE_OWNER, TravelTrustContract } from '@/lib/contracts';
 import { simulateContract } from 'wagmi/actions';
 import { config } from '@/lib/Wagmi';
 import { hexlify, parseEther } from 'ethers';
+import Link from 'next/link';
 
 const CryptoPaymentForm = ({
   bookingData,
@@ -28,6 +29,7 @@ const CryptoPaymentForm = ({
     useUpdatePaymentMutation();
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [paymentSuccess, setPaymentSuccess] = useState<boolean>(false);
 
   const router = useRouter();
   const user: any = useAppSelector((state) => state.user?.data);
@@ -45,6 +47,7 @@ const CryptoPaymentForm = ({
   const handleShowConfetti = useCallback(() => {
     setConfettiActive(true);
     setIsPaymentSuccess(true);
+    setPaymentSuccess(true);
 
     setTimeout(() => {
       setConfettiActive(false);
@@ -77,24 +80,6 @@ const CryptoPaymentForm = ({
 
   const handlePaymentSubmit: SubmitHandler<any> = async (data: any, reset: any) => {
     try {
-      //   setEncrypt('Encrypting rating...');
-
-      //   if (!fhe) {
-      //     fhe = await initializeFheInstance();
-      //   }
-      //   if (!fhe) {
-      //     message.error('Failed to initialize FHE instance');
-      //     return;
-      //   }
-
-      //   const ciphertext = await fhe.createEncryptedInput(contractAddress, address);
-
-      //   ciphertext.add8(BigInt(20));
-      //   const { handles, inputProof } = await ciphertext.encrypt();
-
-      //   const encryptedRating = hexlify(handles[0]);
-      //   const proofHex = hexlify(inputProof);
-
       setEncrypt('Waiting for tx confirmation...');
 
       //   const serviceId = '1a9c3f17-4d14-4ab8-8c24-1b9c5efb8a01';
@@ -104,7 +89,7 @@ const CryptoPaymentForm = ({
         functionName: 'servicePayment',
         args: [SERVICE_OWNER as `0x${string}`, bookingData?.serviceId],
         chainId: 11155111,
-        value: parseEther('0.02'),
+        value: parseEther(String((bookingData as any)?.service?.price)),
       };
 
       await simulateContract(config, txData);
@@ -131,7 +116,7 @@ const CryptoPaymentForm = ({
             {/* Payable Amount: ${bookingData?.service?.price} */}
             {/* ------  */}
             {/* just for demon  */}
-            Payable Amount: 0.02 ETH
+            Payable Amount: {bookingData?.service?.price} ETH
           </h2>
         </div>
 
@@ -153,14 +138,22 @@ const CryptoPaymentForm = ({
           >
             Cancel
           </Button>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className=" mt-4 w-full"
-            loading={loading || isLoading || updateLoading || encrypt ? true : false}
-          >
-            Pay Now
-          </Button>
+          {paymentSuccess ? (
+            <Link href={'/dashboard'}>
+              <Button type="link" className=" mt-4 w-full">
+                Go Dashboard
+              </Button>
+            </Link>
+          ) : (
+            <Button
+              type="primary"
+              htmlType="submit"
+              className=" mt-4 w-full"
+              loading={loading || isLoading || updateLoading || encrypt ? true : false}
+            >
+              Pay Now
+            </Button>
+          )}
         </div>
 
         <p className="text-xs py-4">

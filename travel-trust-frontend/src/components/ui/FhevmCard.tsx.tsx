@@ -15,19 +15,19 @@ const cards = [
     icon: <LockOutlined style={{ fontSize: 36, color: '#FFD20A' }} />,
     title: 'Encrypted Service Pricing',
     description:
-      'Every travel service price is fully encrypted using ZAMA FHEVM — ensuring business data stays private and secure on-chain.',
+      'Every travel service price is fully encrypted using ZAMA FHEVM, ensuring business data stays private and secure on-chain.',
   },
   {
     icon: <StarOutlined style={{ fontSize: 36, color: '#FFD20A' }} />,
     title: 'Confidential Service Reviews',
     description:
-      'Travelers can leave ratings and feedback with full confidentiality — encrypted directly in their browser.',
+      'Travelers can leave ratings and feedback with full confidentiality, encrypted directly in their browser.',
   },
   {
     icon: <SafetyCertificateOutlined style={{ fontSize: 36, color: '#FFD20A' }} />,
     title: 'On-Chain Privacy',
     description:
-      'Encrypted booking and transaction data are stored on-chain — no one, not even TravelTrust, can view user details.',
+      'Encrypted booking and transaction data are stored on-chain, no one, not even TravelTrust, can view user details.',
   },
   {
     icon: <ToolOutlined style={{ fontSize: 36, color: '#FFD20A' }} />,
@@ -39,7 +39,7 @@ const cards = [
     icon: <CheckCircleOutlined style={{ fontSize: 36, color: '#FFD20A' }} />,
     title: 'Guaranteed Fairness',
     description:
-      'Privacy and trust are mathematically guaranteed — ensuring an unbiased, transparent travel experience for all.',
+      'Privacy and trust are mathematically guaranteed, ensuring an unbiased, transparent travel experience for all.',
   },
 ];
 

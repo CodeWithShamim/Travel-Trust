@@ -95,7 +95,7 @@ const HomePage = () => {
               <Image
                 src={require(`@/assets/banner${item}.webp`)}
                 alt="banner image"
-                className="w-full h-screen object-cover"
+                className="!w-full !h-screen !object-cover"
                 priority
                 quality={100}
                 objectFit="cover"
@@ -138,8 +138,8 @@ const HomePage = () => {
         <SponsorCarousel />
       </div>
 
-      <div className="max-w-[1200px] mx-auto md:px-4 py-5 lg:mt-0 md:py-24 lg:py-36 flex items-center gap-6">
-        <div className="flex items-center gap-3 animate-pulse">
+      <div className="max-w-[1200px] mx-auto md:px-4 py-5 lg:mt-0 md:py-24 lg:py-36 flex items-center gap-6 px-2">
+        <div className="items-center gap-3 animate-pulse hidden md:flex">
           <div className="w-1 h-[300px] bg-green-500 rounded-full" />
 
           <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-white font-bold text-lg">
@@ -149,6 +149,8 @@ const HomePage = () => {
             Watch Video & Learn About Travel Trust
           </span>
         </div>
+
+        
 
         <VideoPlayer
           onReady={() => {

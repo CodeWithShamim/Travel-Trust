@@ -154,6 +154,16 @@ const Header = () => {
           </Link>
 
           <WalletConnect />
+
+          <Link href="/docs" className="hidden md:block">
+            <Button
+              type="default"
+              size="middle"
+              className="text-xs md:text-sm rounded-full !bg-[#FFD20A]"
+            >
+              Docs
+            </Button>
+          </Link>
         </div>
       </motion.div>
     </HeaderLayout>

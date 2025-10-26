@@ -7,14 +7,14 @@ export const docs: any = {
     title: 'Overview',
     content: (
       <>
-        <p className="md:max-w-[750px]">
+        <p className="">
           <span className="text-lg text-amber-600 font-bold">Travel Trust</span> is a decentralized
           travel booking DApp that redefines how users plan, book, and review their travel
           experiences. It integrates blockchain technology, privacy-preserving encryption, and
           modern Web3 infrastructure to deliver transparent, trust-based interactions between
           travelers, agents, and service providers , without relying on centralized intermediaries.
         </p>
-        <p className="md:max-w-[750px]">
+        <p className="">
           The platform enables users to search, compare, and book flights, hotels, and tours while
           maintaining full control of their personal data. Using{' '}
           <span className="text-amber-600 font-bold pr-1">Fully Homomorphic Encryption (FHE)</span>
@@ -136,7 +136,7 @@ export const docs: any = {
         <h1 className="pt-6 text-xl">Quick Setup</h1>
         <pre>
           <code>{`git clone https://github.com/your-org/travel-trust
-cd travel-trust
+cd travel-trust-frontend
 yarn install
 yarn dev`}</code>
         </pre>
@@ -194,230 +194,230 @@ NEXT_PUBLIC_SERVICE_FEE=0.01`}</code>
       <>
         <pre>
           <code>{`├── travel-trust-frontend
-│   ├── .env
-│   ├── .eslintrc.json
-│   ├── .gitignore
-│   ├── README.md
-│   ├── contracts
-│   │   ├── TravelTrust.sol
-│   ├── deploy
-│   │   ├── deploy.ts
-│   ├── global.d.ts
-│   ├── hardhat.config.ts
-│   ├── next-env.d.ts
-│   ├── next.config.js
-│   ├── package.json
-│   ├── pnpm-lock.yaml
-│   ├── postcss.config.mjs
-│   ├── public
-│   │   ├── logo.png
-│   │   ├── next.svg
-│   │   ├── notifacation.wav
-│   │   ├── send.mp3
-│   │   ├── travel Trust-logo
-│   │   │   ├── default.png
-│   │   ├── vercel.svg
-│   ├── src
-│   │   ├── abi
-│   │   │   ├── TravelTrust.json
-│   │   ├── app
-│   │   │   ├── [lang]
-│   │   │   │   ├── (subRootLayout)
-│   │   │   │   │   ├── layout.tsx
-│   │   │   │   │   ├── page.tsx
-│   │   │   │   │   ├── service
-│   │   │   │   │   │   ├── search
-│   │   │   │   │   │   │   ├── page.tsx
-│   │   │   │   │   ├── service-details
-│   │   │   │   │   │   ├── [id]
-│   │   │   │   │   │   │   ├── page.tsx
-│   │   │   │   ├── dashboard
-│   │   │   │   │   ├── (adminProtectedLayout)
-│   │   │   │   │   │   ├── admin
-│   │   │   │   │   │   │   ├── (service)
-│   │   │   │   │   │   │   │   ├── add-service
-│   │   │   │   │   │   │   │   │   ├── page.tsx
-│   │   │   │   │   │   │   │   ├── edit-service
-│   │   │   │   │   │   │   │   │   ├── [id]
-│   │   │   │   │   │   │   │   │   │   ├── page.tsx
-│   │   │   │   │   │   │   │   ├── manage-services
-│   │   │   │   │   │   │   │   │   ├── page.tsx
-│   │   │   │   │   │   │   ├── manage-bookings
-│   │   │   │   │   │   │   │   ├── page.tsx
-│   │   │   │   │   │   ├── layout.tsx
-│   │   │   │   │   │   ├── manage-users
-│   │   │   │   │   │   │   ├── page.tsx
-│   │   │   │   │   │   ├── super_admin
-│   │   │   │   │   │   │   ├── manage-admins
-│   │   │   │   │   │   │   │   ├── page.tsx
-│   │   │   │   │   ├── layout.tsx
-│   │   │   │   │   ├── profile
-│   │   │   │   │   │   ├── page.tsx
-│   │   │   │   │   ├── user
-│   │   │   │   │   │   ├── bookings
-│   │   │   │   │   │   │   ├── page.tsx
-│   │   │   │   ├── layout.tsx
-│   │   │   │   ├── message
-│   │   │   │   │   ├── page.tsx
-│   │   │   ├── error.tsx
-│   │   │   ├── favicon.ico
-│   │   │   ├── globals.css
-│   │   │   ├── layout.tsx
-│   │   │   ├── loading.tsx
-│   │   │   ├── not-found.tsx
-│   │   │   ├── page.module.css
-│   │   ├── assets
-│   │   │   ├── 404.webp
-│   │   │   ├── banner1.webp
-│   │   │   ├── banner2.webp
-│   │   │   ├── banner3.webp
-│   │   │   ├── cart.webp
-│   │   │   ├── chat-bg.jpg
-│   │   │   ├── chat-bg2.jpg
-│   │   │   ├── error.webp
-│   │   │   ├── footer-top.webp
-│   │   │   ├── footer.webp
-│   │   │   ├── home1.webp
-│   │   │   ├── home2.webp
-│   │   │   ├── login.webp
-│   │   │   ├── pay.png
-│   │   │   ├── play.webp
-│   │   │   ├── profile-banner.webp
-│   │   │   ├── search-not-found.webp
-│   │   │   ├── select.png
-│   │   ├── components
-│   │   │   ├── charts
-│   │   │   │   ├── LineChart.tsx
-│   │   │   │   ├── PiChart.tsx
-│   │   │   ├── common
-│   │   │   │   ├── ConnectWallet.tsx
-│   │   │   │   ├── DateTime.tsx
-│   │   │   │   ├── FhScript.tsx
-│   │   │   │   ├── MouseScroll.tsx
-│   │   │   │   ├── PaymentModal.tsx
-│   │   │   │   ├── ProgressBar.tsx
-│   │   │   │   ├── UserInfo.tsx
-│   │   │   ├── forms
-│   │   │   │   ├── Form.tsx
-│   │   │   │   ├── FormInput.tsx
-│   │   │   ├── skeletons
-│   │   │   │   ├── ServiceCardSkeleton.tsx
-│   │   │   ├── ui
-│   │   │   │   ├── BottomBar.tsx
-│   │   │   │   ├── CartCard.tsx
-│   │   │   │   ├── ChatMessage.tsx
-│   │   │   │   ├── Confetti.tsx
-│   │   │   │   ├── CryptoPaymentForm.tsx
-│   │   │   │   ├── CustomSelect.tsx
-│   │   │   │   ├── EditModal.tsx
-│   │   │   │   ├── FhevmCard.tsx.tsx
-│   │   │   │   ├── FilterSideBar.tsx
-│   │   │   │   ├── Footer.tsx
-│   │   │   │   ├── Header.tsx
-│   │   │   │   ├── HomeBackButton.tsx
-│   │   │   │   ├── ImageGallery.tsx
-│   │   │   │   ├── LanguageSwitcher.tsx
-│   │   │   │   ├── Loader.tsx
-│   │   │   │   ├── MapView.tsx
-│   │   │   │   ├── NewsCard.tsx
-│   │   │   │   ├── ReviewCard.tsx
-│   │   │   │   ├── ReviewSlider.tsx
-│   │   │   │   ├── SearchBar.tsx
-│   │   │   │   ├── ServiceCard.tsx
-│   │   │   │   ├── ShareService.tsx
-│   │   │   │   ├── SideBar.tsx
-│   │   │   │   ├── SponsorCarousel.tsx
-│   │   │   │   ├── StripePaymentForm.tsx
-│   │   │   │   ├── TTTable.tsx
-│   │   │   │   ├── TableColTitle.tsx
-│   │   │   │   ├── UpdateUserInfo.tsx
-│   │   │   │   ├── VideoPlayer.tsx
-│   │   ├── constants
-│   │   │   ├── booking.ts
-│   │   │   ├── colors.ts
-│   │   │   ├── commons.tsx
-│   │   │   ├── map.ts
-│   │   │   ├── role.ts
-│   │   │   ├── service.tsx
-│   │   │   ├── sidebarItems.tsx
-│   │   │   ├── storageKey.ts
-│   │   │   ├── url.ts
-│   │   ├── data
-│   │   │   ├── common.ts
-│   │   │   ├── dictionaries
-│   │   │   │   ├── bn.json
-│   │   │   │   ├── en.json
-│   │   │   │   ├── hi.json
-│   │   │   ├── news.ts
-│   │   │   ├── service.tsx
-│   │   ├── helpers
-│   │   │   ├── axios
-│   │   │   │   ├── axiosBaseQuery.ts
-│   │   │   │   ├── axiosInstance.ts
-│   │   │   ├── config
-│   │   │   │   ├── envConfig.ts
-│   │   │   ├── persist
-│   │   │   │   ├── user.persist.ts
-│   │   ├── lib
-│   │   │   ├── AntdRegistry.tsx
-│   │   │   ├── Providers.tsx
-│   │   │   ├── Wagmi.tsx
-│   │   │   ├── contracts.ts
-│   │   ├── middleware.ts
-│   │   ├── redux
-│   │   │   ├── api
-│   │   │   │   ├── Home.tsx
-│   │   │   │   ├── authApi.ts
-│   │   │   │   ├── baseApi.ts
-│   │   │   │   ├── bookingApi.ts
-│   │   │   │   ├── messageApi.ts
-│   │   │   │   ├── notificationApi.ts
-│   │   │   │   ├── paymentApi.ts
-│   │   │   │   ├── reviewApi.ts
-│   │   │   │   ├── serviceApi.ts
-│   │   │   ├── hooks.ts
-│   │   │   ├── rootReducer.ts
-│   │   │   ├── slices
-│   │   │   │   ├── i18nSlice.ts
-│   │   │   │   ├── serviceSlice.ts
-│   │   │   │   ├── userSlice.ts
-│   │   │   ├── store.ts
-│   │   ├── styles
-│   │   │   ├── common.module.css
-│   │   │   ├── footer.module.css
-│   │   │   ├── home.module.css
-│   │   │   ├── loader.module.css
-│   │   ├── utils
-│   │   │   ├── base64.ts
-│   │   │   ├── common.ts
-│   │   │   ├── dictionaries.ts
-│   │   │   ├── events.ts
-│   │   │   ├── fheInstance.ts
-│   │   │   ├── jwt.ts
-│   │   │   ├── local-storage.ts
-│   │   │   ├── motion.ts
-│   │   │   ├── upload.ts
-│   │   ├── views
-│   │   │   ├── Home.tsx
-│   │   │   ├── Notification.tsx
-│   │   │   ├── Profile.tsx
-│   │   │   ├── ServiceDetails.tsx
-│   │   │   ├── adminDashboard
-│   │   │   │   ├── ManageAdmin.tsx
-│   │   │   │   ├── ManageBooking.tsx
-│   │   │   │   ├── ManageUser.tsx
-│   │   │   │   ├── service
-│   │   │   │   │   ├── ManageService.tsx
-│   │   │   │   │   ├── ServiceForm
-│   │   │   │   │   │   ├── GeneralField.tsx
-│   │   │   │   │   │   ├── index.tsx
-│   │   │   ├── message
-│   │   │   │   ├── index.tsx
-│   ├── tailwind.config.js
-│   ├── test
-│   │   ├── TravelTrust.test.ts
-│   ├── tsconfig.json
-│   ├── vercel.json`}</code>
+  │   ├── .env
+  │   ├── .eslintrc.json
+  │   ├── .gitignore
+  │   ├── README.md
+  │   ├── contracts
+  │   │   ├── TravelTrust.sol
+  │   ├── deploy
+  │   │   ├── deploy.ts
+  │   ├── global.d.ts
+  │   ├── hardhat.config.ts
+  │   ├── next-env.d.ts
+  │   ├── next.config.js
+  │   ├── package.json
+  │   ├── pnpm-lock.yaml
+  │   ├── postcss.config.mjs
+  │   ├── public
+  │   │   ├── logo.png
+  │   │   ├── next.svg
+  │   │   ├── notifacation.wav
+  │   │   ├── send.mp3
+  │   │   ├── travel Trust-logo
+  │   │   │   ├── default.png
+  │   │   ├── vercel.svg
+  │   ├── src
+  │   │   ├── abi
+  │   │   │   ├── TravelTrust.json
+  │   │   ├── app
+  │   │   │   ├── [lang]
+  │   │   │   │   ├── (subRootLayout)
+  │   │   │   │   │   ├── layout.tsx
+  │   │   │   │   │   ├── page.tsx
+  │   │   │   │   │   ├── service
+  │   │   │   │   │   │   ├── search
+  │   │   │   │   │   │   │   ├── page.tsx
+  │   │   │   │   │   ├── service-details
+  │   │   │   │   │   │   ├── [id]
+  │   │   │   │   │   │   │   ├── page.tsx
+  │   │   │   │   ├── dashboard
+  │   │   │   │   │   ├── (adminProtectedLayout)
+  │   │   │   │   │   │   ├── admin
+  │   │   │   │   │   │   │   ├── (service)
+  │   │   │   │   │   │   │   │   ├── add-service
+  │   │   │   │   │   │   │   │   │   ├── page.tsx
+  │   │   │   │   │   │   │   │   ├── edit-service
+  │   │   │   │   │   │   │   │   │   ├── [id]
+  │   │   │   │   │   │   │   │   │   │   ├── page.tsx
+  │   │   │   │   │   │   │   │   ├── manage-services
+  │   │   │   │   │   │   │   │   │   ├── page.tsx
+  │   │   │   │   │   │   │   ├── manage-bookings
+  │   │   │   │   │   │   │   │   ├── page.tsx
+  │   │   │   │   │   │   ├── layout.tsx
+  │   │   │   │   │   │   ├── manage-users
+  │   │   │   │   │   │   │   ├── page.tsx
+  │   │   │   │   │   │   ├── super_admin
+  │   │   │   │   │   │   │   ├── manage-admins
+  │   │   │   │   │   │   │   │   ├── page.tsx
+  │   │   │   │   │   ├── layout.tsx
+  │   │   │   │   │   ├── profile
+  │   │   │   │   │   │   ├── page.tsx
+  │   │   │   │   │   ├── user
+  │   │   │   │   │   │   ├── bookings
+  │   │   │   │   │   │   │   ├── page.tsx
+  │   │   │   │   ├── layout.tsx
+  │   │   │   │   ├── message
+  │   │   │   │   │   ├── page.tsx
+  │   │   │   ├── error.tsx
+  │   │   │   ├── favicon.ico
+  │   │   │   ├── globals.css
+  │   │   │   ├── layout.tsx
+  │   │   │   ├── loading.tsx
+  │   │   │   ├── not-found.tsx
+  │   │   │   ├── page.module.css
+  │   │   ├── assets
+  │   │   │   ├── 404.webp
+  │   │   │   ├── banner1.webp
+  │   │   │   ├── banner2.webp
+  │   │   │   ├── banner3.webp
+  │   │   │   ├── cart.webp
+  │   │   │   ├── chat-bg.jpg
+  │   │   │   ├── chat-bg2.jpg
+  │   │   │   ├── error.webp
+  │   │   │   ├── footer-top.webp
+  │   │   │   ├── footer.webp
+  │   │   │   ├── home1.webp
+  │   │   │   ├── home2.webp
+  │   │   │   ├── login.webp
+  │   │   │   ├── pay.png
+  │   │   │   ├── play.webp
+  │   │   │   ├── profile-banner.webp
+  │   │   │   ├── search-not-found.webp
+  │   │   │   ├── select.png
+  │   │   ├── components
+  │   │   │   ├── charts
+  │   │   │   │   ├── LineChart.tsx
+  │   │   │   │   ├── PiChart.tsx
+  │   │   │   ├── common
+  │   │   │   │   ├── ConnectWallet.tsx
+  │   │   │   │   ├── DateTime.tsx
+  │   │   │   │   ├── FhScript.tsx
+  │   │   │   │   ├── MouseScroll.tsx
+  │   │   │   │   ├── PaymentModal.tsx
+  │   │   │   │   ├── ProgressBar.tsx
+  │   │   │   │   ├── UserInfo.tsx
+  │   │   │   ├── forms
+  │   │   │   │   ├── Form.tsx
+  │   │   │   │   ├── FormInput.tsx
+  │   │   │   ├── skeletons
+  │   │   │   │   ├── ServiceCardSkeleton.tsx
+  │   │   │   ├── ui
+  │   │   │   │   ├── BottomBar.tsx
+  │   │   │   │   ├── CartCard.tsx
+  │   │   │   │   ├── ChatMessage.tsx
+  │   │   │   │   ├── Confetti.tsx
+  │   │   │   │   ├── CryptoPaymentForm.tsx
+  │   │   │   │   ├── CustomSelect.tsx
+  │   │   │   │   ├── EditModal.tsx
+  │   │   │   │   ├── FhevmCard.tsx.tsx
+  │   │   │   │   ├── FilterSideBar.tsx
+  │   │   │   │   ├── Footer.tsx
+  │   │   │   │   ├── Header.tsx
+  │   │   │   │   ├── HomeBackButton.tsx
+  │   │   │   │   ├── ImageGallery.tsx
+  │   │   │   │   ├── LanguageSwitcher.tsx
+  │   │   │   │   ├── Loader.tsx
+  │   │   │   │   ├── MapView.tsx
+  │   │   │   │   ├── NewsCard.tsx
+  │   │   │   │   ├── ReviewCard.tsx
+  │   │   │   │   ├── ReviewSlider.tsx
+  │   │   │   │   ├── SearchBar.tsx
+  │   │   │   │   ├── ServiceCard.tsx
+  │   │   │   │   ├── ShareService.tsx
+  │   │   │   │   ├── SideBar.tsx
+  │   │   │   │   ├── SponsorCarousel.tsx
+  │   │   │   │   ├── StripePaymentForm.tsx
+  │   │   │   │   ├── TTTable.tsx
+  │   │   │   │   ├── TableColTitle.tsx
+  │   │   │   │   ├── UpdateUserInfo.tsx
+  │   │   │   │   ├── VideoPlayer.tsx
+  │   │   ├── constants
+  │   │   │   ├── booking.ts
+  │   │   │   ├── colors.ts
+  │   │   │   ├── commons.tsx
+  │   │   │   ├── map.ts
+  │   │   │   ├── role.ts
+  │   │   │   ├── service.tsx
+  │   │   │   ├── sidebarItems.tsx
+  │   │   │   ├── storageKey.ts
+  │   │   │   ├── url.ts
+  │   │   ├── data
+  │   │   │   ├── common.ts
+  │   │   │   ├── dictionaries
+  │   │   │   │   ├── bn.json
+  │   │   │   │   ├── en.json
+  │   │   │   │   ├── hi.json
+  │   │   │   ├── news.ts
+  │   │   │   ├── service.tsx
+  │   │   ├── helpers
+  │   │   │   ├── axios
+  │   │   │   │   ├── axiosBaseQuery.ts
+  │   │   │   │   ├── axiosInstance.ts
+  │   │   │   ├── config
+  │   │   │   │   ├── envConfig.ts
+  │   │   │   ├── persist
+  │   │   │   │   ├── user.persist.ts
+  │   │   ├── lib
+  │   │   │   ├── AntdRegistry.tsx
+  │   │   │   ├── Providers.tsx
+  │   │   │   ├── Wagmi.tsx
+  │   │   │   ├── contracts.ts
+  │   │   ├── middleware.ts
+  │   │   ├── redux
+  │   │   │   ├── api
+  │   │   │   │   ├── Home.tsx
+  │   │   │   │   ├── authApi.ts
+  │   │   │   │   ├── baseApi.ts
+  │   │   │   │   ├── bookingApi.ts
+  │   │   │   │   ├── messageApi.ts
+  │   │   │   │   ├── notificationApi.ts
+  │   │   │   │   ├── paymentApi.ts
+  │   │   │   │   ├── reviewApi.ts
+  │   │   │   │   ├── serviceApi.ts
+  │   │   │   ├── hooks.ts
+  │   │   │   ├── rootReducer.ts
+  │   │   │   ├── slices
+  │   │   │   │   ├── i18nSlice.ts
+  │   │   │   │   ├── serviceSlice.ts
+  │   │   │   │   ├── userSlice.ts
+  │   │   │   ├── store.ts
+  │   │   ├── styles
+  │   │   │   ├── common.module.css
+  │   │   │   ├── footer.module.css
+  │   │   │   ├── home.module.css
+  │   │   │   ├── loader.module.css
+  │   │   ├── utils
+  │   │   │   ├── base64.ts
+  │   │   │   ├── common.ts
+  │   │   │   ├── dictionaries.ts
+  │   │   │   ├── events.ts
+  │   │   │   ├── fheInstance.ts
+  │   │   │   ├── jwt.ts
+  │   │   │   ├── local-storage.ts
+  │   │   │   ├── motion.ts
+  │   │   │   ├── upload.ts
+  │   │   ├── views
+  │   │   │   ├── Home.tsx
+  │   │   │   ├── Notification.tsx
+  │   │   │   ├── Profile.tsx
+  │   │   │   ├── ServiceDetails.tsx
+  │   │   │   ├── adminDashboard
+  │   │   │   │   ├── ManageAdmin.tsx
+  │   │   │   │   ├── ManageBooking.tsx
+  │   │   │   │   ├── ManageUser.tsx
+  │   │   │   │   ├── service
+  │   │   │   │   │   ├── ManageService.tsx
+  │   │   │   │   │   ├── ServiceForm
+  │   │   │   │   │   │   ├── GeneralField.tsx
+  │   │   │   │   │   │   ├── index.tsx
+  │   │   │   ├── message
+  │   │   │   │   ├── index.tsx
+  │   ├── tailwind.config.js
+  │   ├── test
+  │   │   ├── TravelTrust.test.ts
+  │   ├── tsconfig.json
+  │   ├── vercel.json`}</code>
         </pre>
         <p>
           The modular structure separates smart contracts, frontend logic, and infrastructure for

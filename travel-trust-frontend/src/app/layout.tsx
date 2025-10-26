@@ -13,6 +13,9 @@ import FhScript from '@/components/common/FhScript';
 
 export const metadata: Metadata = {
   title: 'Travel Trust Agency Website',
+  icons: {
+    icon: './favicon.ico',
+  },
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {

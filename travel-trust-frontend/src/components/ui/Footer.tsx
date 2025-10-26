@@ -1,34 +1,34 @@
 /* eslint-disable react/jsx-key */
-'use client'
+'use client';
 
-import { Button, Col, Divider, Input, Row } from 'antd'
-import React from 'react'
-import { PhoneOutlined, MailOutlined, HomeOutlined } from '@ant-design/icons'
-import { footerLinks } from '@/data/common'
-import Link from 'next/link'
-import styles from '@/styles/footer.module.css'
-import LanguageSwitcher from './LanguageSwitcher'
+import { Button, Col, Divider, Input, Row } from 'antd';
+import React from 'react';
+import { PhoneOutlined, MailOutlined, HomeOutlined } from '@ant-design/icons';
+import { footerLinks } from '@/data/common';
+import Link from 'next/link';
+import styles from '@/styles/footer.module.css';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const items = [
   {
     id: 1,
     icon: <PhoneOutlined className="h-full" />,
     title: 'Call us',
-    value: '+88017-6281-2568',
+    value: '8017-********',
   },
   {
     id: 2,
     icon: <MailOutlined className="h-full" />,
     title: 'Write to us',
-    value: 'shamimislamonline@gmail.com',
+    value: 'shamimislam****@gmail.com',
   },
   {
     id: 3,
     icon: <HomeOutlined className="h-full" />,
     title: 'Address',
-    value: 'Taragonj-5420, Rangpur, Bangladesh',
+    value: 'New york',
   },
-]
+];
 
 const Footer = () => {
   return (
@@ -79,10 +79,7 @@ const Footer = () => {
 
           <div className="text-left flex flex-col gap-4">
             <h1 className="text-xl font-bold">Subscribe</h1>
-            <p>
-              Sign up for our monthly blogletter to stay informed about travel
-              and tours
-            </p>
+            <p>Sign up for our monthly blogletter to stay informed about travel and tours</p>
             <div className="flex">
               <Input placeholder="Email" className="border-none rounded-none" />
               <Button type="primary" size="large" className="!rounded-none">
@@ -105,7 +102,7 @@ const Footer = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

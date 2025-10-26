@@ -42,11 +42,11 @@ const Profile = () => {
       icon: <AiOutlineMail />,
     },
     {
-      value: user?.contactNo ?? '+88017-6282-2568',
+      value: user?.contactNo ?? '8017-********',
       icon: <AiOutlineContacts />,
     },
     {
-      value: user?.address ?? 'Dhaka, Mirpur-1000, Bangladesh',
+      value: user?.address ?? 'New york',
       icon: <FaRegAddressCard />,
     },
   ];

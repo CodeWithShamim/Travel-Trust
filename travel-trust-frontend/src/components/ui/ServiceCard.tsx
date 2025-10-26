@@ -82,7 +82,7 @@ const ServiceCard = ({ service, loading, index = 0 }: ServiceCardProps) => {
 
           <div className="card-content flex gap-2 shadow-sm p-2">
             <p className=" font-bold">Category: {category}</p>
-            <p className=" font-bold">Price: {price}$</p>
+            <p className=" font-bold">Price: {price} ETH</p>
           </div>
         </Link>
       </Card>

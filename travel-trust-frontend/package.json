@@ -22,7 +22,7 @@
     "chain": "hardhat node --network hardhat --no-deploy",
     "deploy:localhost": "hardhat deploy --network localhost",
     "deploy:sepolia": "hardhat deploy --network sepolia",
-    "verify:sepolia": "hardhat verify --network sepolia"
+    "verify:sepolia": "hardhat verify --network sepolia 0xFe661a7fAc060EbA12b7F8123264e51DbDCcB676"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.24.0",

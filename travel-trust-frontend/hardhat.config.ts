@@ -19,9 +19,7 @@ const config = {
     deployer: 0,
   },
   etherscan: {
-    apiKey: {
-      sepolia: process.env.ETHERSCAN_API_KEY || '',
-    },
+    apiKey: process.env.ETHERSCAN_API_KEY || '',
   },
   gasReporter: {
     currency: 'USD',

@@ -1,4 +1,10 @@
-import { Typography } from 'antd';
+import {
+  BarChartOutlined,
+  DollarOutlined,
+  SecurityScanOutlined,
+  StarOutlined,
+} from '@ant-design/icons';
+import { Divider, Typography } from 'antd';
 
 const { Title, Paragraph, Text, Link } = Typography;
 
@@ -21,6 +27,63 @@ export const docs: any = {
           via Zama FHEVM, all sensitive computations , such as encrypted ratings and service pricing
           , are performed on-chain without exposing user information.
         </p>
+
+        {/* Content */}
+        <main className="flex flex-col lg:flex-row flex-grow p-10 lg:p-16 gap-10">
+          {/* Left Section */}
+          <section className="flex-1 space-y-6">
+            <Paragraph className="!text-lg leading-relaxed">
+              A{' '}
+              <span className="text-amber-600 font-semibold">
+                decentralized travel service platform
+              </span>{' '}
+              that leverages{' '}
+              <span className="text-amber-600 font-semibold">
+                Fully Homomorphic Encryption (FHE)
+              </span>{' '}
+              to protect sensitive data while enabling computations on encrypted information.
+            </Paragraph>
+
+            <Divider orientation="left" className="!border-amber-600">
+              <Title level={3} className="!text-2xl !text-amber-600 !font-semibold">
+                Key Features
+              </Title>
+            </Divider>
+
+            <ul className="space-y-5">
+              <li className="flex items-center space-x-3">
+                <SecurityScanOutlined className="text-amber-600 text-2xl" />
+                <span className="text-lg">Encrypted service prices and ratings</span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <DollarOutlined className="text-amber-600 text-2xl" />
+                <span className="text-lg">Secure payment processing with decryption</span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <StarOutlined className="text-amber-600 text-2xl" />
+                <span className="text-lg">Private review system with encrypted ratings</span>
+              </li>
+              <li className="flex items-center space-x-3">
+                <BarChartOutlined className="text-amber-600 text-2xl" />
+                <span className="text-lg">Encrypted service statistics</span>
+              </li>
+            </ul>
+          </section>
+
+          {/* Right Section */}
+          <section className="flex-1 flex justify-center items-center">
+            <img
+              src="https://sfile.chatglm.cn/images-ppt/60cd376e0997.png"
+              alt="Smart Contract Architecture"
+              className="rounded-xl shadow-lg w-5/6 max-w-md lg:max-w-lg"
+            />
+          </section>
+        </main>
+
+        {/* Footer */}
+        <footer className="bg-gray-50 text-right text-gray-500 py-4 px-12 text-sm border-t">
+          Solidity 0.8.24 | FHEVM Implementation
+        </footer>
       </>
     ),
   },

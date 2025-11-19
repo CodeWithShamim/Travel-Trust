@@ -10,12 +10,18 @@ const nextConfig = {
     ],
   },
   productionBrowserSourceMaps: false,
-  telemetry: false,
-  experimental: {
-    serverActions: true, // if you use server actions
-    turbo: true, // if you’re on Next 15+
-  },
   transpilePackages: ['@zama-fhe/relayer-sdk'],
+  // Webpack configuration to exclude scripts
+  webpack: (config, { dev, isServer }) => {
+    // Exclude scripts directory from compilation
+    config.module.rules.push({
+      test: /\.(ts|js)$/,
+      include: /scripts/,
+      use: 'null-loader',
+    });
+
+    return config;
+  },
 };
 
 module.exports = nextConfig;

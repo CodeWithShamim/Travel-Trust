@@ -135,14 +135,18 @@ describe('TravelTrust test', function () {
         { value: mockFee },
       );
 
-    await contract
+    const payTx = await contract
       .connect(bob)
       .servicePayment(await alice.getAddress(), 'svcPay', { value: mockFee });
-    await fhevm.awaitDecryptionOracle();
 
-    // Verify payment recorded
+    // Verify ServiceDecryptionRequested event was emitted
+    await expect(payTx)
+      .to.emit(contract, 'ServiceDecryptionRequested');
+
+    // Note: In the updated system, payment requires manual relayer processing
+    // This test verifies the payment request is created successfully
     const paid = await contract.hasPaymented('svcPay', await bob.getAddress());
-    expect(paid).to.equal(true);
+    expect(paid).to.equal(false); // Payment not processed until relayer callback
   });
 
   it('Prevents duplicate payments', async function () {

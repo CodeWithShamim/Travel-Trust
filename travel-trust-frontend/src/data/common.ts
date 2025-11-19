@@ -311,18 +311,18 @@ export const serviceItems = [
 ];
 
 // const ids = [
-//   '1a9c3f17-4d14-4ab8-8c24-1b9c5efb8a01',
-//   '2f4b0b2e-8d2a-4f75-8b5f-d7c8304e1229',
-//   '3e98b4f1-2a15-49a0-9e8b-76f4c5928acb',
-//   '5a14e5c8-65f8-4e79-8f8d-128e7de26cf0',
-//   '6b3d8e3a-7f9f-44d4-9f76-9f5b67d6a13c',
-//   '7f62b815-b87a-4b12-a987-24d8d98cb8b0',
-//   '8c29e7e4-4f25-4e1c-a3b8-fbaabf509b1f',
-//   '6b3d8e3a-7f9f-44d4-9f76-9f5b67d6a03c',
-//   'a2f3e47d-82b5-4f3f-8d21-1dbe93b0f2a3',
-//   'b8d3f8f6-1234-4c28-a902-b0e14d881175',
-//   'b8d3f8f6-1234-4c28-a902-b0e14d881114',
-//   '3e98b4f1-2a15-49a0-9e8b-76f4c5929acb',
+  // '1a9c3f17-4d14-4ab8-8c24-1b9c5efb8a01',
+  // '2f4b0b2e-8d2a-4f75-8b5f-d7c8304e1229',
+  // '3e98b4f1-2a15-49a0-9e8b-76f4c5928acb',
+  // '5a14e5c8-65f8-4e79-8f8d-128e7de26cf0',
+  // '6b3d8e3a-7f9f-44d4-9f76-9f5b67d6a13c',
+  // '7f62b815-b87a-4b12-a987-24d8d98cb8b0',
+  // '8c29e7e4-4f25-4e1c-a3b8-fbaabf509b1f',
+  // '6b3d8e3a-7f9f-44d4-9f76-9f5b67d6a03c',
+  // 'a2f3e47d-82b5-4f3f-8d21-1dbe93b0f2a3',
+  // 'b8d3f8f6-1234-4c28-a902-b0e14d881175',
+  // 'b8d3f8f6-1234-4c28-a902-b0e14d881114',
+  // '3e98b4f1-2a15-49a0-9e8b-76f4c5929acb',
 // ];
 
 export const bookingItems = [

@@ -2,10 +2,10 @@
 pragma solidity ^0.8.24;
 
 import {FHE, eaddress, euint8, euint32, euint64, externalEuint64, externalEuint8} from '@fhevm/solidity/lib/FHE.sol';
-import {SepoliaConfig} from '@fhevm/solidity/config/ZamaConfig.sol';
+import {ZamaEthereumConfig} from '@fhevm/solidity/config/ZamaConfig.sol';
 // import 'hardhat/console.sol';
 
-contract TravelTrust is SepoliaConfig {
+contract TravelTrust is ZamaEthereumConfig {
   struct Review {
     euint8 rating;
     string comment;
@@ -116,12 +116,14 @@ contract TravelTrust is SepoliaConfig {
     // prevent self-payment
     require(msg.sender != serviceOwner, 'Owner cannot pay self');
 
-    // decrypt encrypted price
-    bytes32[] memory cts = new bytes32[](1);
-    cts[0] = FHE.toBytes32(svc.price);
-
-    uint256 reqId = FHE.requestDecryption(cts, this.priceDycryptCallback.selector);
-    // svc.decryptionRequestId = reqId;
+    // Generate request ID for self-relaying decryption
+    uint256 reqId = uint256(keccak256(abi.encodePacked(
+      block.timestamp,
+      msg.sender,
+      serviceOwner,
+      serviceId,
+      msg.value
+    )));
 
     pendingRequests[reqId] = PaymentRequest({
       buyer: msg.sender,
@@ -139,20 +141,26 @@ contract TravelTrust is SepoliaConfig {
     bytes memory cleartexts,
     bytes memory decryptionProof
   ) external payable {
-    // Verify signatures against the request and provided cleartexts
-    FHE.checkSignatures(requestId, cleartexts, decryptionProof);
-
-    // Decode the cleartexts back into uint64 values [revealedYes, revealedNo]
-    uint64 decryptedPrice = abi.decode(cleartexts, (uint64));
+    // Get the payment request
     PaymentRequest memory req = pendingRequests[requestId];
+    require(req.buyer != address(0), 'Invalid request ID');
 
     Service storage svc = services[req.serviceOwner][req.serviceId];
 
-    require(req.paidAmount == decryptedPrice, 'Incorrect payment amount');
+    // Create the handles list that was used for decryption
+    bytes32[] memory handlesList = new bytes32[](1);
+    handlesList[0] = FHE.toBytes32(svc.price);
+
+    // Verify the KMS signatures
+    FHE.checkSignatures(handlesList, cleartexts, decryptionProof);
+
+    // Decode the cleartexts back into uint64 values
+    uint64 decryptedPrice = abi.decode(cleartexts, (uint64));
+
+    require(req.paidAmount == uint256(decryptedPrice), 'Incorrect payment amount');
 
     // Finalize payment
     (bool sent, ) = payable(svc.owner).call{value: req.paidAmount}('');
-
     require(sent, 'Payment failed');
 
     hasPaymented[req.serviceId][req.buyer] = true;

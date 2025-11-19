@@ -37,12 +37,19 @@ export const axiosBaseQuery =
       return result;
     } catch (axiosError) {
       let err = axiosError as any;
-      const parseErr = JSON.parse(err.message);
+      let parseErr;
+
+      try {
+        parseErr = JSON.parse(err.message);
+      } catch (jsonError) {
+        // If error message is not valid JSON, use the raw message
+        parseErr = { message: err.message, statusCode: err.status || 500 };
+      }
 
       return {
         error: {
-          status: parseErr.statusCode,
-          data: parseErr || err.message,
+          status: parseErr.statusCode || err.status || 500,
+          data: parseErr.message || err.message,
         },
       };
     }

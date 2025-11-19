@@ -6,7 +6,7 @@ import React from 'react';
 export default function FhScript() {
   return (
     <Script
-      src="https://cdn.zama.ai/relayer-sdk-js/0.2.0/relayer-sdk-js.umd.cjs"
+      src="https://cdn.zama.org/relayer-sdk-js/0.3.0-5/relayer-sdk-js.umd.cjs"
       strategy="afterInteractive"
       onLoad={async () => {
         console.log('✅ ZamaRelayerSDK script loadeddddd');

@@ -1,0 +1,4 @@
+# Prevent Next.js from processing script files
+*.ts
+*.js
+!index.ts

@@ -132,6 +132,7 @@ const ServiceForm = ({ mode = ADD }: { mode?: 'ADD' | 'EDIT' }) => {
             // const serviceId = service?.id ?? Date.now();
 
             const serviceId = (address as string) + Date.now();
+
             const txData: any = {
               address: contractAddress,
               abi: ABI,

@@ -23,7 +23,7 @@
     "deploy:localhost": "hardhat deploy --network localhost",
     "deploy:sepolia": "hardhat deploy --network sepolia",
     "verify:sepolia": "hardhat verify --network sepolia 0x879b9DA782cfc92705e868550535d355209a097A",
-    "relayer": "npx tsx scripts/relayer.ts"
+    "relayer": "tsx scripts/relayer.ts"
   },
   "dependencies": {
     "@ant-design/cssinjs": "^1.24.0",
